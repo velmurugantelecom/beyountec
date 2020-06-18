@@ -1,0 +1,96 @@
+<div class="container-fluid ">
+
+  <div class="row mx-2 mt-5 mb-4">
+
+    <div class="col-md-3 col-12   bgcolor">
+
+      <div style="height: 75px;" class="row mt-2">
+        <label class="col-12 ">{{'ChassisNo#' | translate }}</label>
+        <p class="col-12 fbold">{{vehicledetails?.chassisNo}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+
+        <label class="col-12 "> {{ 'MakeLabel' | translate }}, {{ 'ModelLabel' | translate }}, {{ 'Year' | translate }}</label>
+        <p class="col-12 fbold">{{vehicledetails?.makeName}}, {{vehicledetails?.modelName}},
+          {{vehicledetails?.makeYear}}</p>
+
+
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <label class="col-12 "> {{ 'VehicleType' | translate }}</label>
+        <p class="col-12 fbold">{{vehicledetails?.vehicleTypeName}}</p>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-8 col-12 ">
+
+      <div style="height: 75px;" class="row mt-2">
+        <div *ngIf="vehicledetails?.repairType != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'RepairType' | translate }}</label>
+          <p class="col-12 fbold">{{vehicledetails?.repairName}}</p>
+        </div>
+
+        <div *ngIf="vehicledetails?.regCityDesc != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'VehicleRegistered' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{vehicledetails?.regCityDesc}}</p>
+
+        </div>
+        <div *ngIf="vehicledetails?.colorName != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'VehicleColor' | translate }}</label>
+          <p class="col-12 fbold">{{vehicledetails?.colorName}}</p>
+        </div>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <div *ngIf="vehicledetails?.regStatusDesc != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'RegistrationStatus' | translate }} </label>
+          <p class="col-12 fbold">{{vehicledetails?.regStatusDesc}}</p>
+        </div>
+
+        <div *ngIf="vehicledetails?.usageDescription != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'UsageType' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{vehicledetails?.usageDescription}}</p>
+
+        </div>
+        <div *ngIf="vehicledetails?.vehicleValue != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'VehicleValue' | translate }}</label>
+          <p class="col-12 fbold">{{vehicledetails?.vehicleValue | DecimalValue}}</p>
+
+        </div>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <div *ngIf="vehicledetails?.tcFileNumber" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'TCFNo' | translate }}</label>
+          <p class="col-12 fbold">{{vehicledetails?.tcFileNumber}}</p>
+        </div>
+
+        <div class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'Mortagged' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{vehicledetails?.mortgagedDesc}}</p>
+
+        </div>
+        <div *ngIf="vehicledetails?.bankName" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'Bank' | translate }}</label>
+          <p class="col-12 fbold">{{vehicledetails?.bankName}}</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

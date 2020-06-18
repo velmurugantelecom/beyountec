@@ -1,0 +1,159 @@
+
+// new code
+ul{
+  list-style-type:none;
+  width: 100%;
+  // margin-block-start: 0em;
+  // margin-block-end: 0em;
+  // margin-inline-start: 0px;
+  // margin-inline-end: 0px;
+   padding-inline-start: 0px;
+}
+
+.mat-card {
+  padding:0px
+}
+
+ol{
+  list-style-type:none;
+}
+
+
+hr {
+  width: 100%;
+  border-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.header-text {
+  letter-spacing: 0;
+  color: black;
+  text-shadow: 0px 3px 3px #0000004d;
+  opacity: 1;
+}
+
+.silver-card-header {
+  background-color: #00c2d1;
+  width: 100%;
+}
+
+.silver-card-header-2 {
+  background-color: #00c2d1;
+  width: 100%;
+}
+.silver-card-body {
+  background-color: #e2f2f2;
+}
+.silver-card-body-2 {
+  background-color: #e2f2f2;
+}
+.gold-card-header {
+  background-color: #81d54a;
+  width: 100%;
+}
+
+.gold-card-body {
+  background-color: #defeca;
+}
+
+.gold-card-header-2 {
+  background-color: #81d54a;
+  width: 100%;
+}
+
+.gold-card-body-2 {
+  background-color: #defeca;
+}
+.platinum-card-header {
+  background-color: #f3c440;
+  width: 100%;
+}
+
+.platinum-card-body {
+  background-color: #fbf0d3;
+}
+.platinum-card-header-2 {
+  background-color: #f3c440;
+  width: 100%;
+}
+
+.platinum-card-body-2 {
+  background-color: #fbf0d3;
+}
+
+button:hover {
+  color: white;
+}
+
+.mouse-hover {
+  cursor: pointer;
+}
+
+.actived-plan-bg {
+  background-color: #646464;
+}
+
+.selected-coverage-content {
+  position: relative;
+  color: white;
+  top: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mat-select {
+  display: inline-block;
+  width: 50%;
+  outline: 0;
+}
+
+// compare plan
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #f8f9fa;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #f8f9fa;
+}
+
+.mat-radio-outer-circle {
+  border-color: white;
+}
+
+.mat-card:not([class*="mat-elevation-z"]) {
+  box-shadow: 0px 0px 0px 0px;
+}
+
+.cover-head {
+  font-size: 17px;
+  color: black;
+}
+
+// .plan-container {
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+//   white-space: nowrap;
+// }
+
+// .card {
+//   display: inline-block;
+// }
+
+.plan-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  .card {
+    flex: 0 0 auto;
+  }
+}
+
+.h35 {
+  height: 35px !important;
+}

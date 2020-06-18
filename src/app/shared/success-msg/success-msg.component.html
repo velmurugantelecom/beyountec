@@ -1,0 +1,30 @@
+<div class="success-content">
+    <div>
+        <i class="far fa-check-circle fa-5x bg-color"></i>
+        <h3 class="mt-2">Success!</h3>
+        <p class="mb-1 mt-4">
+            {{ 'paymentSuc' | translate }}
+            {{ currency }} {{ amount | DecimalValue}}.
+        </p>
+        <div *ngIf="!policyNo">
+            <h5> {{'PleaseWait' | translate }} </h5>
+        </div>
+        <div *ngIf="policyNo">
+            <p class="mt-4"> {{'PolicyNoHash' | translate }}: {{policyNo}}</p>
+            <div style="text-align: left;margin-left: 30%;">
+                <p>Thank you for issuing your policy with AFNIC, your symbol of security.</p>
+                <p>Your policy document will be sent to your email.</p>
+                <p>If you need any further assistance, you can contact us on our toll-free number 800 23642.</p>
+            </div>
+            <div style="text-align: right;margin-right: 30%;">
+                <p dir="rtl">شكراً لاختياركم شركة الفجيرة الوطنية للتأمين، رمز الأمان.</p>
+                <p dir="rtl">سيتم إرسال تفاصيل الوثيقة لكم عن طريق البريد الالكتروني المسجل لدينا.</p>
+                <p dir="rtl">للمزيد من المعلومات أو المساعدة الرجاء الاتصال على رقمنا المجاني 80023642</p>
+            </div>
+
+            <img class="m-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
+            <img class="m-2 custom-cursor" src="./assets/icon2.png" (click)="sendMail()" />
+            <img class="m-2 custom-cursor" src="./assets/icon3.png" (click)="printDocument()" />
+        </div>
+    </div>
+</div>

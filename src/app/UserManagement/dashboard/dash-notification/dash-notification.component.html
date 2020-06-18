@@ -1,0 +1,126 @@
+<div class="card BoxShadow">
+  <div class="accordion" id="accordionExample">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <div class="d-flex justify-content-between">
+            <div class=" " style="padding: 10px 10px;">
+              <span class="L2Black poppins-med-20">{{ 'Dashboard' | translate }} {{notificationCount}} </span>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+
+          <div>
+
+
+
+            <div class="row  poppins-reg-15">
+              <div class="col-md-12" style="display:block;">
+                <div>
+                  <span class="BadgeSpan" [ngClass]="{'Active': activeQuotes==='Policy'}" (click)="fetchData('Policy')">
+                    <img src="assets/dashboard/renewalactive-icon.png" *ngIf="activeQuotes==='Policy'"
+                      style="height:24px;width:24px;">
+
+                    <img src="assets/dashboard/renewal-icon.png" *ngIf="activeQuotes !=='Policy'"
+                      style="height:24px;width:24px;">
+                    {{ 'Policy' | translate }} {{renewalCount}} </span>
+                  <span class="BadgeSpan" [ngClass]="{'Active': activeQuotes==='Quotes'}" (click)="fetchData('Quotes')">
+                    <img src="assets/dashboard/quotesactive-icon.png" *ngIf="activeQuotes==='Quotes'"
+                      style="height:24px;width:24px;">
+                    <img src="assets/dashboard/quotes-icon.png" *ngIf="activeQuotes !=='Quotes'"
+                      style="height:24px;width:24px;">
+                   {{ 'Quotes' | translate }} {{quoteCount}} </span>
+
+                  
+
+
+
+                  <span class="BadgeSpan" [ngClass]="{'Active': activeQuotes==='Renewal'}"
+                    (click)="fetchData('Renewal')">
+                    <img src="assets/dashboard/renewalactive-icon.png" *ngIf="activeQuotes==='Renewal'"
+                      style="height:24px;width:24px;">
+
+                    <img src="assets/dashboard/renewal-icon.png" *ngIf="activeQuotes !=='Renewal'"
+                      style="height:24px;width:24px;">
+                    {{ 'Renewal' | translate }} {{renewalCount}} </span>
+
+
+
+                  <!-- <span class="BadgeSpan" [ngClass]="{'Active': activeQuotes==='Payment'}" (click)="getPaymentDetail()">
+                    <img src="assets/dashboard/paymentactive-icon.png" *ngIf="activeQuotes==='Payment'"
+                      style="height:24px;width:24px;">
+                    <img src="assets/dashboard/payment-icon.png" *ngIf="activeQuotes !=='Payment'"
+                      style="height:24px;width:24px;">
+                   {{ 'Payment' | translate }}  {{paymentCount}} </span> -->
+
+                  <span class="float-right">
+                    <button *ngIf="activeQuotes==='Quotes'" (click)="NewQuote()" type="button"
+                      class="btn btn-default  bgblue fwhite button roundedbtn mx-4">
+                      {{ 'NewQuote' | translate }}
+                      </button>
+
+                  </span>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12" style="margin-top:20px;display:inline-block;padding:0px;">
+              <table class="table" mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container class="poppins-light-15" [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                  <tr>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-bottom: 15px;">
+                      <!-- <span *ngIf="column!=='refNo' && column!=='insuredName' && column!=='emailId' && column!=='quoteNo' && column!=='product' && column!=='amount'
+                      && column!=='dueDate' && column!=='endDate' && column!=='status'">{{column.toUpperCase()}}</span> -->
+
+                      <span *ngIf="column=='refNo'  || column=='PolicyNo' ">{{ 'PolicyNo' | translate }} </span>
+
+                      <span *ngIf="column=='insuredName'">{{ 'InsuredNameLabel' | translate }}</span>
+                      <span *ngIf="column=='quoteNo' || column=='QuoteNo' ">{{ 'Quote' | translate }}</span>
+
+                      <span *ngIf="column=='emailId'">{{ 'EmailAddress' | translate }}</span>
+                      <span *ngIf="column=='product'">{{ 'Product' | translate }}</span>
+                      <span *ngIf="column=='status'">{{ 'Status' | translate }}</span>
+                      <span *ngIf="column=='endDate'">{{ 'EndDate' | translate }}</span>
+                      <span *ngIf="column=='dueDate'">{{ 'DueDate' | translate }}</span>
+                      <span *ngIf="column=='amount'">{{ 'Amount' | translate }}</span>
+                      <span *ngIf="column=='startDate'">{{ 'StartDate' | translate }}</span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td mat-cell *matCellDef="let element;">
+                      <span
+                        *ngIf=" column!='quoteNo' && column!=='refNo' && column!=='endDate' && column!=='startDate' &&  column!=='dueDate' && column!=='amount'">{{element[column]}}</span>
+
+                      <span class=" hyperlink-click" *ngIf="column=='quoteNo'" (click)="showDetails(element)">
+                        {{element[column]}}</span>
+
+                      <span class=" hyperlink-click" *ngIf="column=='PolicyNo'" (click)="navpage(element)">
+                        {{element['policyNo']}}</span>
+
+                      <span *ngIf="column=='QuoteNo'">
+                        {{element['quoteNo']}}</span>
+
+                      <span *ngIf="column=='refNo'"> {{element[column]}}</span>
+                      <span
+                        *ngIf="column=='dueDate' || column=='endDate' || column=='startDate'">{{element[column] | date:'dd/MM/yyyy'}}</span>
+
+                      <span *ngIf="column=='amount'">{{ 'AED' | translate }}
+                        {{element[column] }}</span>
+                    </td>
+                  </tr>
+                </ng-container>
+
+                <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

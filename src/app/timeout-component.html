@@ -1,0 +1,19 @@
+<div class="row m-0 p-0">
+    <div class="col-md-10 col-9 p-0">
+        <h5 style="display: flex;">Session Timeout </h5>
+    </div>
+    <div class="col-md-2 col-3 custom-cursor" [mat-dialog-close]="doTimeout">
+        <mat-icon>
+            close
+        </mat-icon>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div class="col-md-10 col-9 p-0 my-2 centertext">
+    <div>Your Session will end in <h3>{{minutes}}m: {{seconds}}s </h3></div>
+    <p>Please click CANCEL to avoid session timeout...</p>
+</div>
+<div style="display: flex;justify-content: center;">
+    <button [mat-dialog-close]="doTimeout" class="btn btn-home button fwhite bggreen centercss" (click)="stopTimer()">CANCEL</button>
+    <button [mat-dialog-close]="!doTimeout" class="ml-4 btn btn-home button fwhite bggreen centercss" (click)="logout()">LOGOUT</button>
+</div>

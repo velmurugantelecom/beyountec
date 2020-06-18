@@ -1,0 +1,105 @@
+<div class="row mt-1">
+    <div class="col-md-2 col-sm-12 col-12  align-self-center" (drop)="uploadDriverLicenseByDD($event)"
+    (dragover)="allowDrop($event)">
+        <!-- <div class="row centercss p-1 upload-option">
+            <div class="col-md-6 col-sm-6 col-6 custom-cursor" (click)="uploadMulkiya($event)">
+                <img src="./assets/motor/insurer-details/drag-drop.fw.png" class="pl-1" />
+                <p class="f8 mb-0 pt-2">{{ 'DragAndUpload' | translate }}</p>
+                <input (change)="onSelectFile($event.target.files)" type="file" id="uploadTrigger"
+                    style="display: none;" />
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 border-left custom-cursor py-0 pl-2 pr-1">
+                <img (click)="openDialog()" src="./assets/motor/insurer-details/camera.png" class="pl-3" />
+                <p class="f8 mb-0">{{ 'ClickAndUpload' | translate }}</p>
+            </div>
+        </div> -->
+    </div>
+    <form [formGroup]="driverForm" class="col-md-8 col-sm-12 " autocomplete="off">
+        <div class="row ">
+            <!-- <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'TcNo' | translate }}</mat-label>
+                    <input matInput placeholder="{{ 'PlaceHolder.TcNo' | translate }}" formControlName="tcFileNumber"
+                        required NumbersOnly [maxlength]="tcNoLength">
+                    <mat-error *ngIf="driverForm.controls.tcFileNumber.hasError('required')">
+                        {{ 'Required.TcNo' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="driverForm.controls.tcFileNumber.hasError('minlength') || driverForm.controls.tcFileNumber.hasError('maxlength')">
+                        {{ 'Invalid.TcNo' | translate }} {{tcNoLength}} {{'Invalid.Digits' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'LicenseIssuedDate' | translate }}</mat-label>
+                    <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                        placeholder="{{ 'PlaceHolder.LicenseIssueDate' | translate }}"
+                        formControlName="licenseIssueDate" required
+                        (dateTimeChange)="issuedDateChange($event)" [min]="minDateIssue" 
+                        AutoDateFormat/>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                    <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
+                    <mat-error *ngIf="driverForm.controls.licenseIssueDate.hasError('required')">
+                        {{ 'Required.LicenseIssueDate' | translate }}</mat-error>
+                    <mat-error *ngIf="driverForm.controls.licenseIssueDate.hasError('owlDateTimeMin')">
+                        {{ 'Invalid.LicenseIssueDate' | translate }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'LicenseExpiryDate' | translate }}</mat-label>
+                    <input matInput [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                        placeholder="{{ 'PlaceHolder.LicenseExpiryDate' | translate }}"
+                        formControlName="licenseExpiryDate" required [min]="minDateExpiry"
+                        AutoDateFormat>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt2">date_range</mat-icon>
+                    <mat-error *ngIf="driverForm.controls.licenseExpiryDate.hasError('required')">
+                        {{ 'Required.LicenseExpiryDate' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="driverForm.controls.licenseExpiryDate.hasError('owlDateTimeMin')">
+                        {{ 'LicenseExpiryDateFormat' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'LicenseExpiryDate' | translate }}</mat-label>
+                    <input matInput [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                        placeholder="{{ 'PlaceHolder.LicenseExpiryDate' | translate }}"
+                        formControlName="licenseExpiryDate" required [min]="minDateExpiry">
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt2">date_range</mat-icon>
+                    <mat-error *ngIf="driverForm.controls.licenseExpiryDate.hasError('required')">
+                        {{ 'Required.LicenseExpiryDate' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="driverForm.controls.licenseExpiryDate.hasError('owlDateTimeMin')">
+                        {{ 'LicenseExpiryDateFormat' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div> -->
+    </form>
+    <div class="col-md-2 col-sm-12 col-12 align-self-center">
+        <!-- <div class="row" *ngIf="frontUrl || backUrl;else EmptyTemplate">
+            <p class="f10 border-bottom">{{ 'UploadedDrivingLicenseCard' | translate }}</p>
+            <div *ngIf="frontUrl!=''" class="m-1 img_wrp">
+                <mat-icon class="close" (click)="closefunc('frontUrl')">
+                    close
+                </mat-icon>
+                <img height=60 width=100 [src]="frontUrl" alt="" />
+            </div>
+            <div *ngIf="backUrl!=''" class="m-1 img_wrp">
+                <mat-icon class="close" (click)="closefunc('backUrl')">
+                    close
+                </mat-icon>
+                <img height=60 width=100 [src]="backUrl" alt="" />
+            </div>
+        </div>
+        <ng-template #EmptyTemplate>
+            <p class="f12">{{ 'NoDocs' | translate }}</p>
+        </ng-template> -->
+    </div>
+</div>

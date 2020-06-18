@@ -1,0 +1,177 @@
+<div class="row p-2 ">
+
+  <div class="col-md-12 col-12">
+    <app-dash-notification></app-dash-notification>
+
+  </div>
+
+</div>
+
+
+<div class="row p-2 ">
+
+  <div class="col-md-3">
+
+    <mat-card class="mat-elevation-z6 cardheight">
+      <!-- <div class="row pl-3 pt-3">
+        <div class="col-md-9"> -->
+      <mat-card-title>
+        {{ 'ReferralQuotes' | translate }}
+      </mat-card-title>
+      <!-- </div>
+      
+      </div>   -->
+      <mat-card-content>
+        <div *ngIf="referalQuoteData.length > 0">
+          <table id="customers" class="poppins-med-14">
+            <tr>
+              <th> {{ 'ReferralDetails' | translate }}</th>
+            </tr>
+
+            <ng-container *ngFor="let item of referalQuoteData; let i=index">
+              <tr>
+                <td>
+                  <h5 class="link poppins-med-16">
+                    {{item.quoteNo}}</h5>
+                  <span *ngIf="item.statusId == 'R'"
+                    class="sub-details poppins-med-14">{{'ReferedTo' | translate}}</span>
+                  <span *ngIf="item.statusId == 'RA'"
+                    class="sub-details poppins-med-14">{{ 'Accepted' | translate }}</span>
+                  <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{ 'Declined' | translate }}
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+        <div class="row align-items-center h-100" *ngIf="referalQuoteData.length === 0">
+          <span class="mat-header-cell mx-auto">{{ 'NoData' | translate }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+
+
+  </div>
+
+
+  <div class="col-md-3">
+
+    <!-- <mat-card class="mat-elevation-z6" class="cardheight">
+      <div class="row p-3">
+        <div class="col-md-6">
+          <mat-card-title class="title L2Black poppins-med-18">
+            News And Announcements
+          </mat-card-title>
+        </div>
+      </div>
+      <mat-card-content *ngIf="news.length > 0">
+        <div *ngFor="let new of news;let i = index;">
+          <div *ngIf="i == count">
+            <img style="margin-bottom: 15px; height: 160px;" src="assets/Dashboard/News.png">
+            <br>
+            <h4>{{new.name}}</h4>
+            <p class="poppins-reg-14 LLGrey">
+              {{new.comment}}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <i class="fa fa-circle dot" [ngClass]="{'active' : i===count}" *ngFor="let new of news;let i = index;"></i>
+        </div>
+        <div class="col-md-6">
+          <mat-card-actions style="float:right;margin-right:10px;">
+            <button (click)="nav(-1)" [disabled]="!count" class="button">
+              < </button> <button (click)="nav(+1)" [disabled]="!(count< news.length-1)" class="button"> >
+            </button>
+          </mat-card-actions>
+        </div>
+      </div>
+
+    </mat-card> -->
+
+    <mat-card class="mat-elevation-z6 cardheight">
+      <!-- <div class="row p-3"> -->
+      <!-- <div class="col-md-6"> -->
+      <mat-card-title>
+        {{'NewsAnnoc' | translate }}
+      </mat-card-title>
+      <!-- </div>
+        </div> -->
+      <mat-card-content *ngIf="news.length">
+        <div *ngFor="let new of news;let i = index;">
+          <div *ngIf="i == count">
+            <img style="margin-bottom: 15px; height: 120px;max-width: 100%;" src="./assets/Mask Group 5.png">
+            <br>
+            <h4 class="f16">{{new.name}}</h4>
+            <p>
+              {{new.comment}}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+      <!-- <div class="row"> -->
+      <!-- <div class="col-md-6">
+                <i class="fa fa-circle dot" style="color:lightgray;" [ngClass]="{'active' : i===count}" *ngFor="let new of news;let i = index;"></i>
+            </div> -->
+      <!-- <div class="mx-auto"> -->
+      <mat-card-actions style="float:right;margin-right:10px;">
+        <button (click)="nav(-1)" [disabled]="!count" class="button"> </button> 
+        <button (click)="nav(+1)" [disabled]="!(count< news.length-1)" class="button"> </button>
+      </mat-card-actions>
+      <!-- </div> -->
+      <!-- </div> -->
+    </mat-card>
+
+  </div>
+
+
+
+  <div class="col-md-6">
+
+    <mat-card class="mat-elevation-z6 cardheight">
+      <!-- <div class="row pl-3 pt-3"> -->
+
+      <mat-card-title>
+        {{'PolicyDueFor' | translate }}
+      </mat-card-title>
+
+
+      <!-- </div> -->
+      <mat-card-content>
+        <div *ngIf="tableData.length !== 0">
+          <table id="customers">
+            <tr>
+              <th> {{'PolicyDetails' | translate }}</th>
+            </tr>
+
+            <ng-container *ngFor="let item of tableData; let i=index">
+              <tr>
+                <td>
+                  <h5 class="link poppins-med-16">
+                    {{item.quoteNo}}</h5>
+                  <span *ngIf="item.statusId == 'R'" class="sub-details poppins-med-14">{{'ReferedTo' | translate }}</span>
+                  <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{'Accepted' | translate }}
+                    </span>
+                  <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{'Declined' | translate }}
+                    </span>
+
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+
+        </div>
+
+        <div class="row align-items-center h-100" *ngIf="tableData.length === 0">
+          <span class="mat-header-cell mx-auto"> {{'NoData' | translate }}</span>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<mat-card class="m-5">
+
+  <div class="row">
+    <div class="col-md-3 col-12 m-0">
+      <label> {{ 'PolicyNoHash' | translate }}</label><br>
+      <b>{{policyarr?.policyNo}}</b>
+    </div>
+
+    <div class="col-md-3 borderleft col-12 m-0">
+      <label> {{ 'InsuredNameLabel' | translate }} </label><br>
+      <b>{{policyarr?.userDetails?.firstName}}{{policyarr?.userDetails?.lastName}}</b>
+    </div>
+
+    <!-- <div class="col-md-2 borderleft col-12 m-0">
+      <label>Cover Type</label><br>
+      <b>{{policyarr?.product}}</b>
+    </div> -->
+
+    <div class="col-md-3 borderleft col-12 m-0">
+      <label>{{ 'Product' | translate }} </label><br>
+      <b>{{policyarr?.productTypeName}}</b>
+    </div>
+
+    <div class="col-md-3 borderleft col-12 m-0">
+      <label> Policy Period</label><br>
+      <b class="text-center m-0 p-0">{{policyarr?.startDate | date:'dd/MM/yyyy'}} </b><br>
+      <b class="text-center m-0 p-0">{{ 'To' | translate }}</b><br>
+      <b class="text-center m-0 p-0"> {{policyarr?.endDate | date:'dd/MM/yyyy'}}</b>
+    </div>
+
+  </div>
+
+</mat-card>

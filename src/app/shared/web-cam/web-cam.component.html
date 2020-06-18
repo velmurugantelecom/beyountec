@@ -1,0 +1,26 @@
+<div class="row m-0 p-0">
+    <div class="col-md-10 col-9">
+        <h5 style="display: flex;align-content: center;">{{ 'ScanYourMulkiya' | translate }} {{ data.QTitle}}</h5>
+    </div>
+    <div class="col-md-2 col-3 custom-cursor" (click)="onNoClick()">
+        <mat-icon>
+            close
+        </mat-icon>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div class="d-flex justify-content-center m-1">
+    <webcam [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch"
+        (imageCapture)="handleImage($event)">
+    </webcam>
+</div>
+
+<br />
+
+<div class="d-flex justify-content-center m-0">
+    <button type="submit" (click)="triggerSnapshot()" [mat-dialog-close]="webcamImage"
+        class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
+        {{ 'TakeSnapshot' | translate }}
+    </button>
+
+</div>

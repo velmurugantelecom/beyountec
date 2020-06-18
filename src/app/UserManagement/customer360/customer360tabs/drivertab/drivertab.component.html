@@ -1,0 +1,114 @@
+<div class="container-fluid ">
+
+  <div class="row mx-2 mt-5 mb-2">
+
+    <div class="col-md-3 col-12  bgcolor">
+
+      <div class="row mt-2">
+        <label class="col-12 ">{{ 'DriverName' | translate }}</label>
+        <p class="col-12 fbold">{{driverdetails?.fullName}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div class="row mt-2">
+        <label class="col-12 "> {{ 'Gender' | translate }}, {{ 'Age' | translate }}</label>
+        <p class="col-12 fbold">{{driverdetails?.genderName}}, {{driverdetails?.age}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div class="row mt-2">
+        <label class="col-12 ">{{ 'EmailLabel' | translate }}</label>
+        <p class="col-12 fbold">{{driverdetails?.email}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+      <!-- <div class="row mt-2">
+        <label class="col-12 ">{{ 'ContactNumber' | translate }}</label>
+        <p class="col-12 fbold">{{driverdetails?.mobileNo}}</p>
+
+      </div> -->
+
+    </div>
+
+    <div class="col-md-8 col-12 ">
+
+      <div class="row ">
+        <div *ngIf="driverdetails?.nationality != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'Nationality' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.nationalityDesc}}</p>
+        </div>
+
+        <div *ngIf="driverdetails?.occupation != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'Occupation' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{driverdetails?.professionName}}</p>
+
+        </div>
+        <div *ngIf="driverdetails?.dob != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'Dob' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.dob | dateFormat }}</p>
+
+        </div>
+
+      </div>
+      <hr *ngIf="driverdetails?.dob != null || driverdetails?.occupation != null || driverdetails?.nationality != null"
+        class="hrline mb-2">
+
+      <div class="row ">
+        <div *ngIf="tcfilenumber != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'TCFNo' | translate }}</label>
+          <p class="col-12 fbold">{{tcfilenumber}}</p>
+        </div>
+
+        <div *ngIf="driverdetails?.countryName != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'CountryOfLicense' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{driverdetails?.countryName}}</p>
+
+        </div>
+        <div class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'ContactNumber' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{driverdetails?.mobileNo}}</p>
+  
+        </div>
+        <!-- <div *ngIf="driverdetails?.driverExp != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'DrivingExp' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.driverExp}}</p>
+        </div> -->
+
+      </div>
+      <hr *ngIf="tcfilenumber != null || driverdetails?.countryName != null || driverdetails?.driverExp != null "
+        class="hrline mb-2">
+
+      <div class="row ">
+        <div *ngIf="driverdetails?.licenseNo != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 "> {{ 'LicenseNo' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.licenseNo}}</p>
+        </div>
+
+        <div *ngIf="driverdetails?.licenseIssueDate != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'LicenseIssuedDate' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{driverdetails?.licenseIssueDate | dateFormat }}</p>
+
+        </div>
+        <div *ngIf="driverdetails?.licenseExpiryDate != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'LicenseExpiryDate' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.licenseExpiryDate | dateFormat }}</p>
+
+        </div>
+
+      </div>
+      <hr
+        *ngIf="driverdetails?.licenseExpiryDate != null || driverdetails?.licenseIssueDate != null || driverdetails?.licenseNo != null"
+        class="hrline mb-2">
+      <div class="row">
+        <div *ngIf="driverdetails?.ncdYears != null" class="col-md-4 col-12 mt-2">
+          <label class="col-12 ">{{ 'NCD' | translate }}</label>
+          <p class="col-12 fbold">{{driverdetails?.ncdYears}}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

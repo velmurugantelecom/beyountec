@@ -1,0 +1,115 @@
+<div class="container-fluid ">
+
+  <div class="row mx-2 mt-5 mb-4">
+    <div class="col-md-3 col-12  bgcolor">
+
+      <div style="height: 75px;" class="row mt-2">
+        <label class="col-12 ">{{ 'InsuredName' | translate }}</label>
+        <p class="col-12 fbold">{{insureddetails?.fullName}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <label class="col-12 ">{{ 'EmailLabel' | translate }}</label>
+        <p class="col-12 fbold">{{insureddetails?.email}}</p>
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <label class="col-12 ">{{ 'MobileNumber' | translate }}</label>
+        <p class="col-12 fbold">{{insureddetails?.mobileNo}}</p>
+
+      </div>
+
+      <!-- <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2" *ngIf="customertype != 'C'">
+        <label class="col-12 "> Gender, Age</label>
+        <strong class="col-12">{{insureddetails?.genderName}}, {{insureddetails?.age}}</strong>
+
+      </div> -->
+
+
+    </div>
+
+    <div class="col-md-8 col-12 ">
+
+      <div style="height: 75px;" class="row mt-2">
+
+        <div *ngIf="insureddetails?.personalId != null" class="col-md-4 col-12">
+          <label class="col-12 ">{{ 'EmiratesIDLabel' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.personalId}}</p>
+        </div>
+
+        <div *ngIf="insureddetails?.dob != null" class="col-md-4 col-12 ">
+          <label class="col-12 "> {{ 'Dob' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.dob | dateFormat}}</p>
+        </div>
+
+        <div class="col-md-4 col-12 ">
+          <label class="col-12 "> {{ 'Gender' | translate }}, {{ 'Age' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.genderName}}, {{insureddetails?.age}}</p>
+        </div>
+        <!-- <div class="row mt-2" *ngIf="customertype != 'C'">
+          <label class="col-12"> Gender, Age</label>
+          <strong class="col-12">{{insureddetails?.genderName}}, {{insureddetails?.age}}</strong>
+        </div> -->
+        <!-- [ngStyle]="{'visibility': customertype != 'C' ? 'visible' : 'hidden' }" -->
+        <!-- <div *ngIf="insureddetails?.nationalityDesc != null" class="col-md-4 col-12">
+          <label class="col-12 "> Nationality</label>
+          <strong class="col-12 m-1">{{insureddetails?.nationalityDesc}}</strong>
+
+        </div> -->
+
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+        <div *ngIf="insureddetails?.address1 != null" class="col-md-4 col-12">
+          <label class="col-12 ">{{ 'Address1' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.address1}}</p>
+        </div>
+
+        <div *ngIf="insureddetails?.address2 != null" class="col-md-4 col-12">
+          <label class="col-12 ">{{ 'Address2' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.address2}}</p>
+
+        </div>
+        <div *ngIf="insureddetails?.postBox != null" class="col-md-4 col-12">
+          <label class="col-12 ">{{ 'POBox' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.postBox}}</p>
+        </div>
+      </div>
+      <hr class="hrline mb-3">
+
+      <div style="height: 75px;" class="row mt-2">
+
+
+        <!-- [ngStyle]="{'visibility': customertype != 'C' ? 'visible' : 'hidden' }" -->
+
+
+        <div *ngIf="insureddetails?.cityName != null" class="col-md-4 col-12">
+          <label class="col-12 ">{{ 'City' | translate }} </label>
+          <p class="col-12 fbold">{{insureddetails?.cityName}}</p>
+        </div>
+
+        <div *ngIf="insureddetails?.countryName != null" class="col-md-4 col-12 ">
+          <label class="col-12 "> {{ 'Country' | translate }}</label>
+          <p class="col-12 fbold">{{insureddetails?.countryName}}</p>
+        </div>
+
+        <div *ngIf="insureddetails?.nationalityDesc != null" class="col-md-4 col-12">
+          <label class="col-12 "> {{ 'Nationality' | translate }}</label>
+          <p class="col-12 m-1 fbold">{{insureddetails?.nationalityDesc}}</p>
+        </div>
+
+      </div>
+      <!-- <hr class="hrline mt-3 mb-3"> -->
+
+
+    </div>
+
+  </div>
+</div>

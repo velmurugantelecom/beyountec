@@ -1,0 +1,32 @@
+<div class="col-md-12 pad-0">
+  <div class="col-md-12">
+    <label class="confirm-lbl">{{ 'EmailDocuments' | translate }}</label>
+  </div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="emailForm" (ngSubmit)="sendMail()" autocomplete="off">
+    <div class="col-md-12">
+      <label class="label_cls">{{ 'SendEmailTo' | translate }}</label>
+      <mat-radio-group class="radio_btn" (change)="selectOption($event.value)" formControlName="radio">
+        <mat-radio-button value="DFLT" checked>{{data.mailId}}</mat-radio-button>
+        <mat-radio-button value="OTHERS" class="mb-4">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'Email' | translate }}</mat-label>
+            <input matInput formControlName="email" type="text" placeholder="{{'PlaceHolder.Email' | translate }}"
+              required>
+            <mat-error *ngIf="emailForm.get('email').hasError('pattern')">
+              {{ 'EmailFormat' | translate }}</mat-error>
+            <mat-error *ngIf="emailForm.get('email').hasError('required')">
+              {{ 'Required.Email' | translate }}</mat-error>
+          </mat-form-field>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="col-md-12 text-right btn-css mt-2">
+      <button type="button" mat-flat-button matDialogClose class="btn_no">
+        {{ 'CancelCaps' | translate }}</button>
+      <button type="submit" mat-flat-button class="btn button btn_yes">
+        {{ 'Send' | translate }}</button>
+    </div>
+  </form>
+</div>

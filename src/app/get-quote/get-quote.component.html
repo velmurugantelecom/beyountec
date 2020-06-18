@@ -1,0 +1,194 @@
+<!-- headerimage -->
+<div class="row headercss ">
+        <div class="col-md-5 col-12 my-auto">
+                <h3>
+                        {{ 'EnhanceYourToday' | translate }}
+                </h3>
+                <span class="f-20">
+                        {{ 'Comprehensive' | translate }}
+                </span>
+        </div>
+</div>
+
+
+<!-- getQuoteSection -->
+<div class="row ml-0 mr-0">
+        <div class="ml-auto pt-4 f26">
+                <i class="fas fa-chevron-left custom-cursor" *ngIf="isFormSubmited && QuoteType=='New-Quote'"
+                        (click)="goBack()"></i>
+                <i class="fas fa-chevron-left custom-cursor" *ngIf="QuoteType=='Renewal-Quote'" routerLink="/home"></i>
+        </div>
+        <div class="fgreen mr-auto p-4 f26">
+                {{ 'GetYourQuote' | translate }}
+        </div>
+</div>
+
+<hr class="hr-line">
+
+<div *ngIf="QuoteType=='New-Quote';else RenewalQuote">
+        <div *ngIf="!isFormSubmited">
+                <form [formGroup]="infoForm" (ngSubmit)="getChassisNumber()" focusInvalidInput autocomplete="off">
+                        <div class="my-4 mx-0">
+                                <div class="row centercss m-0">
+                                        <mat-radio-group formControlName="productType" (change)="selectOption($event)">
+                                                <mat-radio-button style="margin-right: 25px;"
+                                                        *ngFor="let product of dropdownOptions"
+                                                        [value]="product.typeid">{{product.typedesc}}
+                                                </mat-radio-button>
+                                        </mat-radio-group>
+                                </div>
+                                <div *ngIf="radioError" class="centercss">
+                                        <mat-error>{{"Product Type"}} {{'IsRequired' | translate }}</mat-error>
+                                </div>
+                        </div>
+                        <div class="row m-2 d-flex justify-content-center">
+                                <div class="row col-md-3 col-sm-3 col-xs-12 col-12 ">
+                                        <div class="ml-3">
+                                                <mat-form-field style="width: 80px;" appearance="outline">
+                                                        <mat-select formControlName="mobileCode">
+                                                                <mat-option *ngFor="let code of options.mobileCode"
+                                                                        [value]="code.value"> {{ code.label}}
+                                                                </mat-option>
+                                                        </mat-select>
+                                                </mat-form-field>
+                                        </div>
+                                        <div style="width: 60%;" class="ml-2">
+                                                <mat-form-field appearance="outline">
+                                                        <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
+                                                        <input matInput
+                                                                placeholder="{{ 'PlaceHolder.MobileNo' | translate }}"
+                                                                formControlName="mobileNo" required maxlength="7"
+                                                                NumbersOnly>
+                                                        <!-- <span matPrefix>+971&nbsp;</span> -->
+                                                        <mat-error
+                                                                *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
+                                                                {{ 'Required.MobileNo' | translate }} </mat-error>
+                                                        <mat-error
+                                                                *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
+                                                                {{ 'MobileNoLength' | translate }}
+                                                        </mat-error>
+                                                </mat-form-field>
+                                        </div>
+                                </div>
+
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                                <mat-label>{{ 'EmailLabel' | translate }}</mat-label>
+                                                <input matInput placeholder="{{ 'PlaceHolder.Email' | translate }}"
+                                                        formControlName="email" required>
+                                                <mat-error
+                                                        *ngIf="formCtrls.email.errors && formCtrls.email.errors.email">
+                                                        {{ 'EmailFormat' | translate }}</mat-error>
+                                                <mat-error
+                                                        *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
+                                                        {{ 'Required.Email' | translate }} </mat-error>
+                                                <mat-error *ngIf="invalidEmail && formCtrls.email.errors">
+                                                        Email address is aldready exist</mat-error>
+                                        </mat-form-field>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                                <mat-label>{{ 'ChassisNoLabel' | translate }}
+                                                </mat-label>
+                                                <input matInput
+                                                        placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                                                        formControlName="chassisNo" required [AlphaNumericOnly]="true"
+                                                        uppercase>
+                                                <mat-error
+                                                        *ngIf="formCtrls.chassisNo.errors && formCtrls.chassisNo.errors.required">
+                                                        {{ 'Required.ChassisNo' | translate }}</mat-error>
+                                                <mat-error *ngIf="invalidChassisNo && formCtrls.chassisNo.errors">
+                                                        {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+                        <div style="margin-left: 90%;">
+                                <p class="m-0 fgreen fbold">STEP 1/2 </p>
+                        </div>
+                        <div class="row justify-content-center m-2">
+                                <button type="submit"
+                                        class="col-md-3 col-sm-4 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
+                                        {{ 'Continue' | translate }}
+                                </button>
+                        </div>
+                </form>
+        </div>
+        <!-- <div *ngIf="isFormSubmited">
+                <form [formGroup]="chassisForm" (ngSubmit)="getQuote()" focusInvalidInput autocomplete="off">
+                        <div class="row m-2 justify-content-center">
+                                <div class="col-md-4 col-sm-4 col-xs-12 col-12  centercss row justify-content-center">
+                                        <img src="./assets/quote/chassis.png" class="p-4" />
+                                        <mat-form-field appearance="outline">
+                                                <mat-label>{{ 'ChassisNoCustom' | translate }}
+                                                </mat-label>
+                                                <input matInput
+                                                        placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                                                        formControlName="chassisNo" required [AlphaNumericOnly]="true"
+                                                        uppercase>
+                                                <mat-error
+                                                        *ngIf="chassisForm.controls.chassisNo.errors && chassisForm.controls.chassisNo.errors.required">
+                                                        {{ 'Required.ChassisNo' | translate }}</mat-error>
+                                                        <mat-error
+                                                        *ngIf="">
+                                                        {{ 'Required.ChassisNo' | translate }}</mat-error>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+                        <div style="margin-left: 90%;">
+                                <p class="m-0 fgreen fbold">STEP 2/3 </p>
+                        </div>
+                        <div class="row justify-content-center m-2">
+                                <button type="submit"
+                                        class="col-md-3 col-sm-4 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
+                                        {{ 'Continue' | translate }}
+                                </button>
+                        </div>
+                </form>
+        </div> -->
+</div>
+
+
+<ng-template #RenewalQuote>
+
+        <div class="d-flex row justify-content-center m-0">
+                <div class="col-md-12 col-12 d-flex justify-content-center">
+                        <img src="./assets/quote/chassis.png" class="p-2" />
+                </div>
+
+
+                <form [formGroup]="RenewalForm" (ngSubmit)="RenewalSubmit()" focusInvalidInput autocomplete="off">
+
+                        <mat-form-field appearance="outline">
+                                <mat-label>{{ 'ChassisNoCustom' | translate }}</mat-label>
+                                <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                                        formControlName="chassisNo" required [AlphaNumericOnly]="true" uppercase>
+
+                                <mat-error *ngIf="RenewalForm.controls.chassisNo.hasError('required')">
+                                        {{ 'Required.ChassisNo' | translate }}
+                                </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                                <mat-label>{{ 'TcFileNo' | translate }}</mat-label>
+                                <input matInput placeholder="{{ 'PlaceHolder.TCFileNo' | translate }}"
+                                        formControlName="tcNo" required maxlength="10" NumbersOnly>
+                                <mat-error *ngIf="RenewalForm.controls.tcNo.hasError('required')">
+                                        {{ 'Required.TcNo' | translate }}
+                                </mat-error>
+                        </mat-form-field>
+
+
+                        <div class="row justify-content-center m-2">
+                                <button type="submit" class="btn bggreen fwhite button">
+                                        {{ 'RenewQuote' | translate }}
+                                </button>
+                        </div>
+
+                </form>
+
+        </div>
+
+
+
+</ng-template>

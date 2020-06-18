@@ -1,0 +1,38 @@
+<div class="row mx-2 mt-5">
+  <div class="col-md-12">
+    <form [formGroup]="formgroup" class="docss">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 doc-card" *ngFor="let doc of docs">
+          <mat-card class="example-card m-1">
+            <mat-card-header class="headerheight">
+              <mat-card-subtitle>{{doc.displayName}}</mat-card-subtitle>
+              <div class="col text-right">
+                <mat-checkbox formControlName="cb_1" (change)="changeCheck($event, doc.fileName)"></mat-checkbox>
+              </div>
+            </mat-card-header>
+            <mat-card-content (click)="openDocument(doc)">
+              <!-- <img mat-card-image src="assets/img/file-icon.png" alt="Photo of a Shiba Inu"> -->
+              <div class="thumbnail">
+                
+                <img mat-card-lg-image  [src]="(doc.thumbnail) ?  doc.thumbnail : './assets/customer_360/file-icon.png'">
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </form>
+    <mat-divider></mat-divider>
+
+    <div class="row d-flex justify-content-end">
+
+      <button class="btn bggreen fwhite button m-3" type="button" [disabled]="disabledButton" mat-flat-button
+        (click)="emailDocument()">
+        {{ 'EmailCaps'| translate }} </button>
+      <button class="btn bggreen fwhite button m-3" type="button" [disabled]="disabledButton" mat-flat-button
+        (click)="printDocument()">
+        {{ 'Print' | translate }} </button>
+
+    </div>
+
+  </div>
+</div>

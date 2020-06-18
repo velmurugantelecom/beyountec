@@ -1,0 +1,37 @@
+<div class="container info-panel-wrapper p-2">
+    <div class="d-flex justify-content-between person-info-wrapper p-2">
+        <div>
+            <div class="f20"> {{ generalInfo?.userDetails?.fullName}}</div>
+            <div class="f13 mt-2">{{ 'Email' | translate }}: {{generalInfo?.userDetails?.email}}</div>
+            <div class="f13">{{ 'Mobile' | translate }}: 
+                {{ generalInfo?.userDetails?.mobileCode}} - {{ generalInfo?.userDetails?.mobileNo}}</div>
+            <div class="f13">{{ 'DOB' | translate }}: {{ generalInfo?.userDetails?.dob | dateFormat}}</div>
+            <div class="f13 ">{{ 'Age' | translate }}: {{ generalInfo?.userDetails?.age}}</div>
+        </div>
+        <div>
+            <img />
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="f22 centertext">{{'VehicleDetailsCaps' | translate}}</div>
+        <hr class="header-divider" />
+        <div class="vehicle-info-wrapper p-2 m-4 f20">
+            <div>
+                <div class="centercss"> {{generalInfo?.vehicleDetails?.makeName}},
+                    {{generalInfo?.vehicleDetails?.modelName}}</div>
+            </div>
+            <hr class="item-divider" />
+            <div *ngIf="generalInfo?.vehicleDetails?.vehicleValue">
+                <label class="centercss">{{'VehicleValue' | translate }}</label>
+                <div class="centercss">{{generalInfo?.premiumCurrencyId}}
+                    {{generalInfo?.vehicleDetails?.vehicleValue | DecimalValue}}</div>
+            </div>
+            <hr *ngIf="generalInfo?.vehicleDetails?.vehicleValue" class="item-divider" />
+            <div>
+                <label class="centercss">{{'Plan' | translate}} {{generalInfo?.productTypeName}}</label>
+                <div class="centercss">Premium - {{generalInfo?.premiumCurrencyId}}
+                    {{generalInfo?.risks[0]?.netPremium | DecimalValue}}</div>
+            </div>
+        </div>
+    </div>
+</div>

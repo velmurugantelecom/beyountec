@@ -1,0 +1,61 @@
+<div class="breadcrum-header my-bread-header m-0 p-0">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="color:#fff;background-color: lightgrey;height: 100px;">
+
+            <li class="d-flex align-items-center breadcrumb-item poppins-med-18" aria-current="page">
+                {{'Quote' | translate }}
+            </li>
+        </ol>
+    </nav>
+</div>
+
+<div class="d-flex justify-content-end mt-2">
+    <button (click)="NewQuote()" type="button" class="btn btn-default  bgblue fwhite button roundedbtn mx-4">
+        {{'NewQuote' | translate }}</button>
+
+</div>
+
+
+
+<div class="row my-1 mx-5">
+
+    <div class="col-md-12" style="margin-top:20px;display:inline-block;padding:0px;z-index: 999;">
+        <table class="table" mat-table [dataSource]="tableData" matSort>
+
+            <ng-container class="poppins-light-15" [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                <tr>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-bottom: 15px;">
+                        <span *ngIf="column=='policyNo'">{{ 'PolicyNo' | translate }}</span>
+                        <span *ngIf="column=='mobileNo'">{{ 'MobileNo' | translate }}</span>
+
+                        <span *ngIf="column=='quoteNo'">{{ 'QuoteNo' | translate }}</span>
+                        <span *ngIf="column=='emailId'">{{ 'EmailAddress' | translate }}</span>
+                        <span *ngIf="column=='productId'">{{ 'Product' | translate }}</span>
+                        <span *ngIf="column=='status'">{{ 'Status' | translate }}</span>
+
+                        <span *ngIf="column=='startDate'">{{ 'StartDate' | translate }}</span>
+                        <span *ngIf="column=='endDate'">{{ 'EndDate' | translate }}</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td mat-cell *matCellDef="let element;">
+
+
+                        <span class=" hyperlink-click" *ngIf="column=='policyNo'">
+
+                            {{element[column]}}</span>
+
+                        <span *ngIf="column !='policyNo' && column!='startDate' && column!='endDate'">
+                            {{element[column]}}</span>
+                        <span
+                            *ngIf="column=='startDate' || column=='endDate'">{{element[column] | date:'dd/MM/yyyy'}}</span>
+
+                    </td>
+                </tr>
+            </ng-container>
+
+            <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<ul class="breadcrumb my-auto">
+    <li><a routerLink="/User/dashboard">
+            <mat-icon class="custom-cursor">
+                home
+            </mat-icon>
+
+        </a></li>
+    <li><a class="custom-cursor" (click)="customer360()">{{ 'PolicyDetails' | translate }}</a></li>
+    <li><a>{{navParams.policyNo}}</a></li>
+    <li>{{ 'ReportLoss' | translate }}</li>
+</ul>
+
+<app-claimdetails></app-claimdetails>
+<form [formGroup]="ReportaLoss" focusInvalidInput>
+
+    <mat-card class="m-5 ">
+        <div class="row">
+            <div class="col-md-6 col-12">
+
+
+                <div class="row p-0">
+
+                    <div class="col-md-6 col-12">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'LossDateLabel' | translate }}</mat-label>
+                            <input matInput placeholder="{{ 'PlaceHolder.LossDate' | translate }}"
+                                formControlName="lossDate" required [owlDateTime]="lossDateDp"
+                                [owlDateTimeTrigger]="lossDateDp" (dateTimeChange)="onDateChange($event)"
+                                [min]="minLossDate" [max]="maxLossDate">
+                            <owl-date-time [pickerType]="'calendar'" #lossDateDp></owl-date-time>
+                            <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="lossDateDp">date_range</mat-icon>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('required')">
+                                {{ 'Required.LossDate' | translate }}</mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('owlDateTimeMin') || ReportaLoss.controls.lossDate.hasError('owlDateTimeMax') ">
+                                {{ 'Invalid.PolicyPeriod' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'IntimatedDateLabel' | translate }}</mat-label>
+                            <input matInput [min]="minDate" [owlDateTime]="effDateDp" [owlDateTimeTrigger]="effDateDp"
+                                placeholder="{{ 'PlaceHolder.IntimatedDate' | translate }}"
+                                formControlName="intimatedDate" required>
+                            <owl-date-time [pickerType]="'calendar'" #effDateDp></owl-date-time>
+                            <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effDateDp">date_range</mat-icon>
+                            <mat-error *ngIf="ReportaLoss.get('intimatedDate').invalid">
+                                {{ 'Required.IntimatedDate' | translate }}</mat-error>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'AccidentLocationLabel' | translate }}</mat-label>
+                        <input matInput formControlName="lossLocation">
+                        <mat-error *ngIf="ReportaLoss.get('lossLocation').invalid">
+                            {{ 'Required.AccidentLocation' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row p-0">
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'PoliceReportNoLabel' | translate }}</mat-label>
+                            <input matInput formControlName="policeReportNo">
+                            <mat-error *ngIf="ReportaLoss.get('policeReportNo').invalid">
+                                {{ 'Required.PoliceReportNo' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'PoliceStationLabel' | translate }}</mat-label>
+                            <input matInput formControlName="policeStation">
+                            <mat-error *ngIf="ReportaLoss.get('policeStation').invalid">
+                                {{ 'Required.PoliceStation' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12 col-12 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'LossDescriptionLabel' | translate }}</mat-label>
+                        <textarea matInput rows="5" formControlName="lossDescription"></textarea>
+                        <mat-error *ngIf="ReportaLoss.get('lossDescription').invalid">
+                            {{ 'Required.LossDescription' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-12 col-12 p-0">
+                    <label class="row pl-3">{{ 'AtFault' | translate }}</label>
+                    <mat-radio-group formControlName="atFault" required>
+                        <mat-radio-button class="m-1" value="Y">{{ 'Yes' | translate }}</mat-radio-button>
+                        <mat-radio-button class="m-1" value="N">{{ 'No' | translate }}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+
+            </div>
+
+            <!-- <div class="col-md-6 col-12">
+                <label>{{ 'DocUpload' | translate }}</label>
+            </div> -->
+
+        </div>
+
+
+    </mat-card>
+
+
+    <div class="d-flex justify-content-end mr-5">
+        <button type="submit" class="searchBtn m-2" (click)="onsubmit()">{{ 'Submit' | translate }}</button>
+        <button (click)="customer360()" class="searchBtn m-2">{{ 'Cancel' | translate }}</button>
+
+    </div>
+</form>

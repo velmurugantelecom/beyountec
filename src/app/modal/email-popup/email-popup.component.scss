@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500");
+
+.pad-0 {
+  padding: 0;
+}
+
+.confirm-lbl {
+  position: relative;
+  top: 10px;
+  padding-bottom: 1rem;
+}
+
+.btn_yes {
+  width: 88px;
+  height: 44px;
+  border-radius: 20px;
+  background-color: #26715e;
+  color: white;
+  margin-right: 10px;
+}
+
+.btn_no {
+  width: 96px;
+  height: 44px;
+  border-radius: 20px;
+  border: 1px solid #717171;
+  background-color: #fff;
+  margin-right: 10px;
+  color: #666666;
+}
+
+.hr-css {
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 10px;
+}
+
+.radio_btn {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.input_text {
+  padding: 0.5rem 0.5rem;
+  margin: 3px 0;
+  box-sizing: border-box;
+  border: 1px solid #cbcbcb;
+  outline: none;
+  border-radius: 3px;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #ff5200;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #ff5200;
+}
+
+.label_cls {
+  display: block;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+::ng-deep .mat-error {
+  display: inline-block;
+  font-size: 12px;
+  padding-left: 2rem;
+  padding-bottom: 5px;
+}
+
+::ng-deep .mat-radio-button {
+  padding-bottom: 0.5rem;
+}
+
+.error-message {
+  font-size: 12px;
+  padding: 0 28px;
+  color: red;
+}
+.error-message span {
+  display: block;
+}

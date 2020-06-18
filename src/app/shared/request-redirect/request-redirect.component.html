@@ -1,0 +1,27 @@
+<form [formGroup]="DocUploadForm">
+    <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
+        <div class="upload-box col-md-10 mt-2">
+            <label class="upload-label">{{ container.label }}</label>
+            <div class="upload-btn-wrapper">
+                <input type="file" (change)="selectFile($event,container.id,i)"
+                    formControlName="{{ container.controlName }}" />
+                <label class="font-weight-bold mb-0">{{container.value}}</label>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <img src="./assets/icon6.png" class="pl-1 pt-1 upload-label" (click)="uploadTrigger.click()" />
+            <div class="upload-btn-wrapper2">
+                <input type="file" (change)="selectFile($event ,container.id,i)" #uploadTrigger />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="pl-4" (click)="addMoredDocuments()">
+    <p class="custom-cursor blue-font f16">+ Add more Document</p>
+</div>
+<div class="d-flex justify-content-between">
+    <button class="btn button btn-default bggreen fwhite" (click)="reviseDetails()">REVISE
+        DETAILS</button>
+    <button type="button" class="btn button btn-default bggreen fwhite" (click)="doNavigate()">CONTINUE</button>
+</div>

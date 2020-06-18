@@ -1,0 +1,27 @@
+::ng-deep .my-bread-header .breadcrumb > li + li:before {
+  color: #fff;
+  content: "> ";
+}
+*{
+  outline:none;
+}
+label {
+  color: gray;
+}
+.borderleft {
+  border-left: 1px solid lightgrey;
+}
+.searchBtn {
+  background-color: #ffff;
+  border-radius: 20px;
+  border: 1px solid #01c9cb;
+  color: #01c9cb;
+  cursor: pointer;
+  padding: 5px 40px;
+}
+.bottombutton{
+  position: fixed;
+  bottom:0px;
+  right: 0Px;
+  z-index: 1;
+}

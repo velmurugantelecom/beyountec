@@ -1,0 +1,98 @@
+<ul class="breadcrumb my-auto">
+  <li><a routerLink="/User/dashboard">
+      <mat-icon>
+        home
+      </mat-icon>
+
+    </a></li>
+  <li><a class="custom-cursor" (click)="customer360()">{{ 'PolicyDetails' | translate }}</a></li>
+  <li><a>{{navParams.policyNo}}</a></li>
+  <li>{{ 'ReqForCancel' | translate }}</li>
+</ul>
+
+
+
+
+<app-claimdetails></app-claimdetails>
+
+<form [formGroup]="cancelReq" focusInvalidInput>
+  <mat-card class="m-5">
+
+    <strong>{{ 'PleaseFillCancelReq' | translate }}</strong>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12 col-12">
+
+        <div class="row p-0">
+
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'CancelReasonLabel' | translate }}</mat-label>
+              <mat-select formControlName="reason" required>
+                <mat-option *ngFor="let opt of options.reasonForChange" [value]="opt.value">
+                  {{ opt.label }}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="cancelReq.get('reason').invalid">{{ 'Required.CancelReason' | translate }}</mat-error>
+
+
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="{{ 'PlaceHolder.EffectiveDate' | translate }}"
+                formControlName="effectiveDate" required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                [min]="minEffectiveDate" [max]="maxEffectiveDate"
+                (dateTimeChange)="onDateChange($event)">
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+              <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
+              <mat-error *ngIf="formCtrls.effectiveDate.errors && formCtrls.effectiveDate.errors.required">
+                {{ 'Required.EffectiveDate' | translate }}
+              </mat-error>
+              <mat-error *ngIf="formCtrls.effectiveDate.errors && formCtrls.effectiveDate.errors.owlDateTimeMin || 
+              formCtrls.effectiveDate.errors && formCtrls.effectiveDate.errors.owlDateTimeMax">
+                {{ 'Invalid.PolicyPeriod' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-12 col-12 p-0">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'DescLabel' | translate }}</mat-label>
+            <textarea matInput rows="5" formControlName="remarks"></textarea>
+            <mat-error *ngIf="cancelReq.get('remarks').invalid">{{ 'Required.Desc' | translate }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row p-0">
+
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'ContactMeLabel' | translate }}</mat-label>
+              <input matInput formControlName="contactme" [disabled]="true">
+              <mat-error *ngIf="cancelReq.get('contactme').invalid">{{ 'Required.ContactMe' | translate }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'EmailId' | translate }}</mat-label>
+              <input matInput formControlName="emailid" [disabled]="true">
+              <mat-error *ngIf="cancelReq.get('emailid').invalid">{{ 'Required.Email' | translate }}</mat-error>
+
+            </mat-form-field>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <div class="d-flex justify-content-end mr-5">
+    <button type="submit" class="searchBtn m-2" (click)="onsubmit()">{{ 'Submit' | translate }}</button>
+    <button (click)="customer360()" class="searchBtn m-2">{{ 'Cancel' | translate }}</button>
+
+  </div>
+</form>

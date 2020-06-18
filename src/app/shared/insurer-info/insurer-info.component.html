@@ -59,7 +59,7 @@
             <div class="col-md-4 col-sm-6">    
                 <mat-form-field appearance="outline">
                     <mat-label>{{'Gender' | translate}}</mat-label>
-                    <mat-select required formControlName="gender">
+                    <mat-select required formControlName="gender" (ngModelChange)="onGenderChange($event)">
                         <mat-option *ngFor="let gender of options.gender" [value]="gender.value">
                             {{ gender.label }}
                         </mat-option>

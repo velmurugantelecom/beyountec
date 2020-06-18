@@ -1,0 +1,5 @@
+<div class="d-flex justify-content-center m-1">
+    <webcam [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch"
+        (imageCapture)="handleImage($event)">
+    </webcam>
+</div>

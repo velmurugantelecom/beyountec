@@ -105,7 +105,6 @@ export class InsurerInfoComponent implements OnInit {
   getDropDownOptions(key: string, optionId: string, productId = '*') {
     this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
       this.options[key] = response.data;
-      console.log(this.options[key]);
       // if (key ==='prefix') {
       //   this.insurerForm.patchValue({
       //     prefix: response['data'][0].value
@@ -212,6 +211,15 @@ export class InsurerInfoComponent implements OnInit {
     if(data['prefix']){
       this.insurerForm.patchValue({prefix: data['prefix']});   
     }
+    if (data['gender'] === 'M') {
+      this.insurerForm.patchValue({
+        prefix: 'Mr'
+      })
+    } else {
+      this.insurerForm.patchValue({
+        prefix: 'Mrs'
+      })
+    }
     this.insurerForm.patchValue({
       personalId: data['personalId'] ? data['personalId'] : '',
       fullName: data['fullName'] ? data['fullName'] : '',
@@ -300,5 +308,17 @@ export class InsurerInfoComponent implements OnInit {
     if (this.insurerForm.get('dob').status === 'VALID') {
       this.appService._dob.next(this.insurerForm.get('dob').value);
     }
+  }
+
+  onGenderChange(event) {
+    let value;
+    console.log(event)
+    if (event === 'M')
+    value = 'Mr';
+    else 
+    value = 'Mrs'
+    this.insurerForm.patchValue({
+      prefix: value
+    });
   }
 }

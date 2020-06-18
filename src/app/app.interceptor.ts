@@ -46,6 +46,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
       catchError((err: any) => {
         console.log(err);
         if (err instanceof HttpErrorResponse) {
+          if (err.status == 401) {
+            
+            this.toasterService.error('Token Expired', 'Please try again', {
+              timeOut: 3000
+            });
+ 
+            return
+          }
           try {
            let errorMsg = err.error.text || err.error.error || err.error ;
             this.spinner.hide();

@@ -29,7 +29,7 @@
             <hr *ngIf="generalInfo?.vehicleDetails?.vehicleValue" class="item-divider" />
             <div>
                 <label class="centercss">{{'Plan' | translate}} {{generalInfo?.productTypeName}}</label>
-                <div class="centercss">Premium - {{generalInfo?.premiumCurrencyId}}
+                <div class="centercss">{{'Premium' | translate}} - {{generalInfo?.premiumCurrencyId}}
                     {{generalInfo?.risks[0]?.netPremium | DecimalValue}}</div>
             </div>
         </div>

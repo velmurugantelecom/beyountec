@@ -1,6 +1,6 @@
 <div class="row m-0 p-0">
     <div class="col-md-10 col-9">
-        <h5 style="display: flex;align-content: center;">{{data.QType}} </h5>
+        <h5 style="display: flex;align-content: center;">{{ 'RetrieveQuote' | translate }} </h5>
     </div>
     <div class="col-md-2 col-3 custom-cursor" (click)="onNoClick()">
         <mat-icon>
@@ -12,15 +12,15 @@
 <form [formGroup]="quoteForm" focusInvalidInput class="mt-2">
     <div>
         <mat-form-field appearance="outline">
-            <mat-label>{{ data.QTitle }}</mat-label>
-            <input [(ngModel)]="dialogeDetails" matInput placeholder="Enter Your {{ data.QTitle }}"
+            <mat-label>{{ 'QuoteNo' | translate }}</mat-label>
+            <input [(ngModel)]="dialogeDetails" matInput placeholder="{{ 'PlaceHolder.QuoteNo' | translate }}"
                 formControlName="type" required>
             <mat-error *ngIf="quoteForm.controls.type.errors && quoteForm.controls.type.errors.required">
-                Quote Number is required</mat-error>
+                {{ 'Required.QuoteNo' | translate }}</mat-error>
         </mat-form-field>
     </div>
     <div class="d-flex justify-content-center">
         <button [mat-dialog-close]="dialogeDetails"
-            class="btn btn-home button fwhite bggreen centercss">{{data.QType}}</button>
+            class="btn btn-home button fwhite bggreen centercss">{{ 'RetrieveQuote' | translate }}</button>
     </div>
 </form>

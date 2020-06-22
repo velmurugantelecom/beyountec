@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/core/services/app.service';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,6 +15,8 @@ export class HeaderComponent implements OnInit {
   userType: any;
   routerurl;
   username: string
+  loginSignup:any;
+  home:any;
   public selectedLanguage;
   public languageFlag;
 
@@ -28,6 +31,8 @@ export class HeaderComponent implements OnInit {
         this.navbarList()
       }
     });
+    
+
   }
 
   ngOnInit() {
@@ -38,18 +43,24 @@ export class HeaderComponent implements OnInit {
   }
 
   navbarList() {
+    this.translate.get('LoginSignup') .subscribe(value => { 
+      this.loginSignup = value; 
+    } );
+    this.translate.get('Home') .subscribe(value => { 
+      this.home = value; 
+    } );
     this.userType = localStorage.getItem("isLoggedIn");
     this.username = localStorage.getItem("Username")
     if (localStorage.getItem("isLoggedIn") == "false" && this.routerurl != 'Login') {
-
+     
       if (this.routerurl != 'home' && this.routerurl != '') {
         this.menus = [
-          { label: 'Home', value: 'home' },
-          { label: 'Login/Signup', value: 'Login' },
+          { label: this.home, value: 'home' },
+          { label: this.loginSignup, value: 'Login' },
         ];
       } else {
         this.menus = [
-          { label: 'Login/Signup', value: 'Login' }
+          { label: this.loginSignup, value: 'Login' }
         ];
       }
     } else if (this.routerurl == 'User') {
@@ -77,10 +88,12 @@ export class HeaderComponent implements OnInit {
       this.selectedLanguage = 'English';
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);
+      this.navbarList();
     } else if (value === 'fa') {
       this.selectedLanguage = 'Arabic';
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);
+      this.navbarList();
     }
   }
 }

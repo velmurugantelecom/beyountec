@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
@@ -31,8 +32,10 @@ export class QuoteSummaryComponent implements OnInit {
   quoteDetails: any;
   isAgreed: boolean;
   isQuickSummary = 'true';
-  pageHeader = 'Quote Summary';
+ // pageHeader = 'Quote Summary';
   attachments: any;
+  pageHeader:any;
+  summaryFor:any;
   grossPremium;
   public selectedCovers = [];
   public mailId: string;
@@ -45,6 +48,7 @@ export class QuoteSummaryComponent implements OnInit {
     private appService: AppService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
+    private translate: TranslateService,
     private formBuilder: FormBuilder) {
 
     this.route.queryParams
@@ -55,9 +59,12 @@ export class QuoteSummaryComponent implements OnInit {
         if (this.isValidQuote != 'false') {
           this.isValidQuote = 'true';
         }
-      })
+      });
+      this.translate.get('QuoteSummary') .subscribe(value => { 
+        this.pageHeader = value; 
+      } );
   }
-
+  
   ngOnInit() {
     this.EffectiveDateForm = this.formBuilder.group({
       startDate: ['', []]
@@ -98,7 +105,10 @@ export class QuoteSummaryComponent implements OnInit {
       });
     });
     if (this.isQuickSummary == 'false') {
-      this.pageHeader = 'Summary for the ' + this.quoteNo;
+      this.translate.get('SummaryForThe') .subscribe(value => { 
+        this.summaryFor = value; 
+      } );
+      this.pageHeader = this.summaryFor+' ' + this.quoteNo;
     }
   }
   

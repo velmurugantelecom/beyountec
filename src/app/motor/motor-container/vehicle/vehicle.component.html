@@ -178,7 +178,7 @@
                     *ngIf="vehicleForm.controls.tcFileNumber.hasError('minlength') || vehicleForm.controls.tcFileNumber.hasError('maxlength')">
                     {{ 'Invalid.TcNo' | translate }} {{tcNoLength}} {{'Invalid.Digits' | translate}}
                 </mat-error>
-                <mat-hint class="fbold">TC no. as per mulkiya.</mat-hint>
+                <mat-hint class="fbold">{{ 'TcNoHints' | translate }}</mat-hint>
             </mat-form-field>
         </div>
         <div class="col-md-4 col-sm-6">
@@ -243,7 +243,7 @@
 
         <div class="row col-md-4 col-sm-6 align-items-center" *ngIf="!vehicleDetails['disableVehicleValue']">
             <div class="pl-2">
-                <div class="pl-2 fbold">Vehicle Value (AED)</div>
+                <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}</div>
             <ngx-gauge [type]="gaugeType" 
             [value]="gaugeValue"
             [min]="minValue"

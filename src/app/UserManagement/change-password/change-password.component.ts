@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../../core/services/core.service';
 // import { PostsService } from '../_service/post.service';
 import { ToastrService } from 'ngx-toastr';
-import { HeaderComponent } from '../../shared/header/header.component'
+import { HeaderComponent } from '../../shared/header/header.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -25,6 +26,9 @@ export class ChangePasswordComponent implements OnInit {
   changePassword: FormGroup;
   validation_messages: any;
   isSubmitted: boolean;
+  oldPasswordIsRequired: any;
+  newPasswordIsRequired: any;
+  confirmPasswordIsRequired: any;
 
   matcher = new MyErrorStateMatcher();
   userName: string = localStorage.getItem('Username');
@@ -37,9 +41,13 @@ export class ChangePasswordComponent implements OnInit {
     return pass === confirmPass ? null : { notSame: true }
   }
 
-  constructor(private formBuilder: FormBuilder, public router: Router,
-    public postService: CoreService, public actRoute: ActivatedRoute,
-    private toastr: ToastrService, private header : HeaderComponent) { }
+  constructor(private formBuilder: FormBuilder,
+   public router: Router,
+   public postService: CoreService,
+   public actRoute: ActivatedRoute,
+   private translate: TranslateService,
+   private toastr: ToastrService,
+   private header : HeaderComponent) { }
 
   ngOnInit() {
     this.changePassword = this.formBuilder.group({
@@ -58,18 +66,28 @@ export class ChangePasswordComponent implements OnInit {
       ])]
     }, { validator: this.checkPasswords });
 
+    this.translate.get('Required.OldPasswordIsRequired') .subscribe(value => { 
+      this.oldPasswordIsRequired = value; 
+    } );
+    this.translate.get('Required.NewPasswordIsRequired') .subscribe(value => { 
+      this.newPasswordIsRequired = value; 
+    } );
+    this.translate.get('Required.ConfirmPasswordIsRequired') .subscribe(value => { 
+      this.confirmPasswordIsRequired = value; 
+    } );
+
     this.validation_messages = {
 
       "oldpassword": [
-        { type: 'required', message: 'Old Password is required' }
+        { type: 'required', message: this.oldPasswordIsRequired  }
         //  { type: 'pattern', message: 'Enter a valid old password' }
       ],
       "newpassword": [
-        { type: 'required', message: 'New Password is required' }
+        { type: 'required', message: this.newPasswordIsRequired }
         //{ type: 'pattern', message: 'Enter a valid new password' }
       ],
       "confirmpassword": [
-        { type: 'required', message: 'Password is required' }
+        { type: 'required', message:  this.confirmPasswordIsRequired }
         //{ type: 'pattern', message: 'Enter a valid Password' }
       ]
     }

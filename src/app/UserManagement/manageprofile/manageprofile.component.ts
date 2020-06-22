@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CoreService } from '../../core/services/core.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-manageprofile',
@@ -15,6 +16,11 @@ export class ManageprofileComponent implements OnInit {
   inputData: any = [];
   validation_messages: any = {};
   options: any = [];
+  profileUpdated:any;
+  emailRequired: any;
+  validEmail: any;
+  mobileNumberRequired:any;
+  mobileCodeRequired: any;
 
 
   constructor(private router: Router,
@@ -22,6 +28,7 @@ export class ManageprofileComponent implements OnInit {
     private postService: CoreService,
     private spinner: NgxSpinnerService,
     private toaster: ToastrService,
+    private translate: TranslateService,
     private service: CoreService) { }
 
   ngOnInit() {
@@ -50,22 +57,37 @@ export class ManageprofileComponent implements OnInit {
         mobileCode: this.inputData.mobileCode
       });
     });
+  this.translate.get('Required.EmailRequired') .subscribe(value => { 
+    this.emailRequired = value; 
+  } );
+  this.translate.get('Required.ValidEmail') .subscribe(value => { 
+    this.validEmail = value; 
+  } );
+  this.translate.get('Required.MobileNumberRequired') .subscribe(value => { 
+    this.mobileNumberRequired = value; 
+  } );
+  this.translate.get('Required.MobileCodeRequired') .subscribe(value => { 
+    this.mobileCodeRequired = value; 
+  } );
 
     this.validation_messages = {
-      "email": [{ type: 'required', message: 'Email Id is required' },
-      { type: 'pattern', message: 'Enter a valid Email' }],
-      "mobileNo": [{ type: 'required', message: 'Mobile Number is required' }],
-      "mobileCode": [{type: 'required', message: 'Mobile Code is required'}]
+      "email": [{ type: 'required', message:  this.emailRequired },
+      { type: 'pattern', message: this.validEmail }],
+      "mobileNo": [{ type: 'required', message: this.mobileNumberRequired }],
+      "mobileCode": [{type: 'required', message: this.mobileCodeRequired}]
     };
   }
 
   onSaveProfile() {
+    this.translate.get('ProfileUpdated') .subscribe(value => { 
+      this.profileUpdated = value; 
+    } );
     this.spinner.show();
     let obj = {};
     obj = this.profileForm.value;
     this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
       this.spinner.hide();
-      this.toaster.success('', 'Profile Updated Successfully', {
+      this.toaster.success('', this.profileUpdated, {
         timeOut: 3000
       });
       this.router.navigate(['/User/dashboard']);

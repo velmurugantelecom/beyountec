@@ -296,15 +296,25 @@
     "MaximumVehicleValue": "",
     "SummaryFor":"",
     "QuoteSummary":"",
-    "LoginSignup":"",
+    "LoginSignup":"Login/Signup_fa",
     "English":"",
     "Arabic":"",
     "RegistrationNo": "",
     "PlateCode": "",
     "Prefix": "",
+    "Otp": "OTP_fa",
     "RegisteredDate": "",
-    "UpdateMyInfo":"",
+    "UpdateMyInfo":"Update My Info_fa",
     "EngineNo": "",
+    "ProductType": "Product Typ_fa",
+    "Step": "STEP_fa",
+    "InAED": "(in AED_fa)",
+    "Loadings": "Loadings_fa",
+    "NetPremium": "Net Premium_fa",
+    "PremiumIncludingVAT": "Premium Including VAT_fa",
+    "SummaryForThe":"Summary for the _fa",
+    "ProfileUpdated":"Profile Updated Successfully_fa",
+    "TcNoHints": "TC no. as per mulkiya._fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",
@@ -371,7 +381,18 @@
         "RegistrationNo":"",
         "PlateCode":"",
         "Prefix": "",
-        "RegisteredDate": ""
+        "Otp": "OTP is required_fa",
+        "RegisteredDate": "",
+        "SelectPlan": "Please select plan_fa",
+        "RatingError": "Rating not defined_fa",
+        "EmailRequired": "Email Id is required_fa",
+        "ValidEmail": "Enter a valid Email_fa",
+        "MobileNumberRequired": "Mobile Number is required_fa",
+        "MobileCodeRequired": "Mobile Code is required_fa",
+        "OldPasswordIsRequired": "Old Password is required_fa",
+        "NewPasswordIsRequired": "New Password is required_fa",
+        "ConfirmPasswordIsRequired": "Confirm Password is required_fa",
+        "QuoteNo": "Quote Number is required_fa"
     },
     "PlaceHolder": {
         "InsuredName": "أدخل اسم المؤمن عليه",
@@ -404,7 +425,8 @@
         "IntimatedDate": "أدخل التاريخ المحبب",
         "Dob": "أدخل تاريخ الميلاد",
         "EffectiveDate": "أدخل تاريخ السريان",
-        "RegistrationNo":""
+        "RegistrationNo":"",
+        "EngineNo": "Enter Engine No_fa"
     },
     "Invalid": {
         "LicenseIssueDate": "يجب أن يكون تاريخ إصدار الترخيص أكبر من أو يساوي 18 من DOB",
@@ -414,6 +436,7 @@
         "TcNo": "لا ينبغي أن يكون TC",
         "Digits": "أرقام",
         "PolicyExpDate": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أقل من التاريخ الحالي",
-        "PolicyExpDateMorethan60": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أكثر من 60 يومًا من التاريخ الحالي"
+        "PolicyExpDateMorethan60": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أكثر من 60 يومًا من التاريخ الحالي",
+        "ChassisNumber": "Please enter valid Chassis no._fa"
     }
 }

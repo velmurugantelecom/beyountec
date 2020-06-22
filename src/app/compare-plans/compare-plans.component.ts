@@ -5,6 +5,7 @@ import { CoreService } from '../core/services/core.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LocationStrategy } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface KeyValue<K, V> {
   key: K;
@@ -32,12 +33,15 @@ export class ComparePlansComponent implements OnInit {
   public charges: any = {};
   public excess: any = {};
   public VatPercentage = '';
+  selectAlert:any;
+  ratingError:any;
 
   constructor(private router: Router,
     private coreService: CoreService,
     private route: ActivatedRoute,
     private appService: AppService,
     private spinner: NgxSpinnerService,
+    private translate: TranslateService,
     private toastr: ToastrService) {
     this.route.queryParams
       .subscribe(params => {
@@ -145,12 +149,18 @@ export class ComparePlansComponent implements OnInit {
 
   confirmPlan() {
     if (!this.isPlanSelected) {
-      this.toastr.error('', 'Please select plan', {
+      this.translate.get('Required.SelectPlan') .subscribe(value => { 
+        this.selectAlert = value; 
+      } );
+      this.toastr.error('', this.selectAlert, {
         timeOut: 3000
       });
     } 
     else if (this.selectedPlanAmount == '0' || this.selectedPlanAmount == null) {
-      this.toastr.error('', 'Rating not defined', {
+      this.translate.get('Required.RatingError') .subscribe(value => { 
+        this.ratingError = value; 
+      } );
+      this.toastr.error('', this.ratingError, {
         timeOut: 3000
       });
     }

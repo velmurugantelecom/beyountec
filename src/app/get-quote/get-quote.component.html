@@ -38,7 +38,7 @@
                                         </mat-radio-group>
                                 </div>
                                 <div *ngIf="radioError" class="centercss">
-                                        <mat-error>{{"Product Type"}} {{'IsRequired' | translate }}</mat-error>
+                                        <mat-error>{{'ProductType'| translate}} {{'IsRequired' | translate }}</mat-error>
                                 </div>
                         </div>
                         <div class="row m-2 d-flex justify-content-center">
@@ -98,13 +98,13 @@
                                                 <mat-error
                                                         *ngIf="formCtrls.chassisNo.errors && formCtrls.chassisNo.errors.required">
                                                         {{ 'Required.ChassisNo' | translate }}</mat-error>
-                                                <mat-error *ngIf="invalidChassisNo && formCtrls.chassisNo.errors">
-                                                        {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
+                                                 <mat-error *ngIf="invalidChassisNo && formCtrls.chassisNo.errors">
+                                                        {{ 'Invalid.ChassisNumber' | translate}}</mat-error> 
                                         </mat-form-field>
                                 </div>
                         </div>
                         <div style="margin-left: 90%;">
-                                <p class="m-0 fgreen fbold">STEP 1/2 </p>
+                                <p class="m-0 fgreen fbold"> {{ 'Step' | translate }} 1/2 </p>
                         </div>
                         <div class="row justify-content-center m-2">
                                 <button type="submit"

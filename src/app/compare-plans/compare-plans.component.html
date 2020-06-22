@@ -83,7 +83,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" *ngFor="let item of excess | keyvalue">
-          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}} (in AED)</div>
+          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}} {{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-3 text-right" style="width: 200px;">
               {{fetchAmount(plan.planDetails[0].planId, item.value, 'E') | DecimalValue}}
@@ -99,7 +99,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" id="headerDiv">
-          <div class="mt-2 pl-4 fbold" style="width: 365px;">Premium (in AED)</div>
+          <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'Premium' | translate}}{{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-2 text-right" style="width: 200px;">
               {{getPremiumWithCharges(plan.planDetails[0])| DecimalValue}}
@@ -115,7 +115,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" *ngFor="let item of discounts | keyvalue">
-          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}}(in AED)</div>
+          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}}{{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-3 text-right" style="width: 200px;">
               {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
@@ -129,12 +129,12 @@
   <!-- Loadings section-->
   <div class="py-2" *ngIf="isNotEmpty(loadings)">
     <div>
-      <span class="fbold">Loadings</span>
+      <span class="fbold">{{'Loadings' | translate}}</span>
     </div>
     <div>
       <div style="padding:0px;" class="card-body m-1">
         <div class="row" *ngFor="let item of loadings | keyvalue">
-          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}} (in AED)</div>
+          <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}} {{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-3 text-right" style="width: 200px;">
               {{fetchAmount(plan.planDetails[0].planId, item.value, 'L') | DecimalValue}}
@@ -150,7 +150,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" id="headerDiv">
-          <div class="mt-2 pl-4 fbold" style="width: 365px;">Net Premium (in AED)</div>
+          <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'NetPremium' | translate}}{{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-2 text-right" style="width: 200px;">
                {{getNetPremium(plan.planDetails[0]) | DecimalValue}}
@@ -166,7 +166,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" id="headerDiv">
-          <div class="mt-2 pl-4 fbold" style="width: 365px;">VAT {{ VatPercentage }} (in AED)</div>
+          <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'VAT' | translate}} {{ VatPercentage }} {{'InAED' | translate}}</div>
           <div class="row ml-0" *ngFor="let item of charges | keyvalue">
             <ng-container *ngFor="let plan of planOb['plans']">
               <div class="mt-2 text-right" style="width: 200px;" >
@@ -185,7 +185,7 @@
     <div>
       <div class="card-body" style="padding:0px;">
         <div class="row" id="headerDiv">
-          <div class="mt-2 pl-4 fbold" style="width: 365px;font-size: 15px;">Premium Including VAT (in AED)</div>
+          <div class="mt-2 pl-4 fbold" style="width: 365px;font-size: 15px;">{{'PremiumIncludingVAT' | translate}} {{'InAED' | translate}}</div>
           <ng-container *ngFor="let plan of planOb['plans']">
             <div class="mt-2 text-right fbold" style="width: 200px;font-size: 15px;" >
               {{getPremiumWithVat(plan.planDetails[0]) | DecimalValue}}

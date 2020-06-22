@@ -1,9 +1,9 @@
 <div class="mx-3">
     <mat-card class="my-1">
         <div class="row"> 
-        <div class="col-md-4 fbold">Product Type: {{ basicDetails['productName']}}</div>
-        <div class="col-md-4 fbold">Mobile No: {{basicDetails['mobileCode']}} - {{basicDetails['mobileNo']}}</div>
-        <div class="col-md-4 fbold">Email: {{ basicDetails['email']}}</div>
+        <div class="col-md-4 fbold">{{'ProductType' | translate }}: {{ basicDetails['productName']}}</div>
+        <div class="col-md-4 fbold">{{'MobileNo' | translate }}: {{basicDetails['mobileCode']}} - {{basicDetails['mobileNo']}}</div>
+        <div class="col-md-4 fbold">{{'Email' | translate }}: {{ basicDetails['email']}}</div>
     </div>
     </mat-card>
     <div class="row">
@@ -35,7 +35,7 @@
     <app-driver-license-details [driverDetails]="driverDetails" (driverInfoEmitter)="checkForm($event)" [driverFormStatus]="driverFormStatus">
     </app-driver-license-details>
     <div style="margin-left: 90%;">
-        <p class="m-0 fgreen fbold">STEP 2/2 </p>
+        <p class="m-0 fgreen fbold">{{'Step' | translate }} 2/2 </p>
 </div>
     <div class="row justify-content-end">
         <button type="button" class="btn blockbutton btn-block col-md-2  bggreen fwhite button"

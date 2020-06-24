@@ -33,6 +33,7 @@ import { EmailPopupComponent } from './modal/email-popup/email-popup.component';
 import { WebCamComponent } from './shared/web-cam/web-cam.component';
 import { WebcamModule } from 'ngx-webcam';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -47,6 +48,9 @@ import { ContentPopupComponent } from './modal/content-popup/content-popup.compo
 import { GuestAuthGuard } from './core/guard/guest.auth.guard';
 import { chooseProduct } from './shared/product-selection/product-selection.component';
 import { ProductChangePopupComponent } from './modal/product-change/product-change.component';
+import { Login1Component } from './changes/login1/login1.component';
+import { Motorinfo1Component } from './changes/motorinfo1/motorinfo1.component';
+import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.component';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -81,13 +85,16 @@ export const MY_CUSTOM_FORMATS = {
     EmailPopupComponent,
     MessagePopupComponent,
     ProductChangePopupComponent,
-    ContentPopupComponent
+    ContentPopupComponent,
+    Motorinfo1Component,
+    Login1Component,
   ],
   imports: [
     //angularLib
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,    
+    NgSelectModule,
     NgxSpinnerModule,
     HttpClientModule,
     ToastrModule.forRoot({
@@ -118,7 +125,7 @@ export const MY_CUSTOM_FORMATS = {
     OwlMomentDateTimeModule,
   ],
   entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
-  ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent],
+  ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload],
   providers: [
     CoreService,
     AuthGuard,

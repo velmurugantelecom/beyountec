@@ -4,7 +4,6 @@ import { CoreService } from 'src/app/core/services/core.service';
 import { AppService } from 'src/app/core/services/app.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as _moment from "moment";
 import { ToastrService } from 'ngx-toastr';
 import { ProductChangePopupComponent } from 'src/app/modal/product-change/product-change.component';
@@ -50,6 +49,12 @@ export class MotorContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.quoteNumber = params['quoteNo'];
+        this.revisedDetails = params['reviseDetails'];
+      });
+
     if (localStorage.getItem("isLoggedIn") == "true") {
       this.isloginUser();
     }
@@ -57,27 +62,22 @@ export class MotorContainerComponent implements OnInit {
       this.insuredDetails = value;
     })
     this.appService._driverDetails.subscribe(value => {
-      this.driverDetails = value; 
+      this.driverDetails = value;
     })
-    this.route.queryParams
-      .subscribe(params => {
-        this.quoteNumber = params['quoteNo'];
-        this.revisedDetails = params['reviseDetails'];
-      });
-      this.productId = this.appService.getuserDetails().productType;
-      this.basicDetails = { ...this.appService.getuserDetails()}
-      if (this.basicDetails['productType'] === '1113') {
-        this.basicDetails['productName'] = 'Full Insurance';
-      } else {
-        this.basicDetails['productName'] = 'Third Party Insurance';
-      }
+    this.productId = this.appService.getuserDetails().productType;
+    this.basicDetails = { ...this.appService.getuserDetails() }
+    if (this.basicDetails['productType'] === '1113') {
+      this.basicDetails['productName'] = 'Full Insurance';
+    } else {
+      this.basicDetails['productName'] = 'Third Party Insurance';
+    }
 
-    let autoData = this.appService.getVehicleAutoData(); 
+    let autoData = this.appService.getVehicleAutoData();
     if (autoData) {
       if (autoData['trim'].length === 0) {
         this.router.navigate(['/contact-message', 'autodata-failed']);
       }
-       this.makeYearValidation(autoData['makeYear']);
+      this.makeYearValidation(autoData['makeYear']);
       let value = {
         chassisNo: autoData['chassisNo'],
         makeId: autoData['makeId'],
@@ -104,9 +104,8 @@ export class MotorContainerComponent implements OnInit {
     }
     this.coreService.getInputs(url, param).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
-      console.log(this.quoteDetails);
       if (this.quoteDetails) {
-        this.basicDetails = {...this.quoteDetails['userDetails']};
+        this.basicDetails = { ...this.quoteDetails['userDetails'] };
         if (this.basicDetails['productType'] === '1113') {
           this.basicDetails['productName'] = 'Full Insurance';
         } else {
@@ -114,16 +113,15 @@ export class MotorContainerComponent implements OnInit {
         }
         this.productId = this.quoteDetails['productTypeId'];
         this.quoteDetails['vehicleDetails']['disableFields'] = true;
-        if(this.productId != '1113') {
-        this.quoteDetails['vehicleDetails']['disableVehicleValue'] = true;
+        if (this.productId != '1113') {
+          this.quoteDetails['vehicleDetails']['disableVehicleValue'] = true;
         } else {
-        this.quoteDetails['vehicleDetails']['disableVehicleValue'] = false;
+          this.quoteDetails['vehicleDetails']['disableVehicleValue'] = false;
 
         }
         this.vehicleDetails = this.quoteDetails['vehicleDetails'];
         this.driverDetails = this.quoteDetails['userDetails'];
         this.insuredDetails = this.quoteDetails['userDetails'];
-      console.log('3rd log')
       }
       this.spinner.hide();
     }, err => {
@@ -136,23 +134,23 @@ export class MotorContainerComponent implements OnInit {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const yearDiff = year - makeYear;
-    if (yearDiff > 7  && this.productId === '1113') {
-    let dialogRef = this.dialog.open(ProductChangePopupComponent, {
-      width: '450px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        let val = this.appService.getuserDetails();
-        val['productType'] = '1116';
-        this.basicDetails['productName'] = 'Third Party Insurance';
-        this.appService.setuserDetails(val);
-        this.productId = '1116';
-        this.vehicleDetails['disableVehicleValue'] = true;
-        this.vehicleDetails['disableRepairType'] = true;
-      } else {
-        this.router.navigate(['/contact-message', 'quotation-failed']);
-      }
-    });
+    if (yearDiff > 7 && this.productId === '1113') {
+      let dialogRef = this.dialog.open(ProductChangePopupComponent, {
+        width: '450px'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          let val = this.appService.getuserDetails();
+          val['productType'] = '1116';
+          this.basicDetails['productName'] = 'Third Party Insurance';
+          this.appService.setuserDetails(val);
+          this.productId = '1116';
+          this.vehicleDetails['disableVehicleValue'] = true;
+          this.vehicleDetails['disableRepairType'] = true;
+        } else {
+          this.router.navigate(['/contact-message', 'quotation-failed']);
+        }
+      });
     }
     return '';
   }
@@ -209,16 +207,18 @@ export class MotorContainerComponent implements OnInit {
     this.driverForm['licenseExpiryDate'] = licenseExpiryDate;
     this.insurerForm['dob'] = new Date(this.insurerForm['dob']);
     this.insurerForm['dob'].setDate(this.insurerForm['dob'].getDate() + 1);
-    this.vehicleForm['prevPolicyExpDate'] = new Date(this.vehicleForm['prevPolicyExpDate']);
-    this.vehicleForm['prevPolicyExpDate'].setDate(this.vehicleForm['prevPolicyExpDate'].getDate() + 1);
-    let trafficLoc:any;
-   console.log(this.vehicleForm['registeredAt']);
-    if(this.vehicleForm['registeredAt'] == '1102'){
-    trafficLoc = '02'
-   }else{
-    // Non Dubai
-    trafficLoc = '01'
-   }
+    if (this.vehicleForm['prevPolicyExpDate'] && this.vehicleForm['registeredDate']) {
+      this.vehicleForm['prevPolicyExpDate'] = new Date(this.vehicleForm['prevPolicyExpDate']);
+      this.vehicleForm['prevPolicyExpDate'].setDate(this.vehicleForm['prevPolicyExpDate'].getDate() + 1);
+      this.vehicleForm['registeredDate'] = new Date(this.vehicleForm['registeredDate']);
+      this.vehicleForm['registeredDate'].setDate(this.vehicleForm['registeredDate'].getDate() + 1);
+    }
+    let trafficLoc: any;
+    if (this.vehicleForm['registeredAt'] == '1102') {
+      trafficLoc = '02'
+    } else {
+      trafficLoc = '01'
+    }
     let data = {
       lobId: 3,
       quoteNumber: "",
@@ -230,7 +230,7 @@ export class MotorContainerComponent implements OnInit {
       policySource: "CP",
       vehicleDetails: this.vehicleForm,
       branchId: this.vehicleForm['branchId'],
-      trafficLoc:trafficLoc,
+      trafficLoc: trafficLoc,
       driverDetails: [
         {
           isSameAsInsured: 'Y',
@@ -288,8 +288,8 @@ export class MotorContainerComponent implements OnInit {
         this.fetchAllPlans(data);
       } else {
         this.spinner.hide();
-        let errorMsg='';
-        switch(res.responseCode) {
+        let errorMsg = '';
+        switch (res.responseCode) {
           case 1: {
             errorMsg = 'Policy exists for the Chassis No. / TCF No.';
             break;

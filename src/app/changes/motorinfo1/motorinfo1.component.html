@@ -1,0 +1,365 @@
+<div style="overflow-x: hidden;">
+
+
+    <div class="row d-flex justify-content-center mt-2">
+
+        <mat-card class="row col-md-8 col-sm-12 m-0 p-2">
+            <div class="row">
+                <div class="col-md-4 fbold">Product Type: Full Insurance</div>
+                <div class="col-md-4 fbold">Mobile No: 058 - 2302547</div>
+                <div class="col-md-4 fbold">Email: afnicae@afnic.com</div>
+            </div>
+        </mat-card>
+
+    </div>
+
+
+    <div class="row d-flex justify-content-center mt-2">
+
+        <div class="row col-md-8 col-sm-12 m-0 p-0">
+
+
+            <div class="col-md-4 col-sm-6 col-12 m-0 p-0">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Chassis Number</mat-label>
+                    <input matInput placeholder="Enter Your Chassis Number" [AlphaNumericOnly]="true" uppercase autocomplete="off">
+                    <mat-icon matSuffix>search</mat-icon>
+                    <mat-hint>Chassis Number should be 15 digits</mat-hint>
+                </mat-form-field>
+
+            </div>
+
+
+            <div class="col-md-8 col-sm-6 col-12 ">
+
+
+                <ng-select bindLabel="label" class="custom" (change)="onchangeLoadDropdown()" appendTo="body"
+                (clear)="reset()"  [(ngModel)]="selected" [searchable]="true" [clearable]="true" appendTo="body" multiple="true">
+                    <ng-option [value]="item" *ngFor="let item of items">
+                        {{item.label}}
+                    </ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row d-flex justify-content-center" *ngIf="showgrid && !showInfo">
+
+        <mat-card class="col-md-8 col-sm-6 col-12 ">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Trim</th>
+                        <th>Select One</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let trim of options.trim">
+                        <td>{{gridDetail[0].label}}</td>
+                        <td>{{gridDetail[1].label}}</td>
+                        <td>{{gridDetail[2].label}}</td>
+
+                        <td>{{trim.label}}</td>
+                        <td>
+                            <input type="radio" id="{{trim.value}}" name="drone" value="{{trim.value}}">
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="row d-flex justify-content-end mr-3">
+
+                <button (click)="submitgrid()" class=" pr-3 btn button btn-default bggreen fwhite">submit</button>
+            </div>
+
+        </mat-card>
+
+    </div>
+
+
+
+    <div *ngIf="showInfo" class="m-0 p-0">
+
+
+
+        <div class="row mx-2 my-2">
+
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+            <div class="fwhite   comp-header col-md-2 col-sm-4 col-12">
+                <label class="label-pad f12 fw900">Vehicle Info</label>
+            </div>
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+
+            <form id="form" [formGroup]="vehicleForm" focusInvalidInput autocomplete="off"
+                class="row col-md-8 col-sm-12 m-0 p-0">
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
+                        <input readonly matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'MakeLabel' | translate }}</mat-label>
+                        <mat-select formControlName="makeId" required>
+                            <mat-option *ngFor="let make of options.make" [value]="make.value">
+                                {{make.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'ModelLabel' | translate }}</mat-label>
+                        <mat-select formControlName="modelId" required>
+                            <mat-option *ngFor="let model of options.model" [value]="model.value">
+                                {{model.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'MakeYear' | translate }}</mat-label>
+                        <mat-select formControlName="makeYear" required>
+                            <mat-option *ngFor="let year of options.regYear" [value]="year.value">
+                                {{year.label}}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'Trim' | translate }}</mat-label>
+                        <mat-select formControlName="trim" required>
+                            <mat-option *ngFor="let trim of options.trim" [value]="trim.value">
+                                {{trim.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'TypeLabel' | translate }}</mat-label>
+                        <mat-select formControlName="vehicleTypeId" required>
+                            <mat-option *ngFor="let type of options.type" [value]="type.value">
+                                {{type.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'VehicleValueLabel' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.VehicleValue' | translate }}" maxlength="6"
+                            formControlName="vehicleValue" required NumbersOnly>
+
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'VehicleUsageLabel' | translate }}</mat-label>
+                        <mat-select formControlName="usage" required>
+                            <mat-option *ngFor="let usage of options.usageType" [value]="usage.value">
+                                {{usage.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RepairType' | translate }}</mat-label>
+                        <mat-select formControlName="repairType" required>
+                            <mat-option *ngFor="let repairType of options.repairType" [value]="repairType.value">
+                                {{repairType.label}}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'NoOfPassengersInclDriver' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.NoOfPassengers' | translate }}"
+                            formControlName="noOfPassengers" required NumbersOnly maxlength="2">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
+                        <mat-select formControlName="registeredAt" required
+                            (selectionChange)="registeredAtChange($event)">
+                            <mat-option *ngFor="let registeredAt of options.registeredAt" [value]="registeredAt.value">
+                                {{registeredAt.label}}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'TcNo' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.TcNo' | translate }}"
+                            formControlName="tcFileNumber" required NumbersOnly [maxlength]="tcNoLength">
+
+                        <mat-hint class="fbold">TC no. as per mulkiya.</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RegistrationType' | translate }}</mat-label>
+                        <mat-select formControlName="regStatus" required>
+                            <mat-option *ngFor="let regStatus of options.regStatus" [value]="regStatus.value">
+                                {{regStatus.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+
+
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'NCDLabel' | translate }}</mat-label>
+                        <mat-select formControlName="ncdYears">
+                            <mat-option *ngFor="let type of options.ncdYears" [value]="type.value">
+                                {{type.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>License Issue Date</mat-label>
+                        <input matInput [owlDateTime]="dp1" [owlDateTimeTrigger]="dp1" placeholder="License Issue Date"
+                            formControlName="licenseissueDate" required AutoDateFormat>
+                        <owl-date-time [pickerType]="'calendar'" #dp1></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dp1">date_range</mat-icon>
+                    </mat-form-field>
+                </div>
+            </form>
+
+        </div>
+
+
+        <div class="row mx-2 my-2">
+
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+            <div class="fwhite   comp-header col-md-2 col-sm-4 col-12">
+                <label class="label-pad f12 fw900">Insured Info</label>
+            </div>
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <form id="form1" [formGroup]="insuredForm" class="row col-md-8 col-sm-12 m-0 p-0" focusInvalidInput
+                autocomplete="off">
+                <div class="col-md-8 col-sm-6">
+                    <div class="row m-0 p-0">
+                        <mat-form-field class="col-md-3 col-sm-4" style="width: 71px;" appearance="outline">
+                            <mat-label>{{'Prefix' | translate}}</mat-label>
+                            <mat-select formControlName="prefix">
+                                <mat-option *ngFor="let prefix of options.prefix" [value]="prefix.value">
+                                    {{ prefix.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-9 col-sm-8" appearance="outline">
+                            <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
+                            <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}"
+                                formControlName="fullName" required AlphabetOnly>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'Dob' | translate }}</mat-label>
+                        <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp" [max]="maxDate"
+                            placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required
+                            AutoDateFormat>
+                        <owl-date-time [pickerType]="'calendar'" #dobdp></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dobdp">date_range</mat-icon>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="row d-flex justify-content-center">
+
+            <form id="form1" [formGroup]="insuredForm" class="row col-md-8 col-sm-12 m-0 p-0" focusInvalidInput
+                autocomplete="off">
+
+                <div class="col-md-4 col-sm-6 ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}"
+                            formControlName="fullName" required AlphabetOnly>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'Gender' | translate}}</mat-label>
+                        <mat-select required formControlName="gender">
+                            <mat-option *ngFor="let gender of options.gender" [value]="gender.value">
+                                {{ gender.label }}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'Dob' | translate }}</mat-label>
+                        <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp" [max]="maxDate"
+                            placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required
+                            AutoDateFormat>
+                        <owl-date-time [pickerType]="'calendar'" #dobdp></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dobdp">date_range</mat-icon>
+
+                    </mat-form-field>
+                </div>
+
+
+
+
+            </form>
+
+        </div> -->
+
+
+        <div class="row d-flex justify-content-end m-3 ">
+
+            <button class=" pr-3 btn button btn-default bggreen fwhite">submit</button>
+        </div>
+
+
+    </div>
+</div>

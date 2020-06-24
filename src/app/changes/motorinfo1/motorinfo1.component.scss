@@ -1,0 +1,41 @@
+
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    background-color: #01785a;
+   color: white;
+}
+
+ng-value-icon{
+    display: hidden!important;
+}
+.custom{
+margin-top: 5px;
+}
+
+.comp-header {
+    background: #01785a 0% 0% no-repeat padding-box;
+    border-radius: 100px;
+    opacity: 1;
+    text-align: center;
+}
+
+.horizontal-line {
+    border: 2px solid #01785a;
+}
+
+.zero-pad {
+    padding: 0px;
+}
+
+.label-pad {
+    padding-top: 4%;
+}
+
+.fw900 {
+    font-weight: 900;
+}
+
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    display: inline-block;
+    padding: 4px 15px;
+    height: 25px;
+}

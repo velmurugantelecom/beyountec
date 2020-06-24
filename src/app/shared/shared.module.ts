@@ -17,6 +17,7 @@ import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
 import { chooseProduct } from './product-selection/product-selection.component';
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
+import { ScanAndUpload } from './scan-and-upload/scan-and-upload.component';
 
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY',
@@ -39,7 +40,8 @@ export const MY_CUSTOM_FORMATS = {
     PrintPackageComponent,
     MessageComponent,
     chooseProduct,
-    PaymentFailedComponent],
+    PaymentFailedComponent,
+    ScanAndUpload],
   imports: [
     TranslateModule,
     CommonModule,

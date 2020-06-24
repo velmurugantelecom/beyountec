@@ -5,6 +5,9 @@ import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { WebCamComponent } from '../web-cam/web-cam.component';
+import { MatDialog } from '@angular/material';
+import { ScanAndUpload } from '../scan-and-upload/scan-and-upload.component';
 
 @Component({
   selector: 'app-request-redirect',
@@ -12,157 +15,60 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   styleUrls: ['./request-redirect.component.scss']
 })
 export class RequestRedirectComponent implements OnInit {
-  public DocUploadForm: FormGroup;
 
-  public quoteNo: string;
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private coreService: CoreService,
+  constructor(
+    private dialog: MatDialog,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private fb: FormBuilder
+    private coreService: CoreService
   ) {
-    // this.route.queryParams.subscribe(params => {
-    //   this.quoteNo = params['quoteNo']
-    // })
   }
-  public fileContainer = []
-
 
   ngOnInit() {
-
-    this.DocUploadForm = this.fb.group({})
-
-    this.getUploadedDocs();
+    // this.openDialog(1,2,'temp')
   }
 
-
-  // get mandatory docs
-  getDocuments() {
-    let body = {
-      quoteId: "1353656",
-      loadAllDocs: "N"
+  openWebCam(docId, i, value, q) {
+    if (i === 0) {
+      value = 'Vehicle Registration Card or Vehicle Transfer Certificate or Vehicle Customs Certificate';
     }
-    this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, body).subscribe((response: any) => {
-      if (response) {
+    let dialogRef = this.dialog.open(ScanAndUpload, {
+      panelClass: 'my-class',
+      // data: { docId: docId, index: i, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
+      data: { docId: docId, fileName: value, quoteNo: q }
 
-        response.forEach((element, index) => {
-          this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-          this.fileContainer = [{
-            id: element.polDoId,
-            label: element.polDocDes,
-            controlName: `documentName${index + 1}`,
-            value: ''
-          }]
-
-        });
-
-      }
-
-    });
-  }
-
-  addMoredDocuments() {
-    let params = {
-      quoteId: '1353656',
-      loadAllDocs: 'Y'
-    }
-    this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {},params).subscribe((response: any) => {
-      if (this.fileContainer.length == 1) {
-        response.forEach((element, index) => {
-
-          this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-          this.fileContainer.push(
-            {
-              id: element.polDoId,
-              label: element.polDocDes,
-              controlName: `documentName${index + 1}`,
-              value: ''
-            }
-          )
-
-        })
-      } else {
-
-        let shallowcopy = this.fileContainer.slice();
-        let value = shallowcopy.splice(1);
-        const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
-
-        result.forEach((element, index) => {
-
-          this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-          this.fileContainer.push(
-            {
-              id: element.polDoId,
-              label: element.polDocDes,
-              controlName: `documentName${index + 1}`,
-              value: ''
-            }
-          )
-
-        })
-
-      }
-    });
-
-
-
-
-
-  }
-
-  doNavigate() {
-  }
-
-
-  //  get Uploaded List docs
-  getUploadedDocs() {
-    let params = {
-      quotenumber: "1353656"
-    }
-    this.coreService.getInputs('brokerservice/documentupload/uploadedDocs', params).subscribe((result: any) => {
-
-      if (result.length > 0) {
-
-        let sortedArray: any[] = result.sort((n1, n2) => n1.docId - n2.docId);
-        sortedArray.forEach((element, index) => {
-          this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-          this.fileContainer.push(
-            {
-              id: element.docId,
-              // label: element.polDocDes,
-              controlName: `documentName${index + 1}`,
-              value: element.fileName || null
-            }
-          )
-        });
-
-      }
-      else {
-        this.getDocuments()
-      }
-
-
-
-    });
-  }
-
-
-
-
-  selectFile(event, docId, i) {
-    let selectedFileName = event.srcElement.files[0].name;
-    const formData = new FormData();
-    formData.append('files', event.target.files[0], selectedFileName);
-    formData.append('doctypeid', docId);
-    formData.append('docDesc', selectedFileName);
-    formData.append('quotenumber', "Q/1113/2/20/3006669");
-    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
-
-      this.fileContainer[i].value = selectedFileName;
+    });  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
     })
-
   }
 
-
+  scanUpload(blob, docId, i, filename) {
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('files', blob, filename);
+    formData.append('doctypeid', docId);
+    formData.append('docDesc', `${filename}`);
+    formData.append('quotenumber', 'Q/1113/3/20/0000076');
+    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+    })
+  }
+  dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(dataURI.split(',')[1]);
+    else
+      byteString = unescape(dataURI.split(',')[1]);
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], { type: mimeString });
+  }
 }

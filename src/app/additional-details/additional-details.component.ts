@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { WebCamComponent } from '../shared/web-cam/web-cam.component';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.component';
 
 @Component({
   selector: 'app-additional-details',
@@ -39,7 +40,7 @@ export class AdditionalDetailsComponent implements OnInit {
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
   public today = moment(new Date()).subtract(1, 'd')
-
+  public effectiveDateChanged = false
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
     private appService: AppService,
@@ -52,15 +53,16 @@ export class AdditionalDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    let date = moment(new Date()).add(1, 'd')
     this.additionalDetails = this.formBuilder.group({
       colorId: ['', [Validators.required]],
       noOfDoors: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
       mortgagedYN: ['', [Validators.required]],
       bankName: ['', [Validators.required]],
       regNo: ['', [Validators.required]],
-      engineNo: ['',[]],
+      engineNo: ['', []],
       registrationMark: ['', [Validators.required]],
-      effectiveDate: [new Date(), [Validators.required]],
+      effectiveDate: [date, [Validators.required]],
       fullNameBL: ['', Validators.required],
       prefix: ['', [Validators.required]],
       taxId: ['', []],
@@ -105,21 +107,26 @@ export class AdditionalDetailsComponent implements OnInit {
     return c
   }
 
-  changeEffectiveDate(event) {
-    console.log(event)
-    let effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0,0,0,0);
+  changeEffectiveDate(event, type) {
+    let effectiveDate;
+    if (type === 'change') {
+      this.effectiveDateChanged = true;
+      effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
+    } else {
+      effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
+    }
     let params = {
       quoteId: this.quoteDetails.quoteId,
       amndVerNo: 0,
       startDate: new Date(effectiveDate).toISOString(),
       productId: this.quoteDetails.productTypeId
     }
-    this.coreService.postInputs2('changeStartDate','', params).subscribe(res => {
+    this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);
     });
-}
+  }
 
   loadQuoteDetails() {
     let url = "brokerservice/quotes/quoteDetailsSummary";
@@ -131,7 +138,7 @@ export class AdditionalDetailsComponent implements OnInit {
         this.quoteDetails = response.data.quoteSummary;
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({ mortgagedYN: 'N' });
-       }
+        }
         this.spinner.hide();
       }
       else {
@@ -144,7 +151,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
 
       this.getUploadedDocs();
-      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' &&  this.quoteDetails.registeredAt != "1102" ) {
+      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "Dubai") {
         this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
@@ -217,6 +224,8 @@ export class AdditionalDetailsComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
+    if (!this.effectiveDateChanged)
+    this.changeEffectiveDate('',null)
     this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
@@ -266,7 +275,8 @@ export class AdditionalDetailsComponent implements OnInit {
     });
   }
 
-  doNavigate() {
+  doNavigate(event) {
+    event.preventDefault();
     console.log(this.DocUploadForm.status)
     this.isAttachmentSubmitted = true;
     if (this.DocUploadForm.status != 'INVALID')
@@ -526,24 +536,21 @@ export class AdditionalDetailsComponent implements OnInit {
     });
   }
 
-  openDialog(docId, i, value): void {
+
+  openDialog(docId, i, value, controlName): void {
     if (i === 0) {
       value = 'Vehicle Registration Card or Vehicle Transfer Certificate or Vehicle Customs Certificate';
     }
-    let dialogRef = this.dialog.open(WebCamComponent, {
+    let dialogRef = this.dialog.open(ScanAndUpload, {
       panelClass: 'my-class',
-      data: { QType: "Attachments", QTitle: "Attachments" }
+      data: { docId: docId, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // loading
-        this.spinner.show();
-        var blob = this.dataURItoBlob(result.data._imageAsDataUrl);
-        this.scanUpload(blob, docId, i, value)
-      }
+      if (result)
+      this.fileContainer[i].value = result[0].docDesc;
+      this.DocUploadForm.controls[controlName] = result[0].docDesc;
     })
   }
-
   dataURItoBlob(dataURI) {
     // convert base64/URLEncoded data component to raw binary data held in a string
     var byteString;

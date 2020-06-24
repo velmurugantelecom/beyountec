@@ -1,0 +1,16 @@
+.img-box {
+    height: 300px;
+    width: 400px;
+}
+
+.img_wrp {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+  }

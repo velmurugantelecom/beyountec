@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { WebCamComponent } from 'src/app/shared/web-cam/web-cam.component'
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 export function PolicyExpDateValidator(control: AbstractControl) {
   if (control.value != '') {
@@ -76,12 +78,12 @@ export class VehicleComponent implements OnInit {
   public maxVehicleValue = 0;
   public branchId;
   public revisingDetails: boolean;
-
+  filteredTrims: Observable<string[]>;
+  filteredRegisteredAt: Observable<string[]>;
   gaugeType = "semi";
   gaugeValue;
   minValue= 0;
   maxValue = 100000;
-
   gaugeChange(event){
     this.gaugeValue=this.vehicleForm.value['vehicleValue'];
   }
@@ -98,6 +100,7 @@ export class VehicleComponent implements OnInit {
       .subscribe(params => {
         if (params['reviseDetails']) {
           this.revisingDetails = true;
+          console.log(this.revisingDetails, params['reviseDetails'])
         }
       });
   }
@@ -107,7 +110,6 @@ export class VehicleComponent implements OnInit {
       this.validateAllFormFields(this.vehicleForm);
     }
     if (this.vehicleDetails != undefined) {
-      console.log(this.vehicleDetails)
       this.productId = this.appSercice.getuserDetails().productType;
       setTimeout(() => {
         this.patchFormValues(this.vehicleDetails);
@@ -125,7 +127,17 @@ export class VehicleComponent implements OnInit {
       }
       // in case of trim multiple value
       else if (this.vehicleDetails.trimOb.length > 1) {
-        this.options['trim'] = this.vehicleDetails.trimOb;
+        setTimeout(() => {
+          this.options['trim'] = this.vehicleDetails.trimOb;
+            this.filteredTrims = this.vehicleForm['controls']['trim'].valueChanges
+              .pipe(
+                startWith(''),
+                map(value => {
+                  let c = this.filterDropDownValues(value, 'trim');
+                  return c;
+                })
+              );
+        },1000)
       }
     }
   }
@@ -192,13 +204,26 @@ export class VehicleComponent implements OnInit {
   getDropDownOptions(key: string, optionId: string, productId = '*') {
     this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
       this.options[key] = response.data;
+      if (key === 'registeredAt') {
+        this.filteredRegisteredAt = this.vehicleForm['controls']['registeredAt'].valueChanges
+          .pipe(
+            startWith(''),
+            map(value => {
+              let c = this.filterDropDownValues(value, key);
+              return c;
+            })
+          );
+      }
     });
   }
 
   loadVehicleDropDowns(key, targetFieldId, value) {
     let mthd;
-    if (key == 'makeId')
+    if(value.option)
+    value = value.option.value;
+    if (key == 'makeId') {
       mthd = this.coreService.listModel(value);
+    }
     if (key == 'modelId') {
       const make = this.vehicleForm.get('makeId').value;
       mthd = this.coreService.listBody(make, value);
@@ -209,6 +234,13 @@ export class VehicleComponent implements OnInit {
         if (response.data && response.data.length === 1 && key == 'makeId')
           this.loadVehicleDropDowns('modelId', 'vehicleTypeId', response.data[0].value);
       });
+  }
+
+  public filterDropDownValues(value, key): string[] {
+    if (key === 'modelId')
+    console.log(value, key)
+    const filterValue = value.toLowerCase();
+    return this.options[key].filter(option => option['label'].toLowerCase().includes(filterValue));
   }
 
   private onFormValueChanges(): void {
@@ -244,7 +276,7 @@ export class VehicleComponent implements OnInit {
           }
         })
       }
-      if (this.vehicleForm.controls['tcFileNumber'].status === 'INVALID') {
+      if (this.vehicleForm.controls['tcFileNumber'].touched && this.vehicleForm.controls['tcFileNumber'].status === 'INVALID' && this.vehicleForm.controls['tcFileNumber'].value != '') {
         checkTcNumber = true;
         this.revisingDetails = false;
 
@@ -360,11 +392,12 @@ export class VehicleComponent implements OnInit {
       makeYear: data['makeYear'] ? data['makeYear'].toString() : null,
       ncdYears: data['ncdYears'] ? data['ncdYears'].toString() : null,
     });
-    
     this.updateTcValidation();
     if (data['trim']) {
       this.trimChanged(data['trim'], 'revise')
     }
+    if (data['registeredAt'] === 'Dubai')
+    this.registeredAtChange(data['registeredAt'])
   }
 
   updateTcValidation() {
@@ -438,6 +471,7 @@ export class VehicleComponent implements OnInit {
     return new Blob([ia], { type: mimeString });
   }
 
+  alreadySet= false;
   setRepairTypeAndRegType(makeYear) {
     const today = new Date();
     if ((today.getFullYear() - makeYear) <= 5) {
@@ -451,10 +485,12 @@ export class VehicleComponent implements OnInit {
       });
       this.disableRepairType = true;
     }
+    if (!this.alreadySet)
     this.setPrevPolicyExpDate(makeYear, 'patch');
   }
 
   setPrevPolicyExpDate(makeYear, value) {
+    this.alreadySet = true;
     const today = new Date();
     if ((today.getFullYear() <= makeYear)) {
       if (value === 'patch') {
@@ -477,6 +513,7 @@ export class VehicleComponent implements OnInit {
       this.vehicleForm.get('registeredDate').setValidators([Validators.required])
       this.vehicleForm.get('registeredDate').updateValueAndValidity();
     }
+    console.log(makeYear,'thethethethethe')
     if (makeYear === 'N') {
       this.vehicleForm.get('prevPolicyExpDate').clearValidators();
       this.vehicleForm.get('prevPolicyExpDate').updateValueAndValidity();
@@ -486,16 +523,21 @@ export class VehicleComponent implements OnInit {
   }
 
   registeredAtChange(event) {
+    let value
+    if (event.option)
+    value = event.option.value;
+    else 
+    value = event;
     let params = {
       productId: "*",
-      filterByValue: event.value,
+      filterByValue: value,
       optionType: 'LOC_DIVN'
     }
     this.coreService.getInputs('brokerservice/options/list',params).subscribe(res => {
       this.branchId = res.data[0].value; 
       this.vehicleForm['branchId'] = res.data[0].value
     })
-    if (event.value === '1102') {
+    if (value === 'Dubai' || value === '1102') {
       this.tcNoLength = 8;
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
@@ -507,12 +549,19 @@ export class VehicleComponent implements OnInit {
   }
 
   trimChanged(value, type) {
+    console.log(value)
     let params = {
       chassisNo: this.vehicleDetails.chassisNo
     }
     if (type === 'revise') {
+      if (value.option)
+      params['trim']  = value.option.value;
+      else
       params['trim'] = value
     } else {
+      if (value.option)
+      params['trim'] = value.option.value;
+      else
       params['trim'] = value.value
     }
     if (this.productId === '1113') {

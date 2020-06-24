@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-5">
                                 <label class="label-field">{{'RegisteredAt'| translate }}</label>
-                                <div class="value-field">{{quoteDetails?.vehicleDetails?.regCityDesc}}</div>
+                                <div class="value-field">{{quoteDetails?.vehicleDetails?.registeredAt}}</div>
                             </div>
 
                         </div>
@@ -210,7 +210,7 @@
                                         formControlName="effectiveDate" required
                                         [min]="today"
                                         [max]="maxEffectiveDate"
-                                        (ngModelChange)="changeEffectiveDate($event)"
+                                        (ngModelChange)="changeEffectiveDate($event, 'change')"
                                         >
                                         <owl-date-time #effectiveDate [pickerType]="'calendar'"></owl-date-time>
                                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effectiveDate">
@@ -429,10 +429,10 @@
                             <input type="file" (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}"/>
                         </div>
                     </div>
-                    <!-- <div style="position: relative;">
-                                <img (click)="openDialog(container.id,i,container.label)" src="./assets/motor/insurer-details/camera.png" class="pl-3 pt-2 upload-label" />
+                    <div style="position: relative;">
+                                <img (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/motor/insurer-details/camera.png" class="pl-3 pt-2 upload-label" />
                                 <p class="pl-2 f8 mb-0">Scan & Upload</p>
-                            </div> -->
+                            </div>
                             <p style="margin-top:2px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">{{container.label}} is required</p>
                             <ng-template #elseBlock>
                     <p style="margin-top:2px" class="mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
@@ -445,7 +445,7 @@
                     <button class="btn button btn-default bggreen fwhite"
                         (click)="goBack(stepper)">{{'ReviseDetails' | translate }}</button>
                     <button type="submit" class="btn button btn-default bggreen fwhite"
-                        (click)="doNavigate()">{{'Continue' | translate }}</button>
+                        (click)="doNavigate($event)">{{'Continue' | translate }}</button>
                 </div>
             </form>
 

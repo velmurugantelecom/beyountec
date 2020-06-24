@@ -228,7 +228,7 @@ export class InsurerInfoComponent implements OnInit {
       address1: data['address1'] ? data['address1'] : '',
       address2: data['address2'] ? data['address2'] : '',
       address4: data['address4'] ? data['address4'] : '',
-      
+      fullNameBL: data['fullNameBL'] ? data['fullNameBL']: '',
       city: data['city'] ? data['city'] : '',
       country: data['country'] ? data['country'] : '',
       occupation: data['occupation'] ? data['occupation'] : '',

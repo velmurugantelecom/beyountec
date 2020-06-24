@@ -15,6 +15,7 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class HomeComponent implements OnInit {
   selectedcard: boolean = false;
+
   constructor(private router: Router, private commonService: CoreService, public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private coreService: CoreService,
@@ -51,15 +52,19 @@ export class HomeComponent implements OnInit {
 
   openDialog(Type: string, Title: string): void {
     let dialogRef = this.dialog.open(QuoteDialog, {
-      width: '350px',
+      width: '400px',
       data: { QType: Type, QTitle: Title }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.router.navigate([`/additional-details`], { 
-          queryParams: { quoteNo: result,
-                         retrieveQuote: true } });
-      }
+      console.log(result);
+      // if (result) {
+      //   this.router.navigate([`/additional-details`], {
+      //     queryParams: {
+      //       quoteNo: result,
+      //       retrieveQuote: true
+      //     }
+      //   });
+      // }
     });
   }
 }
@@ -85,8 +90,15 @@ export class HomeComponent implements OnInit {
 export class QuoteDialog {
   dialogeDetails: any;
   public quoteForm: FormGroup;
-
-  constructor(
+  OtpForm: FormGroup;
+  token: any;
+  public minutes;
+  public seconds;
+  public totalMs;
+  public doTimeout: boolean = false;
+  constructor(private service: CoreService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<QuoteDialog>,
     @Inject(MAT_DIALOG_DATA) public data,
     private builder: FormBuilder,
@@ -98,7 +110,81 @@ export class QuoteDialog {
 
   ngOnInit() {
     this.quoteForm = this.builder.group({
-      type: ['', Validators.required]
+      type: ['', Validators.required],
+
+    });
+    this.OtpForm = this.builder.group({
+      otp: ['', Validators.required]
+    });
+
+  }
+
+
+  sendEmail() {
+    if (this.quoteForm.invalid) {
+      return
+    }
+    this.spinner.show();
+    this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails}`, '').subscribe(response => {
+      console.log(response)
+      if (response) {
+        this.token = response;
+        this.minutes = 2;
+        this.seconds = 0;
+        this.totalMs = 120000;
+        this.showTimer();
+      }
+      this.spinner.hide();
+
     });
   }
+
+  verifyOtp() {
+    this.service.getInputs1(`brokerservice/quotes/validateOtp?token=${this.token}&otp=${this.OtpForm.value['otp']}`, '').subscribe(response => {
+      console.log(response)
+      if (response == 'true') {
+        // this.retriveQuote()
+        this.dialogRef.close();
+        console.log(response);
+        this.router.navigate([`/additional-details`], {
+          queryParams: {
+            quoteNo: this.dialogeDetails,
+            retrieveQuote: true
+          }
+        });
+      }
+    });
+  }
+
+  // retriveQuote() {
+  //   // //consol.log()
+
+  //   // return this.dialogeDetails;
+  //   this.service.getInputs1(`brokerservice/quotes?quoteNo=${this.dialogeDetails}&token=${this.token}`, '').subscribe(response => {
+  //     console.log(response)
+  //   });
+
+  // }
+
+  showTimer() {
+    setInterval(() => {
+      if (this.totalMs >= 0) {
+
+        this.minutes = Math.floor((this.totalMs % (1000 * 60 * 60)) / (1000 * 60));
+        this.seconds = Math.floor((this.totalMs % (1000 * 60)) / 1000);
+      }
+
+      this.totalMs = this.totalMs - 1000;
+      if (this.totalMs === 0) {
+        this.doTimeout = true;
+      }
+    }, 1000)
+  }
+
+  stopTimer() {
+    this.doTimeout = false;
+  }
+
 }
+
+

@@ -49,6 +49,7 @@
                 </mat-select>
                 <mat-error *ngIf="vehicleForm.get('modelId').invalid">{{ 'Required.Model' | translate }}</mat-error>
             </mat-form-field>
+
         </div>
 
         <div class="col-md-4 col-sm-6">
@@ -71,14 +72,23 @@
         <div class="col-md-4 col-sm-6">
             <mat-form-field appearance="outline">
                 <mat-label>{{ 'Trim' | translate }}</mat-label>
-                <mat-select formControlName="trim" required (selectionChange)="trimChanged($event)">
+                <!-- <mat-select formControlName="trim" required (selectionChange)="trimChanged($event)">
                     <mat-option *ngFor="let trim of options.trim" [value]="trim.value">
                         {{trim.label}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input type="text" matInput formControlName="trim"
+                                                [matAutocomplete]="autoTrim" required
+                                                >
                 <mat-error *ngIf="vehicleForm.controls.trim.hasError('required')">{{ 'Required.Trim' | translate }}
                 </mat-error>
             </mat-form-field>
+
+            <mat-autocomplete #autoTrim="matAutocomplete" (optionSelected)="trimChanged($event)">
+                <mat-option *ngFor="let trim of filteredTrims | async" [value]="trim.value"
+                >
+                    {{trim.label}}</mat-option>
+            </mat-autocomplete>
         </div>
         <div class="col-md-4 col-sm-6">
             <mat-form-field appearance="outline">
@@ -157,14 +167,25 @@
         <div class="col-md-4 col-sm-6">
             <mat-form-field appearance="outline">
                 <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
-                <mat-select formControlName="registeredAt" required (selectionChange)="registeredAtChange($event)">
+                <!-- <mat-select formControlName="registeredAt" required (selectionChange)="registeredAtChange($event)">
                     <mat-option *ngFor="let registeredAt of options.registeredAt" [value]="registeredAt.value">
                         {{registeredAt.label}}
                     </mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input type="text" matInput formControlName="registeredAt"
+                [matAutocomplete]="autoRegisteredAt" required
+                >
                 <mat-error *ngIf="vehicleForm.get('registeredAt').invalid">{{ 'Required.RegisteredAt' | translate }}
                 </mat-error>
             </mat-form-field>
+            
+            <mat-autocomplete #autoRegisteredAt="matAutocomplete" (optionSelected)="registeredAtChange($event)">
+                <mat-option *ngFor="let registeredAt of filteredRegisteredAt | async" [value]="registeredAt.label"
+                >
+                    {{registeredAt.label}}</mat-option>
+            </mat-autocomplete>
+
+
         </div>
         <div class="col-md-4 col-sm-6">
             <mat-form-field appearance="outline">

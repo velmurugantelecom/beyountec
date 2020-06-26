@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../core/services/app.service';
 import { ToastrService } from 'ngx-toastr';
-import { CoreService } from '../core/services/core.service'
+import { CoreService } from '../core/services/core.service';
+import { DropDownService } from '../core/services/dropdown.service';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from '../modal/message-popup/message-popup.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -33,6 +34,7 @@ export class GetQuoteComponent implements OnInit {
 
   constructor(private router: Router, private formBuilder: FormBuilder,
     private service: CoreService,
+    private dropdownservice: DropDownService,
     private route: ActivatedRoute,
     private appService: AppService,
     public dialog: MatDialog,
@@ -63,7 +65,7 @@ export class GetQuoteComponent implements OnInit {
         mobileCode: response['data'][0].value
       });
     });
-    this.service.getInputs("brokerservice/vehicledetails/productType", '').subscribe((response: any) => {
+    this.dropdownservice.getInputs("brokerservice/options/product/list", '').subscribe((response: any) => {
       this.dropdownOptions = response.data;
     });
   }

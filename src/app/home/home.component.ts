@@ -23,12 +23,16 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    localStorage.clear();
+   // localStorage.clear();
     this.guestUserCall();
   }
 
   guestUserCall() {
-    localStorage.clear();
+   // localStorage.clear();
+   localStorage.removeItem('tokenDetails');
+   localStorage.removeItem('Username');
+   localStorage.removeItem('guesttokenDetails');
+   localStorage.removeItem('isLoggedIn');
     let value = {
       guestUser: true
     }

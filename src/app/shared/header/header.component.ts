@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,8 @@ import { AppService } from 'src/app/core/services/app.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Output()
+  languageInfoEmitter = new EventEmitter();
   menus = [];
   userType: any;
   routerurl;
@@ -75,7 +77,10 @@ export class HeaderComponent implements OnInit {
   LogOut() {
     this.commonService.logout().subscribe(Response => {
       if (Response) {
-        localStorage.clear();
+        //localStorage.clear();
+        localStorage.removeItem('tokenDetails');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
         this.router.navigate([`/Login`])
       }
@@ -83,13 +88,14 @@ export class HeaderComponent implements OnInit {
   }
 
   changeLanguage(value) {
-    console.log(value)
+    this.languageInfoEmitter.emit(value);
+    localStorage.setItem('language', value);
     if (value === 'en') {
       this.selectedLanguage = 'English';
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);
       this.navbarList();
-    } else if (value === 'fa') {
+    } else if (value === 'ar') {
       this.selectedLanguage = 'Arabic';
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);

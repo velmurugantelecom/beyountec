@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Customer360Service } from '../customer360/customer360.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { CoreService } from 'src/app/core/services/core.service';
+import { DropDownService } from '../../core/services/dropdown.service';
 
 @Component({
   selector: 'app-quote',
@@ -15,7 +16,7 @@ export class QuoteComponent implements OnInit {
 
   tableData = [];
   displayedColumns: string[] = ['policyNo', 'quoteNo', 'mobileNo', 'startDate', 'endDate', 'productId', 'status'];
-  constructor(private Service: CoreService, private router: Router) { }
+  constructor(private Service: CoreService, private router: Router, private dropdownservice: DropDownService) { }
 
   ngOnInit() {
     this.getpolicy();
@@ -28,7 +29,7 @@ export class QuoteComponent implements OnInit {
       pageSize: 5,
     };
 
-    this.Service.getInputs("brokerservice/search/quotes/findAll", params).subscribe((data: any) => {
+    this.dropdownservice.getInputs("brokerservice/search/quotes/findAll", params).subscribe((data: any) => {
       this.tableData = data.data;
     })
   }

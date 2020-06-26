@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
     public translate: TranslateService
   ) {
     // multi language 
-    this.translate.addLangs(['en', 'fa']);
+    this.translate.addLangs(['en', 'ar']);
     // this.translate.setDefaultLang('en');
-    let browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/en|fa/) ? browserLang : 'en');
-    // this.translate.use('fa');
+   // let browserLang = this.translate.getBrowserLang();
+   // this.translate.use(browserLang.match(/en|fa/) ? browserLang : 'en');
+
+   let  browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
+    console.log(browserLang);
     this.appService._languageChange.next(browserLang);
 
     // back button
@@ -97,7 +99,15 @@ export class AppComponent implements OnInit {
   stopWatching() {
     this.userIdle.stopWatching();
   }
-
+  bodyStyleChange(value) {
+    let body = document.getElementsByTagName('body')[0];
+    if (value === 'en') {
+      body.dir = "ltr";
+  }
+    else{
+      body.dir = "rtl";
+    }
+  }
   startWatching(value) {
     this.userIdle.startWatching();
     if (value === 'guest') {
@@ -119,7 +129,10 @@ export class AppComponent implements OnInit {
     this.spinner.show();
     this.auth.logout().subscribe(Response => {
       if (Response) {
-        localStorage.clear();
+       // localStorage.clear();
+       localStorage.removeItem('tokenDetails');
+       localStorage.removeItem('Username');
+       localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
         this.router.navigate([`/Login`])
         this.spinner.hide();

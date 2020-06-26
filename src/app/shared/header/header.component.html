@@ -13,8 +13,7 @@
   </div> -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <!-- <ul style="min-width: 100px;" class="navbar-nav ml-auto custom-cursor"
-        [matMenuTriggerFor]="languageMenu"> -->
+    
         <ul class="navbar-nav ml-auto">
           <li class="nav-item navlist p-2 my-auto">
             <h5>
@@ -22,10 +21,12 @@
             </h5>
           </li>
         </ul>
-        <!-- <button class="nav-item navlist  my-auto" mat-icon-button>
-          <img src="assets/sharedimg/arabic.png" style="height: 36px;width: 36px;border-radius: 50%;">
-        </button> -->
-      <!-- </ul> -->
+        <ul style="min-width: 100px;" class="navbar-nav ml-auto custom-cursor"
+        [matMenuTriggerFor]="languageMenu">
+        <button class="nav-item navlist  my-auto" mat-icon-button>
+          <img src="assets/sharedimg/arabic.png" style="height: 18px;width: 28px;">
+        </button> 
+     </ul> 
       
       <ul class="navbar-nav ml-auto">
         <li (click)="navPages(menu.value)" *ngFor="let menu of menus" class="nav-item navlist p-2 my-auto">
@@ -42,14 +43,14 @@
         </button>
       </ul>
 
-      <!-- <mat-menu #languageMenu="matMenu">
+      <mat-menu #languageMenu="matMenu">
         <div mat-menu-item (click)="changeLanguage('en')" class="col-md-12 col-12">
-          <img src="assets/sharedimg/english.png" style="height: 30px;width: 30px;border-radius: 50%;">  English  
+          <img src="assets/sharedimg/english.png" style="height: 18px;width: 28px;">  English  
         </div>
-        <div mat-menu-item (click)="changeLanguage('fa')" class="col-md-12 col-12">
-          <img src="assets/sharedimg/arabic.png" style="height: 30px;width: 30px;border-radius: 50%;">   Arabic
+        <div mat-menu-item (click)="changeLanguage('ar')" class="col-md-12 col-12">
+          <img src="assets/sharedimg/arabic.png" style="height: 18px;width: 28px;">   Arabic
         </div>
-      </mat-menu> -->
+      </mat-menu>
 
       <mat-menu #menu="matMenu">
         <div mat-menu-item (click)="navPages('/User/dashboard')" class="col-md-12 col-12">

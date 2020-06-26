@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreService } from '../../core/services/core.service'
+import { CoreService } from '../../core/services/core.service';
+import { DropDownService } from '../../core/services/dropdown.service';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -16,7 +17,9 @@ export class DashboardComponent implements OnInit {
 
   //policy due for renewal
   tableData = []
-  constructor(private spinner: NgxSpinnerService,private commonservice: CoreService) { }
+  constructor(private spinner: NgxSpinnerService,
+    private commonservice: CoreService,
+    private dropdownservice: DropDownService) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -53,7 +56,7 @@ export class DashboardComponent implements OnInit {
       "statusId": statusId
     };
 
-    this.commonservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
+    this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
       this.referalQuoteData = result.data;
 
     })

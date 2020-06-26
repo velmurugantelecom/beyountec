@@ -18,6 +18,7 @@ export class Customer360Service {
     public DevEndpoint1
     public ongetpolicyno: BehaviorSubject<any> = new BehaviorSubject([]);
     public ondocuments: BehaviorSubject<any> = new BehaviorSubject([]);
+    languageLable:string='language';
     constructor(private http: HttpClient,  ) {
 
         this.DevEndpoint = environment.DevEndpoint;
@@ -64,6 +65,7 @@ export class Customer360Service {
     }
     // get policyinformation
     getItems(params) {
+        let  languageValue=localStorage.getItem("language");
         let value
         let httpParams = new HttpParams();
         if (params && params != '') {
@@ -71,6 +73,9 @@ export class Customer360Service {
                 httpParams = httpParams.append(key, params[key]);
             }
         }
+        httpParams=httpParams.append(
+            this.languageLable,languageValue
+            );
         let url = `${this.DevEndpoint}brokerservice/policy/policySummary`
         this.http.get(url, { params: httpParams }).subscribe((data: any) => {
             value = data;

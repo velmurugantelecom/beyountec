@@ -3,6 +3,7 @@ import { DatePipe } from "@angular/common";
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../core/services/core.service';
 import { AppService } from '../core/services/app.service';
+import { DropDownService } from '../core/services/dropdown.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from 'jquery';
@@ -46,6 +47,7 @@ export class QuoteSummaryComponent implements OnInit {
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
     private appService: AppService,
+    private dropdownservice: DropDownService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
@@ -74,7 +76,7 @@ export class QuoteSummaryComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-    this.coreService.getInputs(url, params).subscribe((response) => {
+    this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
       this.mailId = this.quoteDetails.userDetails.email;
       if (this.isQuickSummary === 'false') {

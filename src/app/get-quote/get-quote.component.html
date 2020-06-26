@@ -33,7 +33,7 @@
                                         <mat-radio-group formControlName="productType" (change)="selectOption($event)">
                                                 <mat-radio-button style="margin-right: 25px;"
                                                         *ngFor="let product of dropdownOptions"
-                                                        [value]="product.typeid">{{product.typedesc}}
+                                                        [value]="product.value">{{product.label}}
                                                 </mat-radio-button>
                                         </mat-radio-group>
                                 </div>

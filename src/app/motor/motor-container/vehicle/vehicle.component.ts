@@ -247,7 +247,7 @@ export class VehicleComponent implements OnInit {
     let data = {}
     let checkTcNumber = true;
     this.vehicleForm.valueChanges.subscribe(val => {
-      if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && checkTcNumber && !this.revisingDetails) {
+      if ((this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && checkTcNumber && !this.revisingDetails)||(this.vehicleForm.controls['tcFileNumber'].touched && this.vehicleForm.controls['tcFileNumber'].value == '' && checkTcNumber && !this.revisingDetails)) {
         checkTcNumber = false;
         let params = {
           tcNo: this.vehicleForm.value['tcFileNumber'],

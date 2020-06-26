@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { CoreService } from '../core/services/core.service';
+import { DropDownService } from '../core/services/dropdown.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { AppService } from '../core/services/app.service';
@@ -43,6 +44,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public effectiveDateChanged = false
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
+    private dropdownservice: DropDownService,
     private appService: AppService,
     private router: Router, private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -133,7 +135,7 @@ export class AdditionalDetailsComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-    this.coreService.getInputs(url, params).subscribe((response) => {
+    this.dropdownservice.getInputs(url, params).subscribe((response) => {
       if (response.data && response.data != null) {
         this.quoteDetails = response.data.quoteSummary;
         if (this.quoteDetails.productTypeId == '1116') {

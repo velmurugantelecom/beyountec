@@ -2,7 +2,8 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 
 import { MatDialog } from '@angular/material';
-import { CoreService } from '../../core/services/core.service'
+import { CoreService } from '../../core/services/core.service';
+import { DropDownService } from '../../core/services/dropdown.service';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -40,6 +41,7 @@ export class PrintPackageComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog: MatDialog,
     private service1: CoreService,
+    private dropdownservice: DropDownService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private route: Router,
@@ -94,7 +96,7 @@ export class PrintPackageComponent implements OnInit, AfterViewInit {
       documentNo: this.policyNo,
       versionNo: "0"
     }
-    this.service1.getInputs('brokerservice/document/generated', value).subscribe((result: any) => {
+    this.dropdownservice.getInputs('brokerservice/document/generated', value).subscribe((result: any) => {
       this.docs = result.data;
       this.docs.forEach(n => {
         n.thumbnail = (n.thumbnail) ? this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + n.thumbnail) : './assets/img/file-icon.png';

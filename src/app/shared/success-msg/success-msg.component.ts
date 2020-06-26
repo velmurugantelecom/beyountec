@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 import { AppService } from 'src/app/core/services/app.service';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -24,6 +25,7 @@ export class SuccessMsgComponent implements OnInit {
   constructor(private coreService: CoreService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private dropdownservice: DropDownService,
     private appService: AppService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService) {
@@ -44,7 +46,7 @@ export class SuccessMsgComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-    this.coreService.getInputs(url, params).subscribe((response) => {
+    this.dropdownservice.getInputs(url, params).subscribe((response) => {
       if (response != null)
         this.quoteDetails = response.data.quoteSummary;
       this.currency = this.quoteDetails.premiumCurrencyId;

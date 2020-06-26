@@ -29,6 +29,7 @@ import { QuoteDialog } from './home/home.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
+import { DropDownService } from './core/services/dropdown.service';
 import { EmailPopupComponent } from './modal/email-popup/email-popup.component';
 import { WebCamComponent } from './shared/web-cam/web-cam.component';
 import { WebcamModule } from 'ngx-webcam';
@@ -128,6 +129,7 @@ export const MY_CUSTOM_FORMATS = {
   ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload],
   providers: [
     CoreService,
+    DropDownService,
     AuthGuard,
     GuestAuthGuard,
     AuthService,

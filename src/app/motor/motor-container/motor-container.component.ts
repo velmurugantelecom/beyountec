@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from 'src/app/core/services/core.service';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { AppService } from 'src/app/core/services/app.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -42,6 +43,7 @@ export class MotorContainerComponent implements OnInit {
 
   constructor(private router: Router, private coreService: CoreService,
     private appService: AppService,
+    private dropdownservice: DropDownService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -102,7 +104,7 @@ export class MotorContainerComponent implements OnInit {
     let param = {
       quoteNumber: this.quoteNumber
     }
-    this.coreService.getInputs(url, param).subscribe((response) => {
+    this.dropdownservice.getInputs(url, param).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
       if (this.quoteDetails) {
         this.basicDetails = { ...this.quoteDetails['userDetails'] };

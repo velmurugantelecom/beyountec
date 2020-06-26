@@ -37,6 +37,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public addMoreDoc: boolean;
   public activeStepper;
   public isAttachmentSubmitted: boolean;
+  public selectedBank = null;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
@@ -44,14 +45,14 @@ export class AdditionalDetailsComponent implements OnInit {
   public effectiveDateChanged = false
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
-    private dropdownservice: DropDownService,
     private appService: AppService,
     private router: Router, private route: ActivatedRoute,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private fb: FormBuilder,
     public toasterService: ToastrService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dropdownservice: DropDownService
   ) { }
 
   ngOnInit() {
@@ -103,7 +104,7 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   private _filter(value): string[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = value ? value.toLowerCase(): '';
 
     let c = this.options['bankName'].filter(option => option['label'].toLowerCase().includes(filterValue));
     return c
@@ -181,6 +182,11 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   addAdditionalDetail(stepper: MatStepper) {
+      if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
+        this.additionalDetails.controls['bankName'].setValue(null);
+        this.selectedBank = '';
+        return;
+    }
     if (this.additionalDetails.invalid) {
       return;
     }
@@ -279,7 +285,6 @@ export class AdditionalDetailsComponent implements OnInit {
 
   doNavigate(event) {
     event.preventDefault();
-    console.log(this.DocUploadForm.status)
     this.isAttachmentSubmitted = true;
     if (this.DocUploadForm.status != 'INVALID')
       this.router.navigate([`/quote-summary`], {
@@ -419,21 +424,6 @@ export class AdditionalDetailsComponent implements OnInit {
       loadAllDocs: 'Y'
     }
     this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, params).subscribe((response: any) => {
-      console.log(this.fileContainer.length)
-      // if (this.fileContainer.length == 1) {
-      //   response.forEach((element, index) => {
-
-      //     this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-      //     this.fileContainer.push(
-      //       {
-      //         id: element.polDoId,
-      //         label: element.polDocDes,
-      //         controlName: `documentName${index + 1}`,
-      //         value: ''
-      //       }
-      //     );
-      //   })
-      // } else {
       let shallowcopy = this.fileContainer.slice();
       let value = shallowcopy.splice(1);
       const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
@@ -583,5 +573,9 @@ export class AdditionalDetailsComponent implements OnInit {
     }, err => {
       this.spinner.hide();
     })
+  }
+
+  bankSelected(event: any) {
+    this.selectedBank = event.option.value;
   }
 }

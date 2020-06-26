@@ -34,11 +34,11 @@ export class GetQuoteComponent implements OnInit {
 
   constructor(private router: Router, private formBuilder: FormBuilder,
     private service: CoreService,
-    private dropdownservice: DropDownService,
     private route: ActivatedRoute,
     private appService: AppService,
     public dialog: MatDialog,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private dropdownservice: DropDownService) {
     this.route.queryParams
       .subscribe(params => {
         this.QuoteType = params['Type'];
@@ -65,7 +65,7 @@ export class GetQuoteComponent implements OnInit {
         mobileCode: response['data'][0].value
       });
     });
-    this.dropdownservice.getInputs("brokerservice/options/product/list", '').subscribe((response: any) => {
+    this.dropdownservice.getInputs("brokerservice/vehicledetails/productType", '').subscribe((response: any) => {
       this.dropdownOptions = response.data;
     });
   }
@@ -139,7 +139,6 @@ export class GetQuoteComponent implements OnInit {
   }
 
   getChassisNumber(): void {
-    // https://dev.beyontec.com/bts-broker-portal/api/
     let value = {
       emailId: this.infoForm.value['email']
     }
@@ -147,8 +146,17 @@ export class GetQuoteComponent implements OnInit {
 
       if (res == true) {
         this.invalidEmail = true;
-        this.infoForm.controls['email'].setErrors({ 'incorrect': true });
-
+        let dialogRef = this.dialog.open(MessagePopupComponent, {
+          width: '400px',
+          data: {
+            title: 'Try Login',
+            body: `Email address is aldready Exist. Try Login.`
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.router.navigate([`/Login`]);
+        });
+        // this.infoForm.controls['email'].setErrors({ 'incorrect': true });
       } else {
 
         if (this.infoForm.value.productType === '') {

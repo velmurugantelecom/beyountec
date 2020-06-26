@@ -39,7 +39,7 @@
                     <mat-label>{{'PasswordLabel' | translate }}</mat-label>
                     <input matInput id="myInput" type="password" placeholder="{{'PlaceHolder.Password' | translate }}"
                         formControlName="password">
-                    <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd()">visibility &nbsp;&nbsp;
+                    <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">visibility &nbsp;&nbsp;
                     </mat-icon>
                     <mat-error *ngIf="LoginForm.controls.password.hasError('required')">
                         {{'Required.Password' | translate }}

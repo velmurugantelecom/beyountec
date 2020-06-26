@@ -2,13 +2,13 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 
 import { MatDialog } from '@angular/material';
-import { CoreService } from '../../core/services/core.service';
-import { DropDownService } from '../../core/services/dropdown.service';
+import { CoreService } from '../../core/services/core.service'
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 
 @Component({
   selector: 'app-print-package',
@@ -41,11 +41,11 @@ export class PrintPackageComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog: MatDialog,
     private service1: CoreService,
-    private dropdownservice: DropDownService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private spinner: NgxSpinnerService,
+    private dropdownservice: DropDownService,
     private sanitizer: DomSanitizer) {
   }
 

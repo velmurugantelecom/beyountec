@@ -77,11 +77,13 @@ export class HeaderComponent implements OnInit {
   LogOut() {
     this.commonService.logout().subscribe(Response => {
       if (Response) {
-        //localStorage.clear();
+        // localStorage.clear();
         localStorage.removeItem('tokenDetails');
         localStorage.removeItem('Username');
         localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
+        this.appService._loginUserTcNumber.next({});
+        this.appService._insurerDetails.next({})
         this.router.navigate([`/Login`])
       }
     })

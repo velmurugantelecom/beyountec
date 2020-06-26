@@ -10,7 +10,6 @@ import { NgxCurrencyModule } from "ngx-currency";
 
 import { TranslateModule } from '@ngx-translate/core';
 
-
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime-moment';

@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 import { AppService } from 'src/app/core/services/app.service';
-import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 
 @Component({
   selector: 'app-success-msg',
@@ -25,9 +25,9 @@ export class SuccessMsgComponent implements OnInit {
   constructor(private coreService: CoreService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private dropdownservice: DropDownService,
     private appService: AppService,
     private spinner: NgxSpinnerService,
+    private dropdownservice: DropDownService,
     private toastr: ToastrService) {
 
     this.route.queryParams

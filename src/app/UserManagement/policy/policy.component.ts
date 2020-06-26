@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer360Service } from '../customer360/customer360.service';
-import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { Router, NavigationExtras } from '@angular/router';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 
 @Component({
   selector: 'app-policy',
@@ -15,7 +15,9 @@ export class PolicyComponent implements OnInit {
 
   tableData = [];
   displayedColumns: string[] = ['policyNo', 'quoteNo', 'mobileNo', 'startDate', 'endDate', 'productId', 'status'];
-  constructor(private customerService: Customer360Service, private router: Router, private dropdownservice: DropDownService) { }
+  constructor(private customerService: Customer360Service,
+    private dropdownservice: DropDownService,
+     private router: Router) { }
 
   ngOnInit() {
     this.getpolicy();

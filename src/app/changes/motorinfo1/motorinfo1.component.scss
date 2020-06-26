@@ -2,8 +2,16 @@
 ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
     background-color: #01785a;
    color: white;
+
 }
 
+.border-block {
+    border-right-style: solid;
+    border-right-color: lightgrey;
+    border-right-width: medium;
+
+
+}
 ng-value-icon{
     display: hidden!important;
 }
@@ -34,8 +42,38 @@ margin-top: 5px;
     font-weight: 900;
 }
 
+.mat-card {
+    padding: 8px;
+}
 ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
     display: inline-block;
     padding: 4px 15px;
     height: 25px;
 }
+
+.footer{
+    width: 100%;
+    background:#26715e;
+    position: absolute;
+    height: 35px;
+    font-size: 14px;
+    margin-top:30px;
+    color:white;
+    line-height: 35px;
+  }
+
+
+  .container {
+    display: flex;
+     flex-direction: column;
+    min-height: 78vh;
+    //  justify-content: center;
+    //  align-items: center;
+  width: 100%;
+}
+
+// .centercss {
+//     display: flex;
+    
+    
+//   }

@@ -240,14 +240,14 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'BankNameLabel' |translate }}</mat-label>
                                             <input type="text" matInput formControlName="bankName"
-                                                [matAutocomplete]="auto" required>
+                                                [matAutocomplete]="auto" required >
                                             <mat-error
                                                 *ngIf="formCtrls.bankName.errors && formCtrls.bankName.errors.required">
                                                 {{'Required.BankName' | translate }}
                                             </mat-error>
                                         </mat-form-field>
 
-                                        <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="bankSelected($event)">
                                             <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank.label">
                                                 {{bank.label}}</mat-option>
                                         </mat-autocomplete>

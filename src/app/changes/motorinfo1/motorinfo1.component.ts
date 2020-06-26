@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-motorinfo1',
@@ -16,7 +17,7 @@ export class Motorinfo1Component implements OnInit {
   selected;
   showgrid = false;
   showInfo: any = false;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder ,private router:Router) { }
 
   ngOnInit() {
     this.vehicleForm = this.formBuilder.group({
@@ -55,9 +56,9 @@ export class Motorinfo1Component implements OnInit {
     });
 
     this.options.make = [
-      {label: "AUDI", value: "167"}
+      { label: "AUDI", value: "167" }
     ]
-    this.items = this.options.make;
+
     this.options.model = [
       { "label": "A3", "value": "16713101" },
       { "label": "A4", "value": "16713101" },
@@ -76,6 +77,7 @@ export class Motorinfo1Component implements OnInit {
     { "label": "2018", "value": "2018" }, { "label": "2017", "value": "2017" }
       , { "label": "2016", "value": "2016" }, { "label": "2015", "value": "2015" }]
 
+    this.items = this.options.regYear;
     this.options.trim = [{ "label": "STD", "value": "LS" },
     { "label": "QUATTRO", "value": "LT1" },
     { "label": "S-Line", "value": "LTZ" }];
@@ -104,7 +106,7 @@ export class Motorinfo1Component implements OnInit {
       , { label: "9", value: "9" }]
     this.options.gender = [{ "label": "Male", "value": "M" }, { "label": "Female", "value": "F" }]
 
-    this.options.prefix = [{ label: "Mr", value: "Mr" },{ label: "Ms", value: "Ms" },{ label: "Mrs", value: "Mrs" }]
+    this.options.prefix = [{ label: "Mr", value: "Mr" }, { label: "Ms", value: "Ms" }, { label: "Mrs", value: "Mrs" }]
 
   }
 
@@ -113,14 +115,14 @@ export class Motorinfo1Component implements OnInit {
     this.showgrid = false;
     this.showInfo = false;
     this.selected = [];
-    this.items = this.options.make;
+    this.items = this.options.regYear;
   }
   onchangeLoadDropdown() {
     this.showInfo = false;
     if (this.selected.length == 1) {
-      this.items = this.options.model
+      this.items = this.options.make;
     } else if (this.selected.length == 2) {
-      this.items = this.options.regYear
+      this.items = this.options.model;
     }
     else if (this.selected.length == 3) {
       this.showgrid = true;
@@ -132,4 +134,7 @@ export class Motorinfo1Component implements OnInit {
     this.showInfo = true;
   }
 
+  routerBack(){
+    this.router.navigate([`/demo-login`]);   
+  }
 }

@@ -154,6 +154,7 @@ export class LoginComponent implements OnInit {
   }
 
   showHidePwd(value) {
+    console.log(value)
     let x: any = document.getElementById(`${value}`);
     if (x.type === "password") {
       x.type = "text";

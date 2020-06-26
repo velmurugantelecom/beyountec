@@ -187,7 +187,7 @@ export class VehicleComponent implements OnInit {
       noOfDoors: ['', []],
       mortgagedYN: ['', []],
       registrationMark: ['',[]],
-      regNo:['',[]],
+      registerNumber:['',[]],
       bankName:['',[]]
     });
 
@@ -247,6 +247,7 @@ export class VehicleComponent implements OnInit {
     let data = {}
     let checkTcNumber = true;
     this.vehicleForm.valueChanges.subscribe(val => {
+      // if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && checkTcNumber && !this.revisingDetails) {
       if ((this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && checkTcNumber && !this.revisingDetails)||(this.vehicleForm.controls['tcFileNumber'].touched && this.vehicleForm.controls['tcFileNumber'].value == '' && checkTcNumber && !this.revisingDetails)) {
         checkTcNumber = false;
         let params = {
@@ -299,7 +300,7 @@ export class VehicleComponent implements OnInit {
       noOfDoors: value['noOfDoors'],
       mortgagedYN: value['mortgagedYN'],
       registrationMark: value['registrationMark'],
-      regNo: value['regNo'],
+      registerNumber: value['regNo'],
       bankName: value['bankName']
     })
   }
@@ -377,8 +378,10 @@ export class VehicleComponent implements OnInit {
   }
 
   patchFormValues(data) {
+    console.log(data)
     this.appService._loginUserTcNumber.subscribe(res => {
       if (res.length != 0) {
+        console.log(res)
         setTimeout(() => {
           this.vehicleForm.patchValue({
             tcFileNumber: res['tcNumber']
@@ -523,11 +526,7 @@ export class VehicleComponent implements OnInit {
   }
 
   registeredAtChange(event) {
-    let value
-    if (event.option)
-    value = event.option.value;
-    else 
-    value = event;
+    let value = event;
     let params = {
       productId: "*",
       filterByValue: value,
@@ -554,15 +553,9 @@ export class VehicleComponent implements OnInit {
       chassisNo: this.vehicleDetails.chassisNo
     }
     if (type === 'revise') {
-      if (value.option)
-      params['trim']  = value.option.value;
-      else
       params['trim'] = value
     } else {
-      if (value.option)
-      params['trim'] = value.option.value;
-      else
-      params['trim'] = value.value
+      params['trim'] = value
     }
     if (this.productId === '1113') {
       this.coreService.getInputsAutoData('ae/findByChassisNoAndTrimWithPrice', params).subscribe(res => {

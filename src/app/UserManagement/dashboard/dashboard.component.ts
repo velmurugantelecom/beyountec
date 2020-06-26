@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreService } from '../../core/services/core.service';
-import { DropDownService } from '../../core/services/dropdown.service';
+import { CoreService } from '../../core/services/core.service'
 import { NgxSpinnerService } from "ngx-spinner";
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit {
   //policy due for renewal
   tableData = []
   constructor(private spinner: NgxSpinnerService,
-    private commonservice: CoreService,
-    private dropdownservice: DropDownService) { }
+    private dropdownservice: DropDownService,
+    private commonservice: CoreService) { }
 
   ngOnInit() {
     this.spinner.show();

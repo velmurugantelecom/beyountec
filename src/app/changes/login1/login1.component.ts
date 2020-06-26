@@ -44,7 +44,7 @@ export class Login1Component implements OnInit {
   }
 
   ngOnInit() {
-    //localStorage.clear();
+    // localStorage.clear();
     localStorage.removeItem('tokenDetails');
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
@@ -73,21 +73,21 @@ export class Login1Component implements OnInit {
 
 
 
-  submitForm() {
-    if (this.LoginForm.status == 'INVALID') {
-      return
-    }
-    let value = this.LoginForm.value;
-    this.commonService.postInputs('login/signIn', value, {}).subscribe(response => {
-      let data = response.data;
-      localStorage.setItem('tokenDetails', data.token);
-      localStorage.setItem('Username', data.userName)
-      localStorage.setItem('isLoggedIn', 'true');
-      this.authService.isUserLoggedIn.next(true);
-      this.authService.isGuestUser.next(false);
-      this.router.navigate([`/User/dashboard`]);
-    });
-  }
+  // submitForm() {
+  //   if (this.LoginForm.status == 'INVALID') {
+  //     return
+  //   }
+  //   let value = this.LoginForm.value;
+  //   this.commonService.postInputs('login/signIn', value, {}).subscribe(response => {
+  //     let data = response.data;
+  //     localStorage.setItem('tokenDetails', data.token);
+  //     localStorage.setItem('Username', data.userName)
+  //     localStorage.setItem('isLoggedIn', 'true');
+  //     this.authService.isUserLoggedIn.next(true);
+  //     this.authService.isGuestUser.next(false);
+  //     this.router.navigate([`/User/dashboard`]);
+  //   });
+  // }
 
   getChassisNumber() {
     this.router.navigate(['/demo-motor-info'])

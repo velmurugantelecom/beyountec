@@ -29,7 +29,6 @@ import { QuoteDialog } from './home/home.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
-import { DropDownService } from './core/services/dropdown.service';
 import { EmailPopupComponent } from './modal/email-popup/email-popup.component';
 import { WebCamComponent } from './shared/web-cam/web-cam.component';
 import { WebcamModule } from 'ngx-webcam';
@@ -39,7 +38,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { NgxCurrencyModule } from "ngx-currency";
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -52,6 +51,7 @@ import { ProductChangePopupComponent } from './modal/product-change/product-chan
 import { Login1Component } from './changes/login1/login1.component';
 import { Motorinfo1Component } from './changes/motorinfo1/motorinfo1.component';
 import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.component';
+import { DropDownService } from './core/services/dropdown.service';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -94,10 +94,11 @@ export const MY_CUSTOM_FORMATS = {
     //angularLib
     CommonModule,
     BrowserModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule,  
     NgSelectModule,
     NgxSpinnerModule,
     HttpClientModule,
+    NgxCurrencyModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-top-right',
@@ -129,9 +130,9 @@ export const MY_CUSTOM_FORMATS = {
   ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload],
   providers: [
     CoreService,
-    DropDownService,
     AuthGuard,
     GuestAuthGuard,
+    DropDownService,
     AuthService,
 
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },

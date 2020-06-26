@@ -34,11 +34,9 @@ export class AppComponent implements OnInit {
     // multi language 
     this.translate.addLangs(['en', 'ar']);
     // this.translate.setDefaultLang('en');
-   // let browserLang = this.translate.getBrowserLang();
-   // this.translate.use(browserLang.match(/en|fa/) ? browserLang : 'en');
-
-   let  browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
-    console.log(browserLang);
+    // let browserLang = this.translate.getBrowserLang();
+    // this.translate.use(browserLang.match(/en|fa/) ? browserLang : 'en');
+    let  browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
     this.appService._languageChange.next(browserLang);
 
     // back button
@@ -72,6 +70,7 @@ export class AppComponent implements OnInit {
 
     this.auth.isGuestUser.subscribe(value => {
       if (value) {
+        console.log(value);
         this.startWatching('guest');
       } else {
         this.stopWatching();
@@ -80,25 +79,26 @@ export class AppComponent implements OnInit {
 
     this.userIdle.onTimerStart().subscribe(count => {
       if (this.isLoggedInUser)
-      if (count === 1) {
-        let dialogRef = this.dialog.open(TimeoutDialogComponent, {
-          width: '400px',
-          data: {}
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result || result === undefined) {
-            this.LogOut();
-          } else {
-            this.restart();
-          }
-        });
-      }
+        if (count === 1) {
+          let dialogRef = this.dialog.open(TimeoutDialogComponent, {
+            width: '400px',
+            data: {}
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result || result === undefined) {
+              this.LogOut();
+            } else {
+              this.restart();
+            }
+          });
+        }
     });
   }
 
   stopWatching() {
     this.userIdle.stopWatching();
   }
+
   bodyStyleChange(value) {
     let body = document.getElementsByTagName('body')[0];
     if (value === 'en') {
@@ -108,15 +108,15 @@ export class AppComponent implements OnInit {
       body.dir = "rtl";
     }
   }
+
   startWatching(value) {
     this.userIdle.startWatching();
-    if (value === 'guest') {
-      this.pingSubscription = this.userIdle.ping$.subscribe(value => {
-        this.auth.ocall().subscribe(() => {
-          console.log("Refreshed token");
-        });
+    this.pingSubscription = this.userIdle.ping$.subscribe(value => {
+      this.auth.ocall().subscribe(() => {
+        console.log("Refreshed token");
       });
-    }
+    });
+
   }
 
   restart() {
@@ -129,7 +129,7 @@ export class AppComponent implements OnInit {
     this.spinner.show();
     this.auth.logout().subscribe(Response => {
       if (Response) {
-       // localStorage.clear();
+        // localStorage.clear();
        localStorage.removeItem('tokenDetails');
        localStorage.removeItem('Username');
        localStorage.removeItem('guesttokenDetails');

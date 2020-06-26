@@ -3,7 +3,6 @@ import { DatePipe } from "@angular/common";
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../core/services/core.service';
 import { AppService } from '../core/services/app.service';
-import { DropDownService } from '../core/services/dropdown.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from 'jquery';
@@ -11,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
+import { DropDownService } from '../core/services/dropdown.service';
 
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
@@ -47,11 +47,11 @@ export class QuoteSummaryComponent implements OnInit {
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
     private appService: AppService,
-    private dropdownservice: DropDownService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private dropdownservice: DropDownService) {
 
     this.route.queryParams
       .subscribe(params => {

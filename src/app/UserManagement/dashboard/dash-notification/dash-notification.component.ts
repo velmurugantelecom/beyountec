@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
-import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { Customer360Service } from '../../customer360/customer360.service';
 import { Router } from '@angular/router';
 import { chooseProduct } from 'src/app/shared/product-selection/product-selection.component';
 import { AppService } from 'src/app/core/services/app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DropDownService } from 'src/app/core/services/dropdown.service';
 
 @Component({
   selector: 'app-dash-notification',
@@ -37,8 +37,8 @@ export class DashNotificationComponent implements OnInit {
 
 
   constructor(private postService: CoreService,
-    private dropdownservice: DropDownService,
     private router: Router, public dialog: MatDialog, private customerService: Customer360Service,
+    private dropdownservice: DropDownService,
     private appService: AppService, private service: CoreService, private spinner: NgxSpinnerService) {
     this.selectedColumns['Quotes'] = ['quoteNo', 'insuredName', 'product', 'emailId', 'status'];
     this.selectedColumns['Renewal'] = ['quoteNo', 'insuredName', 'product', 'startDate', 'endDate', 'status'];

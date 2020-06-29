@@ -65,7 +65,7 @@ export class GetQuoteComponent implements OnInit {
         mobileCode: response['data'][0].value
       });
     });
-    this.dropdownservice.getInputs("brokerservice/vehicledetails/productType", '').subscribe((response: any) => {
+    this.dropdownservice.getInputs("brokerservice/options/product/list", '').subscribe((response: any) => {
       this.dropdownOptions = response.data;
     });
   }

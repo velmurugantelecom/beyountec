@@ -140,5 +140,8 @@ export class ReqForEndorsmentComponent implements OnInit {
   customer360() {
     this.router.navigate(['/Customer360'], { queryParams: { policyNo: this.navParams.policyNo } });
   }
+  policyPage() {
+    this.router.navigate(['/User/dashboard']);
+  }
 
 }

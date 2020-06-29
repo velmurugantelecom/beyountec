@@ -23,9 +23,22 @@
         </ul>
         <ul style="min-width: 100px;" class="navbar-nav ml-auto custom-cursor"
         [matMenuTriggerFor]="languageMenu">
+        <div *ngIf="selectedLanguage" style=" border: 2px solid white;display: flex; justify-content: space-around;padding:5px;">
+          
         <button class="nav-item navlist  my-auto" mat-icon-button>
-          <img src="assets/sharedimg/arabic.png" style="height: 18px;width: 28px;">
-        </button> 
+        <img src="assets/sharedimg/english.png" style="height: 18px;width: 28px;">
+      </button> 
+      <span style="margin-top: 07px;color:white;font-size: 18px;">EN</span>
+    
+      </div>
+      <div *ngIf="!selectedLanguage" style=" border: 2px solid white;display: flex; justify-content: space-around;padding:5px;">
+          
+        <button class="nav-item navlist  my-auto" mat-icon-button>
+        <img src="assets/sharedimg/arabic.png" style="height: 18px;width: 28px;">
+      </button> 
+      <span style="margin-top: 07px;color:white;font-size: 18px;">AR</span>
+    
+      </div>
      </ul> 
       
       <ul class="navbar-nav ml-auto">

@@ -93,12 +93,12 @@ export class HeaderComponent implements OnInit {
     this.languageInfoEmitter.emit(value);
     localStorage.setItem('language', value);
     if (value === 'en') {
-      this.selectedLanguage = 'English';
+      this.selectedLanguage = true;
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);
       this.navbarList();
     } else if (value === 'ar') {
-      this.selectedLanguage = 'Arabic';
+      this.selectedLanguage = false;
       this.languageFlag = './assets/sharedimg/en-flag.png';
       this.translate.use(value);
       this.navbarList();

@@ -263,7 +263,7 @@ export class MotorContainerComponent implements OnInit {
       data['vehicleDetails']['noOfDoors'] = this.quoteDetails['vehicleDetails']['noOfDoors'];
       data['vehicleDetails']['colorId'] = this.quoteDetails['vehicleDetails']['colorId'];
       data['vehicleDetails']['gccCountryId'] = this.quoteDetails['vehicleDetails']['gccCountryId'];
-      data['vehicleDetails']['prevPolicyExpDate'] = this.quoteDetails['vehicleDetails']['prevPolicyExpDate'];
+      // data['vehicleDetails']['prevPolicyExpDate'] = this.quoteDetails['vehicleDetails']['prevPolicyExpDate'];
       // insured details
       data['insured']['address4'] = this.quoteDetails['userDetails']['address4'];
       data['insured']['nationality'] = this.quoteDetails['userDetails']['nationality'];

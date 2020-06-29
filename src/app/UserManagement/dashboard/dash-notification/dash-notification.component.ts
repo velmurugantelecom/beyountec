@@ -17,7 +17,7 @@ import { DropDownService } from 'src/app/core/services/dropdown.service';
 export class DashNotificationComponent implements OnInit {
   displayedColumns: string[] =['PolicyNo', 'QuoteNo', 'startDate', 'endDate', 'product', 'status'];
   selectedColumns: any = [];
-  tableData: any = {};
+  tableData: any = [];
   subscription: Subscription;
   dataSource: any;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -64,7 +64,14 @@ export class DashNotificationComponent implements OnInit {
       if (!result || result.length === 0) {
         return;
       }
-      this.tableData = result.data;
+      let tempArray = [];
+      result.data.forEach((quote) => {
+        let sgsId = quote.sgsId + '';
+        if (quote.quoteNo != sgsId) {
+          tempArray.push(quote);
+        }
+      })
+      this.tableData = tempArray;
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

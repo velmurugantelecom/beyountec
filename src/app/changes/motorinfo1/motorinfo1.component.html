@@ -1,9 +1,9 @@
 <div class="container " style="overflow-x: hidden;">
 
 
-    <div class="row d-flex justify-content-center mt-2 pr-4 pl-4 ">
+    <div class="row d-flex justify-content-center mt-2 px-2">
 
-        <mat-card class="row col-md-8 col-sm-12" tabindex="-1" style="background-color: #80bbac;">
+        <mat-card class="row col-md-10 col-sm-12" tabindex="-1" style="background-color: #80bbac;">
             <div class="row p-1" >
                 <div class="col-md-4 fbold">Product Type: Full Insurance</div>
                 <div class="col-md-4 fbold">Mobile No: 058 - 2302547</div>
@@ -14,21 +14,22 @@
     </div>
 
     <div class="d-flex justify-content-center  mt-3" style="font-size: 26px;font-family: LatoLight!important;">
-        Lets start building your quote, provide your vehicle details
-        <!-- 1 more step to go, enter your Vehicle details -->
+        <!-- Lets start building your quote, provide your vehicle details -->
+        1 more step to go, enter your Vehicle details
     </div>
-
+<br />
     <div class="row d-flex justify-content-center mt-2">
 
-        <div class="row col-md-8 col-sm-12 m-0 p-0">
+        <div class="row col-md-10 col-sm-12 m-0 p-0">
 
 
-            <div style="margin-top: 3px;" class="col-md-5 col-sm-6 col-12 border-block">
+            <div  class="col-md-5 col-sm-6 col-12 border-block">
 
-                <div  class="d-flex justify-content-center mb-1" style="height: 52px;">
-                    <img src="./assets/new-screen/chassis-blue.png" />
-                    <!-- <img src="./assets/new-screen/chassis-green.png" /> -->
+                <div  class="d-flex justify-content-center mb-2" >
+                    <!-- <img src="./assets/new-screen/chassis-blue.png" /> -->
+                    <img src="./assets/new-screen/chassis-green.png" />
                 </div>
+                <br />
                 <mat-form-field appearance="outline">
                     <mat-label>Search by Chassis Number</mat-label>
                     <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" uppercase
@@ -42,10 +43,11 @@
 
             <div class="col-md-7 col-sm-6 col-12 ">
 
-                <div class="d-flex justify-content-center mb-1">
-                    <img src="./assets/new-screen/car-blue.png" />
-                    <!-- <img src="./assets/new-screen/car-green.png" /> -->
+                <div class="d-flex justify-content-center mb-2">
+                    <!-- <img src="./assets/new-screen/car-blue.png" /> -->
+                    <img src="./assets/new-screen/car-green.png" />
                 </div>
+                <br />
                 <ng-select style=" text-align: center;" bindLabel="label" class="custom"
                     placeholder="Search by Vehicle Details" (change)="onchangeLoadDropdown()" appendTo="body"
                     (clear)="reset()" [(ngModel)]="selected" [searchable]="true" maxSelectedItems="3" [clearable]="true"
@@ -62,7 +64,7 @@
 
     <div class="row d-flex justify-content-center" *ngIf="showgrid && !showInfo">
 
-        <mat-card class="row col-md-8 col-sm-6 col-12 ">
+        <mat-card class="row col-md-10 col-sm-8 col-12 ">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -119,7 +121,7 @@
         <div class="row d-flex justify-content-center">
 
             <form id="form" [formGroup]="vehicleForm" focusInvalidInput autocomplete="off"
-                class="row col-md-8 col-sm-12 m-0 p-0">
+                class="row col-md-10 col-sm-12 m-0 p-0">
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
@@ -284,7 +286,7 @@
         </div>
 
         <div class="row d-flex justify-content-center">
-            <form id="form1" [formGroup]="insuredForm" class="row col-md-8 col-sm-12 m-0 p-0" focusInvalidInput
+            <form id="form1" [formGroup]="insuredForm" class="row col-md-10 col-sm-12 m-0 p-0" focusInvalidInput
                 autocomplete="off">
                 <div class="col-md-8 col-sm-6">
                     <div class="row ">
@@ -319,7 +321,7 @@
 
 
         <div class="row d-flex justify-content-center">
-            <div style="padding-left: 15px;padding-right: 15px;" class="col-md-8 col-sm-12 m-0">
+            <div style="padding-left: 15px;padding-right: 15px;" class="col-md-10 col-sm-12 m-0">
                 <div class="d-flex justify-content-between">
                     <button (click)="routerBack()" class=" pr-3 btn button btn-default bggreen fwhite">
                         <i class="fa fa-arrow-left"></i>
@@ -343,7 +345,7 @@
 <div class="d-flex" class="footer">
     <div>
         <span style="float:left">
-            Copyright © Beyontec 2019. All rights reserved.
+            Copyright &copy; AFNIC | Powered by Beyontec
         </span>
         <span style="float:right; margin-right: 15px;">
             Call 800 Afnic any Time for Assistance

@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
 
   openDialog(Type: string, Title: string): void {
     let dialogRef = this.dialog.open(QuoteDialog, {
-      width: '400px',
+      width: '500px',
       data: { QType: Type, QTitle: Title }
     });
     dialogRef.afterClosed().subscribe(result => {

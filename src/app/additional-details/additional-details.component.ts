@@ -104,7 +104,7 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   private _filter(value): string[] {
-    const filterValue = value ? value.toLowerCase(): '';
+    const filterValue = value ? value.toLowerCase() : '';
 
     let c = this.options['bankName'].filter(option => option['label'].toLowerCase().includes(filterValue));
     return c
@@ -182,10 +182,12 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   addAdditionalDetail(stepper: MatStepper) {
+    if (this.showBankField) {
       if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
         this.additionalDetails.controls['bankName'].setValue(null);
         this.selectedBank = '';
         return;
+      }
     }
     if (this.additionalDetails.invalid) {
       return;
@@ -233,7 +235,7 @@ export class AdditionalDetailsComponent implements OnInit {
       quoteNumber: this.quoteNo
     }
     if (!this.effectiveDateChanged)
-    this.changeEffectiveDate('',null)
+      this.changeEffectiveDate('', null)
     this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
@@ -411,6 +413,7 @@ export class AdditionalDetailsComponent implements OnInit {
       city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
+    this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
   }
 
   // dynamic 
@@ -439,14 +442,8 @@ export class AdditionalDetailsComponent implements OnInit {
           }
         )
         index++;
-      })
-      // }
+      });
     });
-
-
-
-
-
   }
 
   validateAllFormFields(formGroup: FormGroup) {
@@ -478,14 +475,10 @@ export class AdditionalDetailsComponent implements OnInit {
             }
           )
         });
-
       }
       else {
         this.getDocuments()
       }
-
-
-
     });
   }
 
@@ -528,7 +521,6 @@ export class AdditionalDetailsComponent implements OnInit {
     });
   }
 
-
   openDialog(docId, i, value, controlName): void {
     if (i === 0) {
       value = 'Vehicle Registration Card or Vehicle Transfer Certificate or Vehicle Customs Certificate';
@@ -538,11 +530,14 @@ export class AdditionalDetailsComponent implements OnInit {
       data: { docId: docId, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-      this.fileContainer[i].value = result[0].docDesc;
-      this.DocUploadForm.controls[controlName] = result[0].docDesc;
+      if (result) {
+        this.fileContainer[i].value = result[0].docDesc;
+        this.DocUploadForm.value[controlName] = result[0].docDesc;
+        this.DocUploadForm.controls[controlName].setErrors(null);
+      }
     })
   }
+
   dataURItoBlob(dataURI) {
     // convert base64/URLEncoded data component to raw binary data held in a string
     var byteString;

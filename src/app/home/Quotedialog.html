@@ -15,7 +15,7 @@
     <!--  -->
     <mat-step [stepControl]="quoteForm" class="m-2">
         <form [formGroup]="quoteForm" focusInvalidInput class="mt-2">
-            <ng-template matStepLabel>Fill out your QuoteNo</ng-template>
+            <ng-template matStepLabel>Fill out your Quote Number</ng-template>
 
 
             <div>
@@ -41,7 +41,7 @@
 
     <mat-step class="m-2" [stepControl]="OtpForm">
         <form [formGroup]="OtpForm">
-            <ng-template matStepLabel>Fill out your Otp</ng-template>
+            <ng-template matStepLabel>Fill out your OTP</ng-template>
 
             <div class="centertext fgreen p-1" >
                 <div>We've sent you an OTP. Check your email and enter below
@@ -51,7 +51,7 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label> OTP </mat-label>
-                    <input matInput placeholder="Enter Your Otp here" formControlName="otp" required>
+                    <input matInput placeholder="Enter OTP" formControlName="otp" required>
                     <mat-error *ngIf="OtpForm.controls.otp.errors && OtpForm.controls.otp.errors.required">
                         Otp is required</mat-error>
                 </mat-form-field>
@@ -63,10 +63,11 @@
 
             <div class="d-flex justify-content-center">
 
-                <button class="m-2 btn btn-home button fwhite bggreen centercss" mat-button
-                    matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="verifyOtp()"
-                    class="m-2 btn btn-home button fwhite bggreen centercss">verify Otp</button>
+                <!-- <button class="m-2 btn btn-home button fwhite bggreen centercss" mat-button
+                    matStepperPrevious>Back</button> -->
+                    <button mat-button matStepperNext (click)="verifyOtp()"
+                    class="m-2 btn btn-home button fwhite bggreen centercss">Verify OTP</button>
+                    <button  (click)="sendEmail()" class="btn btn-home m-2 bggreen fwhite centercss button">Resend OTP?</button>
             </div>
 
         </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -88,6 +88,7 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
+
 
   changeLanguage(value) {
     this.languageInfoEmitter.emit(value);

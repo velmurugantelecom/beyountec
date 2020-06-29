@@ -114,7 +114,7 @@ export class ScanAndUpload {
   scanUpload(blob1, blob2, docId, filename, q) {
     this.spinner.show();
     const formData = new FormData();
-    formData.append('files', blob1, 'front');
+    formData.append('files', blob1, filename);
     if (blob2 != null)
       formData.append('files', blob2, 'back');
     formData.append('doctypeid', docId);

@@ -14,6 +14,7 @@ import { WebCamComponent } from '../shared/web-cam/web-cam.component';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-additional-details',
@@ -38,6 +39,8 @@ export class AdditionalDetailsComponent implements OnInit {
   public activeStepper;
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
+  yes:any;
+  no:any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
@@ -52,6 +55,7 @@ export class AdditionalDetailsComponent implements OnInit {
     private fb: FormBuilder,
     public toasterService: ToastrService,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
     private dropdownservice: DropDownService
   ) { }
 
@@ -160,14 +164,25 @@ export class AdditionalDetailsComponent implements OnInit {
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
       }
+      this.translate.get('Yes') .subscribe(value => { 
+        this.yes = value; 
+      } );
+      this.translate.get('No') .subscribe(value => { 
+        this.no = value; 
+      } );
       this.mailId = this.quoteDetails.userDetails.email;
-      this.options['financed'] = [{
-        label: 'YES',
-        value: 'Y'
-      }, {
-        label: 'NO',
+      this.options['financed'] = [ 
+        {
+        label: this.no,
         value: 'N'
-      }];
+      },{
+        label: this.yes,
+        value: 'Y'
+      },];
+      this.additionalDetails.patchValue({
+        mortgagedYN: this.options['financed'][0].value
+      });
+
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
       this.getDropDownOptions('nationality', 'NATIONALITY');
@@ -394,7 +409,7 @@ export class AdditionalDetailsComponent implements OnInit {
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
-      mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+    //  mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
       bankName: this.quoteDetails.vehicleDetails['bankName'],
       registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],

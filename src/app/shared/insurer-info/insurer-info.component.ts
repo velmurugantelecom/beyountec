@@ -310,15 +310,24 @@ export class InsurerInfoComponent implements OnInit {
     }
   }
 
-  onGenderChange(event) {
-    let value;
-    console.log(event)
-    if (event === 'M')
-    value = 'Mr';
+  onGenderChange(event, type) {
+    let gender, prefix;
+    if (type === 'prefix') {
+      if (event.value === 'Mr')
+      gender = 'M';
     else 
-    value = 'Mrs'
+    gender = 'F'
     this.insurerForm.patchValue({
-      prefix: value
+      gender: gender
     });
+    } else {
+      if (event.value === 'M')
+      prefix = 'Mr';
+      else 
+      prefix = 'Mrs'
+      this.insurerForm.patchValue({
+        prefix: prefix
+      });
+    }
   }
 }

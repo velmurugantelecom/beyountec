@@ -46,6 +46,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public maxEffectiveDate;
   public today = moment(new Date()).subtract(1, 'd')
   public effectiveDateChanged = false
+  public currentEffDate;
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
     private appService: AppService,
@@ -55,8 +56,9 @@ export class AdditionalDetailsComponent implements OnInit {
     private fb: FormBuilder,
     public toasterService: ToastrService,
     private cdr: ChangeDetectorRef,
+    private dropdownservice: DropDownService,
     private translate: TranslateService,
-    private dropdownservice: DropDownService
+    
   ) { }
 
   ngOnInit() {
@@ -114,12 +116,15 @@ export class AdditionalDetailsComponent implements OnInit {
     return c
   }
 
-  changeEffectiveDate(event, type) {
+  changeEffectiveDate() {
+
+  }
+  updateEffectiveDate(type) {
     let effectiveDate;
     if (type === 'change') {
       this.effectiveDateChanged = true;
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    } else {
+    }else {
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     }
     let params = {
@@ -151,12 +156,9 @@ export class AdditionalDetailsComponent implements OnInit {
       else {
         this.spinner.hide();
       }
-
-
-      this.maxEffectiveDate = moment(new Date()).add('days', 15)['_d'];
+      this.maxEffectiveDate = moment(new Date()).add('days', 60)['_d'];
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
-
       this.getUploadedDocs();
       if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "Dubai") {
         this.additionalDetails.get('registrationMark').setValidators([]);
@@ -182,7 +184,6 @@ export class AdditionalDetailsComponent implements OnInit {
       this.additionalDetails.patchValue({
         mortgagedYN: this.options['financed'][0].value
       });
-
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
       this.getDropDownOptions('nationality', 'NATIONALITY');
@@ -249,8 +250,10 @@ export class AdditionalDetailsComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-    if (!this.effectiveDateChanged)
-      this.changeEffectiveDate('', null)
+    if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
+      this.updateEffectiveDate('change')
+      else 
+      this.updateEffectiveDate(null)
     this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
@@ -409,7 +412,7 @@ export class AdditionalDetailsComponent implements OnInit {
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
-    //  mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+      mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
       bankName: this.quoteDetails.vehicleDetails['bankName'],
       registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],
@@ -429,6 +432,16 @@ export class AdditionalDetailsComponent implements OnInit {
       // country: this.quoteDetails.userDetails['country']
     });
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
+    let effectivDate;
+    if(this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
+      effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
+    } else {
+      effectivDate = moment(new Date());
+    }
+    this.additionalDetails.patchValue({
+      effectiveDate: effectivDate
+    });
+    this.currentEffDate = effectivDate;
   }
 
   // dynamic 

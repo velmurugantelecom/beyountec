@@ -39,7 +39,6 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxCurrencyModule } from "ngx-currency";
-
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
@@ -52,6 +51,8 @@ import { Login1Component } from './changes/login1/login1.component';
 import { Motorinfo1Component } from './changes/motorinfo1/motorinfo1.component';
 import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.component';
 import { DropDownService } from './core/services/dropdown.service';
+import { NewLoginScreen } from './new screen/login1/login1.component';
+import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -89,6 +90,8 @@ export const MY_CUSTOM_FORMATS = {
     ContentPopupComponent,
     Motorinfo1Component,
     Login1Component,
+    NewLoginScreen,
+    NewMotorInfoScreen
   ],
   imports: [
     //angularLib

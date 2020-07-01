@@ -210,13 +210,16 @@
                                         formControlName="effectiveDate" required
                                         [min]="today"
                                         [max]="maxEffectiveDate"
-                                        (ngModelChange)="changeEffectiveDate($event, 'change')"
                                         >
                                         <owl-date-time #effectiveDate [pickerType]="'calendar'"></owl-date-time>
                                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effectiveDate">
                                             date_range</mat-icon>
                                         <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('required')">Policy Effective Date is required
                                         </mat-error>
+                                        <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMin')">
+                                            Policy Effective can't be less than current Date</mat-error>
+                                            <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMax')">
+                                                Policy Effective can't be greater than 60 Days</mat-error>
                                       </mat-form-field>
                                     </div>
                                 </div>

@@ -17,6 +17,8 @@ import { MessageComponent } from './shared/message/message.component';
 import { PaymentFailedComponent } from './shared/payment-failed/payment-failed.component';
 import { Login1Component } from './changes/login1/login1.component';
 import { Motorinfo1Component } from './changes/motorinfo1/motorinfo1.component';
+import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
+import { NewLoginScreen } from './new screen/login1/login1.component';
 
 const routes: Routes = [
   {
@@ -90,6 +92,14 @@ const routes: Routes = [
   {
     path: 'demo-motor-info',
     component: Motorinfo1Component
+  },
+  {
+    path: 'new-login',
+    component: NewLoginScreen
+  },
+  {
+    path: 'new-motor-info',
+    component: NewMotorInfoScreen
   },
   {
     path: 'testcomponent',

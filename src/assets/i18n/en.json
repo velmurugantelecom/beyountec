@@ -426,7 +426,8 @@
         "Dob": "Enter Date of Birth",
         "EffectiveDate": "Enter Effective Date",
         "RegistrationNo":"Enter Registration No",
-        "EngineNo": "Enter Engine No"
+        "EngineNo": "Enter Engine No",
+        "RegisteredDate": "Enter First Registration Date"
     },
     "Invalid": {
         "LicenseIssueDate": "License Issue Date should be greater than or equal to 18 from DOB",

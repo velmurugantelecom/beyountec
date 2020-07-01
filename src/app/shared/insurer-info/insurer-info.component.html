@@ -33,7 +33,7 @@
             <div>
                 <mat-form-field style="width: 71px;" appearance="outline">
                     <mat-label>{{'Prefix' | translate}}</mat-label>
-                        <mat-select formControlName="prefix">
+                        <mat-select formControlName="prefix" (selectionChange)="onGenderChange($event, 'prefix')">
                                 <mat-option *ngFor="let prefix of options.prefix"
                                         [value]="prefix.value"> {{ prefix.label}}
                                 </mat-option>
@@ -59,7 +59,7 @@
             <div class="col-md-4 col-sm-6">    
                 <mat-form-field appearance="outline">
                     <mat-label>{{'Gender' | translate}}</mat-label>
-                    <mat-select required formControlName="gender" (ngModelChange)="onGenderChange($event)">
+                    <mat-select required formControlName="gender" (selectionChange)="onGenderChange($event, 'gender')">
                         <mat-option *ngFor="let gender of options.gender" [value]="gender.value">
                             {{ gender.label }}
                         </mat-option>

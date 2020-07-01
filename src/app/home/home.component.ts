@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { EmailPopupComponent } from '../modal/email-popup/email-popup.component';
 import { AuthService } from '../core/services/auth.service';
-
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-home',
@@ -60,22 +60,11 @@ export class HomeComponent implements OnInit {
       data: { QType: Type, QTitle: Title }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      // if (result) {
-      //   this.router.navigate([`/additional-details`], {
-      //     queryParams: {
-      //       quoteNo: result,
-      //       retrieveQuote: true
-      //     }
-      //   });
-      // }
     });
   }
 }
 
-
 // dialoguecomponent
-
 @Component({
   selector: 'Quotedialog',
   templateUrl: './Quotedialog.html',
@@ -86,10 +75,7 @@ export class HomeComponent implements OnInit {
   
   cursor: pointer;
 }
-
-
-  `],
-
+  `]
 })
 export class QuoteDialog {
   dialogeDetails: any;
@@ -115,23 +101,21 @@ export class QuoteDialog {
   ngOnInit() {
     this.quoteForm = this.builder.group({
       type: ['', Validators.required],
-
     });
     this.OtpForm = this.builder.group({
       otp: ['', Validators.required]
     });
-
   }
 
 
-  sendEmail() {
+  sendEmail(stepper) {
     if (this.quoteForm.invalid) {
       return
     }
     this.spinner.show();
     this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails}`, '').subscribe(response => {
-      console.log(response)
       if (response) {
+        this.goForward(stepper)
         this.token = response;
         this.minutes = 2;
         this.seconds = 0;
@@ -139,17 +123,16 @@ export class QuoteDialog {
         this.showTimer();
       }
       this.spinner.hide();
-
     });
   }
 
   verifyOtp() {
+    if (this.OtpForm.status === 'INVALID')
+    return;
     this.service.getInputs1(`brokerservice/quotes/validateOtp?token=${this.token}&otp=${this.OtpForm.value['otp']}`, '').subscribe(response => {
       console.log(response)
       if (response == 'true') {
-        // this.retriveQuote()
         this.dialogRef.close();
-        console.log(response);
         this.router.navigate([`/additional-details`], {
           queryParams: {
             quoteNo: this.dialogeDetails,
@@ -160,24 +143,12 @@ export class QuoteDialog {
     });
   }
 
-  // retriveQuote() {
-  //   // //consol.log()
-
-  //   // return this.dialogeDetails;
-  //   this.service.getInputs1(`brokerservice/quotes?quoteNo=${this.dialogeDetails}&token=${this.token}`, '').subscribe(response => {
-  //     console.log(response)
-  //   });
-
-  // }
-
   showTimer() {
     setInterval(() => {
       if (this.totalMs >= 0) {
-
         this.minutes = Math.floor((this.totalMs % (1000 * 60 * 60)) / (1000 * 60));
         this.seconds = Math.floor((this.totalMs % (1000 * 60)) / 1000);
       }
-
       this.totalMs = this.totalMs - 1000;
       if (this.totalMs === 0) {
         this.doTimeout = true;
@@ -188,7 +159,9 @@ export class QuoteDialog {
   stopTimer() {
     this.doTimeout = false;
   }
-
+  goForward(stepper: MatStepper){
+    stepper.next();
+}
 }
 
 

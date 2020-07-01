@@ -78,34 +78,6 @@ export class GetQuoteComponent implements OnInit {
     return this.infoForm.controls;
   }
 
-  // validateChassisNo() {
-  //   if (this.chassisForm.status != 'INVALID') {
-  //     let params = {
-  //       chassisNo: this.chassisForm.value.chassisNo
-  //     }
-  //     this.service.getInputsDbsync('validateChassisNo', params).subscribe(res => {
-  //       this.getQuote();
-  //     });
-  //   }
-  // }
-
-  // getQuote(): void {
-  //     this.spinner.show();
-  //     let value = {
-  //       ...this.infoForm.value,
-  //       chassisNo: this.chassisForm.value.chassisNo
-  //     }
-  //     this.appService.setuserDetails(value);
-  //     let params = {
-  //       chassisNo: this.chassisForm.value.chassisNo
-  //     }
-  //     this.service.getInputsDbsync(this.autoDataURL,params).subscribe(res =>{
-  //       this.appService.setVehicleAutoData(res);
-  //       this.spinner.hide();
-  //       this.router.navigate(['/motor-info']);
-  //     });
-  // }
-
   getQuote(): void {
     this.spinner.show();
     let value = {
@@ -120,6 +92,7 @@ export class GetQuoteComponent implements OnInit {
       this.spinner.hide();
       this.router.navigate(['/motor-info']);
     }, err => {
+      console.log(err)
       this.invalidChassisNo = true;
       this.infoForm.controls['chassisNo'].setErrors({ 'incorrect': true });
     });
@@ -154,9 +127,9 @@ export class GetQuoteComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
+          if (result)
           this.router.navigate([`/Login`]);
         });
-        // this.infoForm.controls['email'].setErrors({ 'incorrect': true });
       } else {
 
         if (this.infoForm.value.productType === '') {
@@ -165,15 +138,22 @@ export class GetQuoteComponent implements OnInit {
         if (this.infoForm.status == 'INVALID') {
           return;
         } else {
+          this.saveAuditData();
           this.getQuote();
         }
-
       }
+    });
+  }
+
+  saveAuditData() {
+    let body = {
+      email: this.infoForm.value['email'],
+      mobNo: this.infoForm.value['mobileNo'],
+      loginSrc:'CP'
+    }
+    this.service.postInputs2('audit/users', body, '').subscribe(res => {
 
     })
-
-
-
   }
 
   RenewalSubmit() {

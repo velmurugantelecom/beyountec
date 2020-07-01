@@ -1,6 +1,7 @@
 // custome theme
 @import "~@angular/material/theming";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+// @import "~@ng-select/ng-select/themes/material.theme.css";
 @include mat-core();
 $my-primary: (
   A800: #26715e,

@@ -100,8 +100,10 @@ export class QuoteSummaryComponent implements OnInit {
           if (file.fileName.toLowerCase().includes('pdf')) {
             file['src'] = './assets/sharedimg/pdf.png'
           } else if (file.fileName.toLowerCase().includes('jpg') || file.fileName.toLowerCase().includes('png') || file.fileName.toLowerCase().includes('jpeg')){
-            file['src'] = './assets/sharedimg/image-icon.png'
-          } 
+            file['src'] = './assets/sharedimg/image-icon.png';
+          } else {
+            file['src'] = './assets/sharedimg/image-icon.png';
+          }
         });
         this.attachments = response;
       });

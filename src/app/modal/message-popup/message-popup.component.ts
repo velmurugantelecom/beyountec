@@ -20,6 +20,6 @@ export class MessagePopupComponent implements OnInit {
   }
 
   doRoute() {
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }

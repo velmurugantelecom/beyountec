@@ -4,6 +4,7 @@ import { CoreService } from 'src/app/core/services/core.service';
 import { AppService } from 'src/app/core/services/app.service';
 import { MatDialogRef } from '@angular/material';
 import { chooseProduct } from '../product-selection/product-selection.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-message',
@@ -13,17 +14,23 @@ import { chooseProduct } from '../product-selection/product-selection.component'
 export class MessageComponent implements OnInit {
 
   public type;
-  public text = `Thank you for quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
-  public arabicText = `شكرا لك على طلب الاقتباس. لا يمكن معالجة طلبك في هذا الوقت. سيتصل بك وكيلنا لاستكمال السياسة.`;
+  text:any;
+  quotationText:any;
+ // public text = `Thank you for quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
+  //public arabicText = `شكرا لك على طلب الاقتباس. لا يمكن معالجة طلبك في هذا الوقت. سيتصل بك وكيلنا لاستكمال السياسة.`;
   public icon = '';
 
   constructor(private route: ActivatedRoute,
     private coreService: CoreService,
     private appService: AppService,
+    private translate: TranslateService,
     ) {
     this.route.params.subscribe(params => {
       this.type = params['type']
     });
+    this.translate.get('MessageAlert') .subscribe(value => { 
+      this.text = value; 
+    } );
   }
 
   ngOnInit() {
@@ -48,9 +55,12 @@ export class MessageComponent implements OnInit {
         break;    
       }
       case 'quotation-failed': {
+        this.translate.get('QuotationFailedAlert') .subscribe(value => { 
+          this.quotationText = value; 
+        } );
         this.icon = 'info';
-        this.arabicText = '';
-        this.text = 'Thanks for Contacting AFNIC. We need more information to issue quote, Our Customer Service Representative will contact you shortly'
+      //  this.arabicText = '';
+        this.text =  this.quotationText;
         let params = {
           ...this.appService.getuserDetails(),
           reason:`Make year for the vehicle is  greater than seven years`

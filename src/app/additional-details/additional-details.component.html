@@ -170,7 +170,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'RegistrationNo'| translate }}</mat-label>
                                             <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}"
-                                                required formControlName="regNo" NumbersOnly maxlength="5">
+                                                required formControlName="regNo" NumbersOnly maxlength="5" (change)="registrationNoChange($event)">
                                             <mat-error
                                                 *ngIf="formCtrls.regNo.errors && formCtrls.regNo.errors.required">
                                                 {{'Required.RegistrationNo'| translate }}

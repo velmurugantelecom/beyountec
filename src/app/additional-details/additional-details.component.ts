@@ -160,7 +160,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
       this.getUploadedDocs();
-      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "Dubai") {
+      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.userDetails.address4 != "1102") {
         this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
@@ -276,7 +276,30 @@ export class AdditionalDetailsComponent implements OnInit {
     }
   }
 
+  registrationNoChange(regNoValue){
+    if(regNoValue.target.value.length>0){
+      this.additionalDetails.get('registrationMark').setValidators(Validators.required);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+    }
+    else{
+      this.additionalDetails.get('registrationMark').setValidators([]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+    }
+console.log(regNoValue.target.value+'vel');
+  }
   emiratesChange(value) {
+    if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || value != "1102") {
+      this.additionalDetails.get('registrationMark').setValidators([]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+      this.additionalDetails.get('regNo').setValidators([]);
+      this.additionalDetails.get('regNo').updateValueAndValidity();
+    }
+    else{
+      this.additionalDetails.get('registrationMark').setValidators(Validators.required);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+      this.additionalDetails.get('regNo').setValidators(Validators.required);
+      this.additionalDetails.get('regNo').updateValueAndValidity();
+    }
     let params = {
       productId: "*",
       filterByValue: value,

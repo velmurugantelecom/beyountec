@@ -284,6 +284,16 @@ export class AdditionalDetailsComponent implements OnInit {
     }
     this.coreService.getInputs('brokerservice/options/list', params).subscribe((response) => {
       this.options['city'] = response.data;
+      if(this.quoteDetails.userDetails['address4']==value){
+      this.additionalDetails.patchValue({
+        city: this.quoteDetails.userDetails['city'],
+      });
+    }
+    else{
+      this.additionalDetails.patchValue({
+        city: '',
+      });
+    }
     });
   }
 
@@ -408,11 +418,22 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   patchFormValues() {
+    if((this.quoteDetails.vehicleDetails['mortgagedYN']==null)||(this.quoteDetails.vehicleDetails['mortgagedYN']=='')){
+      this.additionalDetails.patchValue({
+        mortgagedYN:'N'
+      });
+    }
+    else{
+      this.additionalDetails.patchValue({
+        mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+      });
+
+    }
     this.additionalDetails.patchValue({
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
-      mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+     // mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
       bankName: this.quoteDetails.vehicleDetails['bankName'],
       registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],
@@ -428,7 +449,7 @@ export class AdditionalDetailsComponent implements OnInit {
       postBox: this.quoteDetails.userDetails['postBox'],
       address4: this.quoteDetails.userDetails['address4'],
       taxId: this.quoteDetails.userDetails['taxId'],
-      city: this.quoteDetails.userDetails['city'],
+     // city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];

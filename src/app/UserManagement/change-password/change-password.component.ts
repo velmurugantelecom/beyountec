@@ -109,8 +109,14 @@ export class ChangePasswordComponent implements OnInit {
         this.errors = result.data;
         this.changePassword.patchValue({newpassword: '', confirmpassword: ''});
       }
-      if (result.status === 200) {        
-         this.toastr.success('', 'Password successfully changed', {
+      else if(result.status === 404){
+        this.toastr.error('', result.message, {
+          timeOut: 3000
+        }); 
+        this.changePassword.patchValue({oldpassword: ''});
+      }
+      else if (result.status === 200) {        
+         this.toastr.success('', result.message, {
            timeOut: 2000
          });  
          this.header.LogOut();

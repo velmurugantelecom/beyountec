@@ -82,7 +82,8 @@ export class AdditionalDetailsComponent implements OnInit {
       address1: ['', [Validators.required]],
       address2: ['', []],
       occupation: ['', [Validators.required]],
-      postBox: ['', []]
+      postBox: ['', []],
+      personalId: ['', [Validators.required]]
     });
     this.DocUploadForm = this.fb.group({});
     this.route.queryParams
@@ -221,7 +222,8 @@ export class AdditionalDetailsComponent implements OnInit {
       email: this.quoteDetails.userDetails.email,
       licenseExpiryDate: this.quoteDetails.userDetails.licenseExpiryDate,
       mobileNo: this.quoteDetails.userDetails.mobileNo,
-      personalId: this.quoteDetails.userDetails.personalId,
+      //personalId: this.quoteDetails.userDetails.personalId,
+      personalId: this.additionalDetails.value['personalId'],
       nationality: this.additionalDetails.value['nationality'],
       fullNameBL: this.additionalDetails.value['fullNameBL'],
       firstNameBL: this.additionalDetails.value['fullNameBL'],
@@ -466,6 +468,7 @@ console.log(regNoValue.target.value+'vel');
       // prefix: this.quoteDetails.userDetails['prefixBL'],
       fullNameBL: this.quoteDetails.userDetails['fullNameBL'],
       occupation: this.quoteDetails.userDetails['occupation'],
+      personalId: this.quoteDetails.userDetails['personalId'],
       nationality: this.quoteDetails.userDetails['nationality'],
       address1: this.quoteDetails.userDetails['address1'],
       address2: this.quoteDetails.userDetails['address2'],

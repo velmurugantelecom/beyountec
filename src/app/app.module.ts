@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { AdditionalDetailsComponent } from './additional-details/additional-details.component';
 import { QuoteDialog } from './home/home.component';
 import { AuthGuard } from './core/guard/auth.guard';
+import { PolicyDialog } from './additional-details/additional-details.component';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
 import { EmailPopupComponent } from './modal/email-popup/email-popup.component';
@@ -86,6 +87,7 @@ export const MY_CUSTOM_FORMATS = {
     LoginComponent,
     AdditionalDetailsComponent,
     QuoteDialog,
+    PolicyDialog,
     TimeoutDialogComponent,
     EmailPopupComponent,
     MessagePopupComponent,
@@ -133,7 +135,7 @@ export const MY_CUSTOM_FORMATS = {
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
   ],
-  entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
+  entryComponents: [QuoteDialog,PolicyDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
   ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload],
   providers: [
     CoreService,

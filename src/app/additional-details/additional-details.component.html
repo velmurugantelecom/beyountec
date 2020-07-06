@@ -24,8 +24,10 @@
                             </p>
                             <p class="mb-1"> {{'YourEmail' | translate }}</p>
                         </div>
-                        <button type="button" class="btn button btn-default bggreen fwhite" matStepperNext
-                            (click)="doContinue('0')">{{'PurchasePolicy' | translate }}</button>
+                        <button type="button" class="btn button btn-default bggreen fwhite"
+                        (click)="openDialogs(stepper)">
+                        {{'PurchasePolicy' | translate }}
+                      </button>
                     </div>
                     <div class="mt-4">
                         <img class="mx-3 mt-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
@@ -37,7 +39,7 @@
 
             <mat-step>
                 <div class="row  ml-3" style="width: 100%;">
-                    <div class=" p-4 col-md-6 custom-bg pb-0">
+                    <div class=" p-4 col-md-4 custom-bg pb-0">
                         <div class="row  col-md-12">
                             <div class="col-md-12">
                                 <label class="label-field">{{'ChasisNo'| translate }}</label>
@@ -46,15 +48,18 @@
                         </div>
                         <hr class="mt-2 dotted-line" />
                         <div class="row  col-md-12">
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <label class="label-field">{{'TCNO'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
                             </div>
-                            <div class="col-md-5">
+                        </div>
+                        <hr class="mt-2 dotted-line" />
+
+                        <div class="row  col-md-12">
+                            <div class="col-md-12">
                                 <label class="label-field">{{'RegisteredAt'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.regCityDesc}}</div>
                             </div>
-
                         </div>
                         <hr class="mt-2 dotted-line" />
                         <div *ngIf="quoteDetails?.vehicleDetails?.repairName">
@@ -86,11 +91,15 @@
                         </div>
 
                         <div class="row col-md-12">
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <label class="label-field">{{'MakeYear'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.makeYear}}</div>
                             </div>
-                            <div class="col-md-5">
+                            
+                        </div>
+                        <hr class="mt-2 dotted-line" />
+                        <div class="row col-md-12">
+                            <div class="col-md-12">
                                 <label class="label-field">{{'VehicleUsageLabel'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
                             </div>
@@ -121,10 +130,11 @@
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.trim}}</div>
                             </div>
                         </div>
+                        <hr class="mt-2 dotted-line" />
                     </div>
 
 
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-8 p-0">
                         <form [formGroup]="additionalDetails" focusInvalidInput autocomplete="off">
                             <div>
                                 <div class="f18 col-md-12 mt-05 mb-1">
@@ -337,7 +347,7 @@
                                 </div>
                             </div>
                             <div class="row px-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>{{'Address1' | translate}}</mat-label>
                                         <input matInput placeholder="{{'PlaceHolder.Address1' | translate}}" required
@@ -348,9 +358,8 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                            </div>
-                            <div class="row px-3">
-                                <div class="col-md-12">
+                            
+                                <div class="col-md-6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>{{'Address2' | translate}}</mat-label>
                                         <input matInput placeholder="{{'PlaceHolder.Address2' | translate}}"

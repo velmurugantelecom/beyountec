@@ -12,6 +12,7 @@ export class AppService {
   quoteDetails: any = {};
   planDetails: any = {};
   vehicleAutoData: any = {};
+  policyPopup: boolean;
   
   public _insurerDetails: BehaviorSubject<any> = new BehaviorSubject([]);
   public _loginUserTcNumber: BehaviorSubject<any> = new BehaviorSubject([]);
@@ -51,5 +52,11 @@ export class AppService {
 
   getVehicleAutoData() {
     return this.vehicleAutoData;
+  }
+  setpolicyDetails(value: any): void {
+    this.policyPopup = value;
+  }
+  getpolicyDetails(): any {
+    return this.policyPopup;
   }
 }

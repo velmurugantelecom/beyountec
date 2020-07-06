@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef,Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { CoreService } from '../core/services/core.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DropDownService } from '../core/services/dropdown.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { AppService } from '../core/services/app.service';
-import { MatDialog } from '@angular/material';
 import { EmailPopupComponent } from '../modal/email-popup/email-popup.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
@@ -39,6 +39,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public activeStepper;
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
+public policyPopup:any;
   yes:any;
   no:any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
@@ -197,7 +198,7 @@ export class AdditionalDetailsComponent implements OnInit {
       });
     });
   }
-
+  
   addAdditionalDetail(stepper: MatStepper) {
     if (this.showBankField) {
       if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
@@ -287,7 +288,6 @@ export class AdditionalDetailsComponent implements OnInit {
       this.additionalDetails.get('registrationMark').setValidators([]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
-console.log(regNoValue.target.value+'vel');
   }
   emiratesChange(value) {
     if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || value != "1102") {
@@ -648,4 +648,62 @@ console.log(regNoValue.target.value+'vel');
   bankSelected(event: any) {
     this.selectedBank = event.option.value;
   }
+
+  openDialogs(stepper: MatStepper): void {
+    let dialogRef = this.dialog.open(PolicyDialog, {
+      width: '400',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    
+      let val = this.appService.getpolicyDetails();
+      if(val){
+        this.getCampus(stepper);
+      }
+     
+    });
+  }
+  getCampus(stepper){
+    stepper.next();
+  }
 }
+
+
+
+// dialoguecomponent
+@Component({
+  selector: 'Policydialog',
+  templateUrl: './Policydialog.html',
+  styles: [`
+ 
+.closeicon_css {
+  position: relative;
+  
+  cursor: pointer;
+}
+  `]
+})
+export class PolicyDialog {
+  dialogeDetails: any;
+  constructor(private appService: AppService,
+    public dialogRef: MatDialogRef<PolicyDialog>,
+    @Inject(MAT_DIALOG_DATA) public data,
+  ) { }
+
+  onNoClick(): void {
+    this.appService.setpolicyDetails(false);
+    this.dialogRef.close();
+  }
+
+  ngOnInit() {
+  }
+
+  goPolicy(){
+    this.appService.setpolicyDetails(true);
+    this.dialogRef.close();
+  }
+  
+
+
+}
+
+

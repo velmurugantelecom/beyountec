@@ -247,3 +247,16 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline
 .disable-cursor {
   cursor: not-allowed;
 }
+
+
+// disabled field's css
+
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.2) !important;
+} 
+.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.77) !important;
+}
+.mat-select-disabled .mat-select-value {
+  color: rgba(0, 0, 0, 0.77) !important;
+}

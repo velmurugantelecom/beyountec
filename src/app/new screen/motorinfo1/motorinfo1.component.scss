@@ -1,17 +1,40 @@
-
 ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
     background-color: #01785a;
    color: white;
+}
 
+.footer{
+    width: 100%;
+    background:#26715e;
+    position: absolute;
+    height: 35px;
+    font-size: 14px;
+    margin-top:30px;
+    color:white;
+    line-height: 35px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 78vh;
+    justify-content: center;
+    width: 100%;
+}
+.custom-bg {
+    background-image: linear-gradient(to right, #5ea997 60%, #1af954);
+    margin: 8px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 25px;
 }
 
 .border-block {
     border-right-style: solid;
     border-right-color: lightgrey;
     border-right-width: medium;
-
-
 }
+
 ng-value-icon{
     display: hidden!important;
 }
@@ -50,30 +73,3 @@ margin-top: 5px;
     padding: 4px 15px;
     height: 25px;
 }
-
-.footer{
-    width: 100%;
-    background:#26715e;
-    position: absolute;
-    height: 35px;
-    font-size: 14px;
-    margin-top:30px;
-    color:white;
-    line-height: 35px;
-  }
-
-
-  .container {
-    display: flex;
-     flex-direction: column;
-    min-height: 78vh;
-     justify-content: center;
-    //  align-items: center;
-  width: 100%;
-}
-
-// .centercss {
-//     display: flex;
-    
-    
-//   }

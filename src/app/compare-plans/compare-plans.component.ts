@@ -214,6 +214,19 @@ export class ComparePlansComponent implements OnInit {
       });
   }
 
+  // goBack() {
+  //   if (!this.planOb) {
+  //     this.router.navigate(['/new-motor-info']);
+  //     return
+  //   }
+  //   this.router.navigate(['/new-motor-info'],
+  //     {
+  //       queryParams: {
+  //         quoteNo: this.planOb['quoteNo'],
+  //         // reviseDetails: true
+  //       }
+  //     });
+  // }
 
   goBack() {
     if (!this.planOb) {

@@ -53,6 +53,9 @@ import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.componen
 import { DropDownService } from './core/services/dropdown.service';
 import { NewLoginScreen } from './new screen/login1/login1.component';
 import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { DataService } from './core/services/data.service';
+
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -102,6 +105,7 @@ export const MY_CUSTOM_FORMATS = {
     NgxSpinnerModule,
     HttpClientModule,
     NgxCurrencyModule,
+    NgxGaugeModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-top-right',
@@ -137,7 +141,7 @@ export const MY_CUSTOM_FORMATS = {
     GuestAuthGuard,
     DropDownService,
     AuthService,
-
+    DataService,
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },

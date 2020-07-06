@@ -315,7 +315,7 @@
     "SummaryForThe":"Summary for the ",
     "ProfileUpdated":"Profile Updated Successfully",
     "TcNoHints": "TC no. as per mulkiya.",
-    "MessageAlert": "Thank you for quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.",
+    "MessageAlert": "Sorry, Vehicle information not available in our system, our representative will contact you shortly.",
     "QuotationFailedAlert": "Thanks for Contacting AFNIC. We need more information to issue quote, Our Customer Service Representative will contact you shortly",
     "Required": {
         "Dob": "Date of Birth is required",

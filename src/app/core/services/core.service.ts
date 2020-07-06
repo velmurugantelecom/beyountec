@@ -12,18 +12,33 @@ export class CoreService {
   DevEndpointDbsync: string;
   PaymentEndpoint: string;
   DevEndpointAutoData: string;
-
+  greyImport: string;
   configs = {};
+  
   constructor(private http: HttpClient) {
     this.DevEndpoint = environment.DevEndpoint;
     this.DevEndpointDbsync = environment.DevEndpointdbsync;
     this.PaymentEndpoint = environment.PaymentEndpoint;
     this.DevEndpointAutoData = environment.DevEndpointAutoData;
+    this.greyImport  = environment.GreyImport;
     this.configs = config;
   }
 
   getLocalData(url) {
     return this.http.get("assets/json/" + url + ".json");
+  }
+
+  greyImportService(serviceAPI, params): Observable<any> {
+    let httpParams = new HttpParams();
+    if (params && params != "") {
+      for (let key in params) {
+        httpParams = httpParams.append(key, params[key])
+      }
+    }
+    let url = `${this.greyImport}${serviceAPI}`;
+    return this.http.get(url, {
+      params: httpParams
+    });
   }
 
   getInputs(serviceAPI, params): Observable<any> {

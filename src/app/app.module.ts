@@ -17,6 +17,7 @@ import { MotorModule } from './motor/motor.module';
 import { CoreModule } from './core/core.module';
 
 // components
+import { PolicyDialog } from './additional-details/additional-details.component';
 import { AppComponent, TimeoutDialogComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { GetQuoteComponent } from './get-quote/get-quote.component';
@@ -25,9 +26,7 @@ import { ComparePlansComponent } from './compare-plans/compare-plans.component';
 import { AppHttpInterceptor } from './app.interceptor';
 import { LoginComponent } from './login/login.component';
 import { AdditionalDetailsComponent } from './additional-details/additional-details.component';
-import { QuoteDialog } from './home/home.component';
 import { AuthGuard } from './core/guard/auth.guard';
-import { PolicyDialog } from './additional-details/additional-details.component';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
 import { EmailPopupComponent } from './modal/email-popup/email-popup.component';
@@ -52,7 +51,7 @@ import { Login1Component } from './changes/login1/login1.component';
 import { Motorinfo1Component } from './changes/motorinfo1/motorinfo1.component';
 import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.component';
 import { DropDownService } from './core/services/dropdown.service';
-import { NewLoginScreen } from './new screen/login1/login1.component';
+import { NewLoginScreen, QuoteDialog } from './new screen/login1/login1.component';
 import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { DataService } from './core/services/data.service';
@@ -87,7 +86,6 @@ export const MY_CUSTOM_FORMATS = {
     LoginComponent,
     AdditionalDetailsComponent,
     QuoteDialog,
-    PolicyDialog,
     TimeoutDialogComponent,
     EmailPopupComponent,
     MessagePopupComponent,
@@ -96,7 +94,8 @@ export const MY_CUSTOM_FORMATS = {
     Motorinfo1Component,
     Login1Component,
     NewLoginScreen,
-    NewMotorInfoScreen
+    NewMotorInfoScreen,
+    PolicyDialog
   ],
   imports: [
     //angularLib
@@ -135,8 +134,8 @@ export const MY_CUSTOM_FORMATS = {
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
   ],
-  entryComponents: [QuoteDialog,PolicyDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
-  ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload],
+  entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
+  ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload,PolicyDialog, QuoteDialog],
   providers: [
     CoreService,
     AuthGuard,

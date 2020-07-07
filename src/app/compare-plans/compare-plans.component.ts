@@ -214,33 +214,32 @@ export class ComparePlansComponent implements OnInit {
       });
   }
 
-  // goBack() {
-  //   if (!this.planOb) {
-  //     this.router.navigate(['/new-motor-info']);
-  //     return
-  //   }
-  //   this.router.navigate(['/new-motor-info'],
-  //     {
-  //       queryParams: {
-  //         quoteNo: this.planOb['quoteNo'],
-  //         // reviseDetails: true
-  //       }
-  //     });
-  // }
-
   goBack() {
     if (!this.planOb) {
-      this.router.navigate(['/motor-info']);
+      this.router.navigate(['/new-motor-info']);
       return
     }
-    this.router.navigate(['/motor-info'],
+    this.router.navigate(['/new-motor-info'],
       {
         queryParams: {
-          quoteNo: this.planOb['quoteNo'],
-          reviseDetails: true
+          quoteNo: this.planOb['quoteNo']
         }
       });
   }
+
+  // goBack() {
+  //   if (!this.planOb) {
+  //     this.router.navigate(['/motor-info']);
+  //     return
+  //   }
+  //   this.router.navigate(['/motor-info'],
+  //     {
+  //       queryParams: {
+  //         quoteNo: this.planOb['quoteNo'],
+  //         reviseDetails: true
+  //       }
+  //     });
+  // }
 
   isSelectedPlan(value) {
     if (value.confirmed)

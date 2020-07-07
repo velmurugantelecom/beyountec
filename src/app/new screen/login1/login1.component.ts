@@ -56,7 +56,6 @@ export class NewLoginScreen implements OnInit {
   }
 
   patchBasicDetails() {
-    console.log(this.dataService.getUserDetails());
     this.infoForm.patchValue(this.dataService.getUserDetails())
   }
 
@@ -130,6 +129,7 @@ export class NewLoginScreen implements OnInit {
       localStorage.setItem('isLoggedIn', 'true');
       this.authService.isUserLoggedIn.next(true);
       this.authService.isGuestUser.next(false);
+      this.dataService.setUserDetails({})
       this.router.navigate([`/User/dashboard`]);
     });
   }

@@ -70,7 +70,6 @@ export class AppComponent implements OnInit {
 
     this.auth.isGuestUser.subscribe(value => {
       if (value) {
-        console.log(value);
         this.startWatching('guest');
       } else {
         this.stopWatching();
@@ -113,7 +112,6 @@ export class AppComponent implements OnInit {
     this.userIdle.startWatching();
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
       this.auth.ocall().subscribe(() => {
-        console.log("Refreshed token");
       });
     });
 

@@ -199,7 +199,7 @@ export class QuoteSummaryComponent implements OnInit {
       reviseDetails: true
     }
     if (this.isQuickSummary === 'true') {
-      this.router.navigate(['/motor-info'],
+      this.router.navigate(['/new-motor-info'],
       {
         queryParams: value
       });

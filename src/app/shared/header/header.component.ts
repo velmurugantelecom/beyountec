@@ -3,6 +3,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/core/services/app.service';
+import { DataService } from 'src/app/core/services/data.service';
 
 
 @Component({
@@ -24,12 +25,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router, private commonService: AuthService,
     public translate: TranslateService,
-    public appService: AppService) {
+    public appService: AppService,
+    private dataService: DataService) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-      
         this.routerurl = event.url.slice(1).split("/")[0];
-        console.log(this.routerurl);
+        this.routerurl = this.routerurl.split("?")[0]
         this.navbarList()
       }
     });
@@ -39,7 +40,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.appService._languageChange.subscribe(res => {
-      console.log(res)
       this.changeLanguage(res);
     })
   }
@@ -52,20 +52,22 @@ export class HeaderComponent implements OnInit {
       this.home = value; 
     } );
     this.userType = localStorage.getItem("isLoggedIn");
-    this.username = localStorage.getItem("Username")
-    if (localStorage.getItem("isLoggedIn") == "false" && this.routerurl != 'Login') {
+    this.username = localStorage.getItem("Username");
+    if (localStorage.getItem("isLoggedIn") == "false" && this.routerurl != 'new-login') {
      
-      if (this.routerurl != 'home' && this.routerurl != '') {
+      if (this.routerurl != 'new-login' && this.routerurl != '') {
         this.menus = [
-          { label: this.home, value: 'home' },
-          { label: this.loginSignup, value: 'Login' },
+          { label: this.home, value: 'new-login' }
         ];
       } else {
         this.menus = [
-          { label: this.loginSignup, value: 'Login' }
+          // { label: this.loginSignup, value: 'Login' }
+          { label: this.home, value: 'new-login' }
         ];
       }
     } else if (this.routerurl == 'User') {
+      this.menus = [];
+    } else {
       this.menus = [];
     }
   }
@@ -77,14 +79,14 @@ export class HeaderComponent implements OnInit {
   LogOut() {
     this.commonService.logout().subscribe(Response => {
       if (Response) {
-        // localStorage.clear();
+        this.dataService.setUserDetails({});
         localStorage.removeItem('tokenDetails');
         localStorage.removeItem('Username');
         localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
         this.appService._loginUserTcNumber.next({});
         this.appService._insurerDetails.next({})
-        this.router.navigate([`/Login`])
+        this.router.navigate([`/new-login`]);
       }
     })
   }

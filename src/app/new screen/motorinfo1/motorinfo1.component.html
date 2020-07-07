@@ -10,7 +10,7 @@
         <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Email: {{basicUserDetails?.email}}</div>
     </div>
     <div class="d-flex justify-content-center mt-3 f24">
-        <p>1 more step to go, Provide your Vehicle Details.</p>
+        <p>Let us know about your car</p>
     </div>
     <div class="row d-flex justify-content-center my-2">
         <div class="border-block col-md-5">
@@ -40,15 +40,17 @@
                 <img src="./assets/new-screen/car-blue.png" />
             </div>
             <div>
-                <ng-select style=" text-align: center;" bindLabel="label" class="custom" placeholder="Search by Vehicle Details"
-                    appendTo="body" [(ngModel)]="selected" [searchable]="true" maxSelectedItems="3" [clearable]="true"
-                    appendTo="body" multiple="true"
-                    (change)="onchangeLoadDropdown()" (clear)="resetDropDown()"
-                    [items]="items">
+                <ng-select style=" text-align: center;" bindLabel="label" class="custom"
+                    placeholder="Search by Vehicle Details" appendTo="body" [(ngModel)]="selected" [searchable]="true"
+                    maxSelectedItems="3" [clearable]="true" appendTo="body" multiple="true"
+                    (change)="onchangeLoadDropdown()" (clear)="resetDropDown()" [items]="items">
                     <!-- <ng-option [value]="item" *ngFor="let item of items">
                         {{item.label}}
                     </ng-option> -->
                 </ng-select>
+                <div style="padding: 3px 10px;" *ngIf="this.selected.length > 0 && !(this.selected.length === 3)">
+                    <p>Type Vehicle {{typeHint}} above</p>
+                </div>
             </div>
         </div>
     </div>
@@ -58,7 +60,7 @@
         <mat-card class="row col-md-10">
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr style="text-align: center;">
                         <th>Year</th>
                         <th>Make</th>
                         <th>Model</th>
@@ -67,14 +69,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let trim of trimOption;let i = index">
+                    <tr *ngFor="let trim of trimOption;let i = index" style="text-align: center;">
                         <td>{{gridDetails[0]}}</td>
                         <td>{{gridDetails[1]}}</td>
                         <td>{{gridDetails[2]}}</td>
                         <td>{{trim}}</td>
                         <td>
-                            <input type="radio" id="{{trim}}" name="drone" value="{{i}}"
-                                (change)="trimChanged($event)">
+                            <input type="radio" id="{{trim}}" name="drone" value="{{i}}" (change)="trimChanged($event)">
                         </td>
                     </tr>
                 </tbody>
@@ -389,7 +390,7 @@
             Copyright &copy; AFNIC | Powered by Beyontec
         </div>
         <div class="mr-1">
-            Call 800 Afnic any Time for Assistance
+            CALL 800 AFNIC or email us to : callcenre@fujinsco.ae
         </div>
     </div>
 </div>

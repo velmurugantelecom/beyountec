@@ -37,6 +37,7 @@ export class MessageComponent implements OnInit {
     switch (this.type) {
       case 'br-failed': {
         this.icon = 'info';
+        this.text =`Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
         break;
       }
       case 'policy-failed': {
@@ -49,7 +50,6 @@ export class MessageComponent implements OnInit {
           ...this.appService.getuserDetails(),
           reason:`Auto Data not Returning Value`
         }
-        console.log(params);
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
         });
         break;    
@@ -65,7 +65,6 @@ export class MessageComponent implements OnInit {
           ...this.appService.getuserDetails(),
           reason:`Make year for the vehicle is  greater than seven years`
         }
-        console.log(params);
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
         });
         break;

@@ -53,6 +53,7 @@ export class AppService {
   getVehicleAutoData() {
     return this.vehicleAutoData;
   }
+
   setpolicyDetails(value: any): void {
     this.policyPopup = value;
   }

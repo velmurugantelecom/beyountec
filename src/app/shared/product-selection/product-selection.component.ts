@@ -5,6 +5,7 @@ import { CoreService } from 'src/app/core/services/core.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AppService } from 'src/app/core/services/app.service';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'chooseProduct',
@@ -29,6 +30,7 @@ export class chooseProduct {
     private coreService: CoreService,
     public appService: AppService,
     private spinner: NgxSpinnerService,
+    private dataService: DataService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data,
     private builder: FormBuilder,
@@ -40,8 +42,7 @@ export class chooseProduct {
 
   ngOnInit() {
     this.quoteForm = this.builder.group({
-      type: ['', Validators.required],
-      chassisNo: ['', Validators.required]
+      type: ['', Validators.required]
     });
 
     this.coreService.getInputs("brokerservice/vehicledetails/productType", '').subscribe((response: any) => {
@@ -57,28 +58,16 @@ export class chooseProduct {
       return;
     } else {
       this.spinner.show();
-      let autoDataURL;
-      if (this.quoteForm.value.type === '1113') {
-        autoDataURL = 'ae/findByChassisNoWithPrice';
-      } else {
-        autoDataURL = 'ae/findByChassisNo'
-      }
-      let params = {
-        chassisNo: this.quoteForm.value.chassisNo
-      };
-      let type = {
-        productType: this.quoteForm.value.type
-      }
-      this.coreService.getInputsAutoData(autoDataURL, params).subscribe(res => {
+      this.coreService.getInputsDbsync('insured/findByUserId', '').subscribe(res => {
+        res['productType'] = this.quoteForm.get('type').value
+        this.dataService.setUserDetails(res);
+        console.log(this.dataService.getUserDetails());
+        this.router.navigate(['/new-motor-info']);
         this.dialogRef.close();
-        this.appService.setVehicleAutoData(res);
-        this.appService.setuserDetails(type);
-        this.spinner.hide();
-        this.router.navigate(['/motor-info']);
+      this.spinner.hide();
       }, err => {
-        this.invalidChassisNo = true;
-        this.quoteForm.controls['chassisNo'].setErrors({ 'incorrect': true });
-        this.spinner.hide();
+        this.dialogRef.close();
+      this.spinner.hide();
       });
     }
   }

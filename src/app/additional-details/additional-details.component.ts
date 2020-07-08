@@ -417,6 +417,7 @@ public policyPopup:any;
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
+      alert('Email sent successfully...')
     });
   }
 
@@ -663,6 +664,7 @@ public policyPopup:any;
     });
   }
   getCampus(stepper){
+    this.showHeader = true;
     stepper.next();
   }
 }

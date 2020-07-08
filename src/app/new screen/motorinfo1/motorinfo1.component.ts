@@ -59,6 +59,7 @@ export class NewMotorInfoScreen implements OnInit {
   public vehicleValue = 0;
   public isAlreadyChecked = true;
   public enableGridBtn = true;
+  public enableContinue = true;
   public quoteNo = '';
   public invalidChassisNo: boolean;
   public quoteDetails = {};
@@ -66,7 +67,8 @@ export class NewMotorInfoScreen implements OnInit {
   public isLoggedInUser: boolean;
   public loggedInUserName;
   public checkTcNoStatus;
-  public typeHint='';
+  public typeHint = '';
+  public searchType;
   // gauge properties
   gaugeType = "semi";
   gaugeValue;
@@ -98,7 +100,7 @@ export class NewMotorInfoScreen implements OnInit {
     });
 
     this.vehicleForm = this.formBuilder.group({
-      chassisNo: [{ value: '', disabled: true }, [Validators.required]],
+      chassisNo: ['', [Validators.required]],
       makeId: [{ value: '', disabled: true }, [Validators.required]],
       modelId: [{ value: '', disabled: true }, [Validators.required]],
       makeYear: [{ value: '', disabled: true }, [Validators.required]],
@@ -114,7 +116,8 @@ export class NewMotorInfoScreen implements OnInit {
       registeredDate: ['', []],
       prevPolicyExpDate: ['', []],
       ncdYears: ['', []],
-      licenseIssueDate: ['', [Validators.required,]]
+      licenseIssueDate: ['', [Validators.required,]],
+      vehicleTypeId: ['',[]]
     });
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
@@ -136,11 +139,25 @@ export class NewMotorInfoScreen implements OnInit {
     if (this.quoteNo) {
       this.getQuoteDetails();
       this.checkTcNoStatus = false;
+      this.enableContinue = false;
     }
     this.onFormValueChanges();
   }
 
   onFormValueChanges() {
+    this.vehicleForm.get('chassisNo').statusChanges.subscribe(value => {
+      if (value === 'VALID' && this.searchType === 'Manual') {
+        let greyParams = {
+          chassisNo: this.chassisNoForm.value.chassisNo,
+          productId: this.productId
+        }
+        this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
+          if (res) {
+            this.navigateToMsgScreen('autodata-failed')
+          }
+        })
+      }
+    });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
       if (value === 'INVALID') {
         this.insuredForm.patchValue({
@@ -150,8 +167,8 @@ export class NewMotorInfoScreen implements OnInit {
         });
         return;
       } else {
-        if (value === 'VALID' && this.checkTcNoStatus) {
-          setTimeout(() => this.getUserDetails(), 1000);
+        if (value === 'VALID' && this.checkTcNoStatus && this.vehicleForm.controls.chassisNo.status === 'VALID') {
+          setTimeout(() => this.getUserDetailsByTcNo(), 1000);
         }
       }
     });
@@ -182,6 +199,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.showForm = false;
     this.showGrid = false;
     this.enableGridBtn = true;
+    this.enableContinue = true;
     if (this.chassisNoForm.status == 'VALID') {
       this.trimOption = [];
       this.spinner.show();
@@ -203,13 +221,18 @@ export class NewMotorInfoScreen implements OnInit {
         if (!res1) {
           this.spinner.hide();
           this.autoData = res2;
+          if (this.autoData.length === 0) {
+            this.navigateToMsgScreen('autodata-failed');
+          }
           if (this.autoData[0]['makeYear'] && this.productId === '1113')
             this.makeYearValidation(this.autoData[0]['makeYear'])
           else {
             this.validateAutoData();
           }
         } else {
+          if(res1)
           this.spinner.hide();
+          this.navigateToMsgScreen('autodata-failed');
           if (!res2) {
             this.invalidChassisNo = true;
             this.chassisNoForm.controls['chassisNo'].setErrors({ 'incorrect': true });
@@ -254,7 +277,7 @@ export class NewMotorInfoScreen implements OnInit {
         if (this.autoData[0].makeYear && this.autoData[0].makeId && this.autoData[0].modelId && this.autoData[0].trim) {
           // scenario 1 ... all 4 values
           if (this.productId === '1113' && !this.autoData[0].vehicleValue) {
-            this.router.navigate(['/contact-message', 'autodata-failed']);
+            this.navigateToMsgScreen('autodata-failed');
           }
           this.showGrid = true;
           await this.loadVehicleDropDowns('makeId', 'model', this.autoData[0].makeId);
@@ -269,13 +292,13 @@ export class NewMotorInfoScreen implements OnInit {
         } else if (this.autoData[0].makeYear && this.autoData[0].makeId && this.autoData[0].modelId && !this.autoData[0].trim
           && !this.autoData[0].vehicleValue) {
           // scenario 4 ... allM's available wo vehicleValue, trim
-          this.router.navigate(['/contact-message', 'autodata-failed']);
+          this.navigateToMsgScreen('autodata-failed');
         }
       } else {
-        this.router.navigate(['/contact-message', 'autodata-failed']);
+        this.navigateToMsgScreen('autodata-failed');
       }
     } else {
-      this.router.navigate(['/contact-message', 'autodata-failed']);
+      this.navigateToMsgScreen('autodata-failed');
     }
   }
 
@@ -283,6 +306,11 @@ export class NewMotorInfoScreen implements OnInit {
     this.gridDetails[0] = this.autoData[0].makeYear;
     this.gridDetails[1] = this.autoData[0].makeLabel;
     this.gridDetails[2] = this.autoData[0].modelLabel;
+    this.gridDetails[3] = this.autoData[0].noOfCylinders;
+    this.gridDetails[4] = this.autoData[0].noOfSeats;
+    this.gridDetails[5] = this.autoData[0].noOfDoors;
+    this.gridDetails[6] = this.autoData[0].engineSize;
+
   }
 
   validateAllFormFields(formGroup: FormGroup) {
@@ -299,6 +327,8 @@ export class NewMotorInfoScreen implements OnInit {
   getDropDownOptions(key: string, optionId: string, productId = '*') {
     this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
       this.options[key] = response.data;
+      if (!this.quoteNo && key === 'regYear')
+        this.items = this.options.regYear;
     });
   }
 
@@ -334,7 +364,7 @@ export class NewMotorInfoScreen implements OnInit {
           {
             isSameAsInsured: 'Y'
           }],
-        insured: { ...this.insuredForm.getRawValue(), ...this.basicUserDetails }
+        insured: { ...this.insuredForm.getRawValue(), ...this.basicUserDetails, ...this.additionalDetails }
       }
       // adding one day to date fields
 
@@ -401,6 +431,7 @@ export class NewMotorInfoScreen implements OnInit {
   submitGrid() {
     this.showForm = true;
     this.showGrid = false;
+    this.enableContinue = false;
     this.vehicleForm.patchValue({
       chassisNo: this.chassisNoForm.value.chassisNo,
       makeId: this.autoData[this.selectedTrim]['makeId'],
@@ -408,47 +439,88 @@ export class NewMotorInfoScreen implements OnInit {
       makeYear: this.autoData[this.selectedTrim]['makeYear'].toString(),
       trim: this.autoData[this.selectedTrim]['trim'],
       noOfPassengers: this.autoData[this.selectedTrim]['noOfSeats'],
-      vehicleValue: this.autoData[this.selectedTrim]['vehicleValue']
+      vehicleValue: this.autoData[this.selectedTrim]['vehicleValue'],
+      vehicleTypeId: this.autoData[this.selectedTrim]['vehicleTypeId']
     });
     this.maxVehicleValue = this.autoData[this.selectedTrim]['maxValue'];
     this.minValue = this.autoData[this.selectedTrim]['vehicleValue'];
     this.maxValue = this.autoData[this.selectedTrim]['maxValue'];
     this.gaugeValue = this.vehicleForm.value['vehicleValue'];
-    this.setRepairTypeAndRegType(this.autoData['makeYear']);
+    this.setRepairTypeAndRegType(this.autoData[this.selectedTrim]['makeYear']);
     if (this.dataService.getUserDetails().personalId) {
       this.isLoggedInUser = true;
       this.loggedInUserName = this.dataService.getUserDetails().customerId
       this.vehicleForm.patchValue({
         tcFileNumber: this.dataService.getUserDetails().tcNumber
       });
-      this.getUserDetails();
+      if (this.vehicleForm.controls.chassisNo.status === 'VALID') {
+        this.getUserDetailsByTcNo();
+      }
     }
   }
 
   // based on tcNumber
-  getUserDetails() {
+  getUserDetailsByTcNo() {
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
       chassisNo: this.vehicleForm.getRawValue().chassisNo
     }
     this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
-      this.insuredForm.patchValue(res.userDetails);
+      if (res) {
+        this.insuredForm.patchValue(res.userDetails);
+        this.vehicleForm.patchValue({
+          prevPolicyExpDate: res.vehicleDetails.prevPolicyExpDate,
+          licenseIssueDate: res.userDetails.licenseIssuedDate
+        });
+        this.patchAdditionalDetails(res);
+      }
     }, err => {
     });
   }
 
+  patchAdditionalDetails(data) {
+    this.additionalDetails['address1'] = data.userDetails.address1;
+    this.additionalDetails['address2'] = data.userDetails.address2;
+    this.additionalDetails['address4'] = data.userDetails.address4;
+    this.additionalDetails['city'] = data.userDetails.city;
+    this.additionalDetails['fullNameBL'] = data.userDetails.fullNameBL;
+    this.additionalDetails['nationality'] = data.userDetails.nationality;
+    this.additionalDetails['occupation'] = data.userDetails.occupation;
+    this.additionalDetails['personalId'] = data.userDetails.personalId;
+    this.additionalDetails['taxId'] = data.userDetails.taxId;
+    this.additionalDetails['postBox'] = data.userDetails.postBox;
+    this.additionalDetails['prefixBL'] = data.userDetails.prefixBL;
+
+
+  }
+
   setRepairTypeAndRegType(makeYear) {
     // Setting Repair Type
-    if ((this.today.getFullYear() - makeYear) <= 5) {
-      this.vehicleForm.patchValue({
-        repairType: '1'
-      });
-    } else {
-      this.vehicleForm.patchValue({
-        repairType: '2'
-      });
-      this.vehicleForm.controls.repairType.disable();
-    }
+    // if ((this.today.getFullYear() - makeYear) <= 5) {
+    //   this.vehicleForm.patchValue({
+    //     repairType: '1'
+    //   });
+    // } else {
+    //   this.vehicleForm.patchValue({
+    //     repairType: '2'
+    //   });
+    //   this.vehicleForm.controls.repairType.disable();
+    // }
+    // new req
+    if ((this.today.getFullYear() - makeYear) >= 5) {
+        this.vehicleForm.patchValue({
+          repairType: '2'
+        });
+        this.vehicleForm.controls.repairType.disable();
+      } else if ((this.today.getFullYear() - makeYear) <= 2) {
+        this.vehicleForm.patchValue({
+          repairType: '1'
+        });
+      } else {
+        this.vehicleForm.patchValue({
+          repairType: '2'
+        });
+      }
     // Setting Registration Type
     if ((this.today.getFullYear() <= makeYear)) {
       this.vehicleForm.patchValue({
@@ -574,7 +646,6 @@ export class NewMotorInfoScreen implements OnInit {
   fetchAllPlans(data) {
     this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
       this.spinner.hide();
-      localStorage.removeItem('insurerDetails');
       if (response.status === 'VF') {
         this.router.navigate(['/contact-message', 'br-failed']);
       } else {
@@ -600,6 +671,7 @@ export class NewMotorInfoScreen implements OnInit {
       this.spinner.hide();
       this.quoteDetails = response.data.quoteSummary;
       if (this.quoteDetails) {
+        this.patchAdditionalDetails(this.quoteDetails)
         this.productId = this.quoteDetails['productTypeId']
         this.showForm = true;
         this.loadVehicleDropDowns('makeId', 'model', this.quoteDetails['vehicleDetails']['makeId']);
@@ -628,6 +700,10 @@ export class NewMotorInfoScreen implements OnInit {
     this.showGrid = false;
     this.showForm = false;
     this.selected = [];
+    this.items = this.options.regYear;
+    this.gridDetails = [];
+    this.trimOption = [];
+    this.enableContinue = true;
   }
 
   makeYearValidation(value) {
@@ -648,22 +724,34 @@ export class NewMotorInfoScreen implements OnInit {
           this.dataService.setUserDetails(value);
           this.getAutoData();
         } else {
-          this.router.navigate(['/contact-message', 'quotation-failed']);
+          this.navigateToMsgScreen('quotation-failed');
         }
       });
-    } else {
+    } else if (this.searchType != 'Manual') {
       this.validateAutoData();
     };
   }
 
   async onchangeLoadDropdown() {
+    if (this.chassisNoForm.status === 'INVALID') {
+      this.searchType = 'Manual';
+      this.checkTcNoStatus = true;
+    }
     if (this.selected.length === 0) {
-      this.items = [];
+      this.items = this.options.regYear;
     }
     if (this.selected.length == 1) {
+      if (this.selected[0].value && this.productId === '1113')
+        this.makeYearValidation(this.selected[0].value)
       this.typeHint = 'Make';
       this.items = this.options.make;
     } else if (this.selected.length == 2) {
+      if (this.showGrid) {
+        this.showGrid = false;
+        this.gridDetails = [];
+        this.trimOption = [];
+        this.showForm = false;
+      }
       this.typeHint = 'Model';
       await this.loadVehicleDropDowns('makeId', 'model', this.selected[1].value);
       this.items = this.options.model;
@@ -689,5 +777,12 @@ export class NewMotorInfoScreen implements OnInit {
         });
       }
     }
+  }
+
+  navigateToMsgScreen(type) {
+    let value = this.dataService.getUserDetails();
+    value['chassisNo'] = this.chassisNoForm.controls.chassisNo.value;
+    this.dataService.setUserDetails(value);
+    this.router.navigate(['/contact-message', type]);
   }
 }

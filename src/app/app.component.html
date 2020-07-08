@@ -1,5 +1,17 @@
 <ngx-spinner></ngx-spinner>
 
 <app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>
-<router-outlet ></router-outlet>
-
+<div style="min-height: 83vh;">
+    <router-outlet></router-outlet>
+</div>
+<!-- Footer Section -->
+<div class="d-flex" class="footer">
+    <div class="d-flex justify-content-between">
+        <div class="ml-1">
+            Copyright &copy; AFNIC | Powered by Beyontec
+        </div>
+        <div class="mr-1">
+            CALL 800 AFNIC or email us to : callcenre@fujinsco.ae
+        </div>
+    </div>
+</div>

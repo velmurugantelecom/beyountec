@@ -62,12 +62,13 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 this.router.navigate(['/contact-message', 'policy-failed']);
               } else {
                 if (errorMsg === 'Unable to fetch data from auto data') {
-                  ++this.invalidAutoDataCount;
-                  if (this.invalidAutoDataCount === 4) {
-                    this.invalidAutoDataCount = 0;
                     this.router.navigate(['/contact-message', 'autodata-failed']);
-                  }
-                  this.appService._invalidChassisNumber.next('invalid');
+                  // ++this.invalidAutoDataCount;
+                  // if (this.invalidAutoDataCount === 4) {
+                  //   this.invalidAutoDataCount = 0;
+                  //   this.router.navigate(['/contact-message', 'autodata-failed']);
+                  // }
+                  // this.appService._invalidChassisNumber.next('invalid');
                 } else {
                   this.toasterService.error('', errorMsg, {
                     timeOut: 3000

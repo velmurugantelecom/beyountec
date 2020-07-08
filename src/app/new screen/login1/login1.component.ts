@@ -177,7 +177,8 @@ export class NewLoginScreen implements OnInit {
       mobNo: this.infoForm.value['mobileNo'],
       loginSrc: 'CP'
     }
-    this.coreService.postInputs2('audit/users', body, '');
+    this.coreService.postInputs2('audit/users', body, '').subscribe(res => {
+    });
   }
 
   selectOption(value) {

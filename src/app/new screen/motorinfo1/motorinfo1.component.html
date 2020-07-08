@@ -13,7 +13,7 @@
         <p>Let us know about your car</p>
     </div>
     <div class="row d-flex justify-content-center my-2">
-        <div class="border-block col-md-5">
+        <div class="border-block col-md-4">
             <div class="d-flex justify-content-center mb-2">
                 <img src="./assets/new-screen/chassis-blue.png" style="height: 48px;" />
             </div>
@@ -42,8 +42,9 @@
             <div>
                 <ng-select style=" text-align: center;" bindLabel="label" class="custom"
                     placeholder="Search by Vehicle Details" appendTo="body" [(ngModel)]="selected" [searchable]="true"
-                    maxSelectedItems="3" [clearable]="true" appendTo="body" multiple="true"
-                    (change)="onchangeLoadDropdown()" (clear)="resetDropDown()" [items]="items">
+                    maxSelectedItems="3" appendTo="body" multiple="true"
+                    (change)="onchangeLoadDropdown()" (clear)="resetDropDown()" [items]="items"
+                    [clearOnBackspace]="false">
                     <!-- <ng-option [value]="item" *ngFor="let item of items">
                         {{item.label}}
                     </ng-option> -->
@@ -64,6 +65,10 @@
                         <th>Year</th>
                         <th>Make</th>
                         <th>Model</th>
+                        <th>No of Cylinders</th>
+                        <th>No of Seats</th>
+                        <th>No of Doors</th>
+                        <th>Engine Size</th>
                         <th>Trim</th>
                         <th>Select One</th>
                     </tr>
@@ -73,6 +78,10 @@
                         <td>{{gridDetails[0]}}</td>
                         <td>{{gridDetails[1]}}</td>
                         <td>{{gridDetails[2]}}</td>
+                        <td>{{gridDetails[3]}}</td>
+                        <td>{{gridDetails[4]}}</td>
+                        <td>{{gridDetails[5]}}</td>
+                        <td>{{gridDetails[6]}}</td>
                         <td>{{trim}}</td>
                         <td>
                             <input type="radio" id="{{trim}}" name="drone" value="{{i}}" (change)="trimChanged($event)">
@@ -369,28 +378,17 @@
     </div>
 
     <!-- Navigation Section -->
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center mb-4">
         <div style="padding-left: 15px;padding-right: 15px;" class="col-md-10 col-sm-12 m-0">
             <div class="d-flex justify-content-between">
                 <button (click)="goBack()" class=" pr-3 btn button btn-default bggreen fwhite">
                     <i class="fa fa-arrow-left"></i>
                     Back</button>
-                <button class=" pr-3 btn button btn-default bggreen fwhite" (click)="getPlans()">
+                <button [disabled]="enableContinue" class="pr-3 btn button btn-default bggreen fwhite" (click)="getPlans()">
                     Continue
                     <i class="fa fa-arrow-right"></i>
                 </button>
             </div>
-        </div>
-    </div>
-</div>
-<!-- Footer Section -->
-<div class="d-flex" class="footer">
-    <div class="d-flex justify-content-between">
-        <div class="ml-1">
-            Copyright &copy; AFNIC | Powered by Beyontec
-        </div>
-        <div class="mr-1">
-            CALL 800 AFNIC or email us to : callcenre@fujinsco.ae
         </div>
     </div>
 </div>

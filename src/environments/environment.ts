@@ -9,7 +9,7 @@ export const environment = {
   PaymentEndpoint: 'https://dev.beyontec.com/bts-broker-portal/api/payment-service/',
   OcrEndpoint: 'https://dev.beyontec.com/bts-broker-portal/api/ocr-service/api/',
   // Grey Import Check
-  GreyImport: 'http://dev.beyontec.com/bts-broker-portal/api/tpiv2-services/'
+  GreyImport: 'https://dev.beyontec.com/bts-broker-portal/api/tpiv2-services/'
   // IQC
 
   // DevEndpointdbsync: 'http://192.168.2.105:24090/bts-broker-portal/api/dbsync/',

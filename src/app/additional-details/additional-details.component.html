@@ -11,8 +11,6 @@
         </div>
         <hr class="thick-line" *ngIf="showHeader" />
         <mat-horizontal-stepper #stepper>
-
-
             <mat-step>
                 <div class="success-content" style="margin-left: 22%;">
                     <i class="far fa-check-circle fa-5x bg-color"></i>
@@ -459,7 +457,7 @@
                 <div *ngIf="!addMoreDoc" class="pl-4" (click)="addMoreDocuments()">
                     <p class="custom-cursor blue-font f16">+ {{ 'AddMoreDoc'| translate}}</p>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mb-4">
                     <button class="btn button btn-default bggreen fwhite"
                         (click)="goBack(stepper)">{{'ReviseDetails' | translate }}</button>
                     <button type="submit" class="btn button btn-default bggreen fwhite"

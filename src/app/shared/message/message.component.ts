@@ -5,6 +5,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { MatDialogRef } from '@angular/material';
 import { chooseProduct } from '../product-selection/product-selection.component';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-message',
@@ -22,7 +23,7 @@ export class MessageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private coreService: CoreService,
-    private appService: AppService,
+    private dataService: DataService,
     private translate: TranslateService,
     ) {
     this.route.params.subscribe(params => {
@@ -47,7 +48,7 @@ export class MessageComponent implements OnInit {
       case 'autodata-failed': {
         this.icon = 'info';
         let params = {
-          ...this.appService.getuserDetails(),
+          ...this.dataService.getUserDetails(),
           reason:`Auto Data not Returning Value`
         }
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
@@ -62,7 +63,7 @@ export class MessageComponent implements OnInit {
       //  this.arabicText = '';
         this.text =  this.quotationText;
         let params = {
-          ...this.appService.getuserDetails(),
+          ...this.dataService.getUserDetails(),
           reason:`Make year for the vehicle is  greater than seven years`
         }
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {

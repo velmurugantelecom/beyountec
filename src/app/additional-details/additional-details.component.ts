@@ -150,9 +150,10 @@ public policyPopup:any;
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       if (response.data && response.data != null) {
         this.quoteDetails = response.data.quoteSummary;
-        if (this.quoteDetails.productTypeId == '1116') {
-          this.additionalDetails.patchValue({ mortgagedYN: 'N' });
-        }
+        // if (this.quoteDetails.productTypeId == '1116') {
+        //   this.additionalDetails.patchValue({ mortgagedYN: 'N' });
+        // }
+
         this.spinner.hide();
       }
       else {
@@ -183,9 +184,19 @@ public policyPopup:any;
         label: this.yes,
         value: 'Y'
       },];
-      this.additionalDetails.patchValue({
-        mortgagedYN: this.options['financed'][0].value
-      });
+      // this.additionalDetails.patchValue({
+      //   mortgagedYN: this.options['financed'][0].value
+      // });
+      if (this.quoteDetails.productTypeId == '1116') {
+        this.additionalDetails.patchValue({
+          mortgagedYN: this.options['financed'][0].value
+        });
+        }
+        else{
+          this.additionalDetails.patchValue({
+            mortgagedYN: '',
+          });
+        }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
       this.getDropDownOptions('nationality', 'NATIONALITY');
@@ -444,17 +455,17 @@ public policyPopup:any;
   }
 
   patchFormValues() {
-    if((this.quoteDetails.vehicleDetails['mortgagedYN']==null)||(this.quoteDetails.vehicleDetails['mortgagedYN']=='')){
-      this.additionalDetails.patchValue({
-        mortgagedYN:'N'
-      });
-    }
-    else{
-      this.additionalDetails.patchValue({
-        mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
-      });
+    // if((this.quoteDetails.vehicleDetails['mortgagedYN']==null)||(this.quoteDetails.vehicleDetails['mortgagedYN']=='')){
+    //   this.additionalDetails.patchValue({
+    //     mortgagedYN:''
+    //   });
+    // }
+    // else{
+    //   this.additionalDetails.patchValue({
+    //     mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+    //   });
 
-    }
+    // }
     this.additionalDetails.patchValue({
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],

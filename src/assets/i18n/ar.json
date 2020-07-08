@@ -317,6 +317,10 @@
     "TcNoHints": "TC no. as per mulkiya._fa",
     "MessageAlert": "Thank you for quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy._fa",
     "QuotationFailedAlert": "Thanks for Contacting AFNIC. We need more information to issue quote, Our Customer Service Representative will contact you shortly_fa",
+    "PolicySuccessAlertOne": "شكراً لاختياركم شركة الفجيرة الوطنية للتأمين، رمز الأمان.",
+    "PolicySuccessAlertTwo": "سيتم إرسال تفاصيل الوثيقة لكم عن طريق البريد الالكتروني المسجل لدينا.",
+    "PolicySuccessAlertThree": " للمزيد من المعلومات أو المساعدة الرجاء الاتصال على رقمنا المجاني 80023642",
+    "PolicyPopup":"Do you want to convert this Quote to Policy?_fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",

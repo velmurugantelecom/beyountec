@@ -317,6 +317,10 @@
     "TcNoHints": "TC no. as per mulkiya.",
     "MessageAlert": "Sorry, Vehicle information not available in our system, our representative will contact you shortly.",
     "QuotationFailedAlert": "Thanks for Contacting AFNIC. We need more information to issue quote, Our Customer Service Representative will contact you shortly",
+    "PolicySuccessAlertOne": "Thank you for issuing your policy with AFNIC, your symbol of security.",
+    "PolicySuccessAlertTwo": "Your policy document will be sent to your email.",
+    "PolicySuccessAlertThree": "If you need any further assistance, you can contact us on our toll-free number 800 23642.",
+    "PolicyPopup":"Do you want to convert this Quote to Policy?",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name in Arabic is required",

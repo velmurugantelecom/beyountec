@@ -45,17 +45,17 @@
             <i class="fas fa-user-alt fa-lg pr-2"></i>{{ 'UserDetails' | translate }}</label>
         </div>
         <mat-divider></mat-divider>
-          <form [formGroup]="profileForm">
+          <form [formGroup]="profileForm"  focusInvalidInput autocomplete="off">
             <div class="row m-4">
             <div class="col-md-12 my-2">
                <label class="label_form">{{ 'FirstName' | translate }}</label>
                <input type="text" formControlName="firstName" class="form-control poppins-reg-14" disabled />
              </div>
-             <div class="col-md-12 my-2">
+             <div class="col-md-6 my-2">
                <label class="label_form">{{ 'MiddleName' | translate }}</label>
                <input type="text" formControlName="middleName" class="form-control poppins-reg-14" disabled/>
              </div>
-             <div class="col-md-12 my-2">
+             <div class="col-md-6 my-2">
                <label class="label_form">{{ 'LastName' | translate }}</label>
                <input type="text" formControlName="lastName" class="form-control poppins-reg-14" disabled/>
              </div>
@@ -67,25 +67,26 @@
                   <option *ngFor="let code of options.mobileCode"
                   [value]="code.value"> {{ code.label}}</option>
                 </select>
-                <div class="error-message" *ngFor="let validation of validation_messages['mobileCode']">
-                  <span *ngIf="(!profileForm.get('mobileCode').valid) || profileForm.get('mobileCode').hasError(validation.type) && (profileForm.get('mobileCode').dirty || profileForm.get('mobileCode').touched)">{{validation.message}}</span>
-                </div>
+                <span class="validations"  *ngIf="profileForm.get('mobileCode').errors?.required && (profileForm.get('mobileCode').dirty && profileForm.get('mobileCode').touched)">  {{ 'Required.MobileCodeRequired' | translate }} </span>
                </div>
-               
+           
+
                <div class="col-md-8">
                 <label class=" label_form">{{ 'MobileNo' | translate }}</label>
-                <input type="text" formControlName="mobileNo" class="form-control poppins-reg-14" [ngClass]="(!profileForm.get('mobileNo').valid) || (profileForm.get('mobileNo').hasError('required') && (profileForm.get('mobileNo').dirty || profileForm.get('mobileNo').touched)) ? 'invalid' : ''"/>
-                <div class="error-message" *ngFor="let validation of validation_messages['mobileNo']">
-                  <span *ngIf="(!profileForm.get('mobileNo').valid) || profileForm.get('mobileNo').hasError(validation.type) && (profileForm.get('mobileNo').dirty || profileForm.get('mobileNo').touched)">{{validation.message}}</span>
-                </div>
+                <input type="text" formControlName="mobileNo"   class="form-control poppins-reg-14" [ngClass]="(!profileForm.get('mobileNo').valid) || (profileForm.get('mobileNo').hasError('required') && (profileForm.get('mobileNo').dirty || profileForm.get('mobileNo').touched)) ? 'invalid' : ''"/>
+                <span class="validations"  *ngIf="profileForm.get('mobileNo').errors?.required && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">  {{ 'Required.MobileNo' | translate }} </span>
+                <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.maxlength  || profileForm.get('mobileNo').errors?.minlength && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)"> {{ 'MobileNoLength' | translate }}</span>
+                <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.pattern && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">{{ 'MobileFormat' | translate }}</span>
+             
                </div>
+
              </div>
              <div class="col-md-12 mt-2">
                <label class=" label_form">{{ 'EmailId' | translate }}</label>
                <input type="text" formControlName="email" class="form-control poppins-reg-14" [ngClass]="(!profileForm.get('email').valid) || (profileForm.get('email').hasError('required') && (profileForm.get('email').dirty || profileForm.get('email').touched)) ? 'invalid' : ''" />
-               <div class="error-message" *ngFor="let validation of validation_messages['email']">
-                 <span *ngIf="(!profileForm.get('email').valid) || profileForm.get('email').hasError(validation.type) && (profileForm.get('email').dirty || profileForm.get('email').touched)">{{validation.message}}</span>
-               </div>
+               <span class="validations"  *ngIf="profileForm.get('email').errors?.required && (profileForm.get('email').dirty && profileForm.get('email').touched)">    {{ 'Required.Email' | translate }} </span>
+               <span class="validations" *ngIf="profileForm.get('email').errors?.email && (profileForm.get('email').dirty && profileForm.get('email').touched)">   {{ 'EmailFormat' | translate }}</span>
+              
              </div>
             </div>   
            </form>  

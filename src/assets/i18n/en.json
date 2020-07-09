@@ -321,6 +321,10 @@
     "PolicySuccessAlertTwo": "Your policy document will be sent to your email.",
     "PolicySuccessAlertThree": "If you need any further assistance, you can contact us on our toll-free number 800 23642.",
     "PolicyPopup":"Do you want to convert this Quote to Policy?",
+    "MobileFormat": "Invalid Mobile Format",
+    "ProfileUpdate": "Profile Update",
+    "VerifyOTP": "Verify OTP",
+    "ResendOTP": "Resend OTP?",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name in Arabic is required",
@@ -398,7 +402,8 @@
         "OldPasswordIsRequired": "Old Password is required",
         "NewPasswordIsRequired": "New Password is required",
         "ConfirmPasswordIsRequired": "Confirm Password is required",
-        "QuoteNo": "Quote Number is required"
+        "QuoteNo": "Quote Number is required",
+        "OTPIsRequired": "OTP is required"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",

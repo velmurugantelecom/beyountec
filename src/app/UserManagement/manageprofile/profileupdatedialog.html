@@ -1,0 +1,40 @@
+<div class="row m-0 p-0">
+    <div class="col-md-10 col-9">
+        <p class="f14 fbold" style="display: flex;align-content: center;">  {{'ProfileUpdate' | translate }}</p>
+    </div>
+    <div class="col-md-2 col-3 custom-cursor" (click)="onNoClick()">
+        <mat-icon>
+            close
+        </mat-icon>
+    </div>
+</div>
+<mat-divider></mat-divider>
+ 
+
+    <form [formGroup]="OtpForm">
+
+        <div class="centertext fgreen p-1" >
+            <div>We've sent you an OTP. Check your email and enter below
+            </div>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>  {{'Otp' | translate }} </mat-label>
+                <input matInput placeholder="Enter OTP" formControlName="otp" required>
+                <mat-error *ngIf="OtpForm.controls.otp.errors && OtpForm.controls.otp.errors.required">
+                    {{'OTPIsRequired' | translate }}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+                <button mat-button  (click)="verifyOtp()"
+                class="m-2 btn btn-home button fwhite bggreen centercss"> {{'VerifyOTP' | translate }}</button>
+                <button  (click)="sendEmail()" class="btn btn-home m-2 bggreen fwhite centercss button"> {{'ResendOTP' | translate }}</button>
+        </div>
+
+    </form>

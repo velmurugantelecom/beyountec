@@ -1,0 +1,160 @@
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+ }
+ .breadcrum-header {
+     background: #0083C0;
+     color: #fff;
+ }
+ 
+ ::ng-deep .my-bread-header .breadcrumb>li+li:before {
+     color: #fff;
+     content: "> ";
+ }
+
+.row {
+    margin: 0;
+}
+
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+}
+
+.card-align {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 0;
+}
+
+.heading {
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.heading span {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+
+.widget-part {
+    padding: 20px;
+    height: 100px; /*Manualy increased to suit design*/
+}
+
+form {
+    padding: 15px;
+}
+
+.form_align{
+    display: inline;
+    padding: 0;
+
+}
+
+.mar_none{
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+.pad_none{
+    padding-right: 0; 
+}
+  
+.rightside_padnone{
+    padding-right: 0;
+}
+  
+.displayinput_css{
+    display: inline;
+}
+ 
+.btn_margin {
+    background-color: #154979;
+    width:148px;
+    height: 42px;
+    border-radius: 25px;
+    /* margin-left: 40%; */
+    text-align: center !important;
+}
+  
+::ng-deep .padding_none.mat-form-field-appearance-legacy .mat-form-field-infix{
+    padding: 0;
+}
+  
+.mar_top{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+  
+.row_mar{
+    margin-top: 10px;
+}
+  
+::ng-deep .mat-form-field-suffix{
+    bottom: 20px;
+}
+  
+.lbl_cls{
+    text-align: left;
+    font-size: 16px;
+    color: #6E6B6B;
+    margin-top: 10px;
+}
+  
+.img_align{
+    margin-bottom: auto;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.right_pad_none {
+    padding-right: 0;
+}
+
+.pad_20 {
+    padding: 20px;
+}
+
+.change_password {
+    margin: 0 auto;
+    padding-left: 20px;
+}
+.rules-heading {
+    font-size: 16px;
+    margin-top: 20px;
+}
+.rules {
+    font-size: 14px;
+    color:red;
+}
+.form-control:focus {
+    box-shadow: none;
+}
+.validations {
+    color: red;
+    font-size: 12px;
+    font-weight: 100;
+    margin-top: 5px;
+    padding-left: 5px;
+}
+input.invalid {
+    border-color: #f00;
+}
+button:focus {
+    outline: none;
+}

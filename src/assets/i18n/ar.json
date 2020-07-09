@@ -321,6 +321,10 @@
     "PolicySuccessAlertTwo": "سيتم إرسال تفاصيل الوثيقة لكم عن طريق البريد الالكتروني المسجل لدينا.",
     "PolicySuccessAlertThree": " للمزيد من المعلومات أو المساعدة الرجاء الاتصال على رقمنا المجاني 80023642",
     "PolicyPopup":"Do you want to convert this Quote to Policy?_fa",
+    "MobileFormat": "Invalid Mobile Format_fa",
+    "ProfileUpdate": "Profile Update_fa",
+    "VerifyOTP": "Verify OTP_fa",
+    "ResendOTP": "Resend OTP?_fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormControlDirective, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CoreService } from '../../core/services/core.service';
@@ -16,7 +17,6 @@ export class ManageprofileComponent implements OnInit {
   inputData: any = [];
   validation_messages: any = {};
   options: any = [];
-  profileUpdated:any;
   emailRequired: any;
   validEmail: any;
   mobileNumberRequired:any;
@@ -29,34 +29,40 @@ export class ManageprofileComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toaster: ToastrService,
     private translate: TranslateService,
+    private dialog: MatDialog,
     private service: CoreService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.profileForm = this.formBuilder.group({
       firstName: [''],
       middleName: [''],
       lastName: [''],
       mobileCode: ['', [Validators.required]],
-      mobileNo: ['', Validators.required],
-      email: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])],
+      mobileNo: ['', [Validators.required, Validators.minLength(7),
+        Validators.maxLength(7), Validators.pattern(/^[0-9-+() ]*$/)]],
+        email: ['', [Validators.required, Validators.email]],
     });
     this.service.listOptions('MOBILE_CON_CODE', '*').subscribe(response => {
       this.options['mobileCode'] = response['data'];
     });
-    this.postService.getInputs(`dbsync/user/find`, '').subscribe((data: any) => {
+    
+    //this.postService.getInputs(`dbsync/insured/findByUserId`, '').subscribe((data: any) => {
+      this.postService.getInputs(`dbsync/user/find`, '').subscribe((data: any) => {
       this.inputData = data;
       this.profileForm.patchValue({
-        firstName: this.inputData.firstName,
+        firstName:  this.inputData.firstName,
+        mobileCode: this.inputData.mobileCode,
         middleName: this.inputData.middleName,
         lastName: this.inputData.lastName,
         mobileNo: this.inputData.mobileNo,
-        email: this.inputData.email,
-        mobileCode: this.inputData.mobileCode
+        email: this.inputData.email
+       
       });
+      this.spinner.hide();
     });
+ //  
+
   this.translate.get('Required.EmailRequired') .subscribe(value => { 
     this.emailRequired = value; 
   } );
@@ -70,34 +76,136 @@ export class ManageprofileComponent implements OnInit {
     this.mobileCodeRequired = value; 
   } );
 
-    this.validation_messages = {
-      "email": [{ type: 'required', message:  this.emailRequired },
-      { type: 'pattern', message: this.validEmail }],
-      "mobileNo": [{ type: 'required', message: this.mobileNumberRequired }],
-      "mobileCode": [{type: 'required', message: this.mobileCodeRequired}]
-    };
+
+  // this.validation_messages = {
+  //   "email": [{ type: 'required', message:  this.emailRequired },
+  //   { type: 'pattern', message: this.validEmail }],
+  //   "mobileNo": [{ type: 'required', message: this.mobileNumberRequired }],
+  //   "mobileCode": [{type: 'required', message: this.mobileCodeRequired}]
+  // };
   }
 
   onSaveProfile() {
-    this.translate.get('ProfileUpdated') .subscribe(value => { 
-      this.profileUpdated = value; 
-    } );
-    this.spinner.show();
-    let obj = {};
-    obj = this.profileForm.value;
-    this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
-      this.spinner.hide();
-      this.toaster.success('', this.profileUpdated, {
-        timeOut: 3000
-      });
-      this.router.navigate(['/User/dashboard']);
-    }, err => {
-      this.spinner.hide();
+    if (this.profileForm.invalid) {
+      return;
+    }
+    let dialogRef = this.dialog.open(ProfileUpdateDialog, {
+      width: '450',
+      data: { data: this.profileForm.value }
+    });
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 
   onCancel() {
     this.router.navigate(['/User/dashboard']);
+  }
+
+
+
+}
+
+  // dialoguecomponent
+@Component({
+  selector: 'ProfileUpdateDialog',
+  templateUrl: './profileupdatedialog.html',
+  styles: [`
+ 
+.closeicon_css {
+  position: relative;
+  
+  cursor: pointer;
+}
+  `]
+})
+export class ProfileUpdateDialog {
+  dialogeDetails: any;
+  public quoteForm: FormGroup;
+  OtpForm: FormGroup;
+  token: any;
+  public minutes;
+  public profileUpdated:any;
+  public seconds;
+  public totalMs;
+  public doTimeout: boolean = false;
+  constructor(
+    private service: CoreService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private translate: TranslateService,
+    private toaster: ToastrService,
+    private postService: CoreService,
+    public dialogRef: MatDialogRef<ProfileUpdateDialog>,
+    @Inject(MAT_DIALOG_DATA) public data,
+    private builder: FormBuilder,
+  ) { }
+
+  ngOnInit() {
+    this.sendemail();
+
+    this.OtpForm = this.builder.group({
+      otp: ['', Validators.required]
+    });
+  }
+  sendemail(){
+    this.service.getInputs1(`brokerservice/user/confirmProfileUpdate`, '').subscribe(response => {
+      if (response) {
+        this.token = response;
+        this.minutes = 2;
+        this.seconds = 0;
+        this.totalMs = 120000;
+        this.showTimer();
+      }
+     // this.spinner.hide();
+    });
+
+  }
+
+  verifyOtp() {
+    if (this.OtpForm.status === 'INVALID')
+    return;
+    this.service.getInputs1(`brokerservice/user/validateProfileOtp?token=${this.token}&otp=${this.OtpForm.value['otp']}`, '').subscribe(response => {
+      console.log(response)
+      this.spinner.show();
+      if (response == 'true') {
+        this.dialogRef.close();  
+          let obj = {};
+        obj = this.data.data;
+        this.translate.get('ProfileUpdated') .subscribe(value => { 
+          this.profileUpdated = value; 
+        } );
+        this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
+          this.spinner.hide();
+          this.toaster.success('', this.profileUpdated, {
+            timeOut: 2000
+          });
+          this.router.navigate(['/User/dashboard']);
+        }, err => {
+          this.spinner.hide();
+        });
+      }
+    });
+  }
+
+  showTimer() {
+    setInterval(() => {
+      if (this.totalMs >= 0) {
+        this.minutes = Math.floor((this.totalMs % (1000 * 60 * 60)) / (1000 * 60));
+        this.seconds = Math.floor((this.totalMs % (1000 * 60)) / 1000);
+      }
+      this.totalMs = this.totalMs - 1000;
+      if (this.totalMs === 0) {
+        this.doTimeout = true;
+      }
+    }, 1000)
+  }
+
+  stopTimer() {
+    this.doTimeout = false;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

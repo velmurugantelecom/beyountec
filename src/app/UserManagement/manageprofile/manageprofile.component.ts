@@ -59,10 +59,10 @@ export class ManageprofileComponent implements OnInit {
         email: this.inputData.email
        
       });
-      this.spinner.hide();
+     
     });
  //  
-
+ this.spinner.hide();
   this.translate.get('Required.EmailRequired') .subscribe(value => { 
     this.emailRequired = value; 
   } );

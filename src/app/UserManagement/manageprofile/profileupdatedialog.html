@@ -14,7 +14,7 @@
     <form [formGroup]="OtpForm">
 
         <div class="centertext fgreen p-1" >
-            <div>We've sent you an OTP. Check your email and enter below
+            <div> {{'OTPAlert' | translate }}
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                 <mat-label>  {{'Otp' | translate }} </mat-label>
                 <input matInput placeholder="Enter OTP" formControlName="otp" required>
                 <mat-error *ngIf="OtpForm.controls.otp.errors && OtpForm.controls.otp.errors.required">
-                    {{'OTPIsRequired' | translate }}</mat-error>
+                    {{'Required.OTPIsRequired' | translate }}</mat-error>
             </mat-form-field>
         </div>
 

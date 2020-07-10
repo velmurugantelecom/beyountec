@@ -7,7 +7,8 @@
         </div>
         <hr class="hr-line">
         <div class="py-5 my-5 mx-auto ">
-            <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off" style="margin-top: 50px;">
+            <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off"
+                style="margin-top: 50px;">
                 <div class="my-4 mx-0">
                     <div class="row centercss m-0">
                         <mat-radio-group formControlName="productType" (change)="selectOption($event)">
@@ -18,7 +19,7 @@
                     </div>
                     <div *ngIf="radioError" class="centercss">
                         <mat-error>{{'ProductType'| translate}} {{'IsRequired' | translate }}</mat-error>
-                </div>
+                    </div>
                 </div>
                 <div class="row m-2 d-flex justify-content-center">
                     <div class="row col-md-6 col-sm-6 col-xs-12 col-12 ">
@@ -36,12 +37,12 @@
                                 <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
                                 <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}"
                                     formControlName="mobileNo" required maxlength="7" NumbersOnly>
-                                    <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
-                                        {{ 'Required.MobileNo' | translate }} </mat-error>
-                                    <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
-                                        {{ 'MobileNoLength' | translate }}
-                                    </mat-error>
-                                </mat-form-field>
+                                <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
+                                    {{ 'Required.MobileNo' | translate }} </mat-error>
+                                <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
+                                    {{ 'MobileNoLength' | translate }}
+                                </mat-error>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-12">
@@ -49,12 +50,12 @@
                             <mat-label>{{ 'EmailLabel' | translate }}</mat-label>
                             <input matInput placeholder="{{ 'PlaceHolder.Email' | translate }}" formControlName="email"
                                 required>
-                                <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email">
-                                    {{ 'EmailFormat' | translate }}</mat-error>
-                                <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
-                                    {{ 'Required.Email' | translate }} </mat-error>
-                                <mat-error *ngIf="invalidEmail && formCtrls.email.errors">
-                                    Email address is aldready exist</mat-error>
+                            <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email">
+                                {{ 'EmailFormat' | translate }}</mat-error>
+                            <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
+                                {{ 'Required.Email' | translate }} </mat-error>
+                            <mat-error *ngIf="invalidEmail && formCtrls.email.errors">
+                                Email address is aldready exist</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -75,8 +76,11 @@
             <div class="mx-auto img-container">
                 <img src="./assets/home/AFNIC_Logo.png" alt="" />
             </div>
-            <div class="f20">{{'LoginTo' | translate }}</div>
-            <form class="pt-4" [formGroup]="LoginForm" focusInvalidInput autocomplete="off">
+
+            <!-- Login Form -->
+            <form class="pt-4" [formGroup]="LoginForm" focusInvalidInput autocomplete="off"
+                *ngIf="formType=='new-login'">
+                <div class="f20 mb-4">{{'LoginTo' | translate }}</div>
                 <mat-form-field appearance="outline">
                     <mat-label>{{'UsernameLabel' | translate }}</mat-label>
                     <input matInput placeholder="{{'PlaceHolder.Username' | translate }}" formControlName="userName">
@@ -95,14 +99,170 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <div class="mb-2 ml-1" (click)="ForgotNavigate()">
-                    <a class="f14 textGreen">{{'ForgotPassword' | translate }}</a>
-                </div>
-                <div class="d-flex justify-content-center">
+                <!-- DEV ENV CAPTCHA -->
+                <ngx-recaptcha2 #captchaElem siteKey="6Le6DqsZAAAAACW2N0MCaGcN0puUMygxPj8OiTcA"
+                    [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type"
+                    formControlName="recaptcha">
+                </ngx-recaptcha2>
+                <!-- UAT ENV CAPTCHA -->
+                <!-- <ngx-recaptcha2 #captchaElem siteKey="6LcKhK8ZAAAAAFHeq_Tl0USvynrN5bOqH0F9ayL2"
+                    [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type"
+                    formControlName="recaptcha">
+                </ngx-recaptcha2> -->
+                <div class="d-flex justify-content-center mt-2">
                     <button type="submit" class="btn btn-block  bggreen fwhite button roundedbtn"
                         (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>
+                <div class="mt-4 ml-1 centercss" (click)="ForgotNavigate()" style="text-decoration: underline;">
+                    <a class="f14 textGreen">{{'ForgotPassword' | translate }}</a>
+                </div>
             </form>
+
+            <!-- Forgot Password Form-->
+            <div *ngIf="formType==='forgotPwd'">
+                <div *ngIf="!isResetLinkSend">
+                    <div class="f20">{{'ResetPassword' | translate }}</div>
+                    <form class="customform pt-4" [formGroup]="ForgotForm" focusInvalidInput autocomplete="off">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'EmailLabel' | translate }}</mat-label>
+                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" formControlName="email"
+                                #emaild>
+                            <mat-icon matSuffix>email &nbsp;&nbsp; </mat-icon>
+                            <mat-error
+                                *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
+                                {{'Required.Email' | translate }}
+                            </mat-error>
+                            <mat-error
+                                *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.errors.email">
+                                {{'EmailFormat' | translate }}</mat-error>
+                        </mat-form-field>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button (click)="forgotPwd()" type="submit"
+                                class="btn btn-block  bggreen fwhite button roundedbtn">{{ 'RESET' | translate }}</button>
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="isResetLinkSend">
+                    <div style="text-align: center;">
+                        <p>
+                            We've sent an email to {{email}}. Click the link in the email to reset your password.
+                        </p>
+                        <a [routerLink]="['/new-login']">Go Back to Login</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reset Password Form-->
+            <div *ngIf="formType==='resetPassword'">
+                <div>
+                    <div class=" signup-form">
+                        <div class="row">
+                            <form *ngIf="!showPassword" class="pt-4" [formGroup]="OtpForm" focusInvalidInput
+                                autocomplete="off">
+                                <div class="centertext fgreen p-1" style="background-color: #D3D3D3;">
+                                    <div>We've sent you an OTP. Check your email and enter below
+                                    </div>
+                                </div>
+                                <mat-form-field class="mt-2" appearance="outline">
+                                    <mat-label>{{'Otp' | translate }}</mat-label>
+                                    <input id="myInput" type="password" matInput placeholder="Enter OTP"
+                                        formControlName="otp">
+                                    <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
+                                        visibility
+                                        &nbsp;&nbsp;
+                                    </mat-icon>
+
+                                    <mat-error *ngIf="OtpForm.controls.otp.hasError('required')">
+                                        {{'Required.Otp' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="d-flex justify-content-between">
+                                    <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
+                                </div>
+
+
+
+
+
+                                <div class="d-flex flex-row-reverse mt-2">
+                                    <button *ngIf="!showPassword" (click)="getOtp()" type="submit"
+                                        class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
+                                    <button (click)="submitOtpForm()" type="submit"
+                                        class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
+                                </div>
+
+
+
+                            </form>
+
+
+
+                            <form *ngIf="showPassword" class="pt-4" [formGroup]="PasswordForm" focusInvalidInput
+                                autocomplete="off">
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'Username' | translate }}</mat-label>
+                                    <input matInput formControlName="userName">
+                                    <mat-error *ngIf="PasswordForm.controls.userName.hasError('required')">
+                                        {{'Required.userName' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+
+                                <mat-form-field class="mt-2" appearance="outline">
+                                    <mat-label>{{'PasswordLabel' | translate }}</mat-label>
+                                    <input id="myInput" type="password" matInput placeholder="Enter Password"
+                                        formControlName="password">
+                                    <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
+                                        visibility
+                                        &nbsp;&nbsp;
+                                    </mat-icon>
+
+                                    <mat-error *ngIf="PasswordForm.controls.password.hasError('required')">
+                                        {{'Required.Password' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+
+
+                                <mat-form-field class="mt-2" appearance="outline">
+                                    <mat-label>{{'ConfirmPasswordLabel' | translate }}</mat-label>
+                                    <input id="myInput1" type="password" matInput placeholder="Enter Confirm Password"
+                                        formControlName="confirmPassword">
+                                    <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput1')">
+                                        visibility
+                                        &nbsp;&nbsp;
+                                    </mat-icon>
+
+                                    <mat-error *ngIf="PasswordForm.controls.confirmPassword.hasError('required')">
+                                        {{'Required.ConfirmPassword' | translate }}
+                                    </mat-error>
+
+
+                                    <mat-error
+                                        *ngIf="PasswordForm.controls.confirmPassword.hasError('passwordsNotMatch')">
+                                        Password does not match
+                                    </mat-error>
+                                </mat-form-field>
+
+
+                                <div class="d-flex justify-content-center mt-2">
+                                    <button (click)="resetPwd()" type="submit"
+                                        class="btn  bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <ul>
+                                <li *ngFor="let List of PwdSopList;let i=index">
+                                    {{List}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

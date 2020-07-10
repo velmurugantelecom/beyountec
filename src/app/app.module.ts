@@ -55,7 +55,7 @@ import { NewLoginScreen, QuoteDialog } from './new screen/login1/login1.componen
 import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { DataService } from './core/services/data.service';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -95,8 +95,7 @@ export const MY_CUSTOM_FORMATS = {
     Login1Component,
     NewLoginScreen,
     NewMotorInfoScreen,
-    PolicyDialog
-  ],
+    PolicyDialog  ],
   imports: [
     //angularLib
     CommonModule,
@@ -133,6 +132,7 @@ export const MY_CUSTOM_FORMATS = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
+    NgxCaptchaModule
   ],
   entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
   ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload,PolicyDialog, QuoteDialog],

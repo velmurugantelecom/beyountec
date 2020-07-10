@@ -8,23 +8,25 @@ export const environment = {
   DevEndpoint: 'https://dev.beyontec.com/bts-broker-portal/api/',
   PaymentEndpoint: 'https://dev.beyontec.com/bts-broker-portal/api/payment-service/',
   OcrEndpoint: 'https://dev.beyontec.com/bts-broker-portal/api/ocr-service/api/',
-  // Grey Import Check
   GreyImport: 'https://dev.beyontec.com/bts-broker-portal/api/tpiv2-services/'
-  // IQC
 
+
+  // IQC
   // DevEndpointdbsync: 'http://192.168.2.105:24090/bts-broker-portal/api/dbsync/',
   // DevEndpointAutoData: 'http://192.168.2.105:24090/bts-broker-portal/api/tpi-services/',
   // DevEndpoint: 'http://192.168.2.105:24090/bts-broker-portal/api/',
   // PaymentEndpoint: 'http://192.168.2.105:24090/bts-broker-portal/api/payment-service/',
-  // OcrEndpoint: 'http://192.168.2.105:24090/bts-broker-portal/api/ocr-service/api/'
+  // OcrEndpoint: 'http://192.168.2.105:24090/bts-broker-portal/api/ocr-service/api/',
+  // GreyImport: 'http://192.168.2.105:24090/bts-broker-portal/api/tpi-services/'
 
-  // UAT
 
   // DevEndpointdbsync: 'https://172.16.1.160:24090/bts-broker-portal/api/dbsync/',
   // DevEndpointAutoData: 'https://172.16.1.160:24090/bts-broker-portal/api/tpi-services/',
   // DevEndpoint: 'https://172.16.1.160:24090/bts-broker-portal/api/',
   // PaymentEndpoint: 'https://172.16.1.160:24090/bts-broker-portal/api/payment-service/',
-  // OcrEndpoint: 'https://172.16.1.160:24090/bts-broker-portal/api/ocr-service/api/'
+  // OcrEndpoint: 'https://172.16.1.160:24090/bts-broker-portal/api/ocr-service/api/',
+  // GreyImport: 'https://172.16.1.160:24090/bts-broker-portal/api/tpi-services/'
+
 
   // LIVE SERVER
 
@@ -32,7 +34,8 @@ export const environment = {
   // DevEndpointAutoData: 'https://172.16.1.116:24090/bts-broker-portal/api/tpi-services/',
   // DevEndpoint: 'https://172.16.1.116:24090/bts-broker-portal/api/',
   // PaymentEndpoint: 'https://172.16.1.116:24090/bts-broker-portal/api/payment-service/',
-  // OcrEndpoint: 'https://172.16.1.116:24090/bts-broker-portal/api/ocr-service/api/'
+  // OcrEndpoint: 'https://172.16.1.116:24090/bts-broker-portal/api/ocr-service/api/',
+  // GreyImport: 'https://172.16.1.116:24090/bts-broker-portal/api/tpi-services/'
 
   // AFNIC 
 
@@ -40,7 +43,8 @@ export const environment = {
   // DevEndpointAutoData: 'https://afnicportal.afnic.ae/api/tpi-services/',
   // DevEndpoint: 'https://afnicportal.afnic.ae/api/',
   // PaymentEndpoint: 'https://afnicportal.afnic.ae/api/payment-service/',
-  // OcrEndpoint: 'https://afnicportal.afnic.ae/api/ocr-service/api/'
+  // OcrEndpoint: 'https://afnicportal.afnic.ae/api/ocr-service/api/',
+  // GreyImport: 'https://afnicportal.afnic.ae/api/tpi-services/'
 };
 
 /*

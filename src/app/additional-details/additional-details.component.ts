@@ -74,7 +74,7 @@ public policyPopup:any;
       registrationMark: ['', [Validators.required]],
       effectiveDate: [date, [Validators.required]],
       fullNameBL: ['', Validators.required],
-      prefix: ['', [Validators.required]],
+      prefixBL: ['', [Validators.required]],
       taxId: ['', []],
       nationality: ['', [Validators.required]],
       address4: ['', [Validators.required]],
@@ -205,7 +205,7 @@ public policyPopup:any;
       this.patchFormValues();
       this.options['prefix'] = [{ "label": "السيد", "value": "السيد" }, { "label": "تصلب متعدد", "value": "تصلب متعدد" }, { "label": "السيدة", "value": "السيدة" }]
       this.additionalDetails.patchValue({
-        prefix: this.options['prefix'][0].value
+        prefixBL: this.options['prefix'][0].value
       });
     });
   }
@@ -477,7 +477,7 @@ public policyPopup:any;
       regNo: this.quoteDetails.vehicleDetails['regNo'],
       engineNo: this.quoteDetails.vehicleDetails['engineNo'],
       //Insured
-      // prefix: this.quoteDetails.userDetails['prefixBL'],
+      prefixBL: this.quoteDetails.userDetails['prefixBL'],
       fullNameBL: this.quoteDetails.userDetails['fullNameBL'],
       occupation: this.quoteDetails.userDetails['occupation'],
       personalId: this.quoteDetails.userDetails['personalId'],

@@ -7,8 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashNotificationComponent } from './dashboard/dash-notification/dash-notification.component';
 import { PolicyComponent } from './policy/policy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ManageprofileComponent } from './manageprofile/manageprofile.component';
-import { ProfileUpdateDialog } from './manageprofile/manageprofile.component';
+import { ManageprofileComponent, ProfileUpdateDialog } from './manageprofile/manageprofile.component';
 import { AuthGuard } from "../core/guard/auth.guard";
 import { ChangePasswordComponent } from './change-password/change-password.component'
 import { QuoteComponent } from './quote/quote.component';
@@ -46,7 +45,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [PolicyComponent, DashboardComponent, ManageprofileComponent, DashNotificationComponent, ChangePasswordComponent,
-        QuoteComponent,ProfileUpdateDialog],
+        QuoteComponent, ProfileUpdateDialog],
     imports: [
         CommonModule,
         SharedModule,
@@ -54,6 +53,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         TranslateModule
     ],
-    entryComponents: [ProfileUpdateDialog]
+    entryComponents: [
+        ProfileUpdateDialog
+    ]
 })
 export class userModule { }

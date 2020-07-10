@@ -10,7 +10,7 @@
         <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Email: {{basicUserDetails?.email}}</div>
     </div>
     <div class="d-flex justify-content-center mt-3 f24">
-        <p>Let us know about your car</p>
+        <p>One more step to go, please provide your vehicle details</p>
     </div>
     <div class="row d-flex justify-content-center my-2">
         <div class="border-block col-md-4">
@@ -117,8 +117,9 @@
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
-                        <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
-                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required>
+                        <input (blur)="chassisNoChange()" matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required
+                            >
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>

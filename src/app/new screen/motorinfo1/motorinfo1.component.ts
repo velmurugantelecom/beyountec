@@ -117,7 +117,8 @@ export class NewMotorInfoScreen implements OnInit {
       prevPolicyExpDate: ['', []],
       ncdYears: ['', []],
       licenseIssueDate: ['', [Validators.required,]],
-      vehicleTypeId: ['',[]]
+      vehicleTypeId: ['',[]],
+      noOfDoors: ['',[]]
     });
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
@@ -147,15 +148,7 @@ export class NewMotorInfoScreen implements OnInit {
   onFormValueChanges() {
     this.vehicleForm.get('chassisNo').statusChanges.subscribe(value => {
       if (value === 'VALID' && this.searchType === 'Manual') {
-        let greyParams = {
-          chassisNo: this.chassisNoForm.value.chassisNo,
-          productId: this.productId
-        }
-        this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
-          if (res) {
-            this.navigateToMsgScreen('autodata-failed')
-          }
-        })
+        
       }
     });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
@@ -407,6 +400,11 @@ export class NewMotorInfoScreen implements OnInit {
       if (this.isLoggedInUser) {
         data['customerId'] = this.loggedInUserName;
       }
+      data['customerId'] = this.additionalDetails['customerId']
+      data['vehicleDetails']['engineNo'] = this.additionalDetails['engineNo'];
+      data['vehicleDetails']['regNo'] = this.additionalDetails['regNo'];
+      data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
+      data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
       // validating tc & chassis numbers
       let params = {
         chassisNo: this.vehicleForm.getRawValue().chassisNo,
@@ -440,7 +438,8 @@ export class NewMotorInfoScreen implements OnInit {
       trim: this.autoData[this.selectedTrim]['trim'],
       noOfPassengers: this.autoData[this.selectedTrim]['noOfSeats'],
       vehicleValue: this.autoData[this.selectedTrim]['vehicleValue'],
-      vehicleTypeId: this.autoData[this.selectedTrim]['vehicleTypeId']
+      vehicleTypeId: this.autoData[this.selectedTrim]['vehicleTypeId'],
+      noOfDoors: this.autoData[this.selectedTrim]['noOfDoors']
     });
     this.maxVehicleValue = this.autoData[this.selectedTrim]['maxValue'];
     this.minValue = this.autoData[this.selectedTrim]['vehicleValue'];
@@ -490,23 +489,15 @@ export class NewMotorInfoScreen implements OnInit {
     this.additionalDetails['taxId'] = data.userDetails.taxId;
     this.additionalDetails['postBox'] = data.userDetails.postBox;
     this.additionalDetails['prefixBL'] = data.userDetails.prefixBL;
-
-
+    // vehicle details
+    this.additionalDetails['engineNo'] = data.vehicleDetails.engineNo;
+    this.additionalDetails['regNo'] = data.vehicleDetails.regNo;
+    this.additionalDetails['registrationMark'] = data.vehicleDetails.registrationMark;
+    this.additionalDetails['colorId'] = data.vehicleDetails.colorId;
+    this.additionalDetails['customerId'] = data.userDetails.customerId;
   }
 
   setRepairTypeAndRegType(makeYear) {
-    // Setting Repair Type
-    // if ((this.today.getFullYear() - makeYear) <= 5) {
-    //   this.vehicleForm.patchValue({
-    //     repairType: '1'
-    //   });
-    // } else {
-    //   this.vehicleForm.patchValue({
-    //     repairType: '2'
-    //   });
-    //   this.vehicleForm.controls.repairType.disable();
-    // }
-    // new req
     if ((this.today.getFullYear() - makeYear) >= 5) {
         this.vehicleForm.patchValue({
           repairType: '2'
@@ -784,5 +775,19 @@ export class NewMotorInfoScreen implements OnInit {
     value['chassisNo'] = this.chassisNoForm.controls.chassisNo.value;
     this.dataService.setUserDetails(value);
     this.router.navigate(['/contact-message', type]);
+  }
+
+  chassisNoChange() {
+    if (this.vehicleForm.controls.chassisNo.status === 'VALID' && this.vehicleForm.controls.tcFileNumber.status === 'VALID') {
+      let greyParams = {
+        chassisNo: this.chassisNoForm.value.chassisNo,
+        productId: this.productId
+      }
+      this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
+        if (res) {
+          this.navigateToMsgScreen('autodata-failed')
+        }
+      });
+    }
   }
 }

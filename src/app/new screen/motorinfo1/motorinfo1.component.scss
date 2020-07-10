@@ -62,3 +62,12 @@ margin-top: 5px;
     padding: 4px 15px;
     height: 25px;
 }
+
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
+    display: block;
+    height: auto;
+    box-sizing: border-box;
+    max-height: 170px !important;
+    overflow-y: auto;
+}

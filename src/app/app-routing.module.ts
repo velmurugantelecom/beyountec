@@ -51,18 +51,13 @@ const routes: Routes = [
     // canActivate: [GuestAuthGuard]
   },
   {
-    path: 'Login',
-    component: LoginComponent,
-    // canActivate: [GuestAuthGuard]
-  },
-  {
     path: 'resetPassword/:id',
-    component: LoginComponent,
+    component: NewLoginScreen,
     // canActivate: [GuestAuthGuard]
   },
   {
     path: 'forgotPwd',
-    component: LoginComponent,
+    component: NewLoginScreen,
     // canActivate: [GuestAuthGuard]
   },
   {
@@ -84,14 +79,6 @@ const routes: Routes = [
     path: 'payment-failed',
     component: PaymentFailedComponent,
     // canActivate: [GuestAuthGuard]
-  },
-  {
-    path: 'demo-login',
-    component: Login1Component
-  },
-  {
-    path: 'demo-motor-info',
-    component: Motorinfo1Component
   },
   {
     path: 'new-login',

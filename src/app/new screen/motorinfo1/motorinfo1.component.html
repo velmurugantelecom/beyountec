@@ -17,22 +17,29 @@
             <div class="d-flex justify-content-center mb-2">
                 <img src="./assets/new-screen/chassis-blue.png" style="height: 48px;" />
             </div>
-            <form [formGroup]="chassisNoForm" focusInvalidInput autocomplete="off">
-                <mat-form-field appearance="outline">
-                    <mat-label>Search by Chassis Number</mat-label>
-                    <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" uppercase
-                        autocomplete="off" formControlName="chassisNo">
-                    <mat-icon matSuffix class="custom-cursor" (click)="getAutoData()">search</mat-icon>
-                    <mat-hint>Chassis Number should be minimum of 15 digits</mat-hint>
-                    <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
-                        Chassis Number should be minimum of 15 digits
-                    </mat-error>
-                    <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.required">
-                        Chassis Number is required
-                    </mat-error>
-                    <mat-error *ngIf="invalidChassisNo && formCtrl.chassisNo.errors">
-                        {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
-                </mat-form-field>
+            <form [formGroup]="chassisNoForm" focusInvalidInput autocomplete="off" class="row">
+                <div class="col-md-10 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Search by Chassis Number</mat-label>
+                        <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" uppercase
+                            autocomplete="off" formControlName="chassisNo">
+                        <!-- <mat-icon matSuffix class="custom-cursor" (click)="getAutoData()">search</mat-icon> -->
+                        <mat-hint>Chassis Number should be minimum of 15 digits</mat-hint>
+                        <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
+                            Chassis Number should be minimum of 15 digits
+                        </mat-error>
+                        <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.required">
+                            Chassis Number is required
+                        </mat-error>
+                        <mat-error *ngIf="invalidChassisNo && formCtrl.chassisNo.errors">
+                            {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 pl-1">
+                    <button mat-mini-fab color="primary">
+                        <mat-icon [ngStyle]="{'color':'white'}" (click)="getAutoData()">search</mat-icon>
+                    </button>
+                </div>
             </form>
         </div>
         <div class="col-md-6">
@@ -58,7 +65,7 @@
     <!-- Grid Section -->
     <div class="row d-flex justify-content-center my-3" *ngIf="!showForm && showGrid">
         <mat-card class="row col-md-10">
-        <table class="table table-striped">
+            <table class="table table-striped">
                 <thead>
                     <tr style="text-align: center;">
                         <th>Year</th>
@@ -87,12 +94,12 @@
                         </td>
                     </tr>
                 </tbody>
-        </table>
+            </table>
 
-        <div class="row d-flex justify-content-center">
-            <button [disabled]="enableGridBtn" (click)="submitGrid()"
-                class="pr-3 btn button btn-default bggreen fwhite">Submit</button>
-        </div>
+            <div class="row d-flex justify-content-center">
+                <button [disabled]="enableGridBtn" (click)="submitGrid()"
+                    class="pr-3 btn button btn-default bggreen fwhite">Submit</button>
+            </div>
         </mat-card>
     </div>
 
@@ -117,10 +124,8 @@
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
-                        <input matInput
-                            placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}" formControlName="chassisNo"
-                            [AlphaNumericOnly]="true" uppercase required
-                            appAutofocus>
+                        <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus>
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>
@@ -181,7 +186,8 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'VehicleUsageLabel' | translate }}</mat-label>
                         <mat-select formControlName="usage" required>
-                            <mat-option *ngFor="let usage of options.usageType;trackBy: trackByFn" [value]="usage.value">
+                            <mat-option *ngFor="let usage of options.usageType;trackBy: trackByFn"
+                                [value]="usage.value">
                                 {{usage.label}}
                             </mat-option>
                         </mat-select>
@@ -194,7 +200,8 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'RepairType' | translate }}</mat-label>
                         <mat-select formControlName="repairType" required>
-                            <mat-option *ngFor="let repairType of options.repairType;trackBy: trackByFn" [value]="repairType.value">
+                            <mat-option *ngFor="let repairType of options.repairType;trackBy: trackByFn"
+                                [value]="repairType.value">
                                 {{repairType.label}}
                             </mat-option>
                         </mat-select>
@@ -218,7 +225,8 @@
                         <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
                         <mat-select formControlName="registeredAt" required
                             (selectionChange)="registeredAtChange($event.value)">
-                            <mat-option *ngFor="let registeredAt of options.registeredAt;trackBy: trackByFn" [value]="registeredAt.value">
+                            <mat-option *ngFor="let registeredAt of options.registeredAt;trackBy: trackByFn"
+                                [value]="registeredAt.value">
                                 {{registeredAt.label}}
                             </mat-option>
                         </mat-select>
@@ -247,7 +255,8 @@
                         <mat-label>{{ 'RegistrationType' | translate }}</mat-label>
                         <mat-select formControlName="regStatus" required
                             (selectionChange)="regTypeChange($event.value)">
-                            <mat-option *ngFor="let regStatus of options.regStatus;trackBy: trackByFn" [value]="regStatus.value">
+                            <mat-option *ngFor="let regStatus of options.regStatus;trackBy: trackByFn"
+                                [value]="regStatus.value">
                                 {{regStatus.label}}
                             </mat-option>
                         </mat-select>
@@ -347,7 +356,8 @@
                         <mat-form-field class="col-md-3 col-sm-4" style="width: 71px;" appearance="outline">
                             <mat-label>{{'Prefix' | translate}}</mat-label>
                             <mat-select formControlName="prefix">
-                                <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn" [value]="prefix.value">
+                                <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn"
+                                    [value]="prefix.value">
                                     {{ prefix.label}}
                                 </mat-option>
                             </mat-select>

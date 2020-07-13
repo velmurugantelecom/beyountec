@@ -150,11 +150,6 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   onFormValueChanges() {
-    this.vehicleForm.get('chassisNo').statusChanges.subscribe(value => {
-      if (value === 'VALID' && this.searchType === 'Manual') {
-
-      }
-    });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
       if (value === 'INVALID') {
         this.insuredForm.patchValue({
@@ -164,7 +159,14 @@ export class NewMotorInfoScreen implements OnInit {
         });
         return;
       } else {
-        if (value === 'VALID' && this.checkTcNoStatus && this.vehicleForm.controls.chassisNo.status === 'VALID') {
+        console.log(this.vehicleForm.controls['chassisNo'])
+        let fieldStatus;
+        if (this.vehicleForm.controls['chassisNo'].status ==='DISABLED') {
+          fieldStatus = 'VALID'
+        } else {
+          fieldStatus = this.vehicleForm.controls['chassisNo'].status;
+        }
+        if (value === 'VALID' && this.checkTcNoStatus && fieldStatus === 'VALID') {
           setTimeout(() => this.getUserDetailsByTcNo(), 1000);
         }
       }

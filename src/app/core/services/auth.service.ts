@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { RuntimeConfigService } from './runtime-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,10 @@ export class AuthService {
   isUserLoggedIn = new Subject<Boolean>();
   isGuestUser = new Subject<Boolean>();
 
-  constructor(private http: HttpClient, private myRoute: Router) {
-    this.DevEndpoint = environment.DevEndpoint;
-    this.DevEndpointDbsync = environment.DevEndpointdbsync;
+  constructor(private http: HttpClient, private myRoute: Router,
+    private configService: RuntimeConfigService) {
+    this.DevEndpoint = configService.config.DevEndpoint;
+    this.DevEndpointDbsync = configService.config.DevEndpointdbsync;
   }
 
 

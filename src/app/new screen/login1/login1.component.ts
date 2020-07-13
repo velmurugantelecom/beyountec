@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
 import { CoreService } from '../../core/services/core.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -8,10 +8,11 @@ const moment = _moment;
 import { ToastrService } from 'ngx-toastr';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
-import { AppService } from 'src/app/core/services/app.service';
 import { MatDialog, MatStepper, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataService } from 'src/app/core/services/data.service';
+import { Subscription } from 'rxjs';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 function confirmPassword(control: AbstractControl) {
   if (!control.parent || !control) {
@@ -29,7 +30,7 @@ function confirmPassword(control: AbstractControl) {
   templateUrl: './login1.component.html',
   styleUrls: ['./login1.component.scss']
 })
-export class NewLoginScreen implements OnInit {
+export class NewLoginScreen implements OnInit, OnDestroy {
 
 
   public formType: string = 'login';
@@ -52,7 +53,8 @@ export class NewLoginScreen implements OnInit {
   public seconds = 0;
   public totalMs = 120000;
   public doTimeout: boolean = false;
-
+  public subscription: Subscription
+  public runtimeConfig;
   public captchaIsLoaded = false;
   public captchaSuccess = false;
   public captchaIsExpired = false;
@@ -62,6 +64,7 @@ export class NewLoginScreen implements OnInit {
   public size: 'compact' | 'normal' = 'normal';
   public lang = 'en';
   public type: 'image' | 'audio';
+  public isValidForm: boolean;
 
   constructor(private dropdownservice: DropDownService,
     private formBuilder: FormBuilder,
@@ -72,7 +75,8 @@ export class NewLoginScreen implements OnInit {
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private dataService: DataService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    public runtimeConfigService: RuntimeConfigService) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.formType = event.url.slice(1).split("/")[0];
@@ -82,7 +86,6 @@ export class NewLoginScreen implements OnInit {
           this.formType = 'resetPassword';
           this.routerToken = event.url.slice(1).split("/")[1];
         }
-        console.log(this.formType)
       }
     });
 
@@ -99,6 +102,7 @@ export class NewLoginScreen implements OnInit {
   }
 
   ngOnInit() {
+    this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
@@ -132,6 +136,10 @@ export class NewLoginScreen implements OnInit {
       this.patchBasicDetails();
       this.loadDropdownValues();
     }
+    if (this.runtimeConfig.Environment === 'QC') {
+      this.LoginForm.get('recaptcha').setValidators([]);
+      this.LoginForm.get('recaptcha').updateValueAndValidity();
+    }
   }
 
   guestUserCall() {
@@ -143,7 +151,7 @@ export class NewLoginScreen implements OnInit {
     let value = {
       guestUser: true
     }
-    this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;
       localStorage.setItem('guesttokenDetails', data.token);
       localStorage.setItem('isLoggedIn', 'false');
@@ -153,10 +161,10 @@ export class NewLoginScreen implements OnInit {
   }
 
   loadDropdownValues() {
-    this.dropdownservice.getInputs('brokerservice/options/product/list', '').subscribe((response: any) => {
+    this.subscription = this.dropdownservice.getInputs('brokerservice/options/product/list', '').subscribe((response: any) => {
       this.options['products'] = response.data;
     });
-    this.coreService.listOptions('MOBILE_CON_CODE', '*').subscribe(response => {
+    this.subscription = this.coreService.listOptions('MOBILE_CON_CODE', '*').subscribe(response => {
       this.options['mobileCode'] = response['data'];
       this.infoForm.patchValue({
         mobileCode: response['data'][0].value
@@ -167,16 +175,20 @@ export class NewLoginScreen implements OnInit {
     });
   }
 
+  handleSuccess(event) {
+    this.isValidForm = false;
+  }
   submitForm() {
     localStorage.removeItem('tokenDetails');
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
     localStorage.removeItem('isLoggedIn');
     if (this.LoginForm.status == 'INVALID') {
+      this.isValidForm = true;
       return
     }
     let value = this.LoginForm.value;
-    this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;
       localStorage.setItem('tokenDetails', data.token);
       localStorage.setItem('Username', data.userName)
@@ -196,7 +208,7 @@ export class NewLoginScreen implements OnInit {
     let value = {
       emailId: this.infoForm.value['email']
     }
-    this.coreService.getInputs(`brokerservice/user/existsByEmail`, value).subscribe(res => {
+    this.subscription = this.coreService.getInputs(`brokerservice/user/existsByEmail`, value).subscribe(res => {
       if (res == true) {
         this.invalidEmail = true;
         let dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -231,7 +243,7 @@ export class NewLoginScreen implements OnInit {
       mobNo: this.infoForm.value['mobileNo'],
       loginSrc: 'CP'
     }
-    this.coreService.postInputs2('audit/users', body, '').subscribe(res => {
+    this.subscription = this.coreService.postInputs2('audit/users', body, '').subscribe(res => {
     });
   }
 
@@ -271,7 +283,7 @@ export class NewLoginScreen implements OnInit {
       return;
     }
     this.spinner.show();
-    this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email}`, '').subscribe(res => {
+    this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email}`, '').subscribe(res => {
       this.spinner.hide();
       this.isResetLinkSend = true;
       this.email = this.ForgotForm.value.email;
@@ -288,7 +300,7 @@ export class NewLoginScreen implements OnInit {
       token: this.routerToken,
       password: this.PasswordForm.value['confirmPassword']
     }
-    this.coreService.postInputs(`login/resetPassword`, body, '').subscribe(res => {
+    this.subscription = this.coreService.postInputs(`login/resetPassword`, body, '').subscribe(res => {
       if (res.status == 'F') {
         this.PwdSopList = res.errorMessages;
       }
@@ -301,7 +313,7 @@ export class NewLoginScreen implements OnInit {
     });
   }
   getOtp() {
-    this.coreService.getInputs1(`brokerservice/user/confirmPasswordReset/${this.routerToken}`, '').subscribe(res => {
+    this.subscription = this.coreService.getInputs1(`brokerservice/user/confirmPasswordReset/${this.routerToken}`, '').subscribe(res => {
       this.showTimer();
       this.PasswordForm.patchValue({ 'userName': res })
     })
@@ -326,10 +338,14 @@ export class NewLoginScreen implements OnInit {
     if (!this.OtpForm.valid) {
       return;
     }
-    this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.routerToken}&otp=${this.OtpForm.value['otp']}`, '').subscribe(res => {
+    this.subscription = this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.routerToken}&otp=${this.OtpForm.value['otp']}`, '').subscribe(res => {
       if (res)
-      this.showPassword = true;
+        this.showPassword = true;
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 
@@ -337,7 +353,7 @@ export class NewLoginScreen implements OnInit {
 // dialoguecomponent
 @Component({
   selector: 'Quotedialog',
-  templateUrl: '../../home/Quotedialog.html',
+  templateUrl: './Quotedialog.html',
   styles: [`
  
 .closeicon_css {

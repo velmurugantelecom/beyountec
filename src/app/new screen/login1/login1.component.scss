@@ -85,3 +85,12 @@ hr {
     background-color: white;
     width: 53%;
   }
+
+  .error-message {
+    font-size: 12px;
+    padding: 0 28px;
+    color: red;
+  }
+  .error-message span {
+    display: block;
+  }

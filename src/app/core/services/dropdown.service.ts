@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable, Subject, BehaviorSubject } from "rxjs";
 import { config } from '../config';
+import { RuntimeConfigService } from './runtime-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,12 @@ export class DropDownService {
   DevEndpointAutoData: string;
   languageLable:string='language';
   configs = {};
-  constructor(private http: HttpClient) {
-    this.DevEndpoint = environment.DevEndpoint;
-    this.DevEndpointDbsync = environment.DevEndpointdbsync;
-    this.PaymentEndpoint = environment.PaymentEndpoint;
-    this.DevEndpointAutoData = environment.DevEndpointAutoData;
+  constructor(private http: HttpClient,
+    private configService: RuntimeConfigService) {
+    this.DevEndpoint = configService.config.DevEndpoint;
+    this.DevEndpointDbsync = configService.config.DevEndpointdbsync;
+    this.PaymentEndpoint = configService.config.PaymentEndpoint;
+    this.DevEndpointAutoData = configService.config.DevEndpointAutoData;
     this.configs = config;
   }
   getInputs(serviceAPI, params): Observable<any> {

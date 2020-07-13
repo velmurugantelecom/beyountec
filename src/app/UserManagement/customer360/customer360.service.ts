@@ -1,10 +1,8 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Observable, from, BehaviorSubject, ReplaySubject } from 'rxjs';
-import { forkJoin, of, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 
 
@@ -19,10 +17,10 @@ export class Customer360Service {
     public ongetpolicyno: BehaviorSubject<any> = new BehaviorSubject([]);
     public ondocuments: BehaviorSubject<any> = new BehaviorSubject([]);
     languageLable:string='language';
-    constructor(private http: HttpClient,  ) {
+    constructor(private http: HttpClient, private configService: RuntimeConfigService) {
 
-        this.DevEndpoint = environment.DevEndpoint;
-        this.DevEndpoint1 = environment.DevEndpointdbsync;
+        this.DevEndpoint = configService.config.DevEndpoint;
+        this.DevEndpoint1 = configService.config.DevEndpointdbsync;
     }
     // search a customer
     public searchCustomer(params) {

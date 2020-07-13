@@ -7,10 +7,11 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProductChangePopupComponent } from 'src/app/modal/product-change/product-change.component';
 import { MatDialog } from '@angular/material';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 export function PolicyExpDateValidator(control: AbstractControl) {
   if (control.value != '') {
@@ -69,6 +70,7 @@ export class NewMotorInfoScreen implements OnInit {
   public checkTcNoStatus;
   public typeHint = '';
   public searchType;
+  subscription: Subscription
   // gauge properties
   gaugeType = "semi";
   gaugeValue;
@@ -83,7 +85,8 @@ export class NewMotorInfoScreen implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dropdownservice: DropDownService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public runtimeConfigService: RuntimeConfigService) {
     this.route.queryParams
       .subscribe(params => {
         if (params['quoteNo']) {
@@ -100,7 +103,7 @@ export class NewMotorInfoScreen implements OnInit {
     });
 
     this.vehicleForm = this.formBuilder.group({
-      chassisNo: ['', [Validators.required]],
+      chassisNo: ['', [Validators.required, Validators.minLength(15)]],
       makeId: [{ value: '', disabled: true }, [Validators.required]],
       modelId: [{ value: '', disabled: true }, [Validators.required]],
       makeYear: [{ value: '', disabled: true }, [Validators.required]],
@@ -117,8 +120,8 @@ export class NewMotorInfoScreen implements OnInit {
       prevPolicyExpDate: ['', []],
       ncdYears: ['', []],
       licenseIssueDate: ['', [Validators.required,]],
-      vehicleTypeId: ['',[]],
-      noOfDoors: ['',[]]
+      vehicleTypeId: ['', []],
+      noOfDoors: ['', []]
     });
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
@@ -141,6 +144,7 @@ export class NewMotorInfoScreen implements OnInit {
       this.getQuoteDetails();
       this.checkTcNoStatus = false;
       this.enableContinue = false;
+      this.vehicleForm.controls['chassisNo'].disable();
     }
     this.onFormValueChanges();
   }
@@ -148,7 +152,7 @@ export class NewMotorInfoScreen implements OnInit {
   onFormValueChanges() {
     this.vehicleForm.get('chassisNo').statusChanges.subscribe(value => {
       if (value === 'VALID' && this.searchType === 'Manual') {
-        
+
       }
     });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
@@ -188,6 +192,11 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getAutoData() {
+    if (this.selected.length != 3) {
+      this.vehicleForm.controls['chassisNo'].disable();
+    } else {
+      this.vehicleForm.controls['chassisNo'].enable();
+    }
     this.checkTcNoStatus = true;
     this.showForm = false;
     this.showGrid = false;
@@ -223,8 +232,8 @@ export class NewMotorInfoScreen implements OnInit {
             this.validateAutoData();
           }
         } else {
-          if(res1)
-          this.spinner.hide();
+          if (res1)
+            this.spinner.hide();
           this.navigateToMsgScreen('autodata-failed');
           if (!res2) {
             this.invalidChassisNo = true;
@@ -318,7 +327,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getDropDownOptions(key: string, optionId: string, productId = '*') {
-    this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
+    this.subscription = this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
       this.options[key] = response.data;
       if (!this.quoteNo && key === 'regYear')
         this.items = this.options.regYear;
@@ -401,8 +410,8 @@ export class NewMotorInfoScreen implements OnInit {
         data['customerId'] = this.loggedInUserName;
       }
       data['customerId'] = this.additionalDetails['customerId']
-      data['vehicleDetails']['engineNo'] = this.additionalDetails['engineNo'];
-      data['vehicleDetails']['regNo'] = this.additionalDetails['regNo'];
+      data['vehicleDetails']['engineNumber'] = this.additionalDetails['engineNumber'];
+      data['vehicleDetails']['registerNumber'] = this.additionalDetails['registerNumber'];
       data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
       data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
       // validating tc & chassis numbers
@@ -416,7 +425,8 @@ export class NewMotorInfoScreen implements OnInit {
       } else {
         params['regStatus'] = 'N'
       }
-      this.validateTCnoAndChassisNo(params, data);
+      this.fetchAllPlans(data);
+      // this.validateTCnoAndChassisNo(params, data);
     }
   }
 
@@ -464,7 +474,7 @@ export class NewMotorInfoScreen implements OnInit {
       tcNo: this.vehicleForm.value['tcFileNumber'],
       chassisNo: this.vehicleForm.getRawValue().chassisNo
     }
-    this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
+    this.subscription = this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
       if (res) {
         this.insuredForm.patchValue(res.userDetails);
         this.vehicleForm.patchValue({
@@ -490,8 +500,8 @@ export class NewMotorInfoScreen implements OnInit {
     this.additionalDetails['postBox'] = data.userDetails.postBox;
     this.additionalDetails['prefixBL'] = data.userDetails.prefixBL;
     // vehicle details
-    this.additionalDetails['engineNo'] = data.vehicleDetails.engineNo;
-    this.additionalDetails['regNo'] = data.vehicleDetails.regNo;
+    this.additionalDetails['engineNumber'] = data.vehicleDetails.engineNo;
+    this.additionalDetails['registerNumber'] = data.vehicleDetails.regNo;
     this.additionalDetails['registrationMark'] = data.vehicleDetails.registrationMark;
     this.additionalDetails['colorId'] = data.vehicleDetails.colorId;
     this.additionalDetails['customerId'] = data.userDetails.customerId;
@@ -499,19 +509,19 @@ export class NewMotorInfoScreen implements OnInit {
 
   setRepairTypeAndRegType(makeYear) {
     if ((this.today.getFullYear() - makeYear) >= 5) {
-        this.vehicleForm.patchValue({
-          repairType: '2'
-        });
-        this.vehicleForm.controls.repairType.disable();
-      } else if ((this.today.getFullYear() - makeYear) <= 2) {
-        this.vehicleForm.patchValue({
-          repairType: '1'
-        });
-      } else {
-        this.vehicleForm.patchValue({
-          repairType: '2'
-        });
-      }
+      this.vehicleForm.patchValue({
+        repairType: '2'
+      });
+      this.vehicleForm.controls.repairType.disable();
+    } else if ((this.today.getFullYear() - makeYear) <= 2) {
+      this.vehicleForm.patchValue({
+        repairType: '1'
+      });
+    } else {
+      this.vehicleForm.patchValue({
+        repairType: '2'
+      });
+    }
     // Setting Registration Type
     if ((this.today.getFullYear() <= makeYear)) {
       this.vehicleForm.patchValue({
@@ -563,7 +573,7 @@ export class NewMotorInfoScreen implements OnInit {
       filterByValue: value,
       optionType: 'LOC_DIVN'
     }
-    this.coreService.getInputs('brokerservice/options/list', params).subscribe(res => {
+    this.subscription = this.coreService.getInputs('brokerservice/options/list', params).subscribe(res => {
       this.additionalDetails['branchId'] = res.data[0].value;
     })
     this.vehicleForm.get('tcFileNumber').setValue(null);
@@ -590,7 +600,7 @@ export class NewMotorInfoScreen implements OnInit {
         mthd = this.coreService.listModel(value);
       }
       if (mthd)
-        mthd.subscribe((response: any) => {
+      this.subscription = mthd.subscribe((response: any) => {
           this.options[targetFieldId] = response.data;
           resolve();
         });
@@ -604,7 +614,7 @@ export class NewMotorInfoScreen implements OnInit {
   // to validate TC No & Chassis No
   validateTCnoAndChassisNo(params, data) {
     this.spinner.show();
-    this.coreService.getInputsDbsync('validateChassisNoAndTcNo', params).subscribe(res => {
+    this.subscription = this.coreService.getInputsDbsync('validateChassisNoAndTcNo', params).subscribe(res => {
       if (res.responseCode === -1) {
         this.fetchAllPlans(data);
       } else {
@@ -635,7 +645,8 @@ export class NewMotorInfoScreen implements OnInit {
 
   // Fetching Plan Details
   fetchAllPlans(data) {
-    this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
+    this.spinner.show();
+    this.subscription = this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
       this.spinner.hide();
       if (response.status === 'VF') {
         this.router.navigate(['/contact-message', 'br-failed']);
@@ -726,6 +737,10 @@ export class NewMotorInfoScreen implements OnInit {
   async onchangeLoadDropdown() {
     if (this.chassisNoForm.status === 'INVALID') {
       this.searchType = 'Manual';
+      this.chassisNoForm.controls['chassisNo'].setErrors({});
+      this.chassisNoForm.controls['chassisNo'].markAsUntouched();
+      this.chassisNoForm.controls['chassisNo'].updateValueAndValidity();
+      console.log(this.chassisNoForm)
       this.checkTcNoStatus = true;
     }
     if (this.selected.length === 0) {
@@ -755,13 +770,13 @@ export class NewMotorInfoScreen implements OnInit {
         model: this.selected[2].value
       };
       if (this.productId === '1113') {
-        this.coreService.greyImportService('ae/findVehicleWithPrice', params).subscribe(res => {
+        this.subscription = this.coreService.greyImportService('ae/findVehicleWithPrice', params).subscribe(res => {
           this.autoData = res;
           this.validateAutoData();
           this.spinner.hide();
         });
       } else {
-        this.coreService.greyImportService('ae/findVehicle', params).subscribe(res => {
+        this.subscription = this.coreService.greyImportService('ae/findVehicle', params).subscribe(res => {
           this.autoData = res;
           this.validateAutoData();
           this.spinner.hide();
@@ -778,16 +793,23 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   chassisNoChange() {
-    if (this.vehicleForm.controls.chassisNo.status === 'VALID' && this.vehicleForm.controls.tcFileNumber.status === 'VALID') {
+    if (this.vehicleForm.controls.chassisNo.status === 'VALID') {
       let greyParams = {
-        chassisNo: this.chassisNoForm.value.chassisNo,
+        chassisNo: this.vehicleForm.value.chassisNo,
         productId: this.productId
       }
-      this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
+      this.subscription = this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
         if (res) {
           this.navigateToMsgScreen('autodata-failed')
         }
       });
     }
   }
+  trackByFn(index) {
+    return index;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+}
 }

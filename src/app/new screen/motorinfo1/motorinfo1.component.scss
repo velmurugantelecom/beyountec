@@ -11,7 +11,7 @@
     width: 100%;
 }
 .custom-bg {
-    background-image: linear-gradient(to right, #5ea997 60%, #1af954);
+    background-image: linear-gradient(to right, #58BB8B 40%, #6FE289);
     margin: 8px;
     height: 40px;
     padding: 10px;
@@ -70,4 +70,19 @@ margin-top: 5px;
     box-sizing: border-box;
     max-height: 170px !important;
     overflow-y: auto;
+}
+
+// Scroll table
+tbody {
+    display:block;
+    height:200px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+thead {
+    width: calc( 100% - 1em )
 }

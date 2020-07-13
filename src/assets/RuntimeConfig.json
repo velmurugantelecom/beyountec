@@ -1,0 +1,11 @@
+{
+    "Environment": "DEV",
+    "heading": "One more step to go, please provide your vehicle details",
+    "siteKey": "6Le6DqsZAAAAACW2N0MCaGcN0puUMygxPj8OiTcA",
+    "DevEndpointdbsync": "https://dev.beyontec.com/bts-broker-portal/api/dbsync/",
+    "DevEndpointAutoData": "https://dev.beyontec.com/bts-broker-portal/api/tpi-services/",
+    "DevEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/",
+    "PaymentEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/payment-service/",
+    "OcrEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/ocr-service/api/",
+    "GreyImport": "https://dev.beyontec.com/bts-broker-portal/api/tpiv2-services/"
+}

@@ -43,6 +43,7 @@ export class MessageComponent implements OnInit {
       }
       case 'policy-failed': {
         this.icon = 'alert';
+        this.text =`Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
         break;
       }
       case 'autodata-failed': {

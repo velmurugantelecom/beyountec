@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { AppMaterialModule } from '../app-material.module';
-import { InsurerInfoComponent } from './insurer-info/insurer-info.component'
 import { GeneralInfoTemplateComponent } from './general-info-template/general-info-template.component'
 import { CoreModule } from './../core/core.module';
 import { SuccessMsgComponent } from './success-msg/success-msg.component';
@@ -32,7 +31,6 @@ export const MY_CUSTOM_FORMATS = {
 @NgModule({
   declarations: [
     HeaderComponent,
-    InsurerInfoComponent,
     GeneralInfoTemplateComponent,
     SuccessMsgComponent,
     RequestRedirectComponent,
@@ -55,7 +53,6 @@ export const MY_CUSTOM_FORMATS = {
   ],
   exports: [
     HeaderComponent,
-    InsurerInfoComponent,
     GeneralInfoTemplateComponent,
     PrintPackageComponent,
     MessageComponent,

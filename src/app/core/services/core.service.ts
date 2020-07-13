@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Observable, Subject, BehaviorSubject } from "rxjs";
 import { config } from '../config'
+import { RuntimeConfigService } from './runtime-config.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,12 +16,13 @@ export class CoreService {
   greyImport: string;
   configs = {};
   
-  constructor(private http: HttpClient) {
-    this.DevEndpoint = environment.DevEndpoint;
-    this.DevEndpointDbsync = environment.DevEndpointdbsync;
-    this.PaymentEndpoint = environment.PaymentEndpoint;
-    this.DevEndpointAutoData = environment.DevEndpointAutoData;
-    this.greyImport  = environment.GreyImport;
+  constructor(private http: HttpClient,
+    private configService: RuntimeConfigService) {
+    this.DevEndpoint = configService.config.DevEndpoint;
+    this.DevEndpointDbsync = configService.config.DevEndpointdbsync;
+    this.PaymentEndpoint = configService.config.PaymentEndpoint;
+    this.DevEndpointAutoData = configService.config.DevEndpointAutoData;
+    this.greyImport  = configService.config.GreyImport;
     this.configs = config;
   }
 
@@ -196,17 +198,17 @@ export class CoreService {
   }
 
 
-  TestInputs(body: any): Observable<any> {
+  // TestInputs(body: any): Observable<any> {
 
-    let url = `${environment.OcrEndpoint}ocr/submitTransaction`;
-    return this.http.post(url, body);
-  }
+  //   let url = `${environment.OcrEndpoint}ocr/submitTransaction`;
+  //   return this.http.post(url, body);
+  // }
 
-  TestInput1(body: any): Observable<any> {
+  // TestInput1(body: any): Observable<any> {
 
-    let url = `${environment.OcrEndpoint}ocr/submitTransaction3`;
-    return this.http.post(url, body);
-  }
+  //   let url = `${environment.OcrEndpoint}ocr/submitTransaction3`;
+  //   return this.http.post(url, body);
+  // }
 
 
 

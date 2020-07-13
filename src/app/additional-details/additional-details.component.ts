@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef,Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { CoreService } from '../core/services/core.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { WebCamComponent } from '../shared/web-cam/web-cam.component';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,15 +39,17 @@ export class AdditionalDetailsComponent implements OnInit {
   public activeStepper;
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
-public policyPopup:any;
-  yes:any;
-  no:any;
+  public policyPopup: any;
+  yes: any;
+  no: any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
   public today = moment(new Date()).subtract(1, 'd')
   public effectiveDateChanged = false
   public currentEffDate;
+  public subscription: Subscription;
+
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
     private appService: AppService,
@@ -59,7 +61,7 @@ public policyPopup:any;
     private cdr: ChangeDetectorRef,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
-    
+
   ) { }
 
   ngOnInit() {
@@ -126,7 +128,7 @@ public policyPopup:any;
     if (type === 'change') {
       this.effectiveDateChanged = true;
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    }else {
+    } else {
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     }
     let params = {
@@ -135,7 +137,7 @@ public policyPopup:any;
       startDate: new Date(effectiveDate).toISOString(),
       productId: this.quoteDetails.productTypeId
     }
-    this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
+    this.subscription = this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);
@@ -169,21 +171,21 @@ public policyPopup:any;
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
       }
-      this.translate.get('Yes') .subscribe(value => { 
-        this.yes = value; 
-      } );
-      this.translate.get('No') .subscribe(value => { 
-        this.no = value; 
-      } );
+      this.translate.get('Yes').subscribe(value => {
+        this.yes = value;
+      });
+      this.translate.get('No').subscribe(value => {
+        this.no = value;
+      });
       this.mailId = this.quoteDetails.userDetails.email;
-      this.options['financed'] = [ 
+      this.options['financed'] = [
         {
-        label: this.no,
-        value: 'N'
-      },{
-        label: this.yes,
-        value: 'Y'
-      },];
+          label: this.no,
+          value: 'N'
+        }, {
+          label: this.yes,
+          value: 'Y'
+        },];
       // this.additionalDetails.patchValue({
       //   mortgagedYN: this.options['financed'][0].value
       // });
@@ -191,12 +193,12 @@ public policyPopup:any;
         this.additionalDetails.patchValue({
           mortgagedYN: this.options['financed'][0].value
         });
-        }
-        else{
-          this.additionalDetails.patchValue({
-            mortgagedYN: '',
-          });
-        }
+      }
+      else {
+        this.additionalDetails.patchValue({
+          mortgagedYN: '',
+        });
+      }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
       this.getDropDownOptions('nationality', 'NATIONALITY');
@@ -209,7 +211,7 @@ public policyPopup:any;
       });
     });
   }
-  
+
   addAdditionalDetail(stepper: MatStepper) {
     if (this.showBankField) {
       if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
@@ -266,10 +268,10 @@ public policyPopup:any;
     }
     if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
       this.updateEffectiveDate('change')
-      else 
+    else
       this.updateEffectiveDate(null)
-    this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
-      this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
+      this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
+      this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
           this.spinner.hide();
           stepper.next();
@@ -290,12 +292,12 @@ public policyPopup:any;
     }
   }
 
-  registrationNoChange(regNoValue){
-    if(regNoValue.target.value.length>0){
+  registrationNoChange(regNoValue) {
+    if (regNoValue.target.value.length > 0) {
       this.additionalDetails.get('registrationMark').setValidators(Validators.required);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
-    else{
+    else {
       this.additionalDetails.get('registrationMark').setValidators([]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
@@ -307,7 +309,7 @@ public policyPopup:any;
       this.additionalDetails.get('regNo').setValidators([]);
       this.additionalDetails.get('regNo').updateValueAndValidity();
     }
-    else{
+    else {
       this.additionalDetails.get('registrationMark').setValidators(Validators.required);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
       this.additionalDetails.get('regNo').setValidators(Validators.required);
@@ -318,23 +320,23 @@ public policyPopup:any;
       filterByValue: value,
       optionType: 'MOTOR_CITY'
     }
-    this.coreService.getInputs('brokerservice/options/list', params).subscribe((response) => {
+    this.subscription = this.coreService.getInputs('brokerservice/options/list', params).subscribe((response) => {
       this.options['city'] = response.data;
-      if(this.quoteDetails.userDetails['address4']==value){
-      this.additionalDetails.patchValue({
-        city: this.quoteDetails.userDetails['city'],
-      });
-    }
-    else{
-      this.additionalDetails.patchValue({
-        city: '',
-      });
-    }
+      if (this.quoteDetails.userDetails['address4'] == value) {
+        this.additionalDetails.patchValue({
+          city: this.quoteDetails.userDetails['city'],
+        });
+      }
+      else {
+        this.additionalDetails.patchValue({
+          city: '',
+        });
+      }
     });
   }
 
   getDropDownOptions(key: string, optionId: string, productId = '*') {
-    this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
+    this.subscription = this.coreService.listOptions(optionId, productId).subscribe((response: any) => {
       this.options[key] = response.data;
       if (key === 'bankName') {
         this.filteredBanks = this.additionalDetails['controls']['bankName'].valueChanges
@@ -394,7 +396,7 @@ public policyPopup:any;
   }
   downloadDocuments() {
     let url = `brokerservice/quotes/quotePdfreport?quoteNumber=${this.quoteNo}`
-    this.coreService.getDownload(url, '').subscribe((response) => {
+    this.subscription = this.coreService.getDownload(url, '').subscribe((response) => {
       if (response) {
         var link = document.createElement("a");
         link.href = URL.createObjectURL(response);
@@ -406,7 +408,7 @@ public policyPopup:any;
 
   openAttachment(value) {
     let fileName = `${this.quoteDetails.quoteId}_0_${value}`;
-    this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fileName).subscribe((response: any) => {
+    this.subscription = this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fileName).subscribe((response: any) => {
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
       link.download = value;
@@ -433,7 +435,7 @@ public policyPopup:any;
   }
 
   printDocument() {
-    this.coreService.mergeDocument(`brokerservice/quotes/quotePdfreport?quoteNumber=${this.quoteNo}`).subscribe((response: any) => {
+    this.subscription = this.coreService.mergeDocument(`brokerservice/quotes/quotePdfreport?quoteNumber=${this.quoteNo}`).subscribe((response: any) => {
       var blob = new Blob([response], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
       const iframe = document.createElement('iframe');
@@ -470,7 +472,7 @@ public policyPopup:any;
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
-     // mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+      // mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
       bankName: this.quoteDetails.vehicleDetails['bankName'],
       registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],
@@ -487,12 +489,12 @@ public policyPopup:any;
       postBox: this.quoteDetails.userDetails['postBox'],
       address4: this.quoteDetails.userDetails['address4'],
       taxId: this.quoteDetails.userDetails['taxId'],
-     // city: this.quoteDetails.userDetails['city'],
+      // city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
     let effectivDate;
-    if(this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
+    if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
       effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
     } else {
       effectivDate = moment(new Date());
@@ -513,7 +515,7 @@ public policyPopup:any;
       quoteId: this.quoteDetails['quoteId'],
       loadAllDocs: 'Y'
     }
-    this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, params).subscribe((response: any) => {
+    this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, params).subscribe((response: any) => {
       let shallowcopy = this.fileContainer.slice();
       let value = shallowcopy.splice(1);
       const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
@@ -549,7 +551,7 @@ public policyPopup:any;
     let params = {
       quotenumber: this.quoteDetails['quoteId']
     }
-    this.coreService.getInputs('brokerservice/documentupload/uploadedDocs', params).subscribe((result: any) => {
+    this.subscription = this.coreService.getInputs('brokerservice/documentupload/uploadedDocs', params).subscribe((result: any) => {
       if (result.length > 0) {
         let sortedArray: any[] = result.sort((n1, n2) => n1.docId - n2.docId);
         sortedArray.forEach((element, index) => {
@@ -577,7 +579,7 @@ public policyPopup:any;
     formData.append('doctypeid', docId);
     formData.append('docDesc', selectedFileName);
     formData.append('quotenumber', this.quoteDetails['quoteNumber']);
-    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
+    this.subscription = this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
       this.spinner.hide();
       this.fileContainer[i].value = response[0].docDesc;
     }, err => {
@@ -592,7 +594,7 @@ public policyPopup:any;
       quoteId: this.quoteDetails['quoteId'],
       loadAllDocs: "N"
     }
-    this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, body).subscribe((response: any) => {
+    this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, body).subscribe((response: any) => {
       if (response) {
         response.forEach((element, index) => {
           this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
@@ -649,7 +651,7 @@ public policyPopup:any;
     formData.append('doctypeid', docId);
     formData.append('docDesc', `${filename}`);
     formData.append('quotenumber', this.quoteDetails['quoteNumber']);
-    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
+    this.subscription = this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
       this.spinner.hide();
       this.fileContainer[i].value = filename;
     }, err => {
@@ -666,17 +668,20 @@ public policyPopup:any;
       width: '400',
     });
     dialogRef.afterClosed().subscribe(result => {
-    
+
       let val = this.appService.getpolicyDetails();
-      if(val){
+      if (val) {
         this.getCampus(stepper);
       }
-     
+
     });
   }
-  getCampus(stepper){
+  getCampus(stepper) {
     this.showHeader = true;
     stepper.next();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
   }
 }
 
@@ -710,13 +715,10 @@ export class PolicyDialog {
   ngOnInit() {
   }
 
-  goPolicy(){
+  goPolicy() {
     this.appService.setpolicyDetails(true);
     this.dialogRef.close();
   }
-  
-
-
 }
 
 

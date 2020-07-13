@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-print-package',
@@ -33,7 +34,7 @@ export class PrintPackageComponent implements OnInit, AfterViewInit {
   brokerName: any;
   mailId: any;
   //downloadUrl: String = 'brokerservice/document/downloadPDF/?fileName=';
-  downloadUrl: String = environment.DevEndpoint + 'brokerservice/document/downloadPDF/?fileName=';
+  downloadUrl: String;
   selectedDocs: any = [];
   isSuccess: Boolean = false;
   docSpinner: string = 'docSpinner';
@@ -46,10 +47,12 @@ export class PrintPackageComponent implements OnInit, AfterViewInit {
     private route: Router,
     private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private configService: RuntimeConfigService) {
   }
 
   ngOnInit() {
+  this.downloadUrl = this.configService.config.DevEndpoint + 'brokerservice/document/downloadPDF/?fileName=';
     this.formgroup = this.formBuilder.group({
       cb_1: [''],
       cb_2: [''],

@@ -10,7 +10,7 @@
         <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Email: {{basicUserDetails?.email}}</div>
     </div>
     <div class="d-flex justify-content-center mt-3 f24">
-        <p>One more step to go, please provide your vehicle details</p>
+        <p>{{runtimeConfigService.config.heading}}</p>
     </div>
     <div class="row d-flex justify-content-center my-2">
         <div class="border-block col-md-4">
@@ -42,9 +42,8 @@
             <div>
                 <ng-select style=" text-align: center;" bindLabel="label" class="custom"
                     placeholder="Search by Vehicle Details" appendTo="body" [(ngModel)]="selected" [searchable]="true"
-                    maxSelectedItems="3" appendTo="body" multiple="true"
-                    (change)="onchangeLoadDropdown()" (clear)="resetDropDown()" [items]="items"
-                    [clearOnBackspace]="false">
+                    maxSelectedItems="3" appendTo="body" multiple="true" (change)="onchangeLoadDropdown()"
+                    (clear)="resetDropDown()" [items]="items" [clearOnBackspace]="false">
                     <!-- <ng-option [value]="item" *ngFor="let item of items">
                         {{item.label}}
                     </ng-option> -->
@@ -59,7 +58,7 @@
     <!-- Grid Section -->
     <div class="row d-flex justify-content-center my-3" *ngIf="!showForm && showGrid">
         <mat-card class="row col-md-10">
-            <table class="table table-striped">
+        <table class="table table-striped">
                 <thead>
                     <tr style="text-align: center;">
                         <th>Year</th>
@@ -74,7 +73,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let trim of trimOption;let i = index" style="text-align: center;">
+                    <tr *ngFor="let trim of trimOption;let i = index;trackBy: trackByFn" style="text-align: center;">
                         <td>{{gridDetails[0]}}</td>
                         <td>{{gridDetails[1]}}</td>
                         <td>{{gridDetails[2]}}</td>
@@ -88,11 +87,12 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
-            <div class="row d-flex justify-content-center">
-                <button [disabled]="enableGridBtn" (click)="submitGrid()"
-                    class="pr-3 btn button btn-default bggreen fwhite">Submit</button>
-            </div>
+        </table>
+
+        <div class="row d-flex justify-content-center">
+            <button [disabled]="enableGridBtn" (click)="submitGrid()"
+                class="pr-3 btn button btn-default bggreen fwhite">Submit</button>
+        </div>
         </mat-card>
     </div>
 
@@ -117,11 +117,15 @@
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
-                        <input (blur)="chassisNoChange()" matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
-                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required
-                            >
+                        <input matInput
+                            placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}" formControlName="chassisNo"
+                            [AlphaNumericOnly]="true" uppercase required
+                            appAutofocus>
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('minlength')">
+                            Chassis Number should be minimum of 15 digits
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -129,7 +133,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'MakeLabel' | translate }}</mat-label>
                         <mat-select formControlName="makeId" required>
-                            <mat-option *ngFor="let make of options.make" [value]="make.value">
+                            <mat-option *ngFor="let make of options.make;trackBy: trackByFn" [value]="make.value">
                                 {{make.label}}
                             </mat-option>
                         </mat-select>
@@ -142,7 +146,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ModelLabel' | translate }}</mat-label>
                         <mat-select formControlName="modelId" required>
-                            <mat-option *ngFor="let model of options.model" [value]="model.value">
+                            <mat-option *ngFor="let model of options.model;trackBy: trackByFn" [value]="model.value">
                                 {{model.label}}
                             </mat-option>
                         </mat-select>
@@ -155,7 +159,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'MakeYear' | translate }}</mat-label>
                         <mat-select formControlName="makeYear" required>
-                            <mat-option *ngFor="let year of options.regYear" [value]="year.value">
+                            <mat-option *ngFor="let year of options.regYear;trackBy: trackByFn" [value]="year.value">
                                 {{year.label}}
                             </mat-option>
                         </mat-select>
@@ -177,7 +181,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'VehicleUsageLabel' | translate }}</mat-label>
                         <mat-select formControlName="usage" required>
-                            <mat-option *ngFor="let usage of options.usageType" [value]="usage.value">
+                            <mat-option *ngFor="let usage of options.usageType;trackBy: trackByFn" [value]="usage.value">
                                 {{usage.label}}
                             </mat-option>
                         </mat-select>
@@ -190,7 +194,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'RepairType' | translate }}</mat-label>
                         <mat-select formControlName="repairType" required>
-                            <mat-option *ngFor="let repairType of options.repairType" [value]="repairType.value">
+                            <mat-option *ngFor="let repairType of options.repairType;trackBy: trackByFn" [value]="repairType.value">
                                 {{repairType.label}}
                             </mat-option>
                         </mat-select>
@@ -214,7 +218,7 @@
                         <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
                         <mat-select formControlName="registeredAt" required
                             (selectionChange)="registeredAtChange($event.value)">
-                            <mat-option *ngFor="let registeredAt of options.registeredAt" [value]="registeredAt.value">
+                            <mat-option *ngFor="let registeredAt of options.registeredAt;trackBy: trackByFn" [value]="registeredAt.value">
                                 {{registeredAt.label}}
                             </mat-option>
                         </mat-select>
@@ -243,7 +247,7 @@
                         <mat-label>{{ 'RegistrationType' | translate }}</mat-label>
                         <mat-select formControlName="regStatus" required
                             (selectionChange)="regTypeChange($event.value)">
-                            <mat-option *ngFor="let regStatus of options.regStatus" [value]="regStatus.value">
+                            <mat-option *ngFor="let regStatus of options.regStatus;trackBy: trackByFn" [value]="regStatus.value">
                                 {{regStatus.label}}
                             </mat-option>
                         </mat-select>
@@ -290,7 +294,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'NCDLabel' | translate }}</mat-label>
                         <mat-select formControlName="ncdYears">
-                            <mat-option *ngFor="let type of options.ncdYears" [value]="type.value">
+                            <mat-option *ngFor="let type of options.ncdYears;trackBy: trackByFn" [value]="type.value">
                                 {{type.label}}
                             </mat-option>
                         </mat-select>
@@ -343,7 +347,7 @@
                         <mat-form-field class="col-md-3 col-sm-4" style="width: 71px;" appearance="outline">
                             <mat-label>{{'Prefix' | translate}}</mat-label>
                             <mat-select formControlName="prefix">
-                                <mat-option *ngFor="let prefix of options.prefix" [value]="prefix.value">
+                                <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn" [value]="prefix.value">
                                     {{ prefix.label}}
                                 </mat-option>
                             </mat-select>
@@ -385,7 +389,8 @@
                 <button (click)="goBack()" class=" pr-3 btn button btn-default bggreen fwhite">
                     <i class="fa fa-arrow-left"></i>
                     Back</button>
-                <button [disabled]="enableContinue" class="pr-3 btn button btn-default bggreen fwhite" (click)="getPlans()">
+                <button [disabled]="enableContinue" class="pr-3 btn button btn-default bggreen fwhite"
+                    (click)="getPlans()">
                     Continue
                     <i class="fa fa-arrow-right"></i>
                 </button>

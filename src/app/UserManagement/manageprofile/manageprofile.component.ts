@@ -47,8 +47,8 @@ export class ManageprofileComponent implements OnInit {
       this.options['mobileCode'] = response['data'];
     });
     
-    //this.postService.getInputs(`dbsync/insured/findByUserId`, '').subscribe((data: any) => {
-      this.postService.getInputs(`dbsync/user/find`, '').subscribe((data: any) => {
+    this.postService.getInputs(`dbsync/insured/findByUserId`, '').subscribe((data: any) => {
+      // this.postService.getInputs(`dbsync/user/find`, '').subscribe((data: any) => {
       this.inputData = data;
       this.profileForm.patchValue({
         firstName:  this.inputData.firstName,
@@ -174,7 +174,8 @@ export class ProfileUpdateDialog {
         this.translate.get('ProfileUpdated') .subscribe(value => { 
           this.profileUpdated = value; 
         } );
-        this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
+        this.postService.postInputs('dbsync/insured/update', obj, {}).subscribe((result: any) => {
+        // this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
           this.spinner.hide();
           this.toaster.success('', this.profileUpdated, {
             timeOut: 2000

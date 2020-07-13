@@ -12,6 +12,7 @@ import { AlphabetsOnlyDirective } from './directives/alphabets.directive';
 import { DateFormatPipe } from './pipes/customdate.pipe';
 import { DecimalValuePipe } from './pipes/decimalPipe.pipe';
 import { AutoDateFormatDirective } from './directives/dateAutoFormat.directive';
+import { AutofocusDirective } from './directives/autoFocus.directive';
 @NgModule({
     declarations: [
         AlphaNumericDirective,
@@ -22,7 +23,8 @@ import { AutoDateFormatDirective } from './directives/dateAutoFormat.directive';
         CustomClassDirective,
         DateFormatPipe,
         DecimalValuePipe,
-        AutoDateFormatDirective
+        AutoDateFormatDirective,
+        AutofocusDirective
     ],
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import { AutoDateFormatDirective } from './directives/dateAutoFormat.directive';
         CustomClassDirective,
         DateFormatPipe,
         DecimalValuePipe,
-        AutoDateFormatDirective
+        AutoDateFormatDirective,
+        AutofocusDirective
     ],
     providers: [DecimalPipe],
 })

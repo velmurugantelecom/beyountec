@@ -7,6 +7,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-success-msg',
@@ -21,6 +22,8 @@ export class SuccessMsgComponent implements OnInit {
   public quoteDetails: any;
   public currency;
   public amount;
+  public language:any ;
+  poclicyCreated: any;
   policyId: any
   constructor(private coreService: CoreService,
     private route: ActivatedRoute,
@@ -28,6 +31,7 @@ export class SuccessMsgComponent implements OnInit {
     private appService: AppService,
     private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
+    private translate: TranslateService,
     private toastr: ToastrService) {
 
     this.route.queryParams
@@ -39,6 +43,12 @@ export class SuccessMsgComponent implements OnInit {
   ngOnInit() {
     this.getQuoteDetails();
     this.createPolicy();
+    this.language=localStorage.getItem("language") ;
+  }
+  ngDoCheck(){
+    if(this.language!=localStorage.getItem("language")){
+      this.language=localStorage.getItem("language") ;
+    }
   }
 
   getQuoteDetails() {
@@ -47,7 +57,7 @@ export class SuccessMsgComponent implements OnInit {
       quoteNumber: this.quoteNo
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
-      if (response != null)
+     if (response != null)
         this.quoteDetails = response.data.quoteSummary;
       this.currency = this.quoteDetails.premiumCurrencyId;
       this.amount = this.quoteDetails.risks[0].netPremium;
@@ -62,13 +72,17 @@ export class SuccessMsgComponent implements OnInit {
       payMode: "PG",
       sendDocs: true
     }
+    this.translate.get('PolicyCreated') .subscribe(value => { 
+      this.poclicyCreated = value; 
+    } );
+
     this.coreService.postInputs('brokerservice/policy', {}, params).subscribe(response => {
       this.spinner.hide();
       if (response) {
         if (this.mailId)
           this.policyNo = response.policyNo;
         this.policyId = response.policyId;
-        this.toastr.success('', 'Policy Created', {
+        this.toastr.success('',  this.poclicyCreated, {
           timeOut: 3000
         });
       }

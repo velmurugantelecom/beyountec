@@ -320,6 +320,21 @@ export class AdditionalDetailsComponent implements OnInit {
     this.isAttachmentArea = true;
   }
 
+  engineNoChange(value) {
+    if ((value)&&(value.length <= 30)) {
+      this.additionalDetails.get('engineNo').setValidators(Validators.pattern("[a-zA-Z0-9 ]*"));
+      this.additionalDetails.get('engineNo').updateValueAndValidity();
+    }
+   else if ((value)&&(value.length >= 30)) {
+      this.additionalDetails.get('engineNo').setValidators(Validators.maxLength(5));
+      this.additionalDetails.get('engineNo').updateValueAndValidity();
+    }
+    else {
+      this.additionalDetails.get('engineNo').setValidators([]);
+      this.additionalDetails.get('engineNo').updateValueAndValidity();
+    }
+  }
+
   financeStatusChange(value) {
     if (value === 'Y') {
       this.showBankField = true;

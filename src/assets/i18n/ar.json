@@ -69,6 +69,7 @@
     "AED": "درهم إماراتي",
     "VehicleValueMax": "تم تجاوز الحد الأقصى للقيمة",
     "VehicleValueMin": "تم تجاوز الحد الأدنى للقيمة",
+    "MaxValueLimit": "تم تجاوز الحد الأدنى للقيمة",
     "TcNo": "رقم TC",
     "LicenseIssueDateLabel": "تاريخ إصدار الترخيص",
     "LicenseExpiryDateInvalid": "تاريخ انتهاء غير صالح",
@@ -329,6 +330,7 @@
     "DownloadDocument":"Download Document_fa",
     "SendEmail":"Send Email_fa",
     "PrintDocument":"Print Document_fa",
+    "PolicyCreated":"Policy Created_fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",
@@ -406,7 +408,8 @@
         "OldPasswordIsRequired": "Old Password is required_fa",
         "NewPasswordIsRequired": "New Password is required_fa",
         "ConfirmPasswordIsRequired": "Confirm Password is required_fa",
-        "QuoteNo": "Quote Number is required_fa"
+        "QuoteNo": "Quote Number is required_fa",
+        "EngineNoFormat": "Invalid Engine No Format"
     },
     "PlaceHolder": {
         "InsuredName": "أدخل اسم المؤمن عليه",

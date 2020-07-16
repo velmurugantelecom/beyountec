@@ -89,7 +89,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 this.router.navigate(["/contact-message", "policy-failed"]);
               } else {
                 if (errorMsg === "Unable to fetch data from auto data") {
-                  this.router.navigate(["/contact-message", "autodata-failed"]);
+                  // this.router.navigate(["/contact-message", "autodata-failed"]);
                   // ++this.invalidAutoDataCount;
                   // if (this.invalidAutoDataCount === 4) {
                   //   this.invalidAutoDataCount = 0;

@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class MessagePopupComponent implements OnInit {
 
-  public cancelRenew: boolean;
+  public cancelProcess: boolean;
+  public proceedProcess: boolean;
 
   constructor(public dialogRef: MatDialogRef<MessagePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -17,9 +18,17 @@ export class MessagePopupComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.data.for != 'emailAlreadyExist') {
+      this.cancelProcess = true;
+    }
+    this.proceedProcess = true;
   }
 
-  doRoute() {
+  doContinue() {
     this.dialogRef.close(true);
+  }
+
+  doCancel() {
+    this.dialogRef.close(false)
   }
 }

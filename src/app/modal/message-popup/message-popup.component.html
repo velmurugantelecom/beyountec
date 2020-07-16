@@ -3,7 +3,7 @@
         <div class="col-md-10 col-9 p-0">
             <h5 style="display: flex;">{{ data.title}}</h5>
         </div>
-        <div class="col-md-2 col-3 custom-cursor" [mat-dialog-close]="cancelRenew">
+        <div class="col-md-2 col-3 custom-cursor" mat-dialog-close>
             <mat-icon>
                 close
             </mat-icon>
@@ -11,16 +11,15 @@
     </div>
     <mat-divider></mat-divider>
     <div class="col-md-10 col-9 p-0 my-2 centertext">
-        <!-- <mat-icon color="primary">
-            info
-        </mat-icon> -->
         <i class="fa fa-info-circle fa-3x bg-color" aria-hidden="true"></i>
         <p>
             {{ data.body}}
         </p>
     </div>
     <div style="display: flex;justify-content: center;">
-        <button [mat-dialog-close]="cancelRenew" class="btn btn-home button fwhite bggreen centercss" 
-        style="min-width: 75px;" (click)="doRoute()">OK</button>
+        <button class="btn btn-home button fwhite bggreen centercss mr-4" style="min-width: 75px;"
+            (click)="doCancel()" *ngIf="cancelProcess">NO</button>
+        <button mat-dialog-close class="btn btn-home button fwhite bggreen centercss"
+            style="min-width: 75px;" (click)="doContinue()">YES</button>
     </div>
 </div>

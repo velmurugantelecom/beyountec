@@ -5,6 +5,7 @@ import { CoreService } from '../core/services/core.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from '../core/services/data.service';
 
 export interface KeyValue<K, V> {
   key: K;
@@ -40,7 +41,8 @@ export class ComparePlansComponent implements OnInit {
     private appService: AppService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private dataService: DataService) {
     this.route.queryParams
       .subscribe(params => {
         if (params['reviseDetails']) {
@@ -54,7 +56,7 @@ export class ComparePlansComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.planOb = history.state.response;
+    this.planOb = this.dataService.getPlanDetails();
     // to test hard coded data
     // this.planOb = 
     if (this.planOb) {

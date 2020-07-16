@@ -43,6 +43,18 @@ export class CoreService {
     });
   }
 
+  postInputsGreyImportService(serviceAPI, body: any, params): Observable<any> {
+    let httpParams = new HttpParams();
+    if (params && params != "") {
+      for (let key in params) {
+        httpParams = httpParams.append(key, params[key]);
+      }
+    }
+    let url = `${this.greyImport}${serviceAPI}`;
+    return this.http.post(url, body, {
+      params: httpParams
+    });
+  }
   getInputs(serviceAPI, params): Observable<any> {
     let httpParams = new HttpParams();
     if (params && params != "") {

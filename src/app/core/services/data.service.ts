@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   userBasicDetails: any = {};
+  planDetails: any = {};
 
   constructor() { }
 
@@ -15,5 +16,13 @@ export class DataService {
 
   getUserDetails() {
       return this.userBasicDetails;
+  }
+
+  setPlanDetails(data) {
+    this.planDetails = data;
+  }
+
+  getPlanDetails() {
+    return this.planDetails;
   }
 }

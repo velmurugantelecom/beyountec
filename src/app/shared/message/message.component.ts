@@ -61,7 +61,6 @@ export class MessageComponent implements OnInit {
           this.quotationText = value; 
         } );
         this.icon = 'info';
-      //  this.arabicText = '';
         this.text =  this.quotationText;
         let params = {
           ...this.dataService.getUserDetails(),
@@ -70,6 +69,17 @@ export class MessageComponent implements OnInit {
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
         });
         break;
+      }
+      case 'imported-vehicle': {
+        this.icon = 'info';
+        this.text =  'Imported Vehicle...';
+        let params = {
+          ...this.dataService.getUserDetails(),
+          reason:`Auto Data not Returning Value`
+        }
+        this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
+        });
+        break;  
       }
     }
   }

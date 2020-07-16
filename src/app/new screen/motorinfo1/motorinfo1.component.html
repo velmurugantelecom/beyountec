@@ -23,7 +23,6 @@
                         <mat-label>Search by Chassis Number</mat-label>
                         <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" uppercase
                             autocomplete="off" formControlName="chassisNo">
-                        <!-- <mat-icon matSuffix class="custom-cursor" (click)="getAutoData()">search</mat-icon> -->
                         <mat-hint>Chassis Number should be minimum of 15 digits</mat-hint>
                         <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
                             Chassis Number should be minimum of 15 digits
@@ -37,7 +36,7 @@
                 </div>
                 <div class="col-md-2 pl-1">
                     <button mat-mini-fab color="primary">
-                        <mat-icon [ngStyle]="{'color':'white'}" (click)="getAutoData()">search</mat-icon>
+                        <mat-icon [ngStyle]="{'color':'white'}" (click)="getAutoData('ChassisNoSearch')">search</mat-icon>
                     </button>
                 </div>
             </form>
@@ -68,27 +67,27 @@
             <table class="table table-striped">
                 <thead>
                     <tr style="text-align: center;">
-                        <th>Year</th>
-                        <th>Make</th>
                         <th>Model</th>
                         <th>No of Cylinders</th>
                         <th>No of Seats</th>
                         <th>No of Doors</th>
                         <th>Engine Size</th>
+                        <th>Hp</th>
+                        <th>Transmission</th>
                         <th>Trim</th>
                         <th>Select One</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let trim of trimOption;let i = index;trackBy: trackByFn" style="text-align: center;">
-                        <td>{{gridDetails[0]}}</td>
-                        <td>{{gridDetails[1]}}</td>
-                        <td>{{gridDetails[2]}}</td>
-                        <td>{{gridDetails[3]}}</td>
-                        <td>{{gridDetails[4]}}</td>
-                        <td>{{gridDetails[5]}}</td>
-                        <td>{{gridDetails[6]}}</td>
-                        <td>{{trim}}</td>
+                    <tr *ngFor="let data of autoData;let i = index;trackBy: trackByFn" style="text-align: center;">
+                        <td>{{data.model.label}}</td>
+                        <td>{{data.noOfCylinders}}</td>
+                        <td>{{data.noOfSeats}}</td>
+                        <td>{{data.noOfDoors}}</td>
+                        <td>{{data.engineSize}}</td>
+                        <td>{{data.hp}}</td>
+                        <td>{{data.transmission}}</td>
+                        <td>{{data.trim}}</td>
                         <td>
                             <input type="radio" id="{{trim}}" name="drone" value="{{i}}" (change)="trimChanged($event)">
                         </td>
@@ -125,7 +124,8 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
                         <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
-                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus>
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus
+                            (focusout)="chassisNoChange()">
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>
@@ -330,7 +330,7 @@
                     </div>
                     <div class="pl-2">
                         <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue"
-                            [value]="vehicleValue" step="1" class="slider" (input)="gaugeChange()">
+                            [value]="vehicleValue" step="100" class="slider" (input)="gaugeChange()">
                     </div>
                 </div>
             </form>

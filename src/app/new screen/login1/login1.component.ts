@@ -214,11 +214,13 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         let dialogRef = this.dialog.open(MessagePopupComponent, {
           width: '400px',
           data: {
+            for: 'emailAlreadyExist',
             title: 'Try Login',
             body: `Email address is already Exist. Try Login.`
           }
         });
         dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
           this.LoginForm.get('userName').setValue(this.infoForm.get('email').value);
           this.LoginForm.get('password').reset();
         });

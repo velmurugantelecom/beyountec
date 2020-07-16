@@ -279,6 +279,7 @@ export class AdditionalDetailsComponent implements OnInit {
       nationality: this.additionalDetails.value['nationality'],
       fullNameBL: this.additionalDetails.value['fullNameBL'],
       firstNameBL: this.additionalDetails.value['fullNameBL'],
+      prefix: this.additionalDetails.value['prefixBL'],
       taxId: this.additionalDetails.value['taxId'],
       city: this.additionalDetails.value['city'],
       country: this.additionalDetails.value['country'],
@@ -296,7 +297,8 @@ export class AdditionalDetailsComponent implements OnInit {
       registeredAt: this.quoteDetails.vehicleDetails.registeredAt,
       registrationMark: this.additionalDetails.value['registrationMark'],
       regNo: this.additionalDetails.value['regNo'],
-      engineNo: this.additionalDetails.value['engineNo']
+      engineNo: this.additionalDetails.value['engineNo'],
+      trim: this.quoteDetails.vehicleDetails.trim
     }
     if (vehicledetails.mortgagedYN === 'N') {
       delete vehicledetails['bankName'];

@@ -80,6 +80,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.formType = event.url.slice(1).split("/")[0];
+        console.log(this.formType)
         if (this.formType.includes('new-login') || this.formType === '')
           this.formType = 'new-login';
         if (this.formType.includes('resetPassword')) {

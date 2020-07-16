@@ -233,39 +233,55 @@ export class NewMotorInfoScreen implements OnInit {
       let params = {
         chassisNo: this.chassisNoForm.value.chassisNo
       }
-      forkJoin(this.coreService.greyImportService('ae/isImportedVehicle', greyParams).pipe(catchError(err => {
-        return of(undefined)
-      })),
-        this.coreService.greyImportService(this.autoDataURL, params).pipe(catchError(err => {
-          return of(undefined)
-        }))
-      ).subscribe(([res1, res2]) => {
-        res1 = this.productId === '1113' ? res1 : false;
-        if (!res1) {
-          this.spinner.hide();
-          this.autoData = res2;
-          if (!this.autoData || this.autoData.length === 0) {
-            this.openDialog();
-          } else {
-            let makeYear = this.autoData[0]['makeYear']['label'];
-            if (makeYear && this.productId === '1113')
-              this.makeYearValidation(makeYear)
-            else {
-              this.validateAutoData();
-            }
-          }
+      this.coreService.greyImportService(this.autoDataURL, params).subscribe(res => {
+        this.spinner.hide();
+        this.autoData = res;
+        if (!this.autoData || this.autoData.length === 0) {
+          this.openDialog();
         } else {
-          this.spinner.hide();
-          // grey import service return's true
-          if (res1) {
-            this.navigateToMsgScreen('imported-vehicle');
-          }
-          if (!res2) {
-            this.invalidChassisNo = true;
-            this.chassisNoForm.controls['chassisNo'].setErrors({ 'incorrect': true });
+          let makeYear = this.autoData[0]['makeYear']['label'];
+          if (makeYear && this.productId === '1113')
+            this.makeYearValidation(makeYear)
+          else {
+            this.validateAutoData();
           }
         }
+      }, err => {
+        this.openDialog();
       });
+      // forkJoin(this.coreService.greyImportService('ae/isImportedVehicle', greyParams).pipe(catchError(err => {
+      //   return of(undefined)
+      // })),
+      //   this.coreService.greyImportService(this.autoDataURL, params).pipe(catchError(err => {
+      //     return of(undefined)
+      //   }))
+      // ).subscribe(([res1, res2]) => {
+      //   res1 = this.productId === '1113' ? res1 : false;
+      //   if (!res1) {
+      //     this.spinner.hide();
+      //     this.autoData = res2;
+      //     if (!this.autoData || this.autoData.length === 0) {
+      //       this.openDialog();
+      //     } else {
+      //       let makeYear = this.autoData[0]['makeYear']['label'];
+      //       if (makeYear && this.productId === '1113')
+      //         this.makeYearValidation(makeYear)
+      //       else {
+      //         this.validateAutoData();
+      //       }
+      //     }
+      //   } else {
+      //     this.spinner.hide();
+      //     // grey import service return's true
+      //     if (res1) {
+      //       this.navigateToMsgScreen('imported-vehicle');
+      //     }
+      //     if (!res2) {
+      //       this.invalidChassisNo = true;
+      //       this.chassisNoForm.controls['chassisNo'].setErrors({ 'incorrect': true });
+      //     }
+      //   }
+      // });
     }
   }
 
@@ -303,7 +319,7 @@ export class NewMotorInfoScreen implements OnInit {
               for: 'autodata-failed',
               title: 'Information Not Found',
               body: `Vehicle information not found , 
-              do you want to continue with Search By Vehcile information`
+              do you want to continue with Search By Vehicle information`
             }
           });
           dialogRef.afterClosed().subscribe(result => {
@@ -321,7 +337,7 @@ export class NewMotorInfoScreen implements OnInit {
               for: 'autodata-failed',
               title: 'Information Not Found',
               body: `Vehicle information not found , 
-              do you want to continue with Search By Vehcile information`
+              do you want to continue with Search By Vehicle information`
             }
           });
           dialogRef.afterClosed().subscribe(result => {
@@ -453,11 +469,26 @@ export class NewMotorInfoScreen implements OnInit {
       } else {
         params['regStatus'] = 'N'
       }
-      this.fetchAllPlans(data);
+      this.validateImportedStatus(data);
       // this.validateTCnoAndChassisNo(params, data);
     }
   }
 
+  validateImportedStatus(data) {
+    let greyParams = {
+      chassisNo: data['vehicleDetails']['chassisNo'],
+      productId: this.productId
+    }
+    this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
+      if (!res) {
+        this.fetchAllPlans(data);
+      } else {
+        this.showForm= false;
+        this.showGrid = false;
+      }
+    })
+
+  }
   goBack() {
     this.router.navigate(['/new-login'], {
       queryParams: { reviseDetails: true }
@@ -470,29 +501,33 @@ export class NewMotorInfoScreen implements OnInit {
       ...this.autoData[this.selectedTrim]
     }
     this.coreService.postInputsGreyImportService('am/findAutoMatrixEquivalent', body, '').subscribe(res => {
-      formValue = res;
-      this.loadVehicleDropDowns('makeId', 'model', res['make']['value']);
-      this.showForm = true;
-      this.showGrid = false;
-      this.enableContinue = false;
-      localStorage.setItem('maxValue', formValue['maxValue']);
-      localStorage.setItem('minValue', formValue['vehicleValue']);
-      this.vehicleForm.patchValue({
-        chassisNo: this.chassisNoForm.value.chassisNo,
-        makeId: formValue['make']['value'],
-        modelId: formValue['model']['value'],
-        makeYear: formValue['makeYear']['value'],
-        trim: formValue['trim'],
-        noOfPassengers: formValue['noOfSeats'],
-        vehicleValue: formValue['vehicleValue'],
-        vehicleTypeId: formValue['type']['value'],
-        noOfDoors: formValue['noOfDoors']
-      });
-      this.maxVehicleValue = formValue['maxValue'];
-      this.minValue = formValue['vehicleValue'];
-      this.maxValue = formValue['maxValue'];
-      this.gaugeValue = this.vehicleForm.value['vehicleValue'];
-      this.setRepairTypeAndRegType(formValue['makeYear']['value']);
+      if (!res) {
+        this.openDialog();
+      } else {
+        formValue = res;
+        this.loadVehicleDropDowns('makeId', 'model', res['make']['value']);
+        this.showForm = true;
+        this.showGrid = false;
+        this.enableContinue = false;
+        localStorage.setItem('maxValue', formValue['maxValue']);
+        localStorage.setItem('minValue', formValue['vehicleValue']);
+        this.vehicleForm.patchValue({
+          chassisNo: this.chassisNoForm.value.chassisNo,
+          makeId: formValue['make']['value'],
+          modelId: formValue['model']['value'],
+          makeYear: formValue['makeYear']['value'],
+          trim: formValue['trim'],
+          noOfPassengers: formValue['noOfSeats'],
+          vehicleValue: formValue['vehicleValue'],
+          vehicleTypeId: formValue['type']['value'],
+          noOfDoors: formValue['noOfDoors']
+        });
+        this.maxVehicleValue = formValue['maxValue'];
+        this.minValue = formValue['vehicleValue'];
+        this.maxValue = formValue['maxValue'];
+        this.gaugeValue = this.vehicleForm.value['vehicleValue'];
+        this.setRepairTypeAndRegType(formValue['makeYear']['value']);
+      }
     })
     if (this.dataService.getUserDetails().personalId) {
       this.isLoggedInUser = true;
@@ -841,20 +876,6 @@ export class NewMotorInfoScreen implements OnInit {
     this.router.navigate(['/contact-message', type]);
   }
 
-  chassisNoChange() {
-    if (this.vehicleForm.controls.chassisNo.status === 'VALID') {
-      let greyParams = {
-        chassisNo: this.vehicleForm.value.chassisNo,
-        productId: this.productId
-      }
-      this.subscription = this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
-        if (res) {
-          this.navigateToMsgScreen('imported-vehicle')
-        }
-      });
-    }
-  }
-
   trackByFn(index) {
     return index;
   }
@@ -867,7 +888,7 @@ export class NewMotorInfoScreen implements OnInit {
     let msg;
     if (this.searchType === 'ChassisNoSearch') {
       msg = `Vehicle information not found , 
-      do you want to continue with Search By Vehcile information`
+      do you want to continue with Search By Vehicle information`
     } else {
       msg = `Vehicle information not found in our database, do you want to Try again`;
     }
@@ -886,6 +907,7 @@ export class NewMotorInfoScreen implements OnInit {
         if (this.searchType != 'ChassisNoSearch') {
           this.selected = [];
           this.items = this.manualOptions['makeYear'];
+          this.showGrid = false;
         }
       }
     });

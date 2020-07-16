@@ -78,9 +78,13 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 timeOut: 3000,
               });
             } else if (err.status === 400) {
-              this.toasterService.error("", "Bad Request", {
-                timeOut: 3000,
-              });
+              if (errorMsg === "Unable to fetch data from auto data") {
+
+              } else {
+                this.toasterService.error("", "Bad Request", {
+                  timeOut: 3000,
+                });
+              }
             } else if (errorMsg != "Internal Server Error") {
               if (
                 err.url.includes("brokerservice/policy") &&

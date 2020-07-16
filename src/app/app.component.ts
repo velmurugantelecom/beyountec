@@ -33,13 +33,10 @@ export class AppComponent implements OnInit {
   ) {
     // multi language 
     this.translate.addLangs(['en', 'ar']);
-    // this.translate.setDefaultLang('en');
-    // let browserLang = this.translate.getBrowserLang();
-    // this.translate.use(browserLang.match(/en|fa/) ? browserLang : 'en');
     let  browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
     this.appService._languageChange.next(browserLang);
 
-    // back button
+    // back button disable
     this.locationStrategy.onPopState(() => {
       this.appService.isBackButtonClicked = true;
     });

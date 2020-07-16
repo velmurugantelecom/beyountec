@@ -124,8 +124,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
                         <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
-                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus
-                            (focusout)="chassisNoChange()">
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus>
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>
@@ -270,7 +269,7 @@
                         <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
                         <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate"
                             placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}"
-                            formControlName="registeredDate" required AutoDateFormat  [max]="today" />
+                            formControlName="registeredDate" required AutoDateFormat [max]="today"/>
                         <owl-date-time [pickerType]="'calendar'" #registeredDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
                             date_range</mat-icon>

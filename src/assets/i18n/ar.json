@@ -326,6 +326,9 @@
     "VerifyOTP": "Verify OTP_fa",
     "ResendOTP": "Resend OTP?_fa",
     "OTPAlert": "We've sent you an OTP. Check your email and enter below_fa",
+    "DownloadDocument":"Download Document_fa",
+    "SendEmail":"Send Email_fa",
+    "PrintDocument":"Print Document_fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",

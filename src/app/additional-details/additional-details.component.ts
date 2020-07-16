@@ -15,11 +15,13 @@ import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.component';
 import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-additional-details',
   templateUrl: './additional-details.component.html',
-  styleUrls: ['./additional-details.component.scss']
+  styleUrls: ['./additional-details.component.scss'],
+  providers: [DatePipe]
 })
 export class AdditionalDetailsComponent implements OnInit {
 
@@ -40,8 +42,12 @@ export class AdditionalDetailsComponent implements OnInit {
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
   public policyPopup: any;
+  public effetiveDates:any
+  public nowTime:any;
+  public minTime:any;
   yes: any;
   no: any;
+  public language:any ;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
@@ -61,6 +67,7 @@ export class AdditionalDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
+    private datePipe: DatePipe
 
   ) { }
 
@@ -105,6 +112,12 @@ export class AdditionalDetailsComponent implements OnInit {
     } else {
       this.loadQuoteDetails();
     }
+    this.language=localStorage.getItem("language") ;
+  }
+  ngDoCheck(){
+    if(this.language!=localStorage.getItem("language")){
+      this.language=localStorage.getItem("language") ;
+    }
   }
 
   ngAfterViewInit() {
@@ -123,18 +136,43 @@ export class AdditionalDetailsComponent implements OnInit {
   changeEffectiveDate() {
 
   }
+  dateConversion(date: any) {
+    function formatDate(date) {
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [year, month, day].join('-');
+    }
+    return formatDate(date);
+  }
   updateEffectiveDate(type) {
     let effectiveDate;
     if (type === 'change') {
       this.effectiveDateChanged = true;
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    } else {
+    }else {
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     }
+    this.effetiveDates=  this.dateConversion(effectiveDate);
+    this.nowTime =this.dateConversion(new Date());
+    this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
+    if(this.effetiveDates <= this.nowTime){
+      this.effetiveDates= this.effetiveDates.concat('T'+this.minTime+':00.000Z');
+    }
+    else{
+      this.effetiveDates=this.effetiveDates.concat('T00:00:00.000Z');
+     
+    }
+    console.log(this.nowTime+'time');
     let params = {
       quoteId: this.quoteDetails.quoteId,
       amndVerNo: 0,
-      startDate: new Date(effectiveDate).toISOString(),
+    //  startDate: new Date(effectiveDate).toISOString(),
+      startDate:  this.effetiveDates,
       productId: this.quoteDetails.productTypeId
     }
     this.subscription = this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
@@ -165,7 +203,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
       this.getUploadedDocs();
-      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.userDetails.address4 != "1102") {
+      if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "1102") {
         this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
@@ -303,18 +341,6 @@ export class AdditionalDetailsComponent implements OnInit {
     }
   }
   emiratesChange(value) {
-    if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || value != "1102") {
-      this.additionalDetails.get('registrationMark').setValidators([]);
-      this.additionalDetails.get('registrationMark').updateValueAndValidity();
-      this.additionalDetails.get('regNo').setValidators([]);
-      this.additionalDetails.get('regNo').updateValueAndValidity();
-    }
-    else {
-      this.additionalDetails.get('registrationMark').setValidators(Validators.required);
-      this.additionalDetails.get('registrationMark').updateValueAndValidity();
-      this.additionalDetails.get('regNo').setValidators(Validators.required);
-      this.additionalDetails.get('regNo').updateValueAndValidity();
-    }
     let params = {
       productId: "*",
       filterByValue: value,
@@ -702,6 +728,7 @@ export class AdditionalDetailsComponent implements OnInit {
 })
 export class PolicyDialog {
   dialogeDetails: any;
+ language:any ;
   constructor(private appService: AppService,
     public dialogRef: MatDialogRef<PolicyDialog>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -713,6 +740,12 @@ export class PolicyDialog {
   }
 
   ngOnInit() {
+    this.language=localStorage.getItem("language") ;
+  }
+  ngDoCheck(){
+    if(this.language!=localStorage.getItem("language")){
+      this.language=localStorage.getItem("language") ;
+    }
   }
 
   goPolicy() {

@@ -43,6 +43,7 @@ export class QuoteSummaryComponent implements OnInit {
   public EffectiveDateForm: FormGroup;
   public maxEffectiveDate;
   public isValidQuote = 'true';
+  public language:any ;
 
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
@@ -113,6 +114,15 @@ export class QuoteSummaryComponent implements OnInit {
         this.summaryFor = value; 
       } );
       this.pageHeader = this.summaryFor+' ' + this.quoteNo;
+    }
+    this.language=localStorage.getItem("language") ;
+  }
+  ngDoCheck(){
+    if(this.language!=localStorage.getItem("language")){
+      this.language=localStorage.getItem("language") ;
+      this.translate.get('QuoteSummary') .subscribe(value => { 
+        this.pageHeader = value; 
+      } );
     }
   }
   
@@ -251,11 +261,15 @@ export class QuoteSummaryComponent implements OnInit {
     let param = {
       fileName: file
     }
+    this.spinner.show();
     console.log(file)
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
       console.log(response)
       let fileUrl = window.URL.createObjectURL(response);
       window.open(fileUrl,'_blank');
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
     })
   }
 }

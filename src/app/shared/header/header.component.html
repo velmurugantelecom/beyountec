@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light navbg">
+<nav class="navbar navbar-expand-lg navbar-light" [ngClass]="{ ennavbg:language=='en',arnavbg :language=='ar'}">
   <img src="./assets/home/AFNIC_Logo.png" alt="">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,8 +12,8 @@
     </button>
   </div> -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-        <ul style="min-width: 100px;" class="navbar-nav ml-auto custom-cursor"
+    <ul class="navbar-nav" [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}">
+        <ul style="min-width: 100px;" class="navbar-nav  custom-cursor"  [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}"
         [matMenuTriggerFor]="languageMenu">
         <div *ngIf="selectedLanguage" style=" border: 2px solid white;display: flex; justify-content: space-around;padding:5px;">
           

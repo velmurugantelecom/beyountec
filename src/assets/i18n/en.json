@@ -326,6 +326,9 @@
     "VerifyOTP": "Verify OTP",
     "ResendOTP": "Resend OTP?",
     "OTPAlert": "We've sent you an OTP. Check your email and enter below",
+    "DownloadDocument":"Download Document",
+    "SendEmail":"Send Email",
+    "PrintDocument":"Print Document",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name in Arabic is required",

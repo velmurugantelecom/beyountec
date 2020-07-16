@@ -26,10 +26,20 @@
                 <p dir="rtl">سيتم إرسال تفاصيل الوثيقة لكم عن طريق البريد الالكتروني المسجل لدينا.</p>
                 <p dir="rtl">للمزيد من المعلومات أو المساعدة الرجاء الاتصال على رقمنا المجاني 80023642</p>
             </div> -->
-
+            <div class="fullwidth">
+                <div class="columns">
             <img class="m-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
+            <p>{{'DownloadDocument' | translate }}</p>
+        </div>
+        <div class="columns">
             <img class="m-2 custom-cursor" src="./assets/icon2.png" (click)="sendMail()" />
+            <p>{{'SendEmail' | translate }}</p>
+        </div>
+        <div class="columns">
             <img class="m-2 custom-cursor" src="./assets/icon3.png" (click)="printDocument()" />
+            <p>{{'PrintDocument' | translate }}</p>
+        </div>
+        </div>
         </div>
     </div>
 </div>

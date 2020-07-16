@@ -2,11 +2,15 @@ $navbg: #007759;
 $primaryFont: white;
 $secondaryFont: black;
 
-.navbg {
+.ennavbg {
   // background-image: linear-gradient(to right, $primaryFont, $navbg);
   background: $primaryFont;
 background: linear-gradient(90deg, rgba(255,255,255,1) 16%, rgba(1,120,90,1) 100%);
-
+}
+.arnavbg {
+  // background-image: linear-gradient(to right, $primaryFont, $navbg);
+  background: $primaryFont;
+background: linear-gradient(90deg, rgba(1,120,90,1) 16%, rgba(255,255,255,1) 100%);
 }
 .navlist {
   letter-spacing: 0;

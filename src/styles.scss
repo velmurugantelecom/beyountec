@@ -33,6 +33,18 @@ body {
   font-size: 12px;
   font-family: Verdana, "Helvetica Neue", sans-serif;
 }
+.enlanguage {
+  direction: ltr;
+}
+.arlanguage {
+  direction: rtl;
+}
+.entextalign{
+  text-align:left;
+}
+.artextalign{
+  text-align:right;
+}
 // declarations
 $themecolor: #007759;
 $primaryFont: white;

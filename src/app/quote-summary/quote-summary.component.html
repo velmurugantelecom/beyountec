@@ -1,11 +1,11 @@
 <div class="container-fluid mt-3">
   <div>
-    <p class="f20">{{ pageHeader }}</p>
+    <p class="f20" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ pageHeader }}</p>
   </div>
   <div class="quote-header">
-    <p class="f16 ml-1 my-2">{{ 'PleaseReview' | translate }}</p>
+    <p class="f16 ml-1 my-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'PleaseReview' | translate }}</p>
   </div>
-  <div class="row grid-divider">
+  <div class="row grid-divider" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
     <div class="col-md-3">
 
       <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
@@ -261,7 +261,7 @@
   </div>
 
   <div *ngIf="attachments!= undefined && attachments.length > 0 && isQuickSummary === 'false'">
-    <p class="m-4">{{ 'Attachments' | translate }}</p>
+    <p class="m-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'Attachments' | translate }}</p>
     <div class="row m-1">
       <div *ngFor="let attachment of attachments">
         <mat-card class="custom-cursor text-center doc-card mat-elevation-z2 m-2"
@@ -292,8 +292,8 @@
   </div>
   <div *ngIf="isValidQuote==='true'">
   <div class="row mt-4 mb-1">
-    <div class="col-md-10">
-    <mat-checkbox color="primary" class="mr-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
+    <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+    <mat-checkbox color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
     <span>{{ 'TermsAndConditionLabel' | translate }}</span>
     <span class="blue-font fbold" (click)="readTermsAndCond(1)">{{ 'Term1' | translate}}</span> 
     <span class="blue-font fbold" (click)="readTermsAndCond(2)">{{'Term2' | translate}}
@@ -315,7 +315,7 @@
     </mat-form-field>
   </div> -->
   </div>
-  <div class="d-flex justify-content-between mr-4 mb-4">
+  <div class="d-flex justify-content-between mx-4 mb-4">
     <button type="button" class="btn button bggreen fwhite" (click)="goBack()">
       {{ 'ReviseDetails' | translate }}
     </button>

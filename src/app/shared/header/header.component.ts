@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   home:any;
   public selectedLanguage;
   public languageFlag;
+  public language:any ;
 
   constructor(private router: Router, private commonService: AuthService,
     public translate: TranslateService,
@@ -93,6 +94,7 @@ export class HeaderComponent implements OnInit {
 
 
   changeLanguage(value) {
+    this.language=value ;
     this.languageInfoEmitter.emit(value);
     localStorage.setItem('language', value);
     if (value === 'en') {

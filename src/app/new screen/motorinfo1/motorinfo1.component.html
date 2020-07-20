@@ -269,12 +269,15 @@
                         <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
                         <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate"
                             placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}"
-                            formControlName="registeredDate" required AutoDateFormat [max]="today"/>
+                            formControlName="registeredDate" required AutoDateFormat/>
                         <owl-date-time [pickerType]="'calendar'" #registeredDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
                             date_range</mat-icon>
                         <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('required')">
                             {{ 'Required.RegisteredDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('futureDate')">
+                             Invalid First Reg. Date
                         </mat-error>
                     </mat-form-field>
                 </div>

@@ -282,7 +282,7 @@ export class AdditionalDetailsComponent implements OnInit {
       nationality: this.additionalDetails.value['nationality'],
       fullNameBL: this.additionalDetails.value['fullNameBL'],
       firstNameBL: this.additionalDetails.value['fullNameBL'],
-      prefix: this.additionalDetails.value['prefixBL'],
+      prefixBL: this.additionalDetails.value['prefixBL'],
       taxId: this.additionalDetails.value['taxId'],
       city: this.additionalDetails.value['city'],
       country: this.additionalDetails.value['country'],

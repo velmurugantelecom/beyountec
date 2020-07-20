@@ -127,9 +127,23 @@
 </div>
 <!-- end-->
       <div class="row" *ngIf="isQuickSummary === 'false'">
-        <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
+        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
           <label class="label_form">{{ 'EngineNo' | translate }}</label>
           <div class="field-value"> {{quoteDetails?.vehicleDetails?.engineNo}}</div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
+          <label class="label_form">{{ 'VehicleColor' | translate }}</label>
+          <div class="field-value"> {{quoteDetails?.vehicleDetails?.colorName}}</div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isQuickSummary === 'false'">
+        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.noOfDoors">
+          <label class="label_form">{{ 'NoofDoorsLabel' | translate }}</label>
+          <div class="field-value"> {{quoteDetails?.vehicleDetails?.noOfDoors}}</div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.bankName">
+          <label class="label_form">{{ 'VehicleFinancedBank' | translate }}</label>
+          <div class="field-value"> {{quoteDetails?.vehicleDetails?.bankName}}</div>
         </div>
       </div>
     </div>
@@ -203,8 +217,7 @@
         <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
       </div>
       <div *ngIf="isQuickSummary === 'false'">
-        <label class="label_form"
-          [ngStyle]="{'height': quoteDetails?.vehicleDetails?.address2 == null ?  '30px': ''}">{{ 'Address2' | translate }}</label>
+        <label class="label_form">{{ 'Address2' | translate }}</label>
         <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
       </div>
       <div class="row" *ngIf="isQuickSummary === 'false'">
@@ -214,18 +227,24 @@
           <div class="field-value"> {{ quoteDetails?.userDetails?.postBox}} </div>
         </div>
         <div class="col-md-6 col-sm-6 col-12">
+          <label class="label_form">{{ 'EmiratesLabel' | translate }}</label>
+          <div class="field-value"> {{ quoteDetails?.userDetails?.address4Desc}} </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isQuickSummary === 'false'">
+        <div class="col-md-6 col-sm-6 col-12">
           <label class="label_form">{{ 'City' | translate }}</label>
           <div class="field-value"> {{ quoteDetails?.userDetails?.cityName}} </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-12">
+          <label class="label_form">{{ 'Nationality' | translate }}</label>
+          <div class="field-value"> {{ quoteDetails?.userDetails?.nationalityDesc}} </div>
         </div>
       </div>
       <div class="row" *ngIf="isQuickSummary === 'false'">
         <div class="col-md-6 col-sm-6 col-12">
           <label class="label_form">{{ 'Country' | translate }}</label>
           <div class="field-value"> {{ quoteDetails?.userDetails?.countryName}} </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-12">
-          <label class="label_form">{{ 'Nationality' | translate }}</label>
-          <div class="field-value"> {{ quoteDetails?.userDetails?.nationalityDesc}} </div>
         </div>
       </div>
     </div>

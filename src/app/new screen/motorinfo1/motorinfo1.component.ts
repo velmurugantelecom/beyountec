@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data.service';
@@ -7,8 +7,7 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
-import { forkJoin, of, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { ProductChangePopupComponent } from 'src/app/modal/product-change/product-change.component';
 import { MatDialog } from '@angular/material';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
@@ -33,6 +32,23 @@ export function PolicyExpDateValidator(control: AbstractControl) {
   }
 }
 
+export function RegisteredDateValidator(control: AbstractControl) {
+  if (control.value != '') {
+    const givenDate = new Date(control.value);
+    const date = givenDate.getDate();
+    const month = givenDate.getMonth();
+    const year = givenDate.getFullYear();
+    const momentDate = moment({ year: year, month: month, day: date }).startOf('day');
+    const now = moment().startOf('day');
+    const diff = momentDate.diff(now, 'days');
+    console.log(diff)
+    if (diff > 0) {
+      return { futureDate: true };
+    } else {
+      return null;
+    }
+  }
+}
 @Component({
   selector: 'app-motorinfo1',
   templateUrl: './motorinfo1.component.html',
@@ -379,6 +395,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getPlans() {
+    console.log(this.vehicleForm)
     if (this.productId === '1116') {
       this.manipulateFields(['vehicleValue', 'repairType'], 0);
     }
@@ -658,6 +675,8 @@ export class NewMotorInfoScreen implements OnInit {
       } else {
         if (field === 'prevPolicyExpDate') {
           this.vehicleForm.get(field).setValidators([Validators.required, PolicyExpDateValidator]);
+        } else if (field === 'registeredDate') {
+          this.vehicleForm.get(field).setValidators([Validators.required, RegisteredDateValidator]);
         } else {
           this.vehicleForm.get(field).setValidators([Validators.required]);
         }

@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CoreService } from 'src/app/core/services/core.service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-email-popup',
@@ -11,11 +13,15 @@ import { CoreService } from 'src/app/core/services/core.service';
 export class EmailPopupComponent implements OnInit {
 
   emailForm: FormGroup;
+  emailSuccessAlert: any;
+  emailFailureAlert: any;
 
   constructor(private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data,
     private dialogRef: MatDialogRef<any>,
-    private coreService: CoreService) {
+    private coreService: CoreService,
+    private toastr: ToastrService,
+    private translate: TranslateService) {
 
   }
 
@@ -37,16 +43,32 @@ export class EmailPopupComponent implements OnInit {
       } else {
         url = 'brokerservice/quotes/sendquotes?quoteNumber=' + this.data.docNo + '&toEmailAddr=' + emailId;
       }
+      this.translate.get('EmailSuccessAlert') .subscribe(value => { 
+        this.emailSuccessAlert = value; 
+      } );
+      this.translate.get('EmailFailureAlert') .subscribe(value => { 
+        this.emailFailureAlert = value; 
+      } );
 
       this.coreService.getOptions(url).subscribe((result: any) => {
-        if (result.status === 200) {
+        if (result) {
           this.dialogRef.close();
-          alert('Email has been sent successfully');
+          this.toastr.success('', this.emailSuccessAlert, {
+            timeOut: 3000
+          });
+        }
+        else{
+          this.dialogRef.close();
+          this.toastr.error('', this.emailFailureAlert, {
+            timeOut: 3000
+          });
         }
       });
     }
   }
-
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
   selectOption(value) {
     if (value === 'DFLT') {
       this.emailForm.get('email').disable();

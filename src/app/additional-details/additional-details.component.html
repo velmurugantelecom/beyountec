@@ -191,7 +191,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'RegistrationNo'| translate }}</mat-label>
                                             <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}"
-                                                required formControlName="regNo" NumbersOnly maxlength="5" (change)="registrationNoChange($event)">
+                                                [required]="RegistrationNoRequired" formControlName="regNo" NumbersOnly maxlength="5" (change)="registrationNoChange($event)">
                                             <mat-error
                                                 *ngIf="formCtrls.regNo.errors && formCtrls.regNo.errors.required">
                                                 {{'Required.RegistrationNo'| translate }}
@@ -219,16 +219,8 @@
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'EngineNo'| translate }}</mat-label>
-                                            <input matInput    (ngModelChange)="engineNoChange($event)"  placeholder="{{'PlaceHolder.EngineNo'| translate }}"
-                                                 formControlName="engineNo" >
-                                                 <mat-error
-                                                 *ngIf="formCtrls.engineNo.errors?.pattern ">
-                                                 {{'Required.EngineNoFormat'| translate }}
-                                            </mat-error>
-                                            <mat-error
-                                                 *ngIf="formCtrls.engineNo.errors?.maxlength">
-                                                 {{'MaxValueLimit'| translate }}
-                                            </mat-error>
+                                            <input matInput   placeholder="{{'PlaceHolder.EngineNo'| translate }}"
+                                                 formControlName="engineNo" maxlength="30" [AlphaNumericOnly]="true">
                                         </mat-form-field>
                                       
                                     </div>

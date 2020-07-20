@@ -15,11 +15,10 @@ import { DataService } from 'src/app/core/services/data.service';
 export class MessageComponent implements OnInit {
 
   public type;
+  public brFailed:any;
   text:any;
-  quotationText:any;
- // public text = `Thank you for quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
-  //public arabicText = `شكرا لك على طلب الاقتباس. لا يمكن معالجة طلبك في هذا الوقت. سيتصل بك وكيلنا لاستكمال السياسة.`;
   public icon = '';
+  public language:any ;
 
   constructor(private route: ActivatedRoute,
     private coreService: CoreService,
@@ -29,24 +28,23 @@ export class MessageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.type = params['type']
     });
-    this.translate.get('MessageAlert') .subscribe(value => { 
-      this.text = value; 
-    } );
+
   }
 
   ngOnInit() {
     switch (this.type) {
       case 'br-failed': {
+        this.text=  this.languageChange('BrFailed');
         this.icon = 'info';
-        this.text =`Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
         break;
       }
       case 'policy-failed': {
+        this.text=  this.languageChange('PolicyFailed');
         this.icon = 'alert';
-        this.text =`Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.`;
         break;
       }
       case 'autodata-failed': {
+        this.text=  this.languageChange('MessageAlert');
         this.icon = 'info';
         let params = {
           ...this.dataService.getUserDetails(),
@@ -57,11 +55,8 @@ export class MessageComponent implements OnInit {
         break;    
       }
       case 'quotation-failed': {
-        this.translate.get('QuotationFailedAlert') .subscribe(value => { 
-          this.quotationText = value; 
-        } );
+        this.text=  this.languageChange('QuotationFailedAlert');
         this.icon = 'info';
-        this.text =  this.quotationText;
         let params = {
           ...this.dataService.getUserDetails(),
           reason:`Make year for the vehicle is  greater than seven years`
@@ -71,8 +66,8 @@ export class MessageComponent implements OnInit {
         break;
       }
       case 'imported-vehicle': {
+        this.text=  this.languageChange('ImportedVehicle');
         this.icon = 'info';
-        this.text =  'Imported Vehicle...';
         let params = {
           ...this.dataService.getUserDetails(),
           reason:`Auto Data not Returning Value`
@@ -82,5 +77,42 @@ export class MessageComponent implements OnInit {
         break;  
       }
     }
+    this.language=localStorage.getItem("language") ;
   }
+
+  languageChange(urlValue){
+    this.translate.get(urlValue) .subscribe(value => { 
+      this.text = value; 
+    } );
+  return this.text;
+  }
+  ngDoCheck(){
+    if(this.language!=localStorage.getItem("language")){
+      this.language=localStorage.getItem("language");
+      switch (this.type) {
+        case 'br-failed': {
+          this.text=  this.languageChange('BrFailed');
+          break;
+        }
+        case 'policy-failed': {
+          this.text=  this.languageChange('PolicyFailed');
+          break;
+        }
+        case 'autodata-failed': {
+          this.text=  this.languageChange('MessageAlert');
+          break;    
+        }
+        case 'quotation-failed': {
+          this.text=  this.languageChange('QuotationFailedAlert');
+          break;
+        }
+        case 'imported-vehicle': {
+          this.text=  this.languageChange('ImportedVehicle');
+          break;  
+        }
+      }
+  
+    }
+  }
+  
 }

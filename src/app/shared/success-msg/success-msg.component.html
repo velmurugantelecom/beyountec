@@ -6,10 +6,10 @@
             {{ 'paymentSuc' | translate }}
             {{ currency }} {{ amount | DecimalValue}}.
         </p>
-        <div >
+        <div *ngIf="!policyNo">
             <h5> {{'PleaseWait' | translate }} </h5>
         </div>
-        <div >
+        <div *ngIf="policyNo">
             <p class="mt-4"> {{'PolicyNoHash' | translate }}: {{policyNo}}</p>
             <!-- <div style="text-align: left;margin-left: 30%;">
                 <p>Thank you for issuing your policy with AFNIC, your symbol of security.</p>

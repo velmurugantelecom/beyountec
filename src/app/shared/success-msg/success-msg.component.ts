@@ -115,7 +115,7 @@ export class SuccessMsgComponent implements OnInit {
 
   sendMail() {
     const dialogRef = this.dialog.open(EmailPopupComponent, {
-      width: '30%',
+      width: '400px',
       data: {
         head: 'printpopup',
         name: 'this.name',

@@ -69,7 +69,6 @@
     "AED": "AED",
     "VehicleValueMax": "Maximum value limit crossed",
     "VehicleValueMin": "Minimum value limit crossed",
-    "MaxValueLimit": "Maximum value limit crossed",
     "TcNo": "TC No",
     "LicenseIssueDateLabel": "License Issue Date",
     "LicenseExpiryDateInvalid": "Invalid Expiry Date",
@@ -331,6 +330,11 @@
     "SendEmail":"Send Email",
     "PrintDocument":"Print Document",
     "PolicyCreated":"Policy Created",
+    "BrFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.",
+    "PolicyFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy.",
+    "ImportedVehicle":"Imported Vehicle...",
+    "EmailSuccessAlert":"Email Sent Successfully...",
+    "EmailFailureAlert":"Email Sent Failed",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name in Arabic is required",
@@ -409,8 +413,7 @@
         "NewPasswordIsRequired": "New Password is required",
         "ConfirmPasswordIsRequired": "Confirm Password is required",
         "QuoteNo": "Quote Number is required",
-        "OTPIsRequired": "OTP is required",
-        "EngineNoFormat": "Invalid Engine No Format"
+        "OTPIsRequired": "OTP is required"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",

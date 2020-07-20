@@ -379,7 +379,7 @@
                         <mat-label>{{ 'Dob' | translate }}</mat-label>
                         <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp"
                             placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required
-                            AutoDateFormat>
+                            AutoDateFormat [max]="today">
                         <owl-date-time [pickerType]="'calendar'" #dobdp></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dobdp">date_range</mat-icon>
                         <mat-error *ngIf="insuredForm.controls.dob.hasError('required')">

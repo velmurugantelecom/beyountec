@@ -1,7 +1,14 @@
-<div class="col-md-12 pad-0">
-  <div class="col-md-12">
-    <label class="confirm-lbl">{{ 'EmailDocuments' | translate }}</label>
-  </div>
+<div class="col-md-12">
+  <div class="row m-0 pt-2">
+    <div class="col-md-10 col-9">
+        <p class="f14 fbold" style="display: flex;align-content: center;">  {{ 'EmailDocuments' | translate }}</p>
+    </div>
+    <div class="col-md-2 col-3 custom-cursor" (click)="onNoClick()">
+        <mat-icon>
+            close
+        </mat-icon>
+    </div>
+</div>
   <mat-divider></mat-divider>
   <form [formGroup]="emailForm" (ngSubmit)="sendMail()" autocomplete="off">
     <div class="col-md-12">

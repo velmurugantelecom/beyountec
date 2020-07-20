@@ -45,6 +45,8 @@ export class AdditionalDetailsComponent implements OnInit {
   public effetiveDates:any
   public nowTime:any;
   public minTime:any;
+  public RegistrationNoRequired: boolean=true;
+
   yes: any;
   no: any;
   public language:any ;
@@ -208,6 +210,7 @@ export class AdditionalDetailsComponent implements OnInit {
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
+        this.RegistrationNoRequired=false;
       }
       this.translate.get('Yes').subscribe(value => {
         this.yes = value;
@@ -322,20 +325,7 @@ export class AdditionalDetailsComponent implements OnInit {
     this.isAttachmentArea = true;
   }
 
-  engineNoChange(value) {
-    if ((value)&&(value.length <= 30)) {
-      this.additionalDetails.get('engineNo').setValidators(Validators.pattern("[a-zA-Z0-9 ]*"));
-      this.additionalDetails.get('engineNo').updateValueAndValidity();
-    }
-   else if ((value)&&(value.length >= 30)) {
-      this.additionalDetails.get('engineNo').setValidators(Validators.maxLength(5));
-      this.additionalDetails.get('engineNo').updateValueAndValidity();
-    }
-    else {
-      this.additionalDetails.get('engineNo').setValidators([]);
-      this.additionalDetails.get('engineNo').updateValueAndValidity();
-    }
-  }
+
 
   financeStatusChange(value) {
     if (value === 'Y') {
@@ -460,8 +450,8 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   sendMail() {
-    const dialogRef = this.dialog.open(EmailPopupComponent, {
-      width: '30%',
+    let dialogRef = this.dialog.open(EmailPopupComponent, {
+      width: '400px',
       data: {
         head: 'printpopup',
         name: 'this.name',
@@ -473,7 +463,6 @@ export class AdditionalDetailsComponent implements OnInit {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
-      alert('Email sent successfully...')
     });
   }
 

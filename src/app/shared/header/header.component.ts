@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/core/services/app.service';
 import { DataService } from 'src/app/core/services/data.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -18,11 +19,12 @@ export class HeaderComponent implements OnInit {
   userType: any;
   routerurl;
   username: string
-  loginSignup:any;
-  home:any;
+  loginSignup: any;
+  home: any;
   public selectedLanguage;
   public languageFlag;
-  public language:any ;
+  public language: any;
+  public loaded: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(private router: Router, private commonService: AuthService,
     public translate: TranslateService,
@@ -35,7 +37,7 @@ export class HeaderComponent implements OnInit {
         this.navbarList()
       }
     });
-    
+
 
   }
 
@@ -46,23 +48,24 @@ export class HeaderComponent implements OnInit {
   }
 
   navbarList() {
-    this.translate.get('LoginSignup') .subscribe(value => { 
-      this.loginSignup = value; 
-    } );
-    this.translate.get('Home') .subscribe(value => { 
-      this.home = value; 
-    } );
+    this.translate.get('Home').subscribe(value => {
+      this.home = value;
+      if (this.menus.length > 0) {
+        this.menus = [{
+          label: this.home, value: 'new-login'
+        }]
+      }
+    });
     this.userType = localStorage.getItem("isLoggedIn");
     this.username = localStorage.getItem("Username");
     if (localStorage.getItem("isLoggedIn") == "false" && this.routerurl != 'new-login') {
-     
+
       if (this.routerurl != 'new-login' && this.routerurl != '') {
         this.menus = [
           { label: this.home, value: 'new-login' }
         ];
       } else {
         this.menus = [
-          // { label: this.loginSignup, value: 'Login' }
           { label: this.home, value: 'new-login' }
         ];
       }
@@ -94,7 +97,7 @@ export class HeaderComponent implements OnInit {
 
 
   changeLanguage(value) {
-    this.language=value ;
+    this.language = value;
     this.languageInfoEmitter.emit(value);
     localStorage.setItem('language', value);
     if (value === 'en') {

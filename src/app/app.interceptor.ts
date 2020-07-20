@@ -81,9 +81,15 @@ export class AppHttpInterceptor implements HttpInterceptor {
               if (errorMsg === "Unable to fetch data from auto data") {
 
               } else {
-                this.toasterService.error("", "Bad Request", {
-                  timeOut: 3000,
-                });
+                if (errorMsg.includes('Invalid User Name or Password') || errorMsg.includes('User Not Available')) {
+                  this.toasterService.error("", errorMsg, {
+                    timeOut: 3000,
+                  });
+                } else {
+                  this.toasterService.error("", "Bad Request", {
+                    timeOut: 3000,
+                  });
+                }
               }
             } else if (errorMsg != "Internal Server Error") {
               if (

@@ -354,7 +354,7 @@
                     <div class="row ">
                         <mat-form-field class="col-md-3 col-sm-4" style="width: 71px;" appearance="outline">
                             <mat-label>{{'Prefix' | translate}}</mat-label>
-                            <mat-select formControlName="prefix">
+                            <mat-select formControlName="prefix" required>
                                 <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn"
                                     [value]="prefix.value">
                                     {{ prefix.label}}

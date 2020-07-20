@@ -332,7 +332,7 @@
     "PolicyCreated":"Policy Created_fa",
     "BrFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy._fa",
     "PolicyFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy._fa",
-    "ImportedVehicle":"Imported Vehicle..._fa",
+    "ImportedVehicle":"Vehicle information not found in our system, Our Call center representative will call you shortly.",
     "EmailSuccessAlert":"Email Sent Successfully..._fa",
     "EmailFailureAlert":"Email Sent Failed_fa",
     "Required": {

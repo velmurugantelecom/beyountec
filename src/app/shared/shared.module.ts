@@ -17,6 +17,7 @@ import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime
 import { chooseProduct } from './product-selection/product-selection.component';
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 import { ScanAndUpload } from './scan-and-upload/scan-and-upload.component';
+import { DynamicContentDialog } from './dynamic-content/dynamic-content.component';
 
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY',
@@ -26,8 +27,8 @@ export const MY_CUSTOM_FORMATS = {
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
   monthYearA11yLabel: 'MMMM YYYY'
-  };
-  
+};
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -39,7 +40,8 @@ export const MY_CUSTOM_FORMATS = {
     MessageComponent,
     chooseProduct,
     PaymentFailedComponent,
-    ScanAndUpload],
+    ScanAndUpload,
+    DynamicContentDialog],
   imports: [
     TranslateModule,
     CommonModule,
@@ -47,7 +49,7 @@ export const MY_CUSTOM_FORMATS = {
     CoreModule,
     WebcamModule,
 
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule
   ],
@@ -57,11 +59,12 @@ export const MY_CUSTOM_FORMATS = {
     PrintPackageComponent,
     MessageComponent,
     chooseProduct,
-    PaymentFailedComponent
+    PaymentFailedComponent,
+    DynamicContentDialog
   ],
   providers: [
     { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
-    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS},
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
   ]
 })
 export class SharedModule { }

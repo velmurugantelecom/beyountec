@@ -4,13 +4,6 @@
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <!-- <div style="margin-left: 68%;" class="fwhite">
-    <img [src]="languageFlag" style="width: 35px;height: 35px;"/>
-    <button mat-button [matMenuTriggerFor]="languageMenu">
-      {{selectedLanguage}}   
-    </button>
-  </div> -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav" [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}">
         <ul style="min-width: 100px;" class="navbar-nav  custom-cursor"  [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}"

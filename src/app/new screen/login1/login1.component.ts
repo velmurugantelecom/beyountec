@@ -65,7 +65,21 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public lang = 'en';
   public type: 'image' | 'audio';
   public isValidForm: boolean;
-
+  public routes = [
+    'new-login',
+    'new-motor-info',
+    'compare-plans',
+    'quote-summary',
+    'additional-details',
+    'payment-succeed',
+    'payment-failed',
+    'resetPassword',
+    'contact-message',
+    'forgotPwd',
+    'User',
+    'Customer360',
+    ''
+  ]
   constructor(private dropdownservice: DropDownService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -86,6 +100,15 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.formType.includes('resetPassword')) {
           this.formType = 'resetPassword';
           this.routerToken = event.url.slice(1).split("/")[1];
+        }
+        let res;
+         this.routes.filter(val => {
+          if (val === this.formType)
+          res = true;
+        });
+        console.log(res);
+        if (!res) {
+          this.formType = 'new-login'
         }
       }
     });
@@ -217,7 +240,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           data: {
             for: 'emailAlreadyExist',
             title: 'Try Login',
-            body: `Email address is already Exist. Try Login.`
+            body: `Your account already exists, please login with you credentials.`
           }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -311,7 +334,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.toastr.success('', 'Password Saved Succcessfully', {
           timeOut: 2000
         });
-        this.router.navigate([`/Login`]);
+        this.router.navigate([`new-login`]);
       }
     });
   }

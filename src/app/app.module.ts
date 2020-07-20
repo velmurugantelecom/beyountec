@@ -1,7 +1,7 @@
 // angularLib modules
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { BrowserModule } from '@angular/platform-browser'; 
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -51,6 +51,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { DataService } from './core/services/data.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
+import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -89,12 +90,12 @@ export const configFactory = (configService: RuntimeConfigService) => {
     ContentPopupComponent,
     NewLoginScreen,
     NewMotorInfoScreen,
-    PolicyDialog  ],
+    PolicyDialog],
   imports: [
     //angularLib
     CommonModule,
     BrowserModule,
-    BrowserAnimationsModule,  
+    BrowserAnimationsModule,
     NgSelectModule,
     NgxSpinnerModule,
     HttpClientModule,
@@ -113,7 +114,7 @@ export const configFactory = (configService: RuntimeConfigService) => {
     SharedModule,
     CoreModule,
     WebcamModule,
-    
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -128,7 +129,8 @@ export const configFactory = (configService: RuntimeConfigService) => {
     NgxCaptchaModule
   ],
   entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
-  ,MessagePopupComponent, ProductChangePopupComponent,ContentPopupComponent, ScanAndUpload,PolicyDialog, QuoteDialog],
+    , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload, PolicyDialog, QuoteDialog,
+    DynamicContentDialog],
   providers: [
     CoreService,
     AuthGuard,

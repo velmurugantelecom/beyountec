@@ -1,17 +1,16 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { DatePipe } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../core/services/core.service';
 import { AppService } from '../core/services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from 'jquery';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { DropDownService } from '../core/services/dropdown.service';
-
+import {MatDialog} from '@angular/material/dialog';
+import { DynamicContentDialog } from '../shared/dynamic-content/dynamic-content.component';
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
 };
@@ -26,22 +25,20 @@ export const MY_NATIVE_FORMATS = {
 })
 export class QuoteSummaryComponent implements OnInit {
 
-  plandetail: any = {};
-  quoteNo: any;
-  quoteNumber: any;
-  selectedPlan: any;
-  quoteDetails: any;
-  isAgreed: boolean;
-  isQuickSummary = 'true';
- // pageHeader = 'Quote Summary';
-  attachments: any;
-  pageHeader:any;
-  summaryFor:any;
-  grossPremium;
+  public plandetail: any = {};
+  public quoteNo: any;
+  public quoteNumber: any;
+  public selectedPlan: any;
+  public quoteDetails: any;
+  public isAgreed: boolean;
+  public isQuickSummary = 'true';
+  public attachments: any;
+  public pageHeader:any;
+  public summaryFor:any;
+  public grossPremium;
   public selectedCovers = [];
   public mailId: string;
-  public EffectiveDateForm: FormGroup;
-  public maxEffectiveDate;
+  public ncdDeclaration: boolean
   public isValidQuote = 'true';
   public language:any ;
 
@@ -51,8 +48,8 @@ export class QuoteSummaryComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private formBuilder: FormBuilder,
-    private dropdownservice: DropDownService) {
+    private dropdownservice: DropDownService,
+    public dialog: MatDialog) {
 
     this.route.queryParams
       .subscribe(params => {
@@ -69,26 +66,16 @@ export class QuoteSummaryComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.EffectiveDateForm = this.formBuilder.group({
-      startDate: ['', []]
-    });
-
     let url = "brokerservice/quotes/quoteDetailsSummary";
     let params = {
       quoteNumber: this.quoteNo
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
-      this.mailId = this.quoteDetails.userDetails.email;
-      if (this.isQuickSummary === 'false') {
-        this.EffectiveDateForm.get('startDate').setValidators([Validators.required]);
-        this.EffectiveDateForm.get('startDate').updateValueAndValidity();
-        this.EffectiveDateForm.patchValue({
-          startDate: response.data.quoteSummary.startDate
-        });
-        let date = moment(this.quoteDetails.startDate).add('days', 15)['_d'];
-        this.maxEffectiveDate = date.toISOString();
+      if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
+        this.ncdDeclaration = true;
       }
+      this.mailId = this.quoteDetails.userDetails.email;
       this.coverageMakeover();
       let netPremium = response.data.quoteSummary.risks[0].netPremium
       let vat = response.data.quoteSummary.risks[0].vat
@@ -156,20 +143,6 @@ export class QuoteSummaryComponent implements OnInit {
 
   generatePolicy() {
     this.router.navigate([`/payment-succeed`], { queryParams: { quoteNo: this.quoteNo } })
-  }
-
-  changeEffectiveDate() {
-      let params = {
-        quoteId: this.quoteDetails.quoteId,
-        amndVerNo: 0,
-        startDate: new Date(this.EffectiveDateForm.value['startDate']).toISOString(),
-        productId: this.quoteDetails.productTypeId
-      }
-      this.coreService.postInputs2('changeStartDate','', params).subscribe(res => {
-        console.log(res);
-      }, err => {
-        console.log(err);
-      });
   }
 
   makePayment() {
@@ -262,14 +235,20 @@ export class QuoteSummaryComponent implements OnInit {
       fileName: file
     }
     this.spinner.show();
-    console.log(file)
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
-      console.log(response)
       let fileUrl = window.URL.createObjectURL(response);
       window.open(fileUrl,'_blank');
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
     })
+  }
+
+  readNCDDeclaration() {
+    const dialogRef = this.dialog.open(DynamicContentDialog, {
+      width: '60%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

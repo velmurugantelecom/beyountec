@@ -114,7 +114,7 @@ export class NewMotorInfoScreen implements OnInit {
       // to set usage type PRIVATE as default
       usage: [{ value: '1001', disabled: true }, [Validators.required]],
       repairType: ['', [Validators.required]],
-      noOfPassengers: ['', [Validators.required]],
+      noOfPassengers: [{ value: '', disabled: true }, [Validators.required]],
       registeredAt: ['', [Validators.required]],
       tcFileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       regStatus: ['', [Validators.required]],
@@ -475,19 +475,45 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   validateImportedStatus(data) {
-    let greyParams = {
-      chassisNo: data['vehicleDetails']['chassisNo'],
-      productId: this.productId
-    }
-    this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
-      if (!res) {
-        this.fetchAllPlans(data);
-      } else {
-        this.showForm= false;
-        this.showGrid = false;
+    this.spinner.show();
+    if (this.productId === '1113') {
+      let greyParams = {
+        chassisNo: data['vehicleDetails']['chassisNo'],
+        productId: this.productId
       }
-    })
-
+      this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
+        if (!res) {
+          this.fetchAllPlans(data);
+        } else {
+          this.spinner.hide();
+          let dialogRef = this.dialog.open(MessagePopupComponent, {
+            width: '400px',
+            data: {
+              for: 'autodata-failed',
+              title: 'Information Not Found',
+              body: `Vehicle information not found , 
+              do you want to continue with Search By Vehicle information`
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (!result) {
+              this.navigateToMsgScreen('imported-vehicle');
+            } else {
+              this.showForm = false;
+              this.selected = [];
+              this.items = this.manualOptions['makeYear'];
+              this.vehicleForm.reset();
+              this.vehicleForm.clearValidators();
+              this.insuredForm.reset();
+              this.insuredForm.clearValidators();
+              this.vehicleForm.get('usage').setValue('1001');
+            }
+          });
+        }
+      })
+    } else {
+      this.fetchAllPlans(data);
+    }
   }
   goBack() {
     this.router.navigate(['/new-login'], {
@@ -718,7 +744,6 @@ export class NewMotorInfoScreen implements OnInit {
 
   // Fetching Plan Details
   fetchAllPlans(data) {
-    this.spinner.show();
     this.subscription = this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
       this.spinner.hide();
       if (response.status === 'VF') {

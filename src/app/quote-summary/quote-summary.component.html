@@ -291,8 +291,15 @@
     </div>
   </div>
   <div *ngIf="isValidQuote==='true'">
+    <!-- <div class="col-md-10 mt-4 ml-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"
+    *ngIf="isQuickSummary === 'true'">
+      <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration">
+      </mat-checkbox>
+      <span class="blue-font fbold" (click)="readNCDDeclaration()">NCD Declaration</span>
+    </div> -->
   <div class="row mt-4 mb-1">
-    <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+    <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"
+    >
     <mat-checkbox color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
     <span>{{ 'TermsAndConditionLabel' | translate }}</span>
     <span class="blue-font fbold" (click)="readTermsAndCond(1)">{{ 'Term1' | translate}}</span> 
@@ -300,20 +307,6 @@
     </span><span>{{'And' | translate}}</span>
     <span class="blue-font fbold" (click)="readTermsAndCond(3)">{{'Term3' | translate}}</span>
   </div>
-  <!-- <div class="col-md-2" *ngIf="isQuickSummary === 'false'">
-    <mat-form-field appearance="fill">
-      <mat-label>Policy Effective Date</mat-label>
-      <input matInput placeholder="Effective Date" [owlDateTime]="effectiveDate"
-      [owlDateTimeTrigger]="effectiveDate"
-      formControlName="startDate" required
-      [min]="quoteDetails?.startDate"
-      [max]="maxEffectiveDate"
-      >
-      <owl-date-time #effectiveDate ></owl-date-time>
-      <mat-error *ngIf="EffectiveDateForm.controls.startDate.hasError('required')">Effective Date is required
-      </mat-error>
-    </mat-form-field>
-  </div> -->
   </div>
   <div class="d-flex justify-content-between mx-4 mb-4">
     <button type="button" class="btn button bggreen fwhite" (click)="goBack()">

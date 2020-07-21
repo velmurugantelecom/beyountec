@@ -13,8 +13,8 @@
         <mat-horizontal-stepper #stepper>
             <mat-step>
                 <!-- <div class="success-content" style="margin-left: 22%;"> -->
-                   
-                        <div class="success-content" [ngClass]="{enstyle :language=='en',arstyle :language=='ar'}"> 
+
+                <div class="success-content" [ngClass]="{enstyle :language=='en',arstyle :language=='ar'}">
                     <i class="far fa-check-circle fa-5x bg-color"></i>
                     <div>
                         <b class="mt-2">{{ 'success'| translate}}</b>
@@ -25,40 +25,43 @@
                             <p class="mb-1"> {{'YourEmail' | translate }}</p>
                         </div>
                         <div class="text-color">
-                                Interested in our Quote? Click <strong> Purchase Policy</strong> to buy our Policy
-                          </div>
+                            Interested in our Quote? Click <strong> Purchase Policy</strong> to buy our Policy
+                        </div>
 
 
                         <!-- <button type="button" class="btn button btn-default bggreen fwhite"
                         (click)="openDialogs(stepper)">
                         {{'PurchasePolicy' | translate }}
                       </button> -->
-                      <button type="button" class="btn button btn-default bggreen fwhite mt-3" matStepperNext	
-                        (click)="doContinue('0')">{{'PurchasePolicy' | translate }}</button>
+                        <button type="button" class="btn button btn-default bggreen fwhite mt-3" matStepperNext
+                            (click)="doContinue('0')">{{'PurchasePolicy' | translate }}</button>
 
                     </div>
                     <div class="mt-4">
                         <div class="fullwidth">
-                        <div class="columns">
-                        <img class="mx-3 mt-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
-                        <p>{{'DownloadDocument' | translate }}</p>
-                    </div>
-                    <div class="columns">
-                        <img class="mx-3 mt-2 custom-cursor" src="./assets/icon2.png" (click)="sendMail()" />
-                        <p>{{'SendEmail' | translate }}</p>
-                    </div>
-                    <div class="columns">
-                        <img class="mx-3 mt-2 custom-cursor" src="./assets/icon3.png" (click)="printDocument()" />
-                        <p>{{'PrintDocument' | translate }}</p>
-                    </div>
-                    </div>
+                            <div class="columns">
+                                <img class="mx-3 mt-2 custom-cursor" src="./assets/icon1.png"
+                                    (click)="downloadDocuments()" />
+                                <p>{{'DownloadDocument' | translate }}</p>
+                            </div>
+                            <div class="columns">
+                                <img class="mx-3 mt-2 custom-cursor" src="./assets/icon2.png" (click)="sendMail()" />
+                                <p>{{'SendEmail' | translate }}</p>
+                            </div>
+                            <div class="columns">
+                                <img class="mx-3 mt-2 custom-cursor" src="./assets/icon3.png"
+                                    (click)="printDocument()" />
+                                <p>{{'PrintDocument' | translate }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </mat-step>
 
             <mat-step>
-                <div class="row mb-4 mx-3" style="width: 100%;" >
-                    <div class=" p-4 col-md-4 custom-bg pb-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                <div class="row mb-4 mx-3" style="width: 100%;">
+                    <div class=" p-4 col-md-4 custom-bg pb-0"
+                        [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row  col-md-12">
                             <div class="col-md-12">
                                 <label class="label-field">{{'ChasisNo'| translate }}</label>
@@ -82,15 +85,15 @@
                         </div>
                         <hr class="mt-2 dotted-line" />
                         <div *ngIf="quoteDetails?.vehicleDetails?.repairName">
-                        <div class="row  col-md-12">
+                            <div class="row  col-md-12">
 
-                            <div class="col-md-12">
-                                <label class="label-field">{{'RepairType'| translate }}</label>
-                                <div class="value-field">{{quoteDetails?.vehicleDetails?.repairName}}</div>
+                                <div class="col-md-12">
+                                    <label class="label-field">{{'RepairType'| translate }}</label>
+                                    <div class="value-field">{{quoteDetails?.vehicleDetails?.repairName}}</div>
+                                </div>
                             </div>
+                            <hr class="mt-2 dotted-line" />
                         </div>
-                        <hr class="mt-2 dotted-line" />
-                    </div>
                         <div class="row  col-md-12">
                             <div class="col-md-12">
                                 <label class="label-field">{{'NoOfPassengersLabel'| translate }}</label>
@@ -114,7 +117,7 @@
                                 <label class="label-field">{{'MakeYear'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.makeYear}}</div>
                             </div>
-                            
+
                         </div>
                         <hr class="mt-2 dotted-line" />
                         <div class="row col-md-12">
@@ -149,9 +152,9 @@
                         <form [formGroup]="additionalDetails" focusInvalidInput autocomplete="off">
                             <div>
                                 <div class="px-3 row ">
-                                    <div class="px-3 mt-05 mb-1 f18" >{{'adtlVehicleDetails'| translate }}</div>
+                                    <div class="px-3 mt-05 mb-1 f18">{{'adtlVehicleDetails'| translate }}</div>
                                 </div>
-                                    <div class="row px-3">
+                                <div class="row px-3">
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'VehicleColor'| translate }}</mat-label>
@@ -191,7 +194,8 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'RegistrationNo'| translate }}</mat-label>
                                             <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}"
-                                                [required]="RegistrationNoRequired" formControlName="regNo" NumbersOnly maxlength="5" (change)="registrationNoChange($event)">
+                                                [required]="RegistrationNoRequired" formControlName="regNo" NumbersOnly
+                                                maxlength="5" (change)="registrationNoChange($event)">
                                             <mat-error
                                                 *ngIf="formCtrls.regNo.errors && formCtrls.regNo.errors.required">
                                                 {{'Required.RegistrationNo'| translate }}
@@ -202,8 +206,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'PlateCode'| translate }}</mat-label>
                                             <mat-select required formControlName="registrationMark">
-                                                <mat-option *ngFor="let code of options.plateCode"
-                                                    [value]="code.value">
+                                                <mat-option *ngFor="let code of options.plateCode" [value]="code.value">
                                                     {{ code.label }}
                                                 </mat-option>
                                             </mat-select>
@@ -214,35 +217,37 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row px-3">
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'EngineNo'| translate }}</mat-label>
-                                            <input matInput   placeholder="{{'PlaceHolder.EngineNo'| translate }}"
-                                                 formControlName="engineNo" maxlength="30" [AlphaNumericOnly]="true">
+                                            <input matInput placeholder="{{'PlaceHolder.EngineNo'| translate }}"
+                                                formControlName="engineNo" maxlength="30" [AlphaNumericOnly]="true">
                                         </mat-form-field>
-                                      
+
                                     </div>
                                     <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Policy Effective Date</mat-label>
-                                        <input matInput placeholder="Effective Date" [owlDateTime]="effectiveDate"
-                                        [owlDateTimeTrigger]="effectiveDate"
-                                        formControlName="effectiveDate" required
-                                        [min]="today"
-                                        [max]="maxEffectiveDate"
-                                        >
-                                        <owl-date-time #effectiveDate [pickerType]="'calendar'"></owl-date-time>
-                                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effectiveDate">
-                                            date_range</mat-icon>
-                                        <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('required')">Policy Effective Date is required
-                                        </mat-error>
-                                        <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMin')">
-                                            Policy Effective can't be less than current Date</mat-error>
-                                            <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMax')">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Policy Effective Date</mat-label>
+                                            <input matInput placeholder="Effective Date" [owlDateTime]="effectiveDate"
+                                                [owlDateTimeTrigger]="effectiveDate" formControlName="effectiveDate"
+                                                required [min]="today" [max]="maxEffectiveDate">
+                                            <owl-date-time #effectiveDate [pickerType]="'calendar'"></owl-date-time>
+                                            <mat-icon class="custom-cursor" matSuffix
+                                                [owlDateTimeTrigger]="effectiveDate">
+                                                date_range</mat-icon>
+                                            <mat-error
+                                                *ngIf="additionalDetails.controls.effectiveDate.hasError('required')">
+                                                Policy Effective Date is required
+                                            </mat-error>
+                                            <mat-error
+                                                *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMin')">
+                                                Policy Effective can't be less than current Date</mat-error>
+                                            <mat-error
+                                                *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMax')">
                                                 Policy Effective can't be greater than 60 Days</mat-error>
-                                      </mat-form-field>
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="row px-3">
@@ -265,21 +270,22 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'BankNameLabel' |translate }}</mat-label>
                                             <input type="text" matInput formControlName="bankName"
-                                                [matAutocomplete]="auto" required >
+                                                [matAutocomplete]="auto" required>
                                             <mat-error
                                                 *ngIf="formCtrls.bankName.errors && formCtrls.bankName.errors.required">
                                                 {{'Required.BankName' | translate }}
                                             </mat-error>
                                         </mat-form-field>
 
-                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="bankSelected($event)">
+                                        <mat-autocomplete #auto="matAutocomplete"
+                                            (optionSelected)="bankSelected($event)">
                                             <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank.label">
                                                 {{bank.label}}</mat-option>
                                         </mat-autocomplete>
                                     </div>
                                 </div>
                                 <div class="px-3 row ">
-                                    <div class="px-3 mb-1 f18" >  {{'adtlInsuredDetails' | translate }}</div>
+                                    <div class="px-3 mb-1 f18"> {{'adtlInsuredDetails' | translate }}</div>
                                 </div>
                                 <!-- <div class="f18 col-md-12 mb-1">
                                     {{'adtlInsuredDetails' | translate }}
@@ -289,214 +295,226 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{ 'EmiratesIDLabel' | translate }}</mat-label>
                                             <input matInput placeholder="{{ 'PlaceHolder.EmiratesID' | translate }}"
-                                            formControlName="personalId" required maxlength="15" NumbersOnly>
-                                        <mat-error
-                                        *ngIf="formCtrls.personalId.errors && formCtrls.personalId.errors.required">
-                                        {{ 'Required.EmiratesID' | translate }}
-                                    </mat-error>
+                                                formControlName="personalId" required maxlength="15" NumbersOnly>
+                                            <mat-error
+                                                *ngIf="formCtrls.personalId.errors && formCtrls.personalId.errors.required">
+                                                {{ 'Required.EmiratesID' | translate }}
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
 
                                 <div class="row px-3">
                                     <div style="margin-left: 15px;">
-                                    <mat-form-field style="width: 93px;" appearance="outline">
-                                        <mat-select formControlName="prefixBL">
-                                            <mat-option *ngFor="let prefix of options.prefix" [value]="prefix.value">
-                                                {{ prefix.label}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                                        <mat-form-field style="width: 93px;" appearance="outline">
+                                            <mat-select formControlName="prefixBL">
+                                                <mat-option *ngFor="let prefix of options.prefix"
+                                                    [value]="prefix.value">
+                                                    {{ prefix.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{ 'InsuredNameArabicLabel' | translate }}</mat-label>
+                                            <input matInput
+                                                placeholder="{{ 'PlaceHolder.InsuredNameArabic' | translate }} "
+                                                formControlName="fullNameBL" required AlphabetOnly>
+                                            <mat-error
+                                                *ngIf=" formCtrls.fullNameBL.errors && formCtrls.fullNameBL.errors.required">
+                                                {{ 'Required.InsuredNameArabic' | translate }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                                <div class="col-md-9">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{ 'InsuredNameArabicLabel' | translate }}</mat-label>
-                                        <input matInput placeholder="{{ 'PlaceHolder.InsuredNameArabic' | translate }} "
-                                            formControlName="fullNameBL" required AlphabetOnly>
-                                        <mat-error
-                                            *ngIf=" formCtrls.fullNameBL.errors && formCtrls.fullNameBL.errors.required">
-                                            {{ 'Required.InsuredNameArabic' | translate }}
-                                        </mat-error>
-                                    </mat-form-field>
+                                <div class="row px-3">
+                                    <div class="col-md-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'TaxRegNo'| translate }}</mat-label>
+                                            <input matInput formControlName="taxId" maxlength="15"
+                                                placeholder="{{'PlaceHolder.TaxRegNo' | translate }}" />
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row px-3">
-                                <div class="col-md-12">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'TaxRegNo'| translate }}</mat-label>
-                                        <input matInput formControlName="taxId" maxlength="15"
-                                            placeholder="{{'PlaceHolder.TaxRegNo' | translate }}" />
-                                    </mat-form-field>
+                                <div class="row px-3">
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{ 'Occupation' | translate }}</mat-label>
+                                            <mat-select required formControlName="occupation">
+                                                <mat-option *ngFor="let profession of options.profession"
+                                                    [value]="profession.value">
+                                                    {{ profession.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error
+                                                *ngIf="formCtrls.occupation.errors && formCtrls.occupation.errors.required">
+                                                {{'Required.Occupation' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'Nationality' | translate}}</mat-label>
+                                            <mat-select required formControlName="nationality">
+                                                <mat-option *ngFor="let nationality of options.nationality"
+                                                    [value]="nationality.value">
+                                                    {{ nationality.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error
+                                                *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
+                                                {{'Required.Nationality' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row px-3">
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{ 'Occupation' | translate }}</mat-label>
-                                        <mat-select required formControlName="occupation">
-                                            <mat-option *ngFor="let profession of options.profession"
-                                                [value]="profession.value">
-                                                {{ profession.label }}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="formCtrls.occupation.errors && formCtrls.occupation.errors.required">
-                                            {{'Required.Occupation' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
+                                <div class="row px-3">
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'Address1' | translate}}</mat-label>
+                                            <input matInput placeholder="{{'PlaceHolder.Address1' | translate}}"
+                                                required formControlName="address1">
+                                            <mat-error
+                                                *ngIf="formCtrls.address1.errors && formCtrls.address1.errors.required">
+                                                {{'Required.Address1' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'Address2' | translate}}</mat-label>
+                                            <input matInput placeholder="{{'PlaceHolder.Address2' | translate}}"
+                                                formControlName="address2">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'Nationality' | translate}}</mat-label>
-                                        <mat-select required formControlName="nationality">
-                                            <mat-option *ngFor="let nationality of options.nationality"
-                                                [value]="nationality.value">
-                                                {{ nationality.label }}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
-                                            {{'Required.Nationality' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
+
+                                <div class="row px-3">
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'POBOXNo' | translate}}</mat-label>
+                                            <input matInput placeholder="{{'PlaceHolder.PoBoX' | translate}}"
+                                                formControlName="postBox" maxlength="6" NumbersOnly />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'EmiratesLabel' | translate}}</mat-label>
+                                            <mat-select required formControlName="address4"
+                                                (ngModelChange)="emiratesChange($event)">
+                                                <mat-option *ngFor="let emirates of options.motor_emirate"
+                                                    [value]="emirates.value">
+                                                    {{ emirates.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error
+                                                *ngIf="formCtrls.address4.errors && formCtrls.address4.errors.required">
+                                                {{'Required.Emirates' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row px-3">
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'Address1' | translate}}</mat-label>
-                                        <input matInput placeholder="{{'PlaceHolder.Address1' | translate}}" required
-                                            formControlName="address1">
-                                        <mat-error
-                                            *ngIf="formCtrls.address1.errors && formCtrls.address1.errors.required">
-                                            {{'Required.Address1' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'Address2' | translate}}</mat-label>
-                                        <input matInput placeholder="{{'PlaceHolder.Address2' | translate}}"
-                                            formControlName="address2">
-                                    </mat-form-field>
+                                <div class="row px-3">
+
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'City' | translate}}</mat-label>
+                                            <mat-select required formControlName="city">
+                                                <mat-option *ngFor="let city of options.city" [value]="city.value">
+                                                    {{ city.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="formCtrls.city.errors && formCtrls.city.errors.required">
+                                                {{'Required.City' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'Country' | translate}}</mat-label>
+                                            <mat-select required formControlName="country" [disabled]="true">
+                                                <mat-option *ngFor="let country of options.country"
+                                                    [value]="country.value">
+                                                    {{ country.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error
+                                                *ngIf="formCtrls.country.errors && formCtrls.country.errors.required">
+                                                {{'Required.Country' | translate}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row px-3">
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'POBOXNo' | translate}}</mat-label>
-                                        <input matInput placeholder="{{'PlaceHolder.PoBoX' | translate}}"
-                                            formControlName="postBox" maxlength="6" NumbersOnly />
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'EmiratesLabel' | translate}}</mat-label>
-                                        <mat-select required formControlName="address4"
-                                            (ngModelChange)="emiratesChange($event)">
-                                            <mat-option *ngFor="let emirates of options.motor_emirate"
-                                                [value]="emirates.value">
-                                                {{ emirates.label }}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="formCtrls.address4.errors && formCtrls.address4.errors.required">
-                                            {{'Required.Emirates' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row px-3">
+                            <div class="row d-flex justify-content-end mr-3">
 
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'City' | translate}}</mat-label>
-                                        <mat-select required formControlName="city">
-                                            <mat-option *ngFor="let city of options.city" [value]="city.value">
-                                                {{ city.label }}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="formCtrls.city.errors && formCtrls.city.errors.required">
-                                            {{'Required.City' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>{{'Country' | translate}}</mat-label>
-                                        <mat-select required formControlName="country" [disabled]="true">
-                                            <mat-option *ngFor="let country of options.country" [value]="country.value">
-                                                {{ country.label }}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="formCtrls.country.errors && formCtrls.country.errors.required">
-                                            {{'Required.Country' | translate}}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
+                                <button type="submit" class=" pr-3 btn button btn-default bggreen fwhite"
+                                    (click)="addAdditionalDetail(stepper)">{{'Continue' | translate}}</button>
                             </div>
+
+                        </form>
                     </div>
-
-                    <div class="row d-flex justify-content-end mr-3">
-
-                        <button type="submit" class=" pr-3 btn button btn-default bggreen fwhite"
-                            (click)="addAdditionalDetail(stepper)">{{'Continue' | translate}}</button>
-                    </div>
-
-                    </form>
                 </div>
-    </div>
-    </mat-step>
+            </mat-step>
 
-    <mat-step>
-        <div class="col-md-12">
-            <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
-                <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
-                    <div class="upload-box col-md-9 mt-2">
-                        <label class="upload-label">{{ container.label }}</label>
-                        <div class="upload-btn-wrapper">
-                            <input type="file" (change)="selectFile($event,container.id,i)"
-                                formControlName="{{ container.controlName }}" id="{{container.id}}"
-                                accept="image/*, .pdf" />
-                            <label class="font-weight-bold mb-0 blue-font"
-                                (click)="openAttachment(container.value)">{{container.value}}</label>
-                        </div>
-                    </div>
-                    <div style="position: relative;">
-                        <img src="./assets/icon6.png" class="pl-1 pt-1 upload-label" (click)="uploadTrigger.click()" />
-                        <div class="upload-btn-wrapper2">
-                            <input type="file"  (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}"
-                            accept="image/*, .pdf"/>
-                        </div>
-                    </div>
-                    <div style="position: relative;">
-                                <img (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/motor/insurer-details/camera.png" class="pl-3 pt-2 upload-label" />
+            <mat-step>
+                <div class="col-md-12">
+                    <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
+                        <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
+                            <div style="position: relative;border: 1px solid #adacac;" class="m-1">
+                                <img (click)="openDialog(container.id,i,container.label, container.controlName)"
+                                    src="./assets/motor/insurer-details/camera.png" class="px-3 pt-2 upload-label" />
                                 <p class="pl-2 f8 mb-0">Scan & Upload</p>
                             </div>
-                            <p style="margin-top:2px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">{{container.label}} is required</p>
+                            <div class="upload-box col-md-9 mt-1">
+                                <label class="upload-label">{{ container.label }}</label>
+                                <div class="upload-btn-wrapper">
+                                    <input type="file" (change)="selectFile($event,container.id,i)"
+                                        formControlName="{{ container.controlName }}" id="{{container.id}}"
+                                        accept="image/*, .pdf" />
+                                    <label class="font-weight-bold mb-0 blue-font"
+                                        (click)="openAttachment(container.value)">{{container.value}}</label>
+                                </div>
+                            </div>
+                            <div style="position: relative;">
+                                <img src="./assets/icon6.png" class="pl-1 pt-1 upload-label"
+                                    (click)="uploadTrigger.click()" />
+                                <div class="upload-btn-wrapper2">
+                                    <input type="file" (change)="selectFile($event ,container.id,i)" #uploadTrigger
+                                        formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
+                                </div>
+                            </div>
+                            <!-- <div style="position: relative;">
+                                <img (click)="openDialog(container.id,i,container.label, container.controlName)"
+                                    src="./assets/motor/insurer-details/camera.png" class="pl-3 pt-2 upload-label" />
+                                <p class="pl-2 f8 mb-0">Scan & Upload</p>
+                            </div> -->
+                            <p style="margin-top:2px;margin-left:4px" class="error-message mb-0"
+                                *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
+                                {{container.label}} is required</p>
                             <ng-template #elseBlock>
-                    <p style="margin-top:2px" class="mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
-                 </ng-template>
-                </div>
-                <div *ngIf="!addMoreDoc" class="pl-4" (click)="addMoreDocuments()">
-                    <p class="custom-cursor blue-font f16">+ {{ 'AddMoreDoc'| translate}}</p>
-                </div>
-                <div class="d-flex justify-content-between mb-4">
-                    <button class="btn button btn-default bggreen fwhite"
-                        (click)="goBack(stepper)">{{'ReviseDetails' | translate }}</button>
-                    <button type="submit" class="btn button btn-default bggreen fwhite"
-                        (click)="doNavigate($event)">{{'Continue' | translate }}</button>
-                </div>
-            </form>
+                                <p style="margin-top:2px" class="mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="!addMoreDoc" class="pl-4" (click)="addMoreDocuments()">
+                            <p class="custom-cursor blue-font f16">+ {{ 'AddMoreDoc'| translate}}</p>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <button class="btn button btn-default bggreen fwhite"
+                                (click)="goBack(stepper)">{{'ReviseDetails' | translate }}</button>
+                            <button type="submit" class="btn button btn-default bggreen fwhite"
+                                (click)="doNavigate($event)">{{'Continue' | translate }}</button>
+                        </div>
+                    </form>
 
-        </div>
-    </mat-step>
-    </mat-horizontal-stepper>
-</div>
-<div class="col-md-4 m-0 p-0">
-    <app-general-info-template [generalDetails]="quoteDetails"></app-general-info-template>
-</div>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+    <div class="col-md-4 m-0 p-0">
+        <app-general-info-template [generalDetails]="quoteDetails"></app-general-info-template>
+    </div>
 </div>

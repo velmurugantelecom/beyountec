@@ -1,105 +1,105 @@
 <div>
-    <!-- <div class="row heading bcrumb sub-header">
-      <span [routerLink]="['/Dashboard']">Home > </span> &nbsp; Edit Account Details
-    </div> -->
-    <div class="row m-0">
-      <mat-card class="col-md-4 col-sm-4  col-12 m-4">
-        <div class="col-12 d-flex flex-row justify-content-center ">
-          <img src="assets/profile.jpg" class="rounded-circle"  width="150" height="150"> 
+  <!-- <div class="row heading bcrumb sub-header">
+    <span [routerLink]="['/Dashboard']">Home > </span> &nbsp; Edit Account Details
+  </div> -->
+  <div class="row m-0">
+    <mat-card class="col-md-4 col-sm-4  col-12 m-4">
+      <div class="col-12 d-flex flex-row justify-content-center ">
+        <img src="assets/profile.jpg" class="rounded-circle"  width="150" height="150"> 
+      </div>
+      <div class="col-12 d-flex flex-row justify-content-center m-2" >
+        <b style="color: #01c9cb;">
+          {{inputData?.additionalInfo?.brokerInfo?.fullName}}
+         </b>
+      </div>
+      <mat-divider ></mat-divider>
+      <!-- <div class="row m-4"> 
+        <div class="col-md-12 col-12">
+          <label class="label_form">Agency Name</label> <br>
+          <p>{{inputData?.additionalInfo?.brokerInfo?.fullName}}</p>
+        </div><br>
+        <div class="col-md-12 col-12">
+          <label class="label_form">License No / Expiration Date </label> <br>
+          <p>{{inputData?.additionalInfo?.brokerInfo?.licenseNo}} / {{inputData?.additionalInfo?.brokerInfo?.licenseExpiryDate | date:'dd MMM yyyy'}}</p><br>
         </div>
-        <div class="col-12 d-flex flex-row justify-content-center m-2" >
-          <b style="color: #01c9cb;">
-            {{inputData?.additionalInfo?.brokerInfo?.fullName}}
-           </b>
+        <div class="col-md-12 col-12">
+          <label class="label_form">Address</label> <br>
+          <p>
+            {{inputData?.additionalInfo?.brokerInfo?.address1}}         
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address2">, {{inputData?.additionalInfo?.brokerInfo?.address2}}</span>
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address3">, {{inputData?.additionalInfo?.brokerInfo?.address3}}</span>         
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address4">, {{inputData?.additionalInfo?.brokerInfo?.address4}}</span>        
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.city">, {{inputData?.additionalInfo?.brokerInfo?.city}}</span>
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.state">, {{inputData?.additionalInfo?.brokerInfo?.state}}</span>
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.pincode">, {{inputData?.additionalInfo?.brokerInfo?.pincode}}</span>
+            <span *ngIf="inputData?.additionalInfo?.brokerInfo?.country">, {{inputData?.additionalInfo?.brokerInfo?.country}}</span>
+            
+         </p>
         </div>
-        <mat-divider ></mat-divider>
-        <!-- <div class="row m-4"> 
-          <div class="col-md-12 col-12">
-            <label class="label_form">Agency Name</label> <br>
-            <p>{{inputData?.additionalInfo?.brokerInfo?.fullName}}</p>
-          </div><br>
-          <div class="col-md-12 col-12">
-            <label class="label_form">License No / Expiration Date </label> <br>
-            <p>{{inputData?.additionalInfo?.brokerInfo?.licenseNo}} / {{inputData?.additionalInfo?.brokerInfo?.licenseExpiryDate | date:'dd MMM yyyy'}}</p><br>
-          </div>
-          <div class="col-md-12 col-12">
-            <label class="label_form">Address</label> <br>
-            <p>
-              {{inputData?.additionalInfo?.brokerInfo?.address1}}         
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address2">, {{inputData?.additionalInfo?.brokerInfo?.address2}}</span>
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address3">, {{inputData?.additionalInfo?.brokerInfo?.address3}}</span>         
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.address4">, {{inputData?.additionalInfo?.brokerInfo?.address4}}</span>        
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.city">, {{inputData?.additionalInfo?.brokerInfo?.city}}</span>
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.state">, {{inputData?.additionalInfo?.brokerInfo?.state}}</span>
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.pincode">, {{inputData?.additionalInfo?.brokerInfo?.pincode}}</span>
-              <span *ngIf="inputData?.additionalInfo?.brokerInfo?.country">, {{inputData?.additionalInfo?.brokerInfo?.country}}</span>
-              
-           </p>
-          </div>
-        </div>  -->
-      </mat-card>
-  
-      <mat-card class="col-md-7 col-sm-7 col-12 my-4 mr-4">
-        <div class="col-md-12 col-12 my-3">
-          <label class="f18">
-            <i class="fas fa-user-alt fa-lg pr-2"></i>{{ 'UserDetails' | translate }}</label>
-        </div>
-        <mat-divider></mat-divider>
-          <form [formGroup]="profileForm"  focusInvalidInput autocomplete="off">
-            <div class="row m-4">
-            <div class="col-md-12 my-2">
-               <label class="label_form">{{ 'FirstName' | translate }}</label>
-               <input type="text" formControlName="firstName" class="form-control poppins-reg-14" disabled />
-             </div>
-             <div class="col-md-6 my-2">
-               <label class="label_form">{{ 'MiddleName' | translate }}</label>
-               <input type="text" formControlName="middleName" class="form-control poppins-reg-14" disabled/>
-             </div>
-             <div class="col-md-6 my-2">
-               <label class="label_form">{{ 'LastName' | translate }}</label>
-               <input type="text" formControlName="lastName" class="form-control poppins-reg-14" disabled/>
-             </div>
-             <div class="row my-2" style="width: 100%;margin-left: 0px;">
+      </div>  -->
+    </mat-card>
 
-               <div class="col-md-4">
-                <label class=" label_form">{{ 'MobileCode' | translate }}</label>
-                <select  formControlName="mobileCode" class="form-control poppins-reg-14" [ngClass]="(!profileForm.get('mobileCode').valid) || (profileForm.get('mobileCode').hasError('required') && (profileForm.get('mobileCode').dirty || profileForm.get('mobileCode').touched)) ? 'invalid' : ''">
-                  <option *ngFor="let code of options.mobileCode"
-                  [value]="code.value"> {{ code.label}}</option>
-                </select>
-                <span class="validations"  *ngIf="profileForm.get('mobileCode').errors?.required && (profileForm.get('mobileCode').dirty && profileForm.get('mobileCode').touched)">  {{ 'Required.MobileCodeRequired' | translate }} </span>
-               </div>
-           
+    <mat-card class="col-md-7 col-sm-7 col-12 my-4 mr-4">
+      <div class="col-md-12 col-12 my-3">
+        <label class="f18">
+          <i class="fas fa-user-alt fa-lg pr-2"></i>{{ 'UserDetails' | translate }}</label>
+      </div>
+      <mat-divider></mat-divider>
+        <form [formGroup]="profileForm"  focusInvalidInput autocomplete="off">
+          <div class="row m-4">
+          <div class="col-md-12 my-2">
+             <label class="label_form">{{ 'FirstName' | translate }}</label>
+             <input type="text" formControlName="firstName" class="form-control poppins-reg-14" disabled />
+           </div>
+           <div class="col-md-6 my-2">
+             <label class="label_form">{{ 'MiddleName' | translate }}</label>
+             <input type="text" formControlName="middleName" class="form-control poppins-reg-14" disabled/>
+           </div>
+           <div class="col-md-6 my-2">
+             <label class="label_form">{{ 'LastName' | translate }}</label>
+             <input type="text" formControlName="lastName" class="form-control poppins-reg-14" disabled/>
+           </div>
+           <div class="row my-2" style="width: 100%;margin-left: 0px;">
 
-               <div class="col-md-8">
-                <label class=" label_form">{{ 'MobileNo' | translate }}</label>
-                <input type="text" formControlName="mobileNo"   class="form-control poppins-reg-14" [ngClass]="{'is-invalid':profileForm.get('mobileNo').touched && profileForm.get('mobileNo').invalid} "/>
-                <div class="invalid-feedback">
-                <span class="validations"  *ngIf="profileForm.get('mobileNo').errors?.required && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">  {{ 'Required.MobileNo' | translate }} </span>
-                <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.maxlength  || profileForm.get('mobileNo').errors?.minlength && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)"> {{ 'MobileNoLength' | translate }}</span>
-                <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.pattern && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">{{ 'MobileFormat' | translate }}</span>
-              </div>
-               </div>
+             <div class="col-md-4">
+              <label class=" label_form">{{ 'MobileCode' | translate }}</label>
+              <select  formControlName="mobileCode" class="form-control poppins-reg-14" [ngClass]="(!profileForm.get('mobileCode').valid) || (profileForm.get('mobileCode').hasError('required') && (profileForm.get('mobileCode').dirty || profileForm.get('mobileCode').touched)) ? 'invalid' : ''">
+                <option *ngFor="let code of options.mobileCode"
+                [value]="code.value"> {{ code.label}}</option>
+              </select>
+              <span class="validations"  *ngIf="profileForm.get('mobileCode').errors?.required && (profileForm.get('mobileCode').dirty && profileForm.get('mobileCode').touched)">  {{ 'Required.MobileCodeRequired' | translate }} </span>
+             </div>
+         
 
-             </div>
-             <div class="col-md-12 mt-2">
-               <label class=" label_form">{{ 'EmailId' | translate }}</label>
-               <input type="text" formControlName="email" class="form-control poppins-reg-14" [ngClass]="{'is-invalid':profileForm.get('email').touched && profileForm.get('email').invalid}"  />
-               <div class="invalid-feedback">
-               <span class="validations"  *ngIf="profileForm.get('email').errors?.required && (profileForm.get('email').dirty && profileForm.get('email').touched)">    {{ 'Required.Email' | translate }} </span>
-               <span class="validations" *ngIf="profileForm.get('email').errors?.email && (profileForm.get('email').dirty && profileForm.get('email').touched)">   {{ 'EmailFormat' | translate }}</span>
-               </div>
-              
-             </div>
-           
-            </div>   
-            <div class="d-flex justify-content-end mt-3 mr-5">
-              <button class="ml-2 btn bggreen fwhite button" (click)="onSaveProfile()">{{ 'SAVE' | translate }}</button>
-              <button class="ml-2 btn bggreen fwhite button" (click)="onCancel()">{{ 'Cancel' | translate }}</button>
+             <div class="col-md-8">
+              <label class=" label_form">{{ 'MobileNo' | translate }}</label>
+              <input type="text" formControlName="mobileNo" maxlength="7"  class="form-control poppins-reg-14" [ngClass]="{'is-invalid':profileForm.get('mobileNo').touched && profileForm.get('mobileNo').invalid} "/>
+              <div class="invalid-feedback">
+              <span class="validations"  *ngIf="profileForm.get('mobileNo').errors?.required && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">  {{ 'Required.MobileNo' | translate }} </span>
+              <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.maxlength  || profileForm.get('mobileNo').errors?.minlength && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)"> {{ 'MobileNoLength' | translate }}</span>
+              <span class="validations" *ngIf="profileForm.get('mobileNo').errors?.pattern && (profileForm.get('mobileNo').dirty && profileForm.get('mobileNo').touched)">{{ 'MobileFormat' | translate }}</span>
             </div>
-           </form>  
+             </div>
+
+           </div>
+           <div class="col-md-12 mt-2">
+             <label class=" label_form">{{ 'EmailId' | translate }}</label>
+             <input type="text" formControlName="email" class="form-control poppins-reg-14" [ngClass]="{'is-invalid':profileForm.get('email').touched && profileForm.get('email').invalid}"  />
+             <div class="invalid-feedback">
+             <span class="validations"  *ngIf="profileForm.get('email').errors?.required && (profileForm.get('email').dirty && profileForm.get('email').touched)">    {{ 'Required.Email' | translate }} </span>
+             <span class="validations" *ngIf="profileForm.get('email').errors?.email && (profileForm.get('email').dirty && profileForm.get('email').touched)">   {{ 'EmailFormat' | translate }}</span>
+             </div>
+            
+           </div>
          
-         
-      </mat-card>
-    </div>
+          </div>   
+          <div class="d-flex justify-content-end mt-3 mr-5">
+            <button class="ml-2 btn bggreen fwhite button" (click)="onSaveProfile()">{{ 'SAVE' | translate }}</button>
+            <button class="ml-2 btn bggreen fwhite button" (click)="onCancel()">{{ 'Cancel' | translate }}</button>
+          </div>
+         </form>  
+       
+       
+    </mat-card>
   </div>
+</div>

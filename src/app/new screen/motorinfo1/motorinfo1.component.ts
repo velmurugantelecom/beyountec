@@ -265,39 +265,6 @@ export class NewMotorInfoScreen implements OnInit {
       }, err => {
         this.openDialog();
       });
-      // forkJoin(this.coreService.greyImportService('ae/isImportedVehicle', greyParams).pipe(catchError(err => {
-      //   return of(undefined)
-      // })),
-      //   this.coreService.greyImportService(this.autoDataURL, params).pipe(catchError(err => {
-      //     return of(undefined)
-      //   }))
-      // ).subscribe(([res1, res2]) => {
-      //   res1 = this.productId === '1113' ? res1 : false;
-      //   if (!res1) {
-      //     this.spinner.hide();
-      //     this.autoData = res2;
-      //     if (!this.autoData || this.autoData.length === 0) {
-      //       this.openDialog();
-      //     } else {
-      //       let makeYear = this.autoData[0]['makeYear']['label'];
-      //       if (makeYear && this.productId === '1113')
-      //         this.makeYearValidation(makeYear)
-      //       else {
-      //         this.validateAutoData();
-      //       }
-      //     }
-      //   } else {
-      //     this.spinner.hide();
-      //     // grey import service return's true
-      //     if (res1) {
-      //       this.navigateToMsgScreen('imported-vehicle');
-      //     }
-      //     if (!res2) {
-      //       this.invalidChassisNo = true;
-      //       this.chassisNoForm.controls['chassisNo'].setErrors({ 'incorrect': true });
-      //     }
-      //   }
-      // });
     }
   }
 
@@ -395,8 +362,6 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getPlans() {
-    console.log(this.vehicleForm);
-    console.log(this.insuredForm)
     if (this.productId === '1116') {
       this.manipulateFields(['vehicleValue', 'repairType'], 0);
     }
@@ -512,12 +477,11 @@ export class NewMotorInfoScreen implements OnInit {
             data: {
               for: 'autodata-failed',
               title: 'Information Not Found',
-              body: `Vehicle information not found , 
-              do you want to continue with Search By Vehicle information`
+              body: `This vehicle has an import history. Do you want to continue with this vehicle?`
             }
           });
           dialogRef.afterClosed().subscribe(result => {
-            if (!result) {
+            if (result) {
               this.navigateToMsgScreen('imported-vehicle');
             } else {
               this.showForm = false;

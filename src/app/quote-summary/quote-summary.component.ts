@@ -182,10 +182,7 @@ export class QuoteSummaryComponent implements OnInit {
       reviseDetails: true
     }
     if (this.isQuickSummary === 'true') {
-      this.router.navigate(['/new-motor-info'],
-      {
-        queryParams: value
-      });
+      this.router.navigate(['/compare-plans']);
     } else {
       this.router.navigate(['/additional-details'], {
         queryParams: value

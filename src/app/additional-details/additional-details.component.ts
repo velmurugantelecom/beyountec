@@ -42,14 +42,14 @@ export class AdditionalDetailsComponent implements OnInit {
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
   public policyPopup: any;
-  public effetiveDates:any
-  public nowTime:any;
-  public minTime:any;
-  public RegistrationNoRequired: boolean=true;
+  public effetiveDates: any
+  public nowTime: any;
+  public minTime: any;
+  public RegistrationNoRequired: boolean = true;
 
   yes: any;
   no: any;
-  public language:any ;
+  public language: any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   public maxEffectiveDate;
@@ -114,11 +114,11 @@ export class AdditionalDetailsComponent implements OnInit {
     } else {
       this.loadQuoteDetails();
     }
-    this.language=localStorage.getItem("language") ;
+    this.language = localStorage.getItem("language");
   }
-  ngDoCheck(){
-    if(this.language!=localStorage.getItem("language")){
-      this.language=localStorage.getItem("language") ;
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
     }
   }
 
@@ -156,25 +156,25 @@ export class AdditionalDetailsComponent implements OnInit {
     if (type === 'change') {
       this.effectiveDateChanged = true;
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    }else {
+    } else {
       effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     }
-    this.effetiveDates=  this.dateConversion(effectiveDate);
-    this.nowTime =this.dateConversion(new Date());
+    this.effetiveDates = this.dateConversion(effectiveDate);
+    this.nowTime = this.dateConversion(new Date());
     this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
-    if(this.effetiveDates <= this.nowTime){
-      this.effetiveDates= this.effetiveDates.concat('T'+this.minTime+':00.000Z');
+    if (this.effetiveDates <= this.nowTime) {
+      this.effetiveDates = this.effetiveDates.concat('T' + this.minTime + ':00.000Z');
     }
-    else{
-      this.effetiveDates=this.effetiveDates.concat('T00:00:00.000Z');
-     
+    else {
+      this.effetiveDates = this.effetiveDates.concat('T00:00:00.000Z');
+
     }
-    console.log(this.nowTime+'time');
+    console.log(this.nowTime + 'time');
     let params = {
       quoteId: this.quoteDetails.quoteId,
       amndVerNo: 0,
-    //  startDate: new Date(effectiveDate).toISOString(),
-      startDate:  this.effetiveDates,
+      //  startDate: new Date(effectiveDate).toISOString(),
+      startDate: this.effetiveDates,
       productId: this.quoteDetails.productTypeId
     }
     this.subscription = this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
@@ -210,7 +210,7 @@ export class AdditionalDetailsComponent implements OnInit {
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
-        this.RegistrationNoRequired=false;
+        this.RegistrationNoRequired = false;
       }
       this.translate.get('Yes').subscribe(value => {
         this.yes = value;
@@ -230,7 +230,7 @@ export class AdditionalDetailsComponent implements OnInit {
       // this.additionalDetails.patchValue({
       //   mortgagedYN: this.options['financed'][0].value
       // });
-      if(!this.isReviseDetails){
+      if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
             mortgagedYN: this.options['financed'][0].value
@@ -315,7 +315,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.updateEffectiveDate('change')
     else
       this.updateEffectiveDate(null)
-      this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
+    this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
           this.spinner.hide();
@@ -491,14 +491,14 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   patchFormValues() {
-    if(this.isReviseDetails){
+    if (this.isReviseDetails||this.isOldQuote) {
       this.additionalDetails.patchValue({
-     mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
-   });
-   this.additionalDetails.patchValue({
-     bankName: this.quoteDetails.vehicleDetails['bankName'],
-   });
- }
+        mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+      });
+      this.additionalDetails.patchValue({
+        bankName: this.quoteDetails.vehicleDetails['bankName'],
+      });
+    }
     this.additionalDetails.patchValue({
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
@@ -523,6 +523,22 @@ export class AdditionalDetailsComponent implements OnInit {
       // city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
+    let bl;
+    if (this.isReviseDetails || this.isOldQuote) {
+    } else {
+      if (!this.quoteDetails.userDetails['prefixBL']) {
+        if (this.quoteDetails.userDetails['prefix'] === 'Mr') {
+          bl = 'السيد'
+        } else if (this.quoteDetails.userDetails['prefix'] === 'Mrs') {
+          bl = 'السيدة';
+        } else {
+          bl = 'تصلب متعدد';
+        }
+        this.additionalDetails.patchValue({
+          prefixBL: bl
+        })
+      }
+    }
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
     let effectivDate;
     if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
@@ -736,7 +752,7 @@ export class AdditionalDetailsComponent implements OnInit {
 })
 export class PolicyDialog {
   dialogeDetails: any;
- language:any ;
+  language: any;
   constructor(private appService: AppService,
     public dialogRef: MatDialogRef<PolicyDialog>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -748,11 +764,11 @@ export class PolicyDialog {
   }
 
   ngOnInit() {
-    this.language=localStorage.getItem("language") ;
+    this.language = localStorage.getItem("language");
   }
-  ngDoCheck(){
-    if(this.language!=localStorage.getItem("language")){
-      this.language=localStorage.getItem("language") ;
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
     }
   }
 

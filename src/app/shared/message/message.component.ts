@@ -70,7 +70,7 @@ export class MessageComponent implements OnInit {
         this.icon = 'info';
         let params = {
           ...this.dataService.getUserDetails(),
-          reason:`Auto Data not Returning Value`
+          reason:`This vehicle has an import history.`
         }
         this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
         });

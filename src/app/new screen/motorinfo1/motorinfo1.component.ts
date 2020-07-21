@@ -395,7 +395,8 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getPlans() {
-    console.log(this.vehicleForm)
+    console.log(this.vehicleForm);
+    console.log(this.insuredForm)
     if (this.productId === '1116') {
       this.manipulateFields(['vehicleValue', 'repairType'], 0);
     }
@@ -427,8 +428,11 @@ export class NewMotorInfoScreen implements OnInit {
           {
             isSameAsInsured: 'Y'
           }],
-        insured: { ...this.insuredForm.getRawValue(), ...this.basicUserDetails, ...this.additionalDetails }
+        insured: { ...this.insuredForm.getRawValue(), ...this.additionalDetails }
       }
+      data['insured']['mobileCode'] = this.basicUserDetails['mobileCode']
+      data['insured']['mobileNo'] = this.basicUserDetails['mobileNo']
+      data['insured']['email'] = this.basicUserDetails['email']
       // adding one day to date fields
 
       let licenseIssueDate;
@@ -578,7 +582,8 @@ export class NewMotorInfoScreen implements OnInit {
       this.vehicleForm.patchValue({
         tcFileNumber: this.dataService.getUserDetails().tcNumber
       });
-      if (this.vehicleForm.controls.chassisNo.status === 'VALID') {
+      let chassisField = this.vehicleForm.controls.chassisNo.status;
+      if (chassisField === 'VALID' || chassisField === 'DISABLED') {
         this.getUserDetailsByTcNo();
       }
     }
@@ -586,6 +591,13 @@ export class NewMotorInfoScreen implements OnInit {
 
   // based on tcNumber
   getUserDetailsByTcNo() {
+    let status = this.vehicleForm.get('chassisNo').status;
+    if (status === 'DISABLED')
+      status = 'VALID'
+    if (!(this.vehicleForm.get('tcFileNumber').status === 'VALID')
+      || !(status === 'VALID')) {
+      return;
+    }
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
       chassisNo: this.vehicleForm.getRawValue().chassisNo
@@ -694,7 +706,6 @@ export class NewMotorInfoScreen implements OnInit {
     this.subscription = this.coreService.getInputs('brokerservice/options/list', params).subscribe(res => {
       this.additionalDetails['branchId'] = res.data[0].value;
     })
-    this.vehicleForm.get('tcFileNumber').setValue(null);
     if (value === '1102') {
       this.tcNoLength = 8;
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
@@ -955,5 +966,8 @@ export class NewMotorInfoScreen implements OnInit {
         }
       }
     });
+  }
+  checkTCNumber() {
+    this.checkTcNoStatus = true;
   }
 }

@@ -124,7 +124,8 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
                         <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
-                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus>
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus
+                            (focusout)="getUserDetailsByTcNo()">
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>
@@ -238,7 +239,8 @@
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'TcNo' | translate }}</mat-label>
                         <input matInput placeholder="{{ 'PlaceHolder.TcNo' | translate }}"
-                            formControlName="tcFileNumber" required NumbersOnly [maxlength]="tcNoLength">
+                            formControlName="tcFileNumber" required NumbersOnly [maxlength]="tcNoLength"
+                            (focus)="checkTCNumber()">
                         <mat-error *ngIf="vehicleForm.controls.tcFileNumber.hasError('required')">
                             {{ 'Required.TcNo' | translate }}
                         </mat-error>

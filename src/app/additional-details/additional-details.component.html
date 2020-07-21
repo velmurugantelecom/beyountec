@@ -459,7 +459,8 @@
                         <label class="upload-label">{{ container.label }}</label>
                         <div class="upload-btn-wrapper">
                             <input type="file" (change)="selectFile($event,container.id,i)"
-                                formControlName="{{ container.controlName }}" id="{{container.id}}"/>
+                                formControlName="{{ container.controlName }}" id="{{container.id}}"
+                                accept="image/*, .pdf" />
                             <label class="font-weight-bold mb-0 blue-font"
                                 (click)="openAttachment(container.value)">{{container.value}}</label>
                         </div>
@@ -467,7 +468,8 @@
                     <div style="position: relative;">
                         <img src="./assets/icon6.png" class="pl-1 pt-1 upload-label" (click)="uploadTrigger.click()" />
                         <div class="upload-btn-wrapper2">
-                            <input type="file"  (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}"/>
+                            <input type="file"  (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}"
+                            accept="image/*, .pdf"/>
                         </div>
                     </div>
                     <div style="position: relative;">

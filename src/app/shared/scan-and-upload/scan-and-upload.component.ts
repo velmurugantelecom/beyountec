@@ -14,6 +14,7 @@ export class ScanAndUpload {
 
   public title = 'Scan the Document';
   private trigger: Subject<void> = new Subject<void>();
+  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
   public frontSide: WebcamImage = null;
   public backSide: WebcamImage = null;
   public previewImage = null;
@@ -23,6 +24,8 @@ export class ScanAndUpload {
   public showCapturedImage = false;
   public showCapturedImage2 = false;
   public blob = {};
+  public allowCameraSwitch = true;
+
   constructor(public dialogRef: MatDialogRef<ScanAndUpload>,
     private spinner: NgxSpinnerService,
     private coreService: CoreService,
@@ -127,5 +130,12 @@ export class ScanAndUpload {
     }, err => {
       this.spinner.hide();
     })
+  }
+  switchCamaraOption(directionOrDeviceId: boolean|string) {
+    this.nextWebcam.next(directionOrDeviceId)
+  }
+
+  public get nextWebcamObservable(): Observable<boolean|string> {
+    return this.nextWebcam.asObservable();
   }
 }

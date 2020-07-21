@@ -231,17 +231,17 @@ export class AdditionalDetailsComponent implements OnInit {
       //   mortgagedYN: this.options['financed'][0].value
       // });
       if(!this.isReviseDetails){
-      if (this.quoteDetails.productTypeId == '1116') {
-        this.additionalDetails.patchValue({
-          mortgagedYN: this.options['financed'][0].value
-        });
+        if (this.quoteDetails.productTypeId == '1116') {
+          this.additionalDetails.patchValue({
+            mortgagedYN: this.options['financed'][0].value
+          });
+        }
+        else {
+          this.additionalDetails.patchValue({
+            mortgagedYN: '',
+          });
+        }
       }
-      else {
-        this.additionalDetails.patchValue({
-          mortgagedYN: '',
-        });
-      }
-    }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
       this.getDropDownOptions('nationality', 'NATIONALITY');
@@ -491,33 +491,21 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   patchFormValues() {
-    // if((this.quoteDetails.vehicleDetails['mortgagedYN']==null)||(this.quoteDetails.vehicleDetails['mortgagedYN']=='')){
-    //   this.additionalDetails.patchValue({
-    //     mortgagedYN:''
-    //   });
-    // }
-    // else{
-    //   this.additionalDetails.patchValue({
-    //     mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
-    //   });
-
-    // }\
-
     if(this.isReviseDetails){
-         this.additionalDetails.patchValue({
-        mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
-      });
       this.additionalDetails.patchValue({
-        bankName: this.quoteDetails.vehicleDetails['bankName'],
-      });
-    }
+     mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
+   });
+   this.additionalDetails.patchValue({
+     bankName: this.quoteDetails.vehicleDetails['bankName'],
+   });
+ }
     this.additionalDetails.patchValue({
       // vehicle
       colorId: this.quoteDetails.vehicleDetails['colorId'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
       // mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
-     // bankName: this.quoteDetails.vehicleDetails['bankName'],
+      // bankName: this.quoteDetails.vehicleDetails['bankName'],
       registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],
       regNo: this.quoteDetails.vehicleDetails['regNo'],
       engineNo: this.quoteDetails.vehicleDetails['engineNo'],
@@ -627,6 +615,9 @@ export class AdditionalDetailsComponent implements OnInit {
       this.fileContainer[i].value = response[0].docDesc;
     }, err => {
       this.spinner.hide();
+      this.toasterService.error("", "Invalid File Format", {
+        timeOut: 3000
+      })
     })
 
   }

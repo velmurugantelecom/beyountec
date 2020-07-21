@@ -8,7 +8,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { UserIdleModule } from 'angular-user-idle';
 import { MAT_DATE_LOCALE, } from '@angular/material/core';
-import { OrderByPipe } from './shared/custom-pipe/order-by.pipe';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -53,6 +52,7 @@ import { DataService } from './core/services/data.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
+import { OrderByPipe } from './shared/custom-pipe/order-by.pipe';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,

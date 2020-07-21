@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { UserIdleModule } from 'angular-user-idle';
 import { MAT_DATE_LOCALE, } from '@angular/material/core';
+import { OrderByPipe } from './shared/custom-pipe/order-by.pipe';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -90,7 +91,8 @@ export const configFactory = (configService: RuntimeConfigService) => {
     ContentPopupComponent,
     NewLoginScreen,
     NewMotorInfoScreen,
-    PolicyDialog],
+    PolicyDialog,
+    OrderByPipe],
   imports: [
     //angularLib
     CommonModule,

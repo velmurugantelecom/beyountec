@@ -163,7 +163,15 @@
       <!-- </div> -->
 
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-12">
+        <div class="col-md-4 col-sm-4 col-12">
+          <!-- <div class="fixed-height-1"> -->
+          <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+              'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
+            <label class="label_form">{{ 'Dob' | translate }}</label>
+            <div>{{ quoteDetails?.userDetails?.dob}}</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-12">
           <!-- <div class="fixed-height-1"> -->
           <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
@@ -171,7 +179,7 @@
             <div>{{ quoteDetails?.userDetails?.age}}</div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6 col-12">
+        <div class="col-md-4 col-sm-4 col-12">
           <!-- <div class="fixed-height-1"> -->
           <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">

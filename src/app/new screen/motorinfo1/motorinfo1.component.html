@@ -224,7 +224,7 @@
                         <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
                         <mat-select formControlName="registeredAt" required
                             (selectionChange)="registeredAtChange($event.value)">
-                            <mat-option *ngFor="let registeredAt of options.registeredAt;trackBy: trackByFn"
+                            <mat-option *ngFor="let registeredAt of options.registeredAt | orderBy:'label';trackBy: trackByFn"
                                 [value]="registeredAt.value">
                                 {{registeredAt.label}}
                             </mat-option>

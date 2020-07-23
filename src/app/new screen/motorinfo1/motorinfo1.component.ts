@@ -540,7 +540,7 @@ export class NewMotorInfoScreen implements OnInit {
         this.setRepairTypeAndRegType(formValue['makeYear']['value']);
       }
     })
-    if (this.dataService.getUserDetails().personalId) {
+    if (this.dataService.getUserDetails().tcNumber) {
       this.isLoggedInUser = true;
       this.loggedInUserName = this.dataService.getUserDetails().customerId
       this.vehicleForm.patchValue({

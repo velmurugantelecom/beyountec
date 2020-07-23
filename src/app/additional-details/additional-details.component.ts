@@ -248,10 +248,11 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('motor_emirate', 'MOTOR_EMIRATE');
       this.getDropDownOptions('profession', 'PROFESSION');
       this.patchFormValues();
-      this.options['prefix'] = [{ "label": "السيد", "value": "السيد" }, { "label": "تصلب متعدد", "value": "تصلب متعدد" }, { "label": "السيدة", "value": "السيدة" }]
-      this.additionalDetails.patchValue({
-        prefixBL: this.options['prefix'][0].value
-      });
+    //  this.options['prefix'] = [{ "label": "السيد", "value": "السيد" }, { "label": "تصلب متعدد", "value": "تصلب متعدد" }, { "label": "السيدة", "value": "السيدة" }]
+    this.options['prefix'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
+      // this.additionalDetails.patchValue({
+      //   prefixBL: this.options['prefix'][0].value
+      // });
     });
   }
 
@@ -523,19 +524,19 @@ export class AdditionalDetailsComponent implements OnInit {
       // city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
-    let bl;
+    //let bl;
     if (this.isReviseDetails || this.isOldQuote) {
     } else {
       if (!this.quoteDetails.userDetails['prefixBL']) {
-        if (this.quoteDetails.userDetails['prefix'] === 'Mr') {
-          bl = 'السيد'
-        } else if (this.quoteDetails.userDetails['prefix'] === 'Mrs') {
-          bl = 'السيدة';
-        } else {
-          bl = 'تصلب متعدد';
-        }
+        // if (this.quoteDetails.userDetails['prefix'] === 'Mr') {
+        //   bl = 'السيد'
+        // } else if (this.quoteDetails.userDetails['prefix'] === 'Mrs') {
+        //   bl = 'السيدة';
+        // } else {
+        //   bl = 'تصلب متعدد';
+        // }
         this.additionalDetails.patchValue({
-          prefixBL: bl
+          prefixBL: this.quoteDetails.userDetails['prefix']
         })
       }
     }

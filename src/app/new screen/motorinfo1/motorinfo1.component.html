@@ -240,7 +240,7 @@
                         <mat-label>{{ 'TcNo' | translate }}</mat-label>
                         <input matInput placeholder="{{ 'PlaceHolder.TcNo' | translate }}"
                             formControlName="tcFileNumber" required NumbersOnly [maxlength]="tcNoLength"
-                            (focus)="checkTCNumber()">
+                            (focus)="checkTCNumber()"  (ngModelChange)="tcFileNumberStatusChange($event)">
                         <mat-error *ngIf="vehicleForm.controls.tcFileNumber.hasError('required')">
                             {{ 'Required.TcNo' | translate }}
                         </mat-error>

@@ -934,4 +934,14 @@ export class NewMotorInfoScreen implements OnInit {
   checkTCNumber() {
     this.checkTcNoStatus = true;
   }
+
+  tcFileNumberStatusChange(value) {
+    this.vehicleForm.patchValue({
+      registeredDate: null
+    });
+    this.vehicleForm.patchValue({
+      prevPolicyExpDate: null
+    });
+ 
+  }
 }

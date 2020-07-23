@@ -29,6 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   oldPasswordIsRequired: any;
   newPasswordIsRequired: any;
   confirmPasswordIsRequired: any;
+  public language: any;
 
   matcher = new MyErrorStateMatcher();
   userName: string = localStorage.getItem('Username');
@@ -92,6 +93,12 @@ export class ChangePasswordComponent implements OnInit {
       ]
     }
     this.changePassword.patchValue({ username: this.userName });
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   onSavePassword() {

@@ -39,7 +39,7 @@ export class EmailPopupComponent implements OnInit {
       let emailId = this.emailForm.value.radio === 'OTHERS' ? this.emailForm.value.email : this.data.mailId;
       let url;
       if (this.data.transactionType == 'P') {
-        url = 'brokerservice/document/emailPolicyDocs?policyId=' + this.data.policyId + '&policyNo=' + this.data.docNo + '&toEmailAddr=' + emailId;
+        url = 'brokerservice/document/sendPolicyDoc?docs=' + this.data.selectedDocs + '&policyNo=' + this.data.docNo + '&toEmailAddr=' + emailId;
       } else {
         url = 'brokerservice/quotes/sendquotes?quoteNumber=' + this.data.docNo + '&toEmailAddr=' + emailId;
       }

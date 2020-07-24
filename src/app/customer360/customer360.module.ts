@@ -10,9 +10,9 @@ import { ClaimdetailsComponent } from './claims/claimdetails/claimdetails.compon
 import { ReqForEndorsmentComponent } from './claims/claimdetails/req-for-endorsment/req-for-endorsment.component';
 import { ReqForCancellationComponent } from './claims/claimdetails/req-for-cancellation/req-for-cancellation.component';
 import { ReportALOssComponent } from './claims/claimdetails/report-aloss/report-aloss.component';
-import { AppMaterialModule } from '../../app-material.module';
+import { AppMaterialModule } from '../app-material.module';
 
-import { AuthGuard } from '../../core/guard/auth.guard';
+import { AuthGuard } from '../core/guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { OwlModule } from 'ngx-owl-carousel';
 
@@ -21,13 +21,13 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { PaymenttabsComponent } from './customer360tabs/paymenttabs/paymenttabs.component';
 
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
-import { CoreModule } from '../../core/core.module'
+import { CoreModule } from '../core/core.module'
 // import { MAT_DATE_LOCALE, } from '@angular/material/core';
 
 // import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 // import { MAT_DATE_FORMATS, } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';

@@ -168,7 +168,7 @@
           <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
             <label class="label_form">{{ 'Dob' | translate }}</label>
-            <div>{{ quoteDetails?.userDetails?.dob| date: 'dd/MM/yyyy'}}</div>
+            <div>{{ quoteDetails?.userDetails?.dob| date: 'dd/MM/yyyy'}} </div>
           </div>
         </div>
         <div class="col-md-4 col-sm-4 col-12">

@@ -99,14 +99,14 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <div *ngIf="runtimeConfig.Environment != 'QC'">
+                <!-- <div *ngIf="runtimeConfig.Environment != 'QC'">
                     <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}"
                         [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type"
                         formControlName="recaptcha"
                         (success)="handleSuccess($event)">
                     </ngx-recaptcha2>
                     <p class="error-message" *ngIf="isValidForm">Captcha is required</p>
-                </div>
+                </div> -->
                 <div class="d-flex justify-content-center mt-2">
                     <button type="submit" class="btn btn-block  bggreen fwhite button roundedbtn"
                         (click)="submitForm()">{{'Login' | translate }}</button>

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
-import { Customer360Service } from '../../customer360/customer360.service';
+import { Customer360Service } from '../../../customer360/customer360.service';
 import { Router } from '@angular/router';
 import { chooseProduct } from 'src/app/shared/product-selection/product-selection.component';
 import { AppService } from 'src/app/core/services/app.service';

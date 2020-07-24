@@ -44,7 +44,7 @@ import { DropDownService } from './core/services/dropdown.service';
 //import { NewLoginScreen, QuoteDialog } from './new screen/login1/login1.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { DataService } from './core/services/data.service';
-import { NgxCaptchaModule } from 'ngx-captcha';
+
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
 
@@ -115,8 +115,7 @@ export const configFactory = (configService: RuntimeConfigService) => {
 
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule,
-    NgxCaptchaModule
+    OwlMomentDateTimeModule
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload, 

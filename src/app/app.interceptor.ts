@@ -88,9 +88,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 } else {
                   if (errorMsg.includes('Invalid file type')) {
                   } else {
-                    this.toasterService.error("", "Bad Request", {
-                      timeOut: 3000,
-                    });
+                    // this.toasterService.error("", "Bad Request", {
+                    //   timeOut: 3000,
+                    // });
                   }
                 }
               }

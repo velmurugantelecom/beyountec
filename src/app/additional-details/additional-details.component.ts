@@ -248,11 +248,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('motor_emirate', 'MOTOR_EMIRATE');
       this.getDropDownOptions('profession', 'PROFESSION');
       this.patchFormValues();
-    //  this.options['prefix'] = [{ "label": "السيد", "value": "السيد" }, { "label": "تصلب متعدد", "value": "تصلب متعدد" }, { "label": "السيدة", "value": "السيدة" }]
     this.options['prefix'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
-      // this.additionalDetails.patchValue({
-      //   prefixBL: this.options['prefix'][0].value
-      // });
     });
   }
 
@@ -293,11 +289,17 @@ export class AdditionalDetailsComponent implements OnInit {
       address4: this.additionalDetails.value['address4'],
       driverSameAsInsured: true
     }
-
+    console.log(this.additionalDetails);
+    let bn;
+    this.options['bankName'].forEach(element => {
+      if (element.label === this.additionalDetails.value['bankName']) {
+        bn = element.value;
+      }
+    });
     let vehicledetails = {
       colorId: this.additionalDetails.value['colorId'],
       mortgagedYN: this.additionalDetails.value['mortgagedYN'],
-      bankName: this.additionalDetails.value['bankName'],
+      bankName: bn,
       sgsID: this.quoteDetails.quoteId,
       noOfDoors: this.additionalDetails.value['noOfDoors'],
       registeredAt: this.quoteDetails.vehicleDetails.registeredAt,
@@ -524,21 +526,11 @@ export class AdditionalDetailsComponent implements OnInit {
       // city: this.quoteDetails.userDetails['city'],
       // country: this.quoteDetails.userDetails['country']
     });
-    //let bl;
     if (this.isReviseDetails || this.isOldQuote) {
     } else {
-      if (!this.quoteDetails.userDetails['prefixBL']) {
-        // if (this.quoteDetails.userDetails['prefix'] === 'Mr') {
-        //   bl = 'السيد'
-        // } else if (this.quoteDetails.userDetails['prefix'] === 'Mrs') {
-        //   bl = 'السيدة';
-        // } else {
-        //   bl = 'تصلب متعدد';
-        // }
         this.additionalDetails.patchValue({
           prefixBL: this.quoteDetails.userDetails['prefix']
         })
-      }
     }
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
     let effectivDate;
@@ -714,7 +706,7 @@ export class AdditionalDetailsComponent implements OnInit {
     this.selectedBank = event.option.value;
   }
 
- 
+  
   getCampus(stepper) {
     this.showHeader = true;
     stepper.next();

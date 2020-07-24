@@ -89,6 +89,9 @@ export class NewMotorInfoScreen implements OnInit {
   public searchType;
   subscription: Subscription;
   public manualOptions: any = {};
+  minIssueDate
+  dobVDate;
+  changedProductType: boolean;
   // gauge properties
   gaugeType = "semi";
   gaugeValue;
@@ -166,6 +169,10 @@ export class NewMotorInfoScreen implements OnInit {
       this.vehicleForm.controls['chassisNo'].disable();
     }
     this.onFormValueChanges();
+    this.dobVDate = new Date();
+    this.dobVDate.setDate(this.today.getDate() - 1);
+    this.dobVDate.setMonth(this.today.getMonth());
+    this.dobVDate.setFullYear(this.today.getFullYear() - 18);
   }
 
   manualSearchListing(url, key, value) {
@@ -176,8 +183,38 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   onFormValueChanges() {
+    this.insuredForm.get('dob').statusChanges.subscribe(val => {
+      if (val === 'VALID') {
+        let dob = this.insuredForm.get('dob').value;
+        let date = moment(dob).add('years', 18)['_d'];
+        this.minIssueDate = date.toISOString();
+        console.log(this.minIssueDate)
+      }
+    });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
       if (value === 'INVALID') {
+        let temp = {
+          userDetails: {
+            address1: null,
+            address2: null,
+            address4: null,
+            city: null,
+            fullNameBL: null,
+            nationality: null,
+            occupation: null,
+            personalId: null,
+            taxId: null,
+            postBox: null
+          },
+          vehicleDetails: {
+            engineNumber: null,
+            registerNumber: null,
+            registrationMark: null,
+            colorId: null,
+            customerId: null
+          }
+        }
+        this.patchAdditionalDetails(temp);
         this.insuredForm.patchValue({
           prefix: null,
           fullName: null,
@@ -219,6 +256,11 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getAutoData(type) {
+    this.vehicleForm.reset();
+    this.vehicleForm.clearValidators();
+    this.insuredForm.reset();
+    this.insuredForm.clearValidators();
+    this.vehicleForm.get('usage').setValue('1001');
     if (this.chassisNoForm.value.chassisNo === '' || this.chassisNoForm.value.chassisNo === null) {
       this.chassisNoForm.get('chassisNo').setValidators([Validators.required]);
       this.chassisNoForm.get('chassisNo').updateValueAndValidity();
@@ -256,8 +298,21 @@ export class NewMotorInfoScreen implements OnInit {
           this.openDialog();
         } else {
           let makeYear = this.autoData[0]['makeYear']['label'];
-          if (makeYear && this.productId === '1113')
-            this.makeYearValidation(makeYear)
+          console.log(this.basicUserDetails)
+          const currentDate = new Date();
+          const year = currentDate.getFullYear();
+          const yearDiff = year - parseInt(this.autoData[0]['makeYear']['label']);
+          if (this.changedProductType && this.productId === '1116' && yearDiff < 7) {
+            this.changedProductType = false;
+            this.productId = '1113';
+            this.basicUserDetails['productTypeName'] = 'Full Insurance';
+            let value = this.dataService.getUserDetails();
+            value['productType'] = '1113';
+            this.dataService.setUserDetails(value);
+          }
+          if (makeYear && this.productId === '1113') {
+            this.makeYearValidation(makeYear);
+          }
           else {
             this.validateAutoData();
           }
@@ -445,22 +500,32 @@ export class NewMotorInfoScreen implements OnInit {
       data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
       data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
       // validating tc & chassis numbers
-      let params = {
-        chassisNo: this.vehicleForm.getRawValue().chassisNo,
-        tcNo: data['vehicleDetails']['tcFileNumber']
-      }
-      if (data['vehicleDetails']['regStatus'] === '03') {
-        params['regStatus'] = 'R'
-        params['prevPolicyExpDate'] = moment(data['vehicleDetails']['prevPolicyExpDate']).format("YYYY-MM-DD")
-      } else {
-        params['regStatus'] = 'N'
-      }
+      // let params = {
+      //   chassisNo: this.vehicleForm.getRawValue().chassisNo,
+      //   tcNo: data['vehicleDetails']['tcFileNumber']
+      // }
+      // if (data['vehicleDetails']['regStatus'] === '03') {
+      //   params['regStatus'] = 'R'
+      //   params['prevPolicyExpDate'] = moment(data['vehicleDetails']['prevPolicyExpDate']).format("YYYY-MM-DD")
+      // } else {
+      //   params['regStatus'] = 'N'
+      // }
       this.validateImportedStatus(data);
       // this.validateTCnoAndChassisNo(params, data);
     }
   }
 
   validateImportedStatus(data) {
+    let params = {
+      chassisNo: this.vehicleForm.getRawValue().chassisNo,
+      tcNo: data['vehicleDetails']['tcFileNumber']
+    }
+    if (data['vehicleDetails']['regStatus'] === '03') {
+      params['regStatus'] = 'R'
+      params['prevPolicyExpDate'] = moment(data['vehicleDetails']['prevPolicyExpDate']).format("YYYY-MM-DD")
+    } else {
+      params['regStatus'] = 'N'
+    }
     this.spinner.show();
     if (this.productId === '1113') {
       let greyParams = {
@@ -469,7 +534,8 @@ export class NewMotorInfoScreen implements OnInit {
       }
       this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
         if (!res) {
-          this.fetchAllPlans(data);
+      this.validateTCnoAndChassisNo(params, data);
+          // this.fetchAllPlans(data);
         } else {
           this.spinner.hide();
           let dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -497,7 +563,9 @@ export class NewMotorInfoScreen implements OnInit {
         }
       })
     } else {
-      this.fetchAllPlans(data);
+      this.validateTCnoAndChassisNo(params, data);
+      // this.fetchAllPlans(data);
+
     }
   }
   goBack() {
@@ -819,6 +887,7 @@ export class NewMotorInfoScreen implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.changedProductType = true;
           this.productId = '1116';
           this.basicUserDetails['productTypeName'] = 'Third Party Insurance';
           let value = this.dataService.getUserDetails();
@@ -942,6 +1011,6 @@ export class NewMotorInfoScreen implements OnInit {
     this.vehicleForm.patchValue({
       prevPolicyExpDate: null
     });
- 
+
   }
 }

@@ -464,11 +464,6 @@
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
                         <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
-                            <div style="position: relative;border: 1px solid #adacac;" class="m-1">
-                                <img (click)="openDialog(container.id,i,container.label, container.controlName)"
-                                    src="./assets/motor/insurer-details/camera.png" class="px-3 pt-2 upload-label" />
-                                <p class="pl-2 f8 mb-0">Scan & Upload</p>
-                            </div>
                             <div class="upload-box col-md-9 mt-1">
                                 <label class="upload-label">{{ container.label }}</label>
                                 <div class="upload-btn-wrapper">
@@ -478,6 +473,11 @@
                                     <label class="font-weight-bold mb-0 blue-font"
                                         (click)="openAttachment(container.value)">{{container.value}}</label>
                                 </div>
+                            </div>
+                            <div style="position: relative;border: 1px solid #adacac;" class="m-1">
+                                <img (click)="openDialog(container.id,i,container.label, container.controlName)"
+                                    src="./assets/motor/insurer-details/camera.png" class="px-3 pt-2 upload-label" />
+                                <p class="pl-2 f8 mb-0">Scan & Upload</p>
                             </div>
                             <div style="position: relative;">
                                 <img src="./assets/icon6.png" class="pl-1 pt-1 upload-label"

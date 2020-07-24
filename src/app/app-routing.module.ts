@@ -22,8 +22,14 @@ const routes: Routes = [
     component: PaymentFailedComponent,
     canActivate: [GuestAuthGuard]
   },
-  {
+  { 
     path: 'resetPassword/:id',
+    loadChildren: () =>
+    import("./login1/login1.module").then(m => m.NewLoginScreenModule),
+    canActivate: [GuestAuthGuard]
+  },
+  { 
+    path: 'resetPassword/:id/:type',
     loadChildren: () =>
     import("./login1/login1.module").then(m => m.NewLoginScreenModule),
     canActivate: [GuestAuthGuard]

@@ -58,22 +58,27 @@ export class AppComponent implements OnInit {
     this.auth.isUserLoggedIn.subscribe(value => {
       if (value) {
         this.isLoggedInUser = true;
-        this.startWatching('user');
+        setTimeout(() => {
+          this.startWatching('user');
+        }, 2000);
       } else {
         this.isLoggedInUser = false;
-        this.stopWatching();
+        this.stopWatching('user');
       }
     })
 
     this.auth.isGuestUser.subscribe(value => {
       if (value) {
-        this.startWatching('guest');
+        setTimeout(() => {
+          this.startWatching('guest');
+        }, 2000);
       } else {
-        this.stopWatching();
+        this.stopWatching('guest');
       }
     })
 
     this.userIdle.onTimerStart().subscribe(count => {
+      console.log('timer started')
       if (this.isLoggedInUser)
         if (count === 1) {
           let dialogRef = this.dialog.open(TimeoutDialogComponent, {
@@ -91,7 +96,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  stopWatching() {
+  stopWatching(value) {
+    console.log('stop watching', value);
     this.userIdle.stopWatching();
   }
 
@@ -106,8 +112,10 @@ export class AppComponent implements OnInit {
   }
 
   startWatching(value) {
+    console.log('start watching', value);
     this.userIdle.startWatching();
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
+      if (!this.isLoggedInUser)
       this.auth.ocall().subscribe(() => {
       });
     });
@@ -129,7 +137,7 @@ export class AppComponent implements OnInit {
        localStorage.removeItem('Username');
        localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
-        this.router.navigate([`/Login`])
+        this.router.navigate([`/new-login`])
         this.spinner.hide();
       }
     });

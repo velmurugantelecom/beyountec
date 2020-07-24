@@ -13,7 +13,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataService } from 'src/app/core/services/data.service';
 import { Subscription } from 'rxjs';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
-
 function confirmPassword(control: AbstractControl) {
   if (!control.parent || !control) {
     return;
@@ -32,7 +31,6 @@ function confirmPassword(control: AbstractControl) {
 })
 export class NewLoginScreen implements OnInit, OnDestroy {
 
-
   public formType: string = 'login';
   public LoginForm: FormGroup;
   public infoForm: FormGroup;
@@ -49,6 +47,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public isResetLinkSend: boolean;
   public PwdSopList = [];
   public routerToken: any;
+  public routerTokenType: any;
   public minutes = 2;
   public seconds = 0;
   public totalMs = 120000;
@@ -65,6 +64,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public lang = 'en';
   public type: 'image' | 'audio';
   public isValidForm: boolean;
+  public forgotPWToken;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -100,11 +100,12 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.formType.includes('resetPassword')) {
           this.formType = 'resetPassword';
           this.routerToken = event.url.slice(1).split("/")[1];
+          this.routerTokenType = event.url.slice(1).split("/")[2];
         }
         let res;
-         this.routes.filter(val => {
+        this.routes.filter(val => {
           if (val === this.formType)
-          res = true;
+            res = true;
         });
         console.log(res);
         if (!res) {
@@ -129,8 +130,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]]
-   //   recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]],
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -141,9 +142,11 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     });
     this.ForgotForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      otp: ['', []]
     });
     this.OtpForm = this.formBuilder.group({
       otp: ['', [Validators.required,]],
+      email: ['', []]
     });
     this.PasswordForm = this.formBuilder.group({
       userName: [{ value: '', disabled: true }, [Validators.required,]],
@@ -267,7 +270,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     let body = {
       email: this.infoForm.value['email'],
       mobNo: this.infoForm.value['mobileNo'],
-      loginSrc: 'CP'
+      loginSrc: 'CP',
+      mobileCode: this.infoForm.value['mobileCode']
     }
     this.subscription = this.coreService.postInputs2('audit/users', body, '').subscribe(res => {
     });
@@ -305,19 +309,34 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   forgotPwd() {
+    this.totalMs = 120000;
+    this.showTimer();
+    this.ForgotForm.get('otp').setValidators([]);
+    this.ForgotForm.get('otp').updateValueAndValidity();
     if (this.ForgotForm.status === 'INVALID') {
       return;
     }
     this.spinner.show();
     this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email}`, '').subscribe(res => {
+      localStorage.setItem('email', this.ForgotForm.value.email)
       this.spinner.hide();
       this.isResetLinkSend = true;
       this.email = this.ForgotForm.value.email;
+      this.forgotPWToken = res;
+      this.ForgotForm.get('otp').setValidators([Validators.required]);
+      this.ForgotForm.get('otp').updateValueAndValidity();
     }, err => {
       this.spinner.hide();
     });
   }
 
+  verifyFPOTP() {
+    this.subscription = this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.forgotPWToken}&otp=${this.ForgotForm.value['otp']}`, '').subscribe(res => {
+      if (res) {
+        this.router.navigate(['/resetPassword', this.forgotPWToken, 'FP'])
+      }
+    })
+  }
   resetPwd() {
     if (!this.PasswordForm.valid) {
       return;
@@ -336,13 +355,26 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         });
         this.router.navigate([`new-login`]);
       }
+    }, err => {
+      this.toastr.error('', err.error.error, {
+        timeOut: 2000
+      });
     });
   }
   getOtp() {
-    this.subscription = this.coreService.getInputs1(`brokerservice/user/confirmPasswordReset/${this.routerToken}`, '').subscribe(res => {
-      this.showTimer();
-      this.PasswordForm.patchValue({ 'userName': res })
-    })
+    if (this.routerTokenType === 'FP') {
+      this.showPassword = true;
+      this.PasswordForm.get('password').reset();
+      this.PasswordForm.patchValue({
+        'userName': localStorage.getItem('email'),
+      })
+    } else {
+      this.subscription = this.coreService.getInputs1(`brokerservice/user/confirmPasswordReset/${this.routerToken}`, '').subscribe(res => {
+        this.showTimer();
+        this.PasswordForm.patchValue({ 'userName': res });
+        this.OtpForm.patchValue({ 'email': res })
+      });
+    }
   }
   showTimer() {
     setInterval(() => {
@@ -442,7 +474,6 @@ export class QuoteDialog {
     if (this.OtpForm.status === 'INVALID')
       return;
     this.service.getInputs1(`brokerservice/quotes/validateOtp?token=${this.token}&otp=${this.OtpForm.value['otp']}`, '').subscribe(response => {
-      console.log(response)
       if (response == 'true') {
         this.dialogRef.close();
         this.router.navigate([`/additional-details`], {

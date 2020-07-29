@@ -58,6 +58,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
        
         if (err instanceof HttpErrorResponse) {
           if (err.status == 401) {
+            this.router.navigate([`/new-login`]);
             this.toasterService.error("Token Expired", "Please try again", {
               timeOut: 3000,
             });

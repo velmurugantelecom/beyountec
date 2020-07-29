@@ -271,7 +271,8 @@
                         <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
                         <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate"
                             placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}"
-                            formControlName="registeredDate" required AutoDateFormat/>
+                            formControlName="registeredDate" [max]="today"
+                            required AutoDateFormat/>
                         <owl-date-time [pickerType]="'calendar'" #registeredDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
                             date_range</mat-icon>

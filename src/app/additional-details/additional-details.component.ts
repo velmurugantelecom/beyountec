@@ -124,7 +124,7 @@ export class AdditionalDetailsComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.activeStepper === 'second')
-      this.stepper.selectedIndex = 1;
+      this.stepper.selectedIndex = 2;
     this.cdr.detectChanges();
   }
 

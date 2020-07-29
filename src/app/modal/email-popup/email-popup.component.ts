@@ -38,6 +38,7 @@ export class EmailPopupComponent implements OnInit {
     } else {
       let emailId = this.emailForm.value.radio === 'OTHERS' ? this.emailForm.value.email : this.data.mailId;
       let url;
+      
       if (this.data.transactionType == 'P') {
         url = 'brokerservice/document/sendPolicyDoc?docs=' + this.data.selectedDocs + '&policyNo=' + this.data.docNo + '&toEmailAddr=' + emailId;
       } else {

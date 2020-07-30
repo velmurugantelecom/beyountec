@@ -132,7 +132,6 @@ export class QuoteSummaryComponent implements OnInit {
   generateQuote() {
       
     this.coreService.postInputs1('generateQuote', this.quoteDetails.quoteId).subscribe(res => {
-      console.log(res)
       this.quoteNumber = res;
       this.appService.setQuoteDetails(this.quoteDetails);
       this.sendMail();
@@ -203,13 +202,11 @@ export class QuoteSummaryComponent implements OnInit {
     let url = 'brokerservice/quotes/sendquotes?quoteNumber=' + docNo + '&toEmailAddr=' + this.mailId;
     this.coreService.getOptions(url).subscribe((result: any) => {
       if (result.status === 200) {
-        console.log('email sent')
       }
     })
   }
 
   readTermsAndCond(value) {
-    console.log(value);
     let file, windowName;
     switch(value) {
       case 1: {

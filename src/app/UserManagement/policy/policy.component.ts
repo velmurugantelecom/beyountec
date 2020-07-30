@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer360Service } from '../../customer360/customer360.service';
+import { Customer360Service } from '../customer360/customer360.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 

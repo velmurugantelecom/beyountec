@@ -76,6 +76,17 @@ export class MessageComponent implements OnInit {
         });
         break;  
       }
+      case 'tariff-not-found': {
+        this.text=  this.languageChange('BrFailed');
+        this.icon = 'info';
+        let params = {
+          ...this.dataService.getUserDetails(),
+          reason:`Tariff not defined for the coverages.`
+        }
+        this.coreService.postInputs('brokerservice/document/enquiryMail', params, {}).subscribe(res => {
+        });
+        break;  
+      }
     }
     this.language=localStorage.getItem("language") ;
   }

@@ -95,26 +95,71 @@ a:hover {
   display: block;
 }
 
-@media screen and (min-width: 992px) {
-  .radiocenter{
-    display: flex;
-  justify-content: center;
- 
-  } 
-  .headFtSize{
-    font-size: 26px;
-  }
-  .LoginFtSize{
-    font-size: 20px;
 
-  }
- }
- @media screen and (max-width: 600px) {
-  .headFtSize{
-    font-size: 20px;
-  }
-  .LoginFtSize{
-    font-size: 20px;
 
-  }
+ /* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+.headFtSize{
+font-size: 20px;
+}
+.LoginFtSize{
+ font-size: 20px;
  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+.captcharesize{
+  height: 85px;
+}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+.captcharesize{
+  height: 85px;
+}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+// .captcharesize{
+//   height: 85px;
+// } 
+.radiocenter{
+  display: flex;
+justify-content: center;
+
+} 
+.headFtSize{
+  font-size: 26px;
+}
+.LoginFtSize{
+  font-size: 20px;
+
+}
+
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+// .captcharesize{
+//   height: 85px;
+// }
+.radiocenter{
+  display: flex;
+justify-content: center;
+
+} 
+.headFtSize{
+  font-size: 26px;
+}
+.LoginFtSize{
+  font-size: 20px;
+
+}
+
+
+}

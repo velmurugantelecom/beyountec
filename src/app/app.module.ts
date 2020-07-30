@@ -16,8 +16,12 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
 // components
+import { PolicyDialog } from './additional-details/additional-details.component';
 import { AppComponent, TimeoutDialogComponent } from './app.component';
+import { QuoteSummaryComponent } from './quote-summary/quote-summary.component';
+import { ComparePlansComponent } from './compare-plans/compare-plans.component';
 import { AppHttpInterceptor } from './app.interceptor';
+import { AdditionalDetailsComponent } from './additional-details/additional-details.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
@@ -41,13 +45,14 @@ import { chooseProduct } from './shared/product-selection/product-selection.comp
 import { ProductChangePopupComponent } from './modal/product-change/product-change.component';
 import { ScanAndUpload } from './shared/scan-and-upload/scan-and-upload.component';
 import { DropDownService } from './core/services/dropdown.service';
-//import { NewLoginScreen, QuoteDialog } from './new screen/login1/login1.component';
+import { NewLoginScreen, QuoteDialog } from './new screen/login1/login1.component';
+import { NewMotorInfoScreen } from './new screen/motorinfo1/motorinfo1.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { DataService } from './core/services/data.service';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
-
+import { OrderByPipe } from './shared/custom-pipe/order-by.pipe';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -75,12 +80,19 @@ export const configFactory = (configService: RuntimeConfigService) => {
 @NgModule({
   declarations: [
     AppComponent,
+    QuoteSummaryComponent,
+    ComparePlansComponent,
+    AdditionalDetailsComponent,
+    QuoteDialog,
     TimeoutDialogComponent,
     EmailPopupComponent,
     MessagePopupComponent,
     ProductChangePopupComponent,
-    ContentPopupComponent
-  ],
+    ContentPopupComponent,
+    NewLoginScreen,
+    NewMotorInfoScreen,
+    PolicyDialog,
+    OrderByPipe],
   imports: [
     //angularLib
     CommonModule,
@@ -115,10 +127,11 @@ export const configFactory = (configService: RuntimeConfigService) => {
 
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule
+    OwlMomentDateTimeModule,
+    NgxCaptchaModule
   ],
-  entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
-    , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload, 
+  entryComponents: [QuoteDialog, chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
+    , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload, PolicyDialog, QuoteDialog,
     DynamicContentDialog],
   providers: [
     CoreService,

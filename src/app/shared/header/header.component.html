@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav" [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}">
         <ul style="min-width: 100px;" class="navbar-nav  custom-cursor"  [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}"
-        [matMenuTriggerFor]="languageMenu">
+        [matMenuTriggerFor]="languageMenu" *ngIf="runtimeConfigService.config.enableLanguageChange">
         <div *ngIf="selectedLanguage" style=" border: 2px solid white;display: flex; justify-content: space-around;padding:5px;">
           
         <button class="nav-item navlist  my-auto" mat-icon-button>

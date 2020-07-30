@@ -1,5 +1,5 @@
 <div class="row loginBg ">
-    <div class="col-md-8 col-sm-6 col-xs-12 col-12 app-highlight loginimage mt-2">
+    <div class="col-12 col-xs-12  col-sm-6  col-md-7  col-lg-9 app-highlight loginimage mt-2">
         <div class="row m-2 p-3">
             <div class="fgreen mx-auto headFtSize">
                 {{ 'GetYourQuote' | translate }}
@@ -7,13 +7,11 @@
         </div>
         <hr class="hr-line">
         <div class="py-5 my-4 mx-auto ">
-            <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off" class="m-4"
-                style="margin-top: 65px !important;">
+            <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off" class="m-4">
                 <div class="my-4 mx-0">
                     <div class="row radiocenter m-4">
                         <mat-radio-group formControlName="productType" (change)="selectOption($event)">
-                            <mat-radio-button class="m-2" *ngFor="let product of options['products']"
-                                [value]="product.value">{{product.label}}
+                            <mat-radio-button class="m-2" *ngFor="let product of options['products']" [value]="product.value">{{product.label}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -22,8 +20,8 @@
                     </div>
                 </div>
                 <div class="row m-2 d-flex justify-content-center">
-                    <div class="row col-md-6 col-sm-9 col-xs-12 col-12 m-0 p-0">
-                        <div class="col-md-4 col-sm-5 col-xs-6 col-4 pr-0">
+                    <div class="row col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 m-0 p-0">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 col-5 px-0">
                             <mat-form-field appearance="outline">
                                 <mat-select formControlName="mobileCode">
                                     <mat-option *ngFor="let code of options.mobileCode" [value]="code.value">
@@ -32,11 +30,10 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class=" col-md-8 col-sm-7 col-xs-6 col-8 pl-0">
+                        <div class="col-lg-7 col-md-8 col-sm-8 col-xs-7 col-7 pl-0">
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
-                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}"
-                                    formControlName="mobileNo" required maxlength="7" NumbersOnly>
+                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" formControlName="mobileNo" required maxlength="7" NumbersOnly>
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
                                     {{ 'Required.MobileNo' | translate }} </mat-error>
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
@@ -45,11 +42,10 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-3 col-xs-12 col-12">
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 pl-0">
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'EmailLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{ 'PlaceHolder.Email' | translate }}" formControlName="email"
-                                required>
+                            <input matInput placeholder="{{ 'PlaceHolder.Email' | translate }}" formControlName="email" required>
                             <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email">
                                 {{ 'EmailFormat' | translate }}</mat-error>
                             <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
@@ -60,8 +56,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4 ">
-                    <button type="submit"
-                        class="col-md-3 col-sm-4 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn">
+                    <button type="submit" class="col-md-3 col-sm-4 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn">
                         {{ 'Continue' | translate }}
                     </button>
                 </div>
@@ -71,15 +66,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 col-12  mat-elevation-z1" id="loginForm">
+    <div class="col-12 col-xs-12  col-sm-6  col-md-5 col-lg-3  mat-elevation-z1" id="loginForm">
         <div class="login-form">
-            <div class="mx-auto img-container mt-4">
+            <div class="mx-auto img-container mt-1">
                 <img src="./assets/home/AFNIC_Logo.png" alt="" />
             </div>
 
             <!-- Login Form -->
-            <form class="pt-4" [formGroup]="LoginForm" focusInvalidInput autocomplete="off"
-                *ngIf="formType=='new-login'">
+            <form class="pt-4" [formGroup]="LoginForm" focusInvalidInput autocomplete="off" *ngIf="formType=='new-login'">
                 <div class="LoginFtSize centercss mb-3">{{'LoginTo' | translate }}</div>
                 <mat-form-field class="m-1" appearance="outline">
                     <mat-label>{{'UsernameLabel' | translate }}</mat-label>
@@ -91,8 +85,7 @@
                 </mat-form-field>
                 <mat-form-field class="m-1" appearance="outline">
                     <mat-label>{{'PasswordLabel' | translate }}</mat-label>
-                    <input matInput id="myInput" type="password" placeholder="{{'PlaceHolder.Password' | translate }}"
-                        formControlName="password">
+                    <input matInput id="myInput" type="password" placeholder="{{'PlaceHolder.Password' | translate }}" formControlName="password">
                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">visibility &nbsp;&nbsp;
                     </mat-icon>
                     <mat-error *ngIf="LoginForm.controls.password.hasError('required')">
@@ -100,20 +93,16 @@
                     </mat-error>
                 </mat-form-field>
                 <div *ngIf="runtimeConfig.Environment != 'QC'">
-                    <div class="d-flex justify-content-center">
+                    <div class="row d-flex justify-content-center captcharesize">
 
-                        <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}"
-                            [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type"
-                            formControlName="recaptcha" (success)="handleSuccess($event)">
+                        <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha" (success)="handleSuccess($event)">
                         </ngx-recaptcha2>
                     </div>
 
                     <p class="error-message" *ngIf="isValidForm">Captcha is required</p>
                 </div>
                 <div class="centercss mt-2">
-                    <button type="submit"
-                        class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn"
-                        (click)="submitForm()">{{'Login' | translate }}</button>
+                    <button type="submit" class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn" (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>
                 <div class="mt-4 ml-1 centercss" (click)="ForgotNavigate()" style="text-decoration: underline;">
                     <a class="f14 textGreen">{{'ForgotPassword' | translate }}</a>
@@ -122,33 +111,27 @@
 
             <!-- Forgot Password Form-->
             <div *ngIf="formType==='forgotPwd'">
-                <div  class="ml-4">
+                <div class="ml-4">
                     <div class="f20 centercss">{{'ResetPassword' | translate }}</div>
                     <form class="customform pt-4" [formGroup]="ForgotForm" focusInvalidInput autocomplete="off" id="ForgotForm">
                         <mat-form-field appearance="outline" class="ml-4 col-md-10">
                             <mat-label>{{'EmailLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" formControlName="email"
-                                #emaild>
+                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" formControlName="email" #emaild>
                             <mat-icon matSuffix>email &nbsp;&nbsp; </mat-icon>
-                            <mat-error
-                                *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
+                            <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
                                 {{'Required.Email' | translate }}
                             </mat-error>
-                            <mat-error
-                                *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.errors.email">
+                            <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.errors.email">
                                 {{'EmailFormat' | translate }}</mat-error>
                         </mat-form-field>
                         <div *ngIf="isResetLinkSend" class="ml-4 col-md-10 centertext fgreen p-1" style="background-color: #D3D3D3;">
-                                We've sent you an OTP. Check your email and enter below
+                            We've sent you an OTP. Check your email and enter below
                         </div>
                         <mat-form-field class="mt-2 ml-4 col-md-10" appearance="outline" *ngIf="isResetLinkSend">
                             <mat-label>{{'Otp' | translate }}</mat-label>
-                            <input id="myInput" type="password" matInput placeholder="Enter OTP"
-                                formControlName="otp"
-                                autocomplete="new-password">
+                            <input id="myInput" type="password" matInput placeholder="Enter OTP" formControlName="otp" autocomplete="new-password">
                             <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
-                                visibility
-                                &nbsp;&nbsp;
+                                visibility &nbsp;&nbsp;
                             </mat-icon>
 
                             <mat-error *ngIf="ForgotForm.controls.otp.hasError('required')">
@@ -159,14 +142,11 @@
                             <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
                         </div>
                         <div class="d-flex justify-content-center mt-3" *ngIf="!isResetLinkSend">
-                            <button (click)="forgotPwd()" type="submit"
-                                class="col-md-3 col-sm-4 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn">{{ 'RESET' | translate }}</button>
+                            <button (click)="forgotPwd()" type="submit" class="col-md-3 col-sm-4 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn">{{ 'RESET' | translate }}</button>
                         </div>
                         <div class="d-flex flex-row-reverse mt-2" *ngIf="isResetLinkSend">
-                            <button  (click)="forgotPwd()" type="submit"
-                                class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
-                            <button (click)="verifyFPOTP()" type="submit"
-                                class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
+                            <button (click)="forgotPwd()" type="submit" class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
+                            <button (click)="verifyFPOTP()" type="submit" class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
                         </div>
                     </form>
                 </div>
@@ -177,8 +157,7 @@
                 <div>
                     <div class=" signup-form">
                         <div class="row ml-2">
-                            <form *ngIf="!showPassword" class="pt-4 ml-3 col-md-11" [formGroup]="OtpForm"
-                                focusInvalidInput autocomplete="off">
+                            <form *ngIf="!showPassword" class="pt-4 ml-3 col-md-11" [formGroup]="OtpForm" focusInvalidInput autocomplete="off">
                                 <div class="centertext fgreen p-1" style="background-color: #D3D3D3;">
                                     <div>We've sent you an OTP. Check your email and enter below
                                     </div>
@@ -189,11 +168,9 @@
                                 </mat-form-field>
                                 <mat-form-field class="mt-2" appearance="outline">
                                     <mat-label>{{'Otp' | translate }}</mat-label>
-                                    <input id="myInput" type="password"  matInput placeholder="Enter OTP"
-                                        formControlName="otp">
+                                    <input id="myInput" type="password" matInput placeholder="Enter OTP" formControlName="otp">
                                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
-                                        visibility
-                                        &nbsp;&nbsp;
+                                        visibility &nbsp;&nbsp;
                                     </mat-icon>
 
                                     <mat-error *ngIf="OtpForm.controls.otp.hasError('required')">
@@ -204,10 +181,8 @@
                                     <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
                                 </div>
                                 <div class="d-flex flex-row-reverse mt-2">
-                                    <button *ngIf="!showPassword" (click)="getOtp()" type="submit"
-                                        class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
-                                    <button (click)="submitOtpForm()" type="submit"
-                                        class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
+                                    <button *ngIf="!showPassword" (click)="getOtp()" type="submit" class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
+                                    <button (click)="submitOtpForm()" type="submit" class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
                                 </div>
 
 
@@ -216,8 +191,7 @@
 
 
 
-                            <form *ngIf="showPassword" class="pt-4" [formGroup]="PasswordForm" focusInvalidInput
-                                autocomplete="off">
+                            <form *ngIf="showPassword" class="pt-4" [formGroup]="PasswordForm" focusInvalidInput autocomplete="off">
 
                                 <mat-form-field appearance="outline">
                                     <mat-label>{{'Username' | translate }}</mat-label>
@@ -230,11 +204,9 @@
 
                                 <mat-form-field class="mt-2" appearance="outline">
                                     <mat-label>{{'PasswordLabel' | translate }}</mat-label>
-                                    <input id="myInput" type="password" matInput placeholder="Enter Password"
-                                        formControlName="password" maxlength="16" autocomplete="new-password">
+                                    <input id="myInput" type="password" matInput placeholder="Enter Password" formControlName="password" autocomplete="new-password">
                                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
-                                        visibility
-                                        &nbsp;&nbsp;
+                                        visibility &nbsp;&nbsp;
                                     </mat-icon>
 
                                     <mat-error *ngIf="PasswordForm.controls.password.hasError('required')">
@@ -246,11 +218,9 @@
 
                                 <mat-form-field class="mt-2" appearance="outline">
                                     <mat-label>{{'ConfirmPasswordLabel' | translate }}</mat-label>
-                                    <input id="myInput1" type="password"  maxlength="16" matInput placeholder="Enter Confirm Password"
-                                        formControlName="confirmPassword" autocomplete="new-password">
+                                    <input id="myInput1" type="password" matInput placeholder="Enter Confirm Password" formControlName="confirmPassword" autocomplete="new-password">
                                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput1')">
-                                        visibility
-                                        &nbsp;&nbsp;
+                                        visibility &nbsp;&nbsp;
                                     </mat-icon>
 
                                     <mat-error *ngIf="PasswordForm.controls.confirmPassword.hasError('required')">
@@ -258,16 +228,14 @@
                                     </mat-error>
 
 
-                                    <mat-error
-                                        *ngIf="PasswordForm.controls.confirmPassword.hasError('passwordsNotMatch')">
+                                    <mat-error *ngIf="PasswordForm.controls.confirmPassword.hasError('passwordsNotMatch')">
                                         Password does not match
                                     </mat-error>
                                 </mat-form-field>
 
 
                                 <div class="d-flex justify-content-center mt-2">
-                                    <button (click)="resetPwd()" type="submit"
-                                        class="btn  bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
+                                    <button (click)="resetPwd()" type="submit" class="btn  bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
                                 </div>
                             </form>
                         </div>

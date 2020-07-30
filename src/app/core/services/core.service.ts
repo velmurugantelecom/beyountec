@@ -122,6 +122,11 @@ export class CoreService {
     return this.http.post(url, body,{ responseType: 'text' });
   }
   
+  deleteInputs(serviceAPI, body: any): Observable<any> {
+    let url = `${this.DevEndpointDbsync}${serviceAPI}`;
+    return this.http.delete(url, body);
+  }
+
   postInputs2(serviceAPI, body,params): Observable<any> {
     let httpParams = new HttpParams();
     if (params && params != "") {

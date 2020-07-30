@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data.service';
@@ -41,7 +41,6 @@ export function RegisteredDateValidator(control: AbstractControl) {
     const momentDate = moment({ year: year, month: month, day: date }).startOf('day');
     const now = moment().startOf('day');
     const diff = momentDate.diff(now, 'days');
-    console.log(diff)
     if (diff > 0) {
       return { futureDate: true };
     } else {
@@ -71,6 +70,7 @@ export class NewMotorInfoScreen implements OnInit {
   public showForm: boolean;
   public showGrid: boolean;
   public selectedTrim;
+  public selectedData;
   public tcNoLength = 10;
   public additionalDetails: any = {};
   public maxVehicleValue = 0;
@@ -91,7 +91,9 @@ export class NewMotorInfoScreen implements OnInit {
   public manualOptions: any = {};
   minIssueDate
   dobVDate;
+  dobMinVDate;
   changedProductType: boolean;
+  openDropDown: boolean;
   // gauge properties
   gaugeType = "semi";
   gaugeValue;
@@ -150,6 +152,9 @@ export class NewMotorInfoScreen implements OnInit {
       dob: ['', [Validators.required]]
     });
 
+    if (this.dataService.getUserDetails().tcNumber) {
+      this.isLoggedInUser = true
+    }
     // loading dropdown values
     this.getDropDownOptions('make', 'MAKE');
     this.manualSearchListing('ae/options/makeYear/findAll', 'makeYear', null);
@@ -173,6 +178,10 @@ export class NewMotorInfoScreen implements OnInit {
     this.dobVDate.setDate(this.today.getDate() - 1);
     this.dobVDate.setMonth(this.today.getMonth());
     this.dobVDate.setFullYear(this.today.getFullYear() - 18);
+    this.dobMinVDate = new Date();
+    this.dobMinVDate.setDate(this.today.getDate() - 1);
+    this.dobMinVDate.setMonth(this.today.getMonth());
+    this.dobMinVDate.setFullYear(this.today.getFullYear() - 75);
   }
 
   manualSearchListing(url, key, value) {
@@ -188,7 +197,6 @@ export class NewMotorInfoScreen implements OnInit {
         let dob = this.insuredForm.get('dob').value;
         let date = moment(dob).add('years', 18)['_d'];
         this.minIssueDate = date.toISOString();
-        console.log(this.minIssueDate)
       }
     });
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
@@ -298,7 +306,6 @@ export class NewMotorInfoScreen implements OnInit {
           this.openDialog();
         } else {
           let makeYear = this.autoData[0]['makeYear']['label'];
-          console.log(this.basicUserDetails)
           const currentDate = new Date();
           const year = currentDate.getFullYear();
           const yearDiff = year - parseInt(this.autoData[0]['makeYear']['label']);
@@ -364,6 +371,7 @@ export class NewMotorInfoScreen implements OnInit {
             if (!result) {
               this.navigateToMsgScreen('autodata-failed');
             } else {
+              this.openDropDown = true;
               this.searchDetailsManually('Make');
             }
           });
@@ -382,6 +390,7 @@ export class NewMotorInfoScreen implements OnInit {
             if (!result) {
               this.navigateToMsgScreen('autodata-failed');
             } else {
+              this.openDropDown = true;
               this.searchDetailsManually('Model');
             }
           });
@@ -534,7 +543,7 @@ export class NewMotorInfoScreen implements OnInit {
       }
       this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
         if (!res) {
-      this.validateTCnoAndChassisNo(params, data);
+          this.validateTCnoAndChassisNo(params, data);
           // this.fetchAllPlans(data);
         } else {
           this.spinner.hide();
@@ -569,9 +578,13 @@ export class NewMotorInfoScreen implements OnInit {
     }
   }
   goBack() {
-    this.router.navigate(['/new-login'], {
-      queryParams: { reviseDetails: true }
-    })
+    if (this.isLoggedInUser) {
+      this.router.navigate(['/User/dashboard'])
+    } else {
+      this.router.navigate(['/new-login'], {
+        queryParams: { reviseDetails: true }
+      })
+    }
   }
 
   submitGrid() {
@@ -611,6 +624,12 @@ export class NewMotorInfoScreen implements OnInit {
     if (this.dataService.getUserDetails().tcNumber) {
       this.isLoggedInUser = true;
       this.loggedInUserName = this.dataService.getUserDetails().customerId
+      let tcNumber = this.dataService.getUserDetails().tcNumber;
+      if (tcNumber.length === 8) {
+        this.tcNoLength = 8;
+        this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+        this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
+      }
       this.vehicleForm.patchValue({
         tcFileNumber: this.dataService.getUserDetails().tcNumber
       });
@@ -754,6 +773,11 @@ export class NewMotorInfoScreen implements OnInit {
     this.selectedTrim = event.target.value
   }
 
+  trimDisplayMobile(trimValue) {
+    this.selectedData = this.autoData[trimValue]
+    this.selectedTrim = trimValue.innerHTML;
+  }
+
   loadVehicleDropDowns(key, targetFieldId, value) {
     return new Promise(resolve => {
       let mthd;
@@ -810,13 +834,9 @@ export class NewMotorInfoScreen implements OnInit {
       this.spinner.hide();
       if (response.status === 'VF') {
         this.router.navigate(['/contact-message', 'br-failed']);
+      } else if (response.plans.length === 0) {
+        this.navigateToMsgScreen('tariff-not-found');
       } else {
-        // const navigationExtras = {
-        //   state: {
-        //     response
-        //   }
-        // }
-        // this.router.navigate(['/compare-plans'], navigationExtras);
         this.dataService.setPlanDetails(response);
         this.router.navigate(['/compare-plans']);
       }
@@ -866,6 +886,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   resetDropDown() {
+    // this.openDropDown = true;
     this.showGrid = false;
     this.showForm = false;
     this.selected = [];
@@ -903,6 +924,11 @@ export class NewMotorInfoScreen implements OnInit {
     };
   }
 
+  deSelectedItem(item) {
+    if (this.selected.length != 3) {
+      this.openDropDown = true;
+    }
+  }
   async onchangeLoadDropdown() {
     if (this.chassisNoForm.status === 'INVALID') {
       this.chassisNoForm.setErrors({});
@@ -915,9 +941,11 @@ export class NewMotorInfoScreen implements OnInit {
     this.searchType = 'Manual';
     this.checkTcNoStatus = true;
     if (this.selected.length === 0) {
-      this.items = this.manualOptions['makeYear']
+      this.items = this.manualOptions['makeYear'];
+      this.openDropDown = true;
     }
     if (this.selected.length == 1) {
+      this.openDropDown = true;
       if (this.selected[0].value && this.productId === '1113')
         this.makeYearValidation(this.selected[0].label)
       this.typeHint = 'Make';
@@ -934,6 +962,7 @@ export class NewMotorInfoScreen implements OnInit {
       this.manualSearchListing('ae/options/model/findAll', 'model', { makeYear: this.selected[0].value, makeId: this.selected[1].value });
     }
     else if (this.selected.length == 3) {
+      this.openDropDown = false;
       this.vehicleForm.controls['chassisNo'].enable();
       this.spinner.show();
       let params = {
@@ -959,7 +988,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   navigateToMsgScreen(type) {
     let value = this.dataService.getUserDetails();
-    value['chassisNo'] = this.chassisNoForm.controls.chassisNo.value;
+    value['chassisNo'] = this.vehicleForm.controls.chassisNo.value;
     this.dataService.setUserDetails(value);
     this.router.navigate(['/contact-message', type]);
   }
@@ -1011,6 +1040,22 @@ export class NewMotorInfoScreen implements OnInit {
     this.vehicleForm.patchValue({
       prevPolicyExpDate: null
     });
-
   }
+
+  onEnterChassisField() {
+    this.openDropDown = false;
+  }
+
+  enableDropDown() {
+    if (this.selected.length === 3) {
+      return;
+    }
+    this.openDropDown = true;
+  }
+
+  ngSelectBlur() {
+    this.openDropDown = false;
+  }
+
+
 }

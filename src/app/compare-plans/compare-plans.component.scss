@@ -160,3 +160,9 @@ button:hover {
 .h35 {
   height: 35px !important;
 }
+
+.flex-container {
+  display: flex;
+  align-items: stretch;
+  background-color: #f1f1f1;
+}

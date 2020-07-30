@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
-import { Customer360Service } from '../../../customer360/customer360.service';
+import { Customer360Service } from '../../customer360/customer360.service';
 import { Router } from '@angular/router';
 import { chooseProduct } from 'src/app/shared/product-selection/product-selection.component';
 import { AppService } from 'src/app/core/services/app.service';
@@ -165,7 +165,7 @@ export class DashNotificationComponent implements OnInit {
   showDetails(quote) {
     console.log(quote)
     if (quote.statusId === "WIP" || quote.statusId === "MR") {
-      this.router.navigate(['/additional-details'], { queryParams: { quoteNo: quote.quoteNo } });
+      this.router.navigate(['/additional-details'], { queryParams: { quoteNo: quote.quoteNo,retrieveQuote: true } });
     } else if (quote.statusId === 'VF' || quote.statusId === "MA" || quote.statusId === "RA") {
       this.router.navigate([`/quote-summary`], { queryParams: { quoteNo: quote.quoteNo, validQuote : false } });
     }

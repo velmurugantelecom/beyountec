@@ -6,7 +6,7 @@
     <p class="f16 ml-1 my-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'PleaseReview' | translate }}</p>
   </div>
   <div class="row grid-divider" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-    <div class="col-md-3">
+    <div class="col-lg-3 order-lg-0 col-md-6 order-md-0 col-sm-6  order-sm-0 col-xs-12">
 
       <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
       <div class="text-center screenName fbold">{{ 'GeneralInfo' | translate }} </div>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="col-md-3" style="margin-top: 13px;">
+    <div class="col-lg-3 order-lg-1 col-md-6 order-md-2 col-sm-6 order-sm-2 col-xs-12" style="margin-top: 13px;">
       <div class="text-center"><img src='assets/quote-summary/vehicle.png' class="img_cls"></div>
       <div class="text-center screenName fbold"> {{ 'VehicleDetails' | translate }} </div>
       <div class="split-input">
@@ -73,11 +73,11 @@
 <!-- start-->
 <!-- start-->
 <div class="row">
-  <div class="col-md-6 col-sm-6 col-12">
+  <div class="col-md-12 col-sm-12 col-12">
     <label class="label_form">{{ 'NoofPassengers' | translate }}</label>
     <div class="field-value"> {{ quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
   </div>
-  <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc"> 
+  <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc"> 
     <label class="label_form">{{ 'RegisteredAt' | translate }}</label>
             <div class="field-value"> {{ quoteDetails?.vehicleDetails?.regCityDesc}}</div>
   </div>
@@ -85,14 +85,14 @@
 <!-- end-->
 <!-- start-->
 <div class="row">
-  <div class="col-md-6 col-sm-6 col-12">
+  <div class="col-md-12 col-sm-12 col-12">
     <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
       'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
     <label class="label_form">{{ 'TCFNo' | translate }}</label>
   <div> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
   </div>
   </div>
-  <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc"> 
+  <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc"> 
     <label class="label_form">{{ 'RegistrationType' | translate }}</label>
     <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
   </div>
@@ -127,11 +127,11 @@
 </div>
 <!-- end-->
       <div class="row" *ngIf="isQuickSummary === 'false'">
-        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
+        <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
           <label class="label_form">{{ 'EngineNo' | translate }}</label>
           <div class="field-value"> {{quoteDetails?.vehicleDetails?.engineNo}}</div>
         </div>
-        <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
+        <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
           <label class="label_form">{{ 'VehicleColor' | translate }}</label>
           <div class="field-value"> {{quoteDetails?.vehicleDetails?.colorName}}</div>
         </div>
@@ -147,10 +147,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-lg-3 order-lg-2 col-md-6 order-md-3 col-sm-6 order-sm-3 col-xs-12">
       <div class="text-center"><img src='assets/quote-summary/insured.png' class="img_cls"></div>
       <div class="text-center screenName fbold"> {{ 'InsuredDetails' | translate }} </div>
-      <div *ngIf="isQuickSummary===false">
+      <div *ngIf="isQuickSummary=='false'">
         <label class="label_form">{{ 'PersonalNumberID' | translate }}</label>
         <div class="field-value"> {{ quoteDetails?.userDetails?.personalId}} </div>
       </div>
@@ -256,7 +256,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3" *ngIf="isValidQuote==='true'">
+    <div class="col-lg-3 order-lg-3 col-md-6 order-md-1 col-sm-6 order-sm-1 col-xs-12" *ngIf="isValidQuote==='true'">
       <div class="text-center"><img src='assets/quote-summary/premium.png' class="img_cls"></div>
       <div class="text-center screenName fbold"> {{ 'PremiumDetails' | translate }} </div>
 
@@ -290,7 +290,7 @@
   <div *ngIf="attachments!= undefined && attachments.length > 0 && isQuickSummary === 'false'">
     <p class="m-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'Attachments' | translate }}</p>
     <div class="row m-1">
-      <div *ngFor="let attachment of attachments">
+      <div *ngFor="let attachment of attachments" class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
         <mat-card class="custom-cursor text-center doc-card mat-elevation-z2 m-2"
           (click)="openAttachment(attachment.fileName)">
           <img mat-card-lg-image [src]="attachment.src" class="p-1" />
@@ -308,10 +308,10 @@
   </div>
 
   <div class="row m-2" *ngIf="isValidQuote==='true'">
-    <div class="col-md-6 row hr" *ngFor="let manCvg of selectedCovers">
-      <div class="poppins-reg-14 col-md-9 plan-coverages">{{manCvg}}
+    <div class="col-md-6 row  col-sm-12 col-xs-12 hr" *ngFor="let manCvg of selectedCovers">
+      <div class="poppins-reg-14 col-md-9 col-sm-8 col-xs-8 plan-coverages">{{manCvg}}
       </div>
-      <div class="poppins-reg-14 col-md-2">
+      <div class="poppins-reg-14 col-md-2 col-sm-2 col-xs-2">
         <img class="sub-image" src="assets/checked.png" />
       </div>
       <hr />
@@ -335,7 +335,7 @@
     <span class="blue-font fbold" (click)="readTermsAndCond(3)">{{'Term3' | translate}}</span>
   </div>
   </div>
-  <div class="d-flex justify-content-between mx-4 mb-4">
+  <div class="d-flex justify-content-between mr-4 mb-4">
     <button type="button" class="btn button bggreen fwhite" (click)="goBack()">
       {{ 'ReviseDetails' | translate }}
     </button>

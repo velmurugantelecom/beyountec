@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/core/services/app.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { BehaviorSubject } from 'rxjs';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private commonService: AuthService,
     public translate: TranslateService,
     public appService: AppService,
-    private dataService: DataService) {
+    private dataService: DataService,
+    public runtimeConfigService: RuntimeConfigService) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.routerurl = event.url.slice(1).split("/")[0];

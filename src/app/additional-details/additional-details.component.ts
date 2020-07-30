@@ -16,6 +16,7 @@ import { startWith, map } from 'rxjs/operators';
 import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-additional-details',
@@ -169,7 +170,6 @@ export class AdditionalDetailsComponent implements OnInit {
       this.effetiveDates = this.effetiveDates.concat('T00:00:00.000Z');
 
     }
-    console.log(this.nowTime + 'time');
     let params = {
       quoteId: this.quoteDetails.quoteId,
       amndVerNo: 0,
@@ -178,9 +178,7 @@ export class AdditionalDetailsComponent implements OnInit {
       productId: this.quoteDetails.productTypeId
     }
     this.subscription = this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
-      console.log(res);
     }, err => {
-      console.log(err);
     });
   }
 
@@ -201,7 +199,7 @@ export class AdditionalDetailsComponent implements OnInit {
       else {
         this.spinner.hide();
       }
-      this.maxEffectiveDate = moment(new Date()).add('days', 60)['_d'];
+      this.maxEffectiveDate = moment(new Date()).add('days', 30)['_d'];
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
       this.getUploadedDocs();
@@ -289,7 +287,6 @@ export class AdditionalDetailsComponent implements OnInit {
       address4: this.additionalDetails.value['address4'],
       driverSameAsInsured: true
     }
-    console.log(this.additionalDetails);
     let bn;
     this.options['bankName'].forEach(element => {
       if (element.label === this.additionalDetails.value['bankName']) {
@@ -706,13 +703,87 @@ export class AdditionalDetailsComponent implements OnInit {
     this.selectedBank = event.option.value;
   }
 
-  
+  openDialogs(stepper: MatStepper): void {
+    let dialogRef = this.dialog.open(PolicyDialog, {
+      width: '400',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      let val = this.appService.getpolicyDetails();
+      if (val) {
+        this.getCampus(stepper);
+      }
+
+    });
+  }
   getCampus(stepper) {
     this.showHeader = true;
     stepper.next();
   }
   ngOnDestroy() {
     this.subscription.unsubscribe()
+  }
+
+  onStepperSelectionChange(event: StepperSelectionEvent) {
+    console.log(event.selectedStep.label);
+    let stepLabel = event.selectedStep.label
+    this.scrollToSectionHook();
+  }
+
+  private scrollToSectionHook() {
+    const element = document.querySelector('.stepperTop');
+    console.log(element);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({
+          behavior: 'smooth', block: 'start', inline:
+            'nearest'
+        });
+      }, 250);
+    }
+  }
+}
+
+
+
+// dialoguecomponent
+@Component({
+  selector: 'Policydialog',
+  templateUrl: './Policydialog.html',
+  styles: [`
+ 
+.closeicon_css {
+  position: relative;
+  
+  cursor: pointer;
+}
+  `]
+})
+export class PolicyDialog {
+  dialogeDetails: any;
+  language: any;
+  constructor(private appService: AppService,
+    public dialogRef: MatDialogRef<PolicyDialog>,
+    @Inject(MAT_DIALOG_DATA) public data,
+  ) { }
+
+  onNoClick(): void {
+    this.appService.setpolicyDetails(false);
+    this.dialogRef.close();
+  }
+
+  ngOnInit() {
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
+  }
+
+  goPolicy() {
+    this.appService.setpolicyDetails(true);
+    this.dialogRef.close();
   }
 }
 

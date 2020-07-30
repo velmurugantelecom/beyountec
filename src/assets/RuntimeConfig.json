@@ -7,5 +7,6 @@
     "DevEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/",
     "PaymentEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/payment-service/",
     "OcrEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/ocr-service/api/",
-    "GreyImport": "https://dev.beyontec.com/bts-broker-portal/api/tpi-services/"
+    "GreyImport": "https://dev.beyontec.com/bts-broker-portal/api/tpi-services/",
+    "enableLanguageChange": true
 }

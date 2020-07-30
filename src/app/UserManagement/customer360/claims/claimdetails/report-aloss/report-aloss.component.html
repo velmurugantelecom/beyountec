@@ -1,10 +1,12 @@
 <ul class="breadcrumb my-auto">
-    <li><a routerLink="/User/dashboard">
+    <li>
+        <a routerLink="/User/dashboard">
             <mat-icon class="custom-cursor">
                 home
             </mat-icon>
 
-        </a></li>
+        </a>
+    </li>
     <li><a class="custom-cursor" (click)="customer360()">{{ 'PolicyDetails' | translate }}</a></li>
     <li><a>{{navParams.policyNo}}</a></li>
     <li>{{ 'ReportLoss' | translate }}</li>
@@ -24,11 +26,8 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'LossDateLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{ 'PlaceHolder.LossDate' | translate }}"
-                                formControlName="lossDate" required [owlDateTime]="lossDateDp"
-                                [owlDateTimeTrigger]="lossDateDp" (dateTimeChange)="onDateChange($event)"
-                                [min]="minLossDate" [max]="maxLossDate">
-                            <owl-date-time [pickerType]="'calendar'" #lossDateDp></owl-date-time>
+                            <input matInput placeholder="{{ 'PlaceHolder.LossDate' | translate }}" formControlName="lossDate" required [owlDateTime]="lossDateDp" [owlDateTimeTrigger]="lossDateDp" (dateTimeChange)="onDateChange($event)" [min]="minLossDate" [max]="maxLossDate">
+                            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #lossDateDp></owl-date-time>
                             <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="lossDateDp">date_range</mat-icon>
                             <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('required')">
                                 {{ 'Required.LossDate' | translate }}</mat-error>
@@ -41,10 +40,8 @@
                     <div class="col-md-6 col-12">
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'IntimatedDateLabel' | translate }}</mat-label>
-                            <input matInput [min]="minDate" [owlDateTime]="effDateDp" [owlDateTimeTrigger]="effDateDp"
-                                placeholder="{{ 'PlaceHolder.IntimatedDate' | translate }}"
-                                formControlName="intimatedDate" required>
-                            <owl-date-time [pickerType]="'calendar'" #effDateDp></owl-date-time>
+                            <input matInput [min]="minDate" [owlDateTime]="effDateDp" [owlDateTimeTrigger]="effDateDp" placeholder="{{ 'PlaceHolder.IntimatedDate' | translate }}" formControlName="intimatedDate" required>
+                            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #effDateDp></owl-date-time>
                             <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effDateDp">date_range</mat-icon>
                             <mat-error *ngIf="ReportaLoss.get('intimatedDate').invalid">
                                 {{ 'Required.IntimatedDate' | translate }}</mat-error>

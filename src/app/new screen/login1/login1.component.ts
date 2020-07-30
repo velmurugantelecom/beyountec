@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
-import { CoreService } from '../core/services/core.service';
-import { AuthService } from '../core/services/auth.service';
+import { CoreService } from '../../core/services/core.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as _moment from "moment";
 const moment = _moment;
@@ -42,7 +42,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public invalidChassisNo: boolean;
   public invalidEmail: boolean;
   public radioError: boolean;
-  public options = {};
+  public options: any = {};
   public isRevisedDetail: boolean;
   public isResetLinkSend: boolean;
   public PwdSopList = [];
@@ -94,7 +94,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.formType = event.url.slice(1).split("/")[0];
-        console.log(this.formType)
         if (this.formType.includes('new-login') || this.formType === '')
           this.formType = 'new-login';
         if (this.formType.includes('resetPassword')) {
@@ -107,7 +106,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           if (val === this.formType)
             res = true;
         });
-        console.log(res);
         if (!res) {
           this.formType = 'new-login'
         }
@@ -247,7 +245,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
-          console.log(result)
           this.LoginForm.get('userName').setValue(this.infoForm.get('email').value);
           this.LoginForm.get('password').reset();
         });

@@ -812,19 +812,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.selectedOccupation = event.option.value;
     }
   }
-  openDialogs(stepper: MatStepper): void {
-    let dialogRef = this.dialog.open(PolicyDialog, {
-      width: '400',
-    });
-    dialogRef.afterClosed().subscribe(result => {
 
-      let val = this.appService.getpolicyDetails();
-      if (val) {
-        this.getCampus(stepper);
-      }
-
-    });
-  }
   getCampus(stepper) {
     this.showHeader = true;
     stepper.next();
@@ -850,49 +838,6 @@ export class AdditionalDetailsComponent implements OnInit {
         });
       }, 250);
     }
-  }
-}
-
-
-
-// dialoguecomponent
-@Component({
-  selector: 'Policydialog',
-  templateUrl: './Policydialog.html',
-  styles: [`
- 
-.closeicon_css {
-  position: relative;
-  
-  cursor: pointer;
-}
-  `]
-})
-export class PolicyDialog {
-  dialogeDetails: any;
-  language: any;
-  constructor(private appService: AppService,
-    public dialogRef: MatDialogRef<PolicyDialog>,
-    @Inject(MAT_DIALOG_DATA) public data,
-  ) { }
-
-  onNoClick(): void {
-    this.appService.setpolicyDetails(false);
-    this.dialogRef.close();
-  }
-
-  ngOnInit() {
-    this.language = localStorage.getItem("language");
-  }
-  ngDoCheck() {
-    if (this.language != localStorage.getItem("language")) {
-      this.language = localStorage.getItem("language");
-    }
-  }
-
-  goPolicy() {
-    this.appService.setpolicyDetails(true);
-    this.dialogRef.close();
   }
 }
 

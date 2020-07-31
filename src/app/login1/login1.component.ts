@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
-import { CoreService } from '../../core/services/core.service';
-import { AuthService } from '../../core/services/auth.service';
+import { CoreService } from '../core/services/core.service';
+import { AuthService } from '../core/services/auth.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as _moment from "moment";
 const moment = _moment;
@@ -133,8 +133,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]],
-      recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]]
+    //  recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],

@@ -415,7 +415,8 @@
         "NewPasswordIsRequired": "New Password is required",
         "ConfirmPasswordIsRequired": "Confirm Password is required",
         "QuoteNo": "Quote Number is required",
-        "OTPIsRequired": "OTP is required"
+        "OTPIsRequired": "OTP is required",
+        "EmiratesIDLength": "Emirates ID should be 15 digits"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",

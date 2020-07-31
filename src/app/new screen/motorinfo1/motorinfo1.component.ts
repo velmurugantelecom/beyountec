@@ -581,9 +581,16 @@ export class NewMotorInfoScreen implements OnInit {
     if (this.isLoggedInUser) {
       this.router.navigate(['/User/dashboard'])
     } else {
+      if(this.quoteNo){
+        this.router.navigate(['/new-login'], {
+          queryParams: { reviseDetails: true,quoteNo:this.quoteNo }
+        })
+      }
+      else{
       this.router.navigate(['/new-login'], {
         queryParams: { reviseDetails: true }
       })
+    }
     }
   }
 

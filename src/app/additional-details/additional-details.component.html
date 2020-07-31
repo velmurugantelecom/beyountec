@@ -273,6 +273,9 @@
                                             <mat-error *ngIf="formCtrls.personalId.errors && formCtrls.personalId.errors.required">
                                                 {{ 'Required.EmiratesID' | translate }}
                                             </mat-error>
+                                            <mat-error *ngIf="formCtrls.personalId.errors && formCtrls.personalId.errors.minlength">
+                                                {{ 'Required.EmiratesIDLength' | translate }}
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>

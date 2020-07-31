@@ -330,7 +330,7 @@
     "SendEmail":"Send Email_fa",
     "PrintDocument":"Print Document_fa",
     "PolicyCreated":"Policy Created_fa",
-    "BrFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy._fa",
+    "BrFailed":" شكراً لاهتمامكم  بطلب عرض السعر لا يمكن إتمام الطلب في الوقت الحالي، سيقوم أحد موظفينا بالاتصال بكم لتصدير الوثيقة  بأسرع  وقت ممكن",
     "PolicyFailed":"Thank you for your quotation request. Your request cannot be processed at this time. Our agent will contact you to finalise the policy._fa",
     "ImportedVehicle":"Vehicle information not found in our system, Our Call center representative will call you shortly.",
     "EmailSuccessAlert":"Email Sent Successfully..._fa",
@@ -413,7 +413,8 @@
         "NewPasswordIsRequired": "New Password is required_fa",
         "ConfirmPasswordIsRequired": "Confirm Password is required_fa",
         "QuoteNo": "Quote Number is required_fa",
-        "OTPIsRequired": "OTP is required_fa"
+        "OTPIsRequired": "OTP is required_fa",
+        "EmiratesIDLength": "Emirates ID should be 15 digits_fa"
     },
     "PlaceHolder": {
         "InsuredName": "أدخل اسم المؤمن عليه",

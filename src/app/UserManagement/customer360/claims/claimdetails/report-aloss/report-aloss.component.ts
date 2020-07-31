@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Customer360Service } from '../../../customer360.service'
 import { ToastrService } from 'ngx-toastr';
 import { ClaimdetailsComponent } from '../claimdetails.component';
+import { DatePipe } from '@angular/common';
 
 import * as _moment from "moment";
 const moment = _moment;
@@ -12,20 +13,22 @@ const moment = _moment;
 @Component({
   selector: 'app-report-aloss',
   templateUrl: './report-aloss.component.html',
-  styleUrls: ['./report-aloss.component.scss']
+  styleUrls: ['./report-aloss.component.scss'],
+  providers: [DatePipe]
 })
 export class ReportALOssComponent implements OnInit {
 
 
   ReportaLoss: FormGroup;
   policyarr: any
+  currentDate:any;
   navParams: any = {};
   minDate: any;
   minLossDate;
   maxLossDate;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
 
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
+  constructor(private datePipe: DatePipe,private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
     // this.navParams = this.router.getCurrentNavigation().extras.state;
     this.route.queryParams
       .subscribe(params => {
@@ -52,9 +55,17 @@ export class ReportALOssComponent implements OnInit {
 
     this.service1.ongetpolicyno.subscribe((data) => {
       this.policyarr = data.data;
+      this.currentDate =moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       if (this.policyarr) {
-        this.minLossDate = moment(new Date(this.policyarr.startDate)).subtract(1, 'd')
+        this.minLossDate = moment(new Date(this.policyarr.startDate));
         this.maxLossDate = new Date(this.policyarr.endDate);
+        if(this.currentDate>=this.maxLossDate){
+          this.maxLossDate=this.maxLossDate;
+        }
+        else{
+          this.maxLossDate=this.currentDate;
+        }
+        
       }
     })
   }

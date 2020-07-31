@@ -59,6 +59,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public captchaIsExpired = false;
   public captchaResponse?: string;
   public email;
+  public quoteNo = '';
   public theme: 'light' | 'dark' = 'light';
   public size: 'compact' | 'normal' = 'normal';
   public lang = 'en';
@@ -116,6 +117,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       .subscribe(params => {
         if (params['reviseDetails']) {
           this.isRevisedDetail = true;
+        }
+        if (params['quoteNo']) {
+          this.quoteNo = params['quoteNo'];
         }
       });
   }
@@ -257,7 +261,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         } else {
           this.saveAuditData();
           this.dataService.setUserDetails(this.infoForm.value)
+          if(this.quoteNo){
+            this.router.navigate(['/new-motor-info'], {
+              queryParams: {quoteNo:this.quoteNo }
+            })
+          }
+          else{
           this.router.navigate(['/new-motor-info'])
+          }
         }
       }
     });

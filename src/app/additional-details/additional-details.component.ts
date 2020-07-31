@@ -96,7 +96,7 @@ export class AdditionalDetailsComponent implements OnInit {
       address2: ['', []],
       occupation: ['', [Validators.required]],
       postBox: ['', []],
-      personalId: ['', [Validators.required]]
+      personalId: ['', [Validators.required,Validators.minLength(15)]]
     });
     this.DocUploadForm = this.fb.group({});
     this.route.queryParams

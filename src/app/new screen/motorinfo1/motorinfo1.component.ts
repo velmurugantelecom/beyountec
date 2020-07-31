@@ -995,7 +995,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   navigateToMsgScreen(type) {
     let value = this.dataService.getUserDetails();
-    value['chassisNo'] = this.vehicleForm.controls.chassisNo.value;
+    value['chassisNo'] = this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value;
     this.dataService.setUserDetails(value);
     this.router.navigate(['/contact-message', type]);
   }

@@ -22,7 +22,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     public spinner: NgxSpinnerService,
     public router: Router,
     public appService: AppService
-  ) {}
+  ) { }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -55,26 +55,24 @@ export class AppHttpInterceptor implements HttpInterceptor {
         }
       }),
       catchError((err: any) => {
-       
+
         if (err instanceof HttpErrorResponse) {
           if (err.status == 401) {
             this.router.navigate([`/new-login`]);
             this.toasterService.error("Token Expired", "Please try again", {
               timeOut: 3000,
             });
-
             return;
           }
           try {
             let errorMsg = err.error.text || err.error.error || err.error;
-
             this.spinner.hide();
-            if(!err.status){
+            if (!err.status) {
               this.toasterService.error('', 'An error has occurred please try again', {
                 timeOut: 3000
               });
             }
-           else if (err.status === 503) {
+            else if (err.status === 503) {
               this.toasterService.error("", " Service Unavailable", {
                 timeOut: 3000,
               });
@@ -82,17 +80,11 @@ export class AppHttpInterceptor implements HttpInterceptor {
               if (errorMsg === "Unable to fetch data from auto data") {
 
               } else {
-                if (errorMsg.includes('Invalid User Name or Password') || errorMsg.includes('User Not Available')) {
-                  this.toasterService.error("", errorMsg, {
-                    timeOut: 3000,
-                  });
+                if (errorMsg.includes('Invalid file type')) {
                 } else {
-                  if (errorMsg.includes('Invalid file type')) {
-                  } else {
-                    // this.toasterService.error("", "Bad Request", {
-                    //   timeOut: 3000,
-                    // });
-                  }
+                  // this.toasterService.error("", errorMsg, {
+                  //   timeOut: 3000,
+                  // });
                 }
               }
             } else if (errorMsg != "Internal Server Error") {
@@ -103,17 +95,16 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 this.router.navigate(["/contact-message", "policy-failed"]);
               } else {
                 if (errorMsg === "Unable to fetch data from auto data") {
-                  // this.router.navigate(["/contact-message", "autodata-failed"]);
-                  // ++this.invalidAutoDataCount;
-                  // if (this.invalidAutoDataCount === 4) {
-                  //   this.invalidAutoDataCount = 0;
-                  //   this.router.navigate(['/contact-message', 'autodata-failed']);
-                  // }
-                  // this.appService._invalidChassisNumber.next('invalid');
                 } else {
-                  this.toasterService.error("", errorMsg, {
-                    timeOut: 3000,
-                  });
+                  if (errorMsg === `Endorsement exists. Policy can't be cancelled.`) {
+                    this.toasterService.error("", 'Endorsement exists. Only 1 endorsement(s) can be processed at a time.', {
+                      timeOut: 3000,
+                    });
+                  } else {
+                    this.toasterService.error("", errorMsg, {
+                      timeOut: 3000,
+                    });
+                  }
                 }
               }
             } else {
@@ -126,7 +117,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
               );
             }
           } catch (e) {
-          
+
             this.toasterService.error("An error occurred", "");
             this.spinner.hide();
           }

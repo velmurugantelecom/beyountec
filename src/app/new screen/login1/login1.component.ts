@@ -59,13 +59,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public captchaIsExpired = false;
   public captchaResponse?: string;
   public email;
-  public quoteNo = '';
   public theme: 'light' | 'dark' = 'light';
   public size: 'compact' | 'normal' = 'normal';
   public lang = 'en';
   public type: 'image' | 'audio';
   public isValidForm: boolean;
   public forgotPWToken;
+  public quoteNo = '';
+
   public routes = [
     'new-login',
     'new-motor-info',
@@ -226,6 +227,10 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.authService.isGuestUser.next(false);
       this.dataService.setUserDetails({})
       this.router.navigate([`/User/dashboard`]);
+    }, err => {
+      this.toastr.error("", err.error.error, {
+        timeOut: 3000,
+      });
     });
   }
 
@@ -438,6 +443,7 @@ export class QuoteDialog {
   public seconds;
   public totalMs;
   public doTimeout: boolean = false;
+  public isCompleted: boolean = false;
   constructor(private service: CoreService,
     private router: Router,
     private spinner: NgxSpinnerService,
@@ -467,6 +473,7 @@ export class QuoteDialog {
     this.spinner.show();
     this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails}`, '').subscribe(response => {
       if (response) {
+        this.isCompleted= true;
         this.goForward(stepper)
         this.token = response;
         this.minutes = 2;

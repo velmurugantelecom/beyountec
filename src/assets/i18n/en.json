@@ -417,6 +417,7 @@
         "QuoteNo": "Quote Number is required",
         "OTPIsRequired": "OTP is required",
         "EmiratesIDLength": "Emirates ID should be 15 digits"
+
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",

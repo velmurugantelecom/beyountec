@@ -1,11 +1,11 @@
 <div class="container-fluid row  align-items-between m-0 p-0 stepperTop" style="height: 87%;">
-    <div class="col-md-8 mt-3">
-        <div class="row " *ngIf="showHeader">
-            <div class="col-6 col-xs-6 col-sm-6 col-md-7  headfont">
+    <div class="col-lg-8 col-md-7 col-sm-7 mt-3">
+        <div class="row" *ngIf="showHeader">
+            <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-7 headfont">
                 <span *ngIf="!isAttachmentArea">{{'AdditionalDetails' | translate }}</span>
                 <span *ngIf="isAttachmentArea">{{'Attachments' | translate }}</span>
             </div>
-            <div class="col-6 col-xs-6 col-sm-6  col-md-5  headfont txt-color-blue">
+            <div class="col-6 col-xs-6 col-sm-6  col-md-6 col-lg-5 headfont txt-color-blue">
                 {{ quoteNo }}
             </div>
         </div>
@@ -57,7 +57,7 @@
 
             <mat-step>
                 <div class="row mb-4 ml-3" style="width: 100%;">
-                    <div class=" p-4 d-none d-lg-block col-md-4 custom-bg pb-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                    <div class=" p-4 d-none d-lg-block col-lg-4 custom-bg pb-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'ChasisNo'| translate }}</label>
@@ -144,7 +144,7 @@
                     </div>
 
 
-                    <div class="col-md-8 p-0">
+                    <div class="col-lg-8 col-md-12 p-0">
                         <form [formGroup]="additionalDetails" focusInvalidInput autocomplete="off">
                             <div>
                                 <div>
@@ -152,17 +152,19 @@
                                 </div>
                                 <div class="row px-3">
                                     <div class="col-md-6">
+
                                         <mat-form-field appearance="outline">
-                                            <mat-label>{{'VehicleColor'| translate }}</mat-label>
-                                            <mat-select required formControlName="colorId">
-                                                <mat-option *ngFor="let colour of options.vehicleColor" [value]="colour.value">
-                                                    {{ colour.label }}
-                                                </mat-option>
-                                            </mat-select>
+                                            <mat-label>{{'VehicleColor' |translate }}</mat-label>
+                                            <input type="text" matInput formControlName="colorId" [matAutocomplete]="colorField" required>
                                             <mat-error *ngIf="formCtrls.colorId.errors && formCtrls.colorId.errors.required">
-                                                {{'Required.VehicleColor'| translate }}
+                                                {{'Required.VehicleColor' | translate }}
                                             </mat-error>
                                         </mat-form-field>
+
+                                        <mat-autocomplete #colorField="matAutocomplete" (optionSelected)="dropDownSelected($event, 'color')">
+                                            <mat-option *ngFor="let color of filteredColors | async" [value]="color.label">
+                                                {{color.label}}</mat-option>
+                                        </mat-autocomplete>
                                     </div>
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
@@ -192,7 +194,7 @@
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6">
-                                        <mat-form-field appearance="outline">
+                                        <!-- <mat-form-field appearance="outline">
                                             <mat-label>{{'PlateCode'| translate }}</mat-label>
                                             <mat-select required formControlName="registrationMark">
                                                 <mat-option *ngFor="let code of options.plateCode" [value]="code.value">
@@ -202,7 +204,20 @@
                                             <mat-error *ngIf="additionalDetails.controls.registrationMark.hasError('required')">
                                                 {{'Required.PlateCode'| translate }}
                                             </mat-error>
+                                        </mat-form-field> -->
+
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'PlateCode' |translate }}</mat-label>
+                                            <input type="text" matInput formControlName="registrationMark" [matAutocomplete]="plateCodeField" required>
+                                            <mat-error *ngIf="formCtrls.registrationMark.errors && formCtrls.registrationMark.errors.required">
+                                                {{'Required.PlateCode' | translate }}
+                                            </mat-error>
                                         </mat-form-field>
+
+                                        <mat-autocomplete #plateCodeField="matAutocomplete" (optionSelected)="dropDownSelected($event, 'plateCode')">
+                                            <mat-option *ngFor="let plateCode of filteredPlateCodes | async" [value]="plateCode.label">
+                                                {{plateCode.label}}</mat-option>
+                                        </mat-autocomplete>
                                     </div>
                                 </div>
 
@@ -253,7 +268,7 @@
                                             </mat-error>
                                         </mat-form-field>
 
-                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="bankSelected($event)">
+                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="dropDownSelected($event, 'bankName')">
                                             <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank.label">
                                                 {{bank.label}}</mat-option>
                                         </mat-autocomplete>
@@ -310,30 +325,34 @@
                                 </div>
                                 <div class="row px-3">
                                     <div class="col-md-6">
+
                                         <mat-form-field appearance="outline">
-                                            <mat-label>{{ 'Occupation' | translate }}</mat-label>
-                                            <mat-select required formControlName="occupation">
-                                                <mat-option *ngFor="let profession of options.profession" [value]="profession.value">
-                                                    {{ profession.label }}
-                                                </mat-option>
-                                            </mat-select>
+                                            <mat-label>{{'Occupation' |translate }}</mat-label>
+                                            <input type="text" matInput formControlName="occupation" [matAutocomplete]="occupationField" required>
                                             <mat-error *ngIf="formCtrls.occupation.errors && formCtrls.occupation.errors.required">
-                                                {{'Required.Occupation' | translate}}
+                                                {{'Required.Occupation' | translate }}
                                             </mat-error>
                                         </mat-form-field>
+
+                                        <mat-autocomplete #occupationField="matAutocomplete" (optionSelected)="dropDownSelected($event, 'occupation')">
+                                            <mat-option *ngFor="let occupation of filteredOccupation | async" [value]="occupation.label">
+                                                {{occupation.label}}</mat-option>
+                                        </mat-autocomplete>
                                     </div>
                                     <div class="col-md-6">
+
                                         <mat-form-field appearance="outline">
-                                            <mat-label>{{'Nationality' | translate}}</mat-label>
-                                            <mat-select required formControlName="nationality">
-                                                <mat-option *ngFor="let nationality of options.nationality" [value]="nationality.value">
-                                                    {{ nationality.label }}
-                                                </mat-option>
-                                            </mat-select>
+                                            <mat-label>{{'Nationality' |translate }}</mat-label>
+                                            <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField" required>
                                             <mat-error *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
-                                                {{'Required.Nationality' | translate}}
+                                                {{'Required.Nationality' | translate }}
                                             </mat-error>
                                         </mat-form-field>
+
+                                        <mat-autocomplete #nationalityField="matAutocomplete" (optionSelected)="dropDownSelected($event, 'nationality')">
+                                            <mat-option *ngFor="let nationality of filteredNationality | async" [value]="nationality.label">
+                                                {{nationality.label}}</mat-option>
+                                        </mat-autocomplete>
                                     </div>
                                 </div>
                                 <div class="row px-3">
@@ -421,18 +440,18 @@
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
                         <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
-                            <div class="upload-box col-md-8 col-sm-8 col-xs-8 col-8 mt-2">
-                                <label class="upload-label">{{ container.label }}</label>
+                            <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 mt-2">
+                                <label class="upload-label">{{ container.label}}</label>
                                 <div class="upload-btn-wrapper">
                                     <input type="file" (change)="selectFile($event,container.id,i)" formControlName="{{ container.controlName }}" id="{{container.id}}" accept="image/*, .pdf" />
-                                    <label class="font-weight-bold mb-0 blue-font" (click)="openAttachment(container.value)">{{container.value}}</label>
+                                    <label class="placeFont mb-0 blue-font" (click)="openAttachment(container.value)">{{container.value}}</label>
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-2 col-xs-2 col-2 px-0 bor-box ml-1">
+                            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 col-2 px-0 bor-box ml-1">
                                 <img (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/motor/insurer-details/camera.png" class="px-3 pt-2 img-fluid" />
-                                <p class="pl-2 f8 mb-0">Scan & Upload</p>
+                                <p class="px-0 f8 mb-0">Scan & Upload</p>
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-2 col-2 px-0">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 px-0">
                                 <img src="./assets/icon6.png" class="pl-1 pt-1 img-fluid" (click)="uploadTrigger.click()" />
                                 <div class="upload-btn-wrapper2">
                                     <input type="file" (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
@@ -441,7 +460,7 @@
                             <p style="margin-top:2px;margin-left:4px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
                                 {{container.label}} is required</p>
                             <ng-template #elseBlock>
-                                <p style="margin-top:2px" class="mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
+                                <p style="margin-top:2px" class="placeFont mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
                             </ng-template>
                         </div>
                         <div *ngIf="!addMoreDoc" class="pl-4" (click)="addMoreDocuments()">
@@ -457,7 +476,7 @@
             </mat-step>
         </mat-horizontal-stepper>
     </div>
-    <div class="col-md-4 col-sm-12 col-xs-12 col-12 m-0 p-0">
+    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 col-12 m-0 p-0">
         <app-general-info-template [generalDetails]="quoteDetails"></app-general-info-template>
     </div>
 </div>

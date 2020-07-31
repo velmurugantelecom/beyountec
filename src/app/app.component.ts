@@ -44,8 +44,21 @@ export class AppComponent implements OnInit {
     router.events.forEach(event => {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
+        if (this.routerurl === 'new-login') {
+          console.log('stop watching...');
+          this.stopWatching();
+        } else {
+          if (!localStorage.getItem('guesttokenDetails')) {
+            console.log('start watching...');
+            this.startWatching();
+          } else {
+            console.log('stop watching...');
+            this.stopWatching();
+          }
+        }
       }
     });
+
   }
 
   ngOnInit() {
@@ -55,30 +68,29 @@ export class AppComponent implements OnInit {
       ping: config.ping
     });
 
-    this.auth.isUserLoggedIn.subscribe(value => {
-      if (value) {
-        this.isLoggedInUser = true;
-        setTimeout(() => {
-          this.startWatching('user');
-        }, 2000);
-      } else {
-        this.isLoggedInUser = false;
-        this.stopWatching('user');
-      }
-    })
+    // this.auth.isUserLoggedIn.subscribe(value => {
+    //   if (value) {
+    //     this.isLoggedInUser = true;
+    //     setTimeout(() => {
+    //       this.startWatching('user');
+    //     }, 2000);
+    //   } else {
+    //     this.isLoggedInUser = false;
+    //     this.stopWatching('user');
+    //   }
+    // })
 
-    this.auth.isGuestUser.subscribe(value => {
-      if (value) {
-        setTimeout(() => {
-          this.startWatching('guest');
-        }, 2000);
-      } else {
-        this.stopWatching('guest');
-      }
-    })
+    // this.auth.isGuestUser.subscribe(value => {
+    //   if (value) {
+    //     setTimeout(() => {
+    //       this.startWatching('guest');
+    //     }, 2000);
+    //   } else {
+    //     this.stopWatching('guest');
+    //   }
+    // })
 
     this.userIdle.onTimerStart().subscribe(count => {
-      console.log('timer started')
       if (this.isLoggedInUser)
         if (count === 1) {
           let dialogRef = this.dialog.open(TimeoutDialogComponent, {
@@ -96,8 +108,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  stopWatching(value) {
-    console.log('stop watching', value);
+  stopWatching() {
     this.userIdle.stopWatching();
   }
 
@@ -111,8 +122,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  startWatching(value) {
-    console.log('start watching', value);
+  startWatching() {
     this.userIdle.startWatching();
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
       if (!this.isLoggedInUser)
@@ -132,7 +142,6 @@ export class AppComponent implements OnInit {
     this.spinner.show();
     this.auth.logout().subscribe(Response => {
       if (Response) {
-        // localStorage.clear();
        localStorage.removeItem('tokenDetails');
        localStorage.removeItem('Username');
        localStorage.removeItem('guesttokenDetails');

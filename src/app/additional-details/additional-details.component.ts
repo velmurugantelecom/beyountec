@@ -42,6 +42,10 @@ export class AdditionalDetailsComponent implements OnInit {
   public activeStepper;
   public isAttachmentSubmitted: boolean;
   public selectedBank = null;
+  public selectedColor = null;
+  public selectedPlate = null;
+  public selectedNationality = null;
+  public selectedOccupation = null;
   public policyPopup: any;
   public effetiveDates: any
   public nowTime: any;
@@ -53,6 +57,11 @@ export class AdditionalDetailsComponent implements OnInit {
   public language: any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
+  filteredColors: Observable<string[]>;
+  filteredPlateCodes: Observable<string[]>;
+  filteredNationality: Observable<string[]>;
+  filteredOccupation: Observable<string[]>;
+
   public maxEffectiveDate;
   public today = moment(new Date()).subtract(1, 'd')
   public effectiveDateChanged = false
@@ -125,14 +134,14 @@ export class AdditionalDetailsComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.activeStepper === 'second')
-      this.stepper.selectedIndex = 2;
+      this.stepper.selectedIndex = 1;
     this.cdr.detectChanges();
   }
 
-  private _filter(value): string[] {
+  private _filter(value, key): string[] {
     const filterValue = value ? value.toLowerCase() : '';
 
-    let c = this.options['bankName'].filter(option => option['label'].toLowerCase().includes(filterValue));
+    let c = this.options[key].filter(option => option['label'].toLowerCase().includes(filterValue));
     return c
   }
 
@@ -255,13 +264,40 @@ export class AdditionalDetailsComponent implements OnInit {
       if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
         this.additionalDetails.controls['bankName'].setValue(null);
         this.selectedBank = '';
-        return;
       }
+    }
+    if (!this.selectedColor || this.selectedColor !== this.additionalDetails.controls['colorId'].value) {
+      this.additionalDetails.controls['colorId'].setValue(null);
+      this.selectedColor = '';
+    }
+    if (!this.selectedPlate || this.selectedPlate !== this.additionalDetails.controls['registrationMark'].value) {
+      this.additionalDetails.controls['registrationMark'].setValue(null);
+      this.selectedPlate = '';
+    }
+    if (!this.selectedNationality || this.selectedNationality !== this.additionalDetails.controls['nationality'].value) {
+      this.additionalDetails.controls['nationality'].setValue(null);
+      this.selectedNationality = '';
+    }
+    if (!this.selectedOccupation || this.selectedOccupation !== this.additionalDetails.controls['occupation'].value) {
+      this.additionalDetails.controls['occupation'].setValue(null);
+      this.selectedOccupation = '';
     }
     if (this.additionalDetails.invalid) {
       return;
     }
     this.spinner.show();
+    let profession;
+    this.options['profession'].forEach(element => {
+      if (element.label === this.additionalDetails.value['occupation']) {
+        profession = element.value;
+      }
+    });
+    let nationality;
+    this.options['nationality'].forEach(element => {
+      if (element.label === this.additionalDetails.value['nationality']) {
+        nationality = element.value;
+      }
+    });
     let insuredDetails = {
       quoteId: this.quoteDetails.quoteId,
       quoteNo: this.quoteNo,
@@ -276,31 +312,43 @@ export class AdditionalDetailsComponent implements OnInit {
       mobileNo: this.quoteDetails.userDetails.mobileNo,
       //personalId: this.quoteDetails.userDetails.personalId,
       personalId: this.additionalDetails.value['personalId'],
-      nationality: this.additionalDetails.value['nationality'],
+      nationality: nationality,
       fullNameBL: this.additionalDetails.value['fullNameBL'],
       firstNameBL: this.additionalDetails.value['fullNameBL'],
       prefixBL: this.additionalDetails.value['prefixBL'],
       taxId: this.additionalDetails.value['taxId'],
       city: this.additionalDetails.value['city'],
       country: this.additionalDetails.value['country'],
-      occupation: this.additionalDetails.value['occupation'],
+      occupation: profession,
       address4: this.additionalDetails.value['address4'],
       driverSameAsInsured: true
     }
-    let bn;
+    let bankName;
     this.options['bankName'].forEach(element => {
       if (element.label === this.additionalDetails.value['bankName']) {
-        bn = element.value;
+        bankName = element.value;
+      }
+    });
+    let color;
+    this.options['vehicleColor'].forEach(element => {
+      if (element.label === this.additionalDetails.value['colorId']) {
+        color = element.value;
+      }
+    });
+    let plateCode;
+    this.options['plateCode'].forEach(element => {
+      if (element.label === this.additionalDetails.value['registrationMark']) {
+        plateCode = element.value;
       }
     });
     let vehicledetails = {
-      colorId: this.additionalDetails.value['colorId'],
+      colorId: color,
       mortgagedYN: this.additionalDetails.value['mortgagedYN'],
-      bankName: bn,
+      bankName: bankName,
       sgsID: this.quoteDetails.quoteId,
       noOfDoors: this.additionalDetails.value['noOfDoors'],
       registeredAt: this.quoteDetails.vehicleDetails.registeredAt,
-      registrationMark: this.additionalDetails.value['registrationMark'],
+      registrationMark: plateCode,
       regNo: this.additionalDetails.value['regNo'],
       engineNo: this.additionalDetails.value['engineNo'],
       trim: this.quoteDetails.vehicleDetails.trim
@@ -378,7 +426,43 @@ export class AdditionalDetailsComponent implements OnInit {
           .pipe(
             startWith(''),
             map(value => {
-              let c = this._filter(value);
+              let c = this._filter(value, key);
+              return c;
+            })
+          );
+      } else if (key === 'vehicleColor') {
+        this.filteredColors = this.additionalDetails['controls']['colorId'].valueChanges
+          .pipe(
+            startWith(''),
+            map(value => {
+              let c = this._filter(value, key);
+              return c;
+            })
+          );
+      } else if (key === 'plateCode') {
+        this.filteredPlateCodes = this.additionalDetails['controls']['registrationMark'].valueChanges
+          .pipe(
+            startWith(''),
+            map(value => {
+              let c = this._filter(value, key);
+              return c;
+            })
+          );
+      } else if (key === 'nationality') {
+        this.filteredNationality = this.additionalDetails['controls']['nationality'].valueChanges
+          .pipe(
+            startWith(''),
+            map(value => {
+              let c = this._filter(value, key);
+              return c;
+            })
+          );
+      } else if (key === 'profession') {
+        this.filteredOccupation = this.additionalDetails['controls']['occupation'].valueChanges
+          .pipe(
+            startWith(''),
+            map(value => {
+              let c = this._filter(value, key);
               return c;
             })
           );
@@ -499,22 +583,34 @@ export class AdditionalDetailsComponent implements OnInit {
         bankName: this.quoteDetails.vehicleDetails['bankName'],
       });
     }
+    if (this.quoteDetails.vehicleDetails['colorName']) {
+      this.selectedColor = this.quoteDetails.vehicleDetails['colorName'];
+    }
+    if (this.quoteDetails.vehicleDetails['registrationMarkDesc']) {
+      this.selectedPlate = this.quoteDetails.vehicleDetails['registrationMarkDesc'];
+    }
+    if (this.quoteDetails.userDetails['nationalityDesc']) {
+      this.selectedNationality = this.quoteDetails.userDetails['nationalityDesc'];
+    }
+    if (this.quoteDetails.userDetails['professionName']) {
+      this.selectedOccupation = this.quoteDetails.userDetails['professionName'];
+    }
     this.additionalDetails.patchValue({
       // vehicle
-      colorId: this.quoteDetails.vehicleDetails['colorId'],
+      colorId: this.quoteDetails.vehicleDetails['colorName'],
       noOfDoors: this.quoteDetails.vehicleDetails['noOfDoors'],
       // mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       prevPolicyExpDate: this.quoteDetails.vehicleDetails['prevPolicyExpDate'],
       // bankName: this.quoteDetails.vehicleDetails['bankName'],
-      registrationMark: this.quoteDetails.vehicleDetails['registrationMark'],
+      registrationMark: this.quoteDetails.vehicleDetails['registrationMarkDesc'],
       regNo: this.quoteDetails.vehicleDetails['regNo'],
       engineNo: this.quoteDetails.vehicleDetails['engineNo'],
       //Insured
       prefixBL: this.quoteDetails.userDetails['prefixBL'],
       fullNameBL: this.quoteDetails.userDetails['fullNameBL'],
-      occupation: this.quoteDetails.userDetails['occupation'],
+      occupation: this.quoteDetails.userDetails['professionName'],
       personalId: this.quoteDetails.userDetails['personalId'],
-      nationality: this.quoteDetails.userDetails['nationality'],
+      nationality: this.quoteDetails.userDetails['nationalityDesc'],
       address1: this.quoteDetails.userDetails['address1'],
       address2: this.quoteDetails.userDetails['address2'],
       postBox: this.quoteDetails.userDetails['postBox'],
@@ -530,6 +626,10 @@ export class AdditionalDetailsComponent implements OnInit {
         })
     }
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
+    // this.selectedColor = this.quoteDetails.vehicleDetails['colorName'];
+    // this.selectedPlate = this.quoteDetails.vehicleDetails['registrationMarkDesc'];
+    // this.selectedNationality = this.quoteDetails.vehicleDetails['nationalityDesc'];
+    // this.selectedOccupation = this.quoteDetails.vehicleDetails['professionName'];
     let effectivDate;
     if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
       effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
@@ -699,10 +799,19 @@ export class AdditionalDetailsComponent implements OnInit {
     })
   }
 
-  bankSelected(event: any) {
+  dropDownSelected(event: any, type) {
+    if (type === 'bankName') {
     this.selectedBank = event.option.value;
+    } else if (type === 'color') {
+    this.selectedColor = event.option.value;
+    } else if (type === 'plateCode') {
+      this.selectedPlate = event.option.value;
+    } else if (type === 'nationality') {
+      this.selectedNationality = event.option.value;
+    } else if (type === 'occupation') {
+      this.selectedOccupation = event.option.value;
+    }
   }
-
   openDialogs(stepper: MatStepper): void {
     let dialogRef = this.dialog.open(PolicyDialog, {
       width: '400',

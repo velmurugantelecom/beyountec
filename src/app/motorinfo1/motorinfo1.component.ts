@@ -665,7 +665,8 @@ export class NewMotorInfoScreen implements OnInit {
         this.insuredForm.patchValue(res.userDetails);
         this.vehicleForm.patchValue({
           prevPolicyExpDate: res.vehicleDetails.prevPolicyExpDate,
-          licenseIssueDate: res.userDetails.licenseIssuedDate
+          licenseIssueDate: res.userDetails.licenseIssuedDate,
+          registeredDate: res.vehicleDetails.registeredDate
         });
         this.patchAdditionalDetails(res);
       }

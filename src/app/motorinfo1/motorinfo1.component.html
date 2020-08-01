@@ -115,7 +115,7 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-2 px-0 col-sm-2 col-xs-2 col-2 ">
-                        <button mat-mini-fab color="primary" (click)="getAutoData()">
+                        <button mat-mini-fab color="primary" (click)="getAutoData('')">
                             <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
                         </button>
                     </div>
@@ -171,7 +171,7 @@
                                 </mat-icon>
                             </td>
                             <td>
-                                <input type="radio" id="{{trim}}" name="drone" value="{{i}}" (change)="trimChanged($event)">
+                                <input type="radio" id="{{data.trim}}" name="drone" value="{{i}}" (change)="trimChanged($event)">
                             </td>
                         </tr>
                     </tbody>
@@ -345,8 +345,8 @@
                             <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('required')">
                                 {{ 'Required.RegisteredDate' | translate }}
                             </mat-error>
-                            <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('futureDate')">
-                                Invalid First Reg. Date
+                            <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMax')">
+                                {{ 'Invalid.RegisteredDate' | translate }}
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -421,7 +421,7 @@
                 <form id="form1" [formGroup]="insuredForm" class="row col-md-10 col-sm-12 m-0 p-0" focusInvalidInput autocomplete="off">
                     <div class="col-md-8 col-sm-6">
                         <div class="row ">
-                            <mat-form-field class="col-lg-3 col-md-4 col-sm-4 col-xs-5 col-5" style="width: 71px;" appearance="outline">
+                            <mat-form-field class="col-lg-3 col-md-4 col-sm-4 col-xs-3 col-3 pr-1" style="width: 71px;" appearance="outline">
                                 <mat-label>{{'Prefix' | translate}}</mat-label>
                                 <mat-select formControlName="prefix">
                                     <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn" [value]="prefix.value">
@@ -432,7 +432,7 @@
                                     {{ 'Required.Prefix' | translate }}
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-lg-9 col-md-8 col-sm-8 col-xs-7 col-7" appearance="outline">
+                            <mat-form-field class="col-lg-9 col-md-8 col-sm-8 col-xs-9 col-9 pl-0" appearance="outline">
                                 <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
                                 <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}" formControlName="fullName" required AlphabetOnly>
                                 <mat-error *ngIf="insuredForm.controls.fullName.hasError('required')">

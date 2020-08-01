@@ -29,7 +29,7 @@
 
 
             <div class="d-flex justify-content-center">
-                <button mat-button (click)="sendEmail(stepper)" class="btn btn-home button fwhite bggreen centercss">Get OTP</button>
+                <button (click)="sendEmail(stepper)" class="btn btn-home button fwhite bggreen centercss">Get OTP</button>
             </div>
 
 
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button mat-button matStepperNext (click)="verifyOtp()" class="m-2 btn btn-home button fwhite bggreen centercss">Verify OTP</button>
+                    <button matStepperNext (click)="verifyOtp()" class="m-2 btn btn-home button fwhite bggreen centercss">Verify OTP</button>
                     <button (click)="sendEmail(stepper)" class="btn btn-home m-2 bggreen fwhite centercss button">Resend OTP?</button>
                 </div>
             </div>

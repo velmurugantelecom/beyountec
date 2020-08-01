@@ -58,7 +58,7 @@ export class NewMotorInfoScreen implements OnInit {
   public today = new Date();
   public items = [];
   public selected = [];
-  public basicUserDetails = {};
+  public basicUserDetails:any = {};
   public chassisNoForm: FormGroup;
   public vehicleForm: FormGroup;
   public insuredForm: FormGroup;
@@ -461,7 +461,8 @@ export class NewMotorInfoScreen implements OnInit {
       }
       data['insured']['mobileCode'] = this.basicUserDetails['mobileCode']
       data['insured']['mobileNo'] = this.basicUserDetails['mobileNo']
-      data['insured']['email'] = this.basicUserDetails['email']
+      data['insured']['email'] = this.basicUserDetails['email'];
+      data['insured']['firstName'] = this.insuredForm.get('fullName').value;
       // adding one day to date fields
 
       let licenseIssueDate;
@@ -776,7 +777,7 @@ export class NewMotorInfoScreen implements OnInit {
     }
   }
 
-  trimChanged(event) {
+  trimChanged(event:any) {
     this.enableGridBtn = false;
     this.selectedTrim = event.target.value
   }

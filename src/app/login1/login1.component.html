@@ -21,7 +21,7 @@
                 </div>
                 <div class="row m-2 d-flex justify-content-center">
                     <div class="row col-lg-3 col-md-12 col-sm-12 col-xs-12 col-12 m-0 p-0">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 col-5 px-0">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4 pl-0 pr-1">
                             <mat-form-field appearance="outline">
                                 <mat-select formControlName="mobileCode">
                                     <mat-option *ngFor="let code of options.mobileCode" [value]="code.value">
@@ -30,7 +30,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 col-7 pl-0">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-8 pl-0">
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
                                 <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" formControlName="mobileNo" required maxlength="7" NumbersOnly>
@@ -92,7 +92,7 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <!-- <div *ngIf="runtimeConfig.Environment != 'QC'">
+                <div *ngIf="runtimeConfig.Environment != 'QC'">
                     <div class="row d-flex justify-content-center captcharesize">
 
                         <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha" (success)="handleSuccess($event)">
@@ -100,7 +100,7 @@
                     </div>
 
                     <p class="error-message" *ngIf="isValidForm">Captcha is required</p>
-                </div> -->
+                </div>
                 <div class="centercss mt-2">
                     <button type="submit" class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn" (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>

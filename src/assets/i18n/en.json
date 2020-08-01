@@ -464,6 +464,7 @@
         "PolicyExpDate": "Prev. Policy Exp.Date can't be less than current date",
         "PolicyExpDateMorethan60": "Prev. Policy Exp.Date can't be more than 60 days from current date",
         "ChassisNumber": "Please enter valid Chassis no.",
-        "FutureDate": "License Issue Date can't be future date"
+        "FutureDate": "License Issue Date can't be future date",
+        "RegisteredDate": "First Registered Date can't be future date"
     }
 }

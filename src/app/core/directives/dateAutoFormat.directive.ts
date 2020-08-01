@@ -10,7 +10,7 @@ export class AutoDateFormatDirective {
     constructor(private el: ElementRef) {
 
     }
-    @HostListener('blur', ['$event']) 
+    @HostListener('blur') 
     onBlur() {
         const inputValue = this.el.nativeElement.value;
         if (inputValue !== '') {

@@ -1,15 +1,16 @@
 ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
     background-color: #01785a;
-   color: white;
+    color: white;
 }
 
-  .container {
+.container {
     display: flex;
     flex-direction: column;
     min-height: 78vh;
     justify-content: center;
     width: 100%;
 }
+
 .custom-bg {
     background-image: linear-gradient(to right, #58BB8B 40%, #6FE289);
     margin: 8px;
@@ -24,11 +25,12 @@
     border-right-width: medium;
 }
 
-ng-value-icon{
+ng-value-icon {
     display: hidden!important;
 }
-.custom{
-margin-top: 5px;
+
+.custom {
+    margin-top: 5px;
 }
 
 .comp-header {
@@ -57,12 +59,12 @@ margin-top: 5px;
 .mat-card {
     padding: 8px;
 }
+
 ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
     display: inline-block;
     padding: 4px 15px;
     height: 25px;
 }
-
 
 ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
     display: block;
@@ -74,15 +76,23 @@ margin-top: 5px;
 
 // Scroll table
 tbody {
-    display:block;
-    height:130px;
-    overflow:auto;
+    display: block;
+    height: 130px;
+    overflow: auto;
 }
-thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
+
 thead {
-    width: calc( 100% - 1em )
+    width: calc( 100% - 1em)
+}
+
+.mat-drawer-container {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.87);
 }

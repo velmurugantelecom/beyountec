@@ -133,8 +133,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]]
-    //  recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]],
+     recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -228,9 +228,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.dataService.setUserDetails({})
       this.router.navigate([`/User/dashboard`]);
     }, err => {
-      this.toastr.error("", err.error.error, {
-        timeOut: 3000,
-      });
+      // this.toastr.error("", err.error.error, {
+      //   timeOut: 3000,
+      // });
     });
   }
 

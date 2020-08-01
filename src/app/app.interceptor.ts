@@ -57,65 +57,86 @@ export class AppHttpInterceptor implements HttpInterceptor {
       catchError((err: any) => {
 
         if (err instanceof HttpErrorResponse) {
-          if (err.status == 401) {
-            this.router.navigate([`/new-login`]);
-            this.toasterService.error("Token Expired", "Please try again", {
-              timeOut: 3000,
-            });
-            return;
-          }
+
           try {
+            console.log(err)
             let errorMsg = err.error.text || err.error.error || err.error;
             this.spinner.hide();
-            if (!err.status) {
-              this.toasterService.error('', 'An error has occurred please try again', {
-                timeOut: 3000
+            if (err.status == 401) {
+              this.router.navigate([`/new-login`]);
+              this.toasterService.error("Token Expired", "Please try again", {
+                timeOut: 3000,
               });
-            }
-            else if (err.status === 503) {
-              this.toasterService.error("", " Service Unavailable", {
+              
+            } else if (err.status === 503) {
+              this.toasterService.error("Service Unavailable", "Please try again", {
                 timeOut: 3000,
               });
             } else if (err.status === 400) {
-              if (errorMsg === "Unable to fetch data from auto data") {
-
-              } else {
-                if (errorMsg.includes('Invalid file type')) {
-                } else {
-                  // this.toasterService.error("", errorMsg, {
-                  //   timeOut: 3000,
-                  // });
-                }
-              }
-            } else if (errorMsg != "Internal Server Error") {
-              if (
-                err.url.includes("brokerservice/policy") &&
-                !err.url.includes("Summary")
-              ) {
-                this.router.navigate(["/contact-message", "policy-failed"]);
-              } else {
-                if (errorMsg === "Unable to fetch data from auto data") {
-                } else {
-                  if (errorMsg === `Endorsement exists. Policy can't be cancelled.`) {
-                    this.toasterService.error("", 'Endorsement exists. Only 1 endorsement(s) can be processed at a time.', {
-                      timeOut: 3000,
-                    });
-                  } else {
-                    this.toasterService.error("", errorMsg, {
-                      timeOut: 3000,
-                    });
-                  }
-                }
-              }
-            } else {
-              this.toasterService.error(
-                "",
-                "An error has occurred please try again",
-                {
-                  timeOut: 3000,
-                }
-              );
+              this.toasterService.error("Invalid Input", "Please try again", {
+                timeOut: 3000,
+              });
+            }else if(err.status === 500) {
+              this.toasterService.error("Service is not available", "Please try again", {
+                timeOut: 3000,
+              });
             }
+            else if (!err.status) {
+              this.toasterService.error('', errorMsg, {
+                timeOut: 3000
+              });
+            }
+            // let errorMsg = err.error.text || err.error.error || err.error;
+            // this.spinner.hide();
+            // if (!err.status) {
+            //   this.toasterService.error('', 'An error has occurred please try again', {
+            //     timeOut: 3000
+            //   });
+            // }
+            // else if (err.status === 503) {
+            //   this.toasterService.error("", " Service Unavailable", {
+            //     timeOut: 3000,
+            //   });
+            // } else if (err.status === 400) {
+            //   if (errorMsg === "Unable to fetch data from auto data") {
+
+            //   } else {
+            //     if (errorMsg.includes('Invalid file type')) {
+            //     } else {
+            //       // this.toasterService.error("", errorMsg, {
+            //       //   timeOut: 3000,
+            //       // });
+            //     }
+            //   }
+            // } else if (errorMsg != "Internal Server Error") {
+            //   if (
+            //     err.url.includes("brokerservice/policy") &&
+            //     !err.url.includes("Summary")
+            //   ) {
+            //     this.router.navigate(["/contact-message", "policy-failed"]);
+            //   } else {
+            //     if (errorMsg === "Unable to fetch data from auto data") {
+            //     } else {
+            //       if (errorMsg === `Endorsement exists. Policy can't be cancelled.`) {
+            //         this.toasterService.error("", 'Endorsement exists. Only 1 endorsement(s) can be processed at a time.', {
+            //           timeOut: 3000,
+            //         });
+            //       } else {
+            //         this.toasterService.error("", errorMsg, {
+            //           timeOut: 3000,
+            //         });
+            //       }
+            //     }
+            //   }
+            // } else {
+            //   this.toasterService.error(
+            //     "",
+            //     "An error has occurred please try again",
+            //     {
+            //       timeOut: 3000,
+            //     }
+            //  );
+            // }
           } catch (e) {
 
             this.toasterService.error("An error occurred", "");

@@ -41,7 +41,11 @@ export class EmailPopupComponent implements OnInit {
       
       if (this.data.transactionType == 'P') {
         url = 'brokerservice/document/sendPolicyDoc?docs=' + this.data.selectedDocs + '&policyNo=' + this.data.docNo + '&toEmailAddr=' + emailId;
-      } else {
+      } 
+     else if (this.data.transactionType == 'policysuccess') {
+        url = 'brokerservice/document/emailPolicyDocs?policyId=' + this.data.policyId + '&policyNo=' + this.data.docNo + '&toEmailAddr=' + emailId;
+      }
+      else {
         url = 'brokerservice/quotes/sendquotes?quoteNumber=' + this.data.docNo + '&toEmailAddr=' + emailId;
       }
       this.translate.get('EmailSuccessAlert') .subscribe(value => { 

@@ -31,6 +31,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public quoteDetails: any;
   public options: any = {};
   public showBankField: boolean;
+  public questionnaireStatus:boolean=false;
   public quoteNo;
   public showHeader = false;
   public mailId: string;
@@ -51,6 +52,8 @@ export class AdditionalDetailsComponent implements OnInit {
   public nowTime: any;
   public minTime: any;
   public RegistrationNoRequired: boolean = true;
+  public RegistrationMarkRequired:boolean =true;
+  public QuestionnaireStatusShow:boolean =false;
 
   yes: any;
   no: any;
@@ -105,7 +108,8 @@ export class AdditionalDetailsComponent implements OnInit {
       address2: ['', []],
       occupation: ['', [Validators.required]],
       postBox: ['', []],
-      personalId: ['', [Validators.required,Validators.minLength(15)]]
+      personalId: ['', [Validators.required,Validators.minLength(15)]],
+      questionnaire: ['', []]
     });
     this.DocUploadForm = this.fb.group({});
     this.route.queryParams
@@ -218,6 +222,11 @@ export class AdditionalDetailsComponent implements OnInit {
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
         this.RegistrationNoRequired = false;
+        this.RegistrationMarkRequired = false;
+      }
+      if(this.quoteDetails.vehicleDetails.registeredAt == "1102"){
+      this.QuestionnaireStatusShow =true;
+
       }
       this.translate.get('Yes').subscribe(value => {
         this.yes = value;
@@ -234,9 +243,24 @@ export class AdditionalDetailsComponent implements OnInit {
           label: this.yes,
           value: 'Y'
         },];
-      // this.additionalDetails.patchValue({
-      //   mortgagedYN: this.options['financed'][0].value
-      // });
+        this.options['questionnaire'] = [
+          {
+            label: 'Is the vehicle already registered in Dubai?',
+            value: '04'
+          }, {
+            label: 'First time registered in Dubai?',
+            value: 'N'
+          }, {
+            label: 'Renewing your existing vehicle in Dubai?',
+            value: '03'
+          }];
+       
+          if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.isReviseDetails)){
+            this.additionalDetails.patchValue({
+              questionnaire: this.quoteDetails.vehicleDetails.regStatus
+            });
+          }
+
       if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
@@ -350,6 +374,7 @@ export class AdditionalDetailsComponent implements OnInit {
       registeredAt: this.quoteDetails.vehicleDetails.registeredAt,
       registrationMark: plateCode,
       regNo: this.additionalDetails.value['regNo'],
+      regStatus: this.additionalDetails.value['questionnaire'],
       engineNo: this.additionalDetails.value['engineNo'],
       trim: this.quoteDetails.vehicleDetails.trim
     }
@@ -387,12 +412,43 @@ export class AdditionalDetailsComponent implements OnInit {
     }
   }
 
+  questionnaireStatusChange(value) {
+    if (value === '04') {
+      this.questionnaireStatus = true;
+      this.RegistrationNoRequired= true;
+      this.RegistrationMarkRequired=true;
+      this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+      this.additionalDetails.get('regNo').setValidators([Validators.required]);
+      this.additionalDetails.get('regNo').updateValueAndValidity();
+    } else if(value === 'N'){
+      this.questionnaireStatus = false;
+      this.RegistrationNoRequired= false;
+      this.RegistrationMarkRequired=false;
+      this.additionalDetails.get('registrationMark').setValidators([]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+      this.additionalDetails.get('regNo').setValidators([]);
+      this.additionalDetails.get('regNo').updateValueAndValidity();
+    }
+    else if(value === '03'){
+      this.questionnaireStatus = false;
+      this.RegistrationNoRequired= true;
+      this.RegistrationMarkRequired=true;
+      this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+      this.additionalDetails.get('regNo').setValidators([Validators.required]);
+      this.additionalDetails.get('regNo').updateValueAndValidity();
+    }
+  }
+
   registrationNoChange(regNoValue) {
     if (regNoValue.target.value.length > 0) {
+      this.RegistrationMarkRequired=true;
       this.additionalDetails.get('registrationMark').setValidators(Validators.required);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
     else {
+      this.RegistrationMarkRequired=false;
       this.additionalDetails.get('registrationMark').setValidators([]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }

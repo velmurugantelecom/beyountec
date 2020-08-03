@@ -17,6 +17,10 @@ import { CoreModule } from '../core/core.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+export const options: Partial<IConfig> | (() => Partial<IConfig>)={};
+
+
 
 export const MY_CUSTOM_FORMATS = {
     fullPickerInput: 'DD/MM/YYYY',
@@ -54,7 +58,8 @@ const routes: Routes = [
 
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        OwlMomentDateTimeModule
+        OwlMomentDateTimeModule,
+        NgxMaskModule.forRoot(),
     ],
 
     providers: [

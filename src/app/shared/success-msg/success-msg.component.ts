@@ -122,7 +122,7 @@ export class SuccessMsgComponent implements OnInit {
         mailId: this.mailId,
         docNo: this.policyNo,
         policyId: this.policyId,
-        transactionType: 'P'
+        transactionType: 'policysuccess'
       },
       autoFocus: false
     });

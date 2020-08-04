@@ -101,7 +101,7 @@
                     <div class="col-md-10 col-sm-10 col-xs-10 col-10">
                         <mat-form-field appearance="outline">
                             <mat-label>Search by Chassis Number</mat-label>
-                            <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" uppercase autocomplete="off" formControlName="chassisNo" (focus)="onEnterChassisField()">
+                            <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" class="tansformToUpper" autocomplete="off" formControlName="chassisNo" (focus)="onEnterChassisField()">
                             <!-- <mat-icon matSuffix class="custom-cursor" (click)="getAutoData()">search</mat-icon> -->
                             <mat-hint>Chassis Number should be minimum of 15 digits</mat-hint>
                             <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
@@ -204,7 +204,7 @@
                     <div class="col-md-4 col-sm-6">
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}" formControlName="chassisNo" [AlphaNumericOnly]="true" uppercase required appAutofocus>
+                            <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}" formControlName="chassisNo" [AlphaNumericOnly]="true" class="tansformToUpper" required appAutofocus>
                             <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
                                 {{ 'Required.ChassisNo' | translate }}
                             </mat-error>

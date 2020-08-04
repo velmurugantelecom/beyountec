@@ -178,7 +178,8 @@ export class QuoteSummaryComponent implements OnInit {
   goBack() {
     let value = {
       quoteNo: this.quoteNo,
-      reviseDetails: true
+      reviseDetails: true,
+      goTo: 3
     }
     if (this.isQuickSummary === 'true') {
       this.router.navigate(['/compare-plans']);

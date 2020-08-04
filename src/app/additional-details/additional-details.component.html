@@ -182,16 +182,35 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
+                                <!---->
+                                <div class="row px-3" *ngIf="QuestionnaireStatusShow">
+                                    <div class="col-md-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Questionnaire</mat-label>
+                                            <mat-select required formControlName="questionnaire" (ngModelChange)="questionnaireStatusChange($event)">
+                                                <mat-option *ngFor="let questionnaireStatus of options.questionnaire" [value]="questionnaireStatus.value">
+                                                    {{ questionnaireStatus.label }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <!---->
 
-                                <div class="row px-3" *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc != 'New'">
+                                <!-- <div class="row px-3" *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc != 'New'"> -->
+                                <div class="row px-3">
                                     <div class="col-md-6">
+                                        <div *ngIf="questionnaireStatus" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Registration number</div>
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'RegistrationNo'| translate }}</mat-label>
                                             <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}" [required]="RegistrationNoRequired" formControlName="regNo" NumbersOnly maxlength="5" (change)="registrationNoChange($event)">
                                             <mat-error *ngIf="formCtrls.regNo.errors && formCtrls.regNo.errors.required">
                                                 {{'Required.RegistrationNo'| translate }}
                                             </mat-error>
+
                                         </mat-form-field>
+
+
                                     </div>
                                     <div class="col-md-6">
                                         <!-- <mat-form-field appearance="outline">
@@ -205,10 +224,12 @@
                                                 {{'Required.PlateCode'| translate }}
                                             </mat-error>
                                         </mat-form-field> -->
+                                        <div *ngIf="questionnaireStatus" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Plate code</div>
 
                                         <mat-form-field appearance="outline">
+
                                             <mat-label>{{'PlateCode' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="registrationMark" [matAutocomplete]="plateCodeField" required>
+                                            <input type="text" matInput formControlName="registrationMark" [required]="RegistrationMarkRequired" [matAutocomplete]="plateCodeField">
                                             <mat-error *ngIf="formCtrls.registrationMark.errors && formCtrls.registrationMark.errors.required">
                                                 {{'Required.PlateCode' | translate }}
                                             </mat-error>
@@ -284,7 +305,7 @@
                                     <div class="col-md-12">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{ 'EmiratesIDLabel' | translate }}</mat-label>
-                                            <input matInput placeholder="{{ 'PlaceHolder.EmiratesID' | translate }}" formControlName="personalId" required maxlength="15" NumbersOnly>
+                                            <input matInput placeholder="{{ 'PlaceHolder.EmiratesID' | translate }}" formControlName="personalId" required maxlength="15" NumbersOnly mask="000-0000-00000000">
                                             <mat-error *ngIf="formCtrls.personalId.errors && formCtrls.personalId.errors.required">
                                                 {{ 'Required.EmiratesID' | translate }}
                                             </mat-error>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'src/app/core/services/core.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 import { AppService } from 'src/app/core/services/app.service';
@@ -22,9 +22,10 @@ export class SuccessMsgComponent implements OnInit {
   public quoteDetails: any;
   public currency;
   public amount;
-  public language:any ;
+  public language: any;
   poclicyCreated: any;
   policyId: any
+  activateAccount = null;
   constructor(private coreService: CoreService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -32,7 +33,8 @@ export class SuccessMsgComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
 
     this.route.queryParams
       .subscribe(params => {
@@ -43,11 +45,11 @@ export class SuccessMsgComponent implements OnInit {
   ngOnInit() {
     this.getQuoteDetails();
     this.createPolicy();
-    this.language=localStorage.getItem("language") ;
+    this.language = localStorage.getItem("language");
   }
-  ngDoCheck(){
-    if(this.language!=localStorage.getItem("language")){
-      this.language=localStorage.getItem("language") ;
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
     }
   }
 
@@ -57,7 +59,7 @@ export class SuccessMsgComponent implements OnInit {
       quoteNumber: this.quoteNo
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
-     if (response != null)
+      if (response != null)
         this.quoteDetails = response.data.quoteSummary;
       this.currency = this.quoteDetails.premiumCurrencyId;
       this.amount = this.quoteDetails.risks[0].netPremium;
@@ -72,17 +74,20 @@ export class SuccessMsgComponent implements OnInit {
       payMode: "PG",
       sendDocs: true
     }
-    this.translate.get('PolicyCreated') .subscribe(value => { 
-      this.poclicyCreated = value; 
-    } );
+    this.translate.get('PolicyCreated').subscribe(value => {
+      this.poclicyCreated = value;
+    });
 
     this.coreService.postInputs('brokerservice/policy', {}, params).subscribe(response => {
       this.spinner.hide();
       if (response) {
+        if (response['accountActivationToken']) {
+          this.activateAccount = response['accountActivationToken']
+        }
         if (this.mailId)
           this.policyNo = response.policyNo;
         this.policyId = response.policyId;
-        this.toastr.success('',  this.poclicyCreated, {
+        this.toastr.success('', this.poclicyCreated, {
           timeOut: 3000
         });
       }
@@ -123,6 +128,7 @@ export class SuccessMsgComponent implements OnInit {
         docNo: this.policyNo,
         policyId: this.policyId,
         transactionType: 'policysuccess'
+
       },
       autoFocus: false
     });
@@ -142,6 +148,9 @@ export class SuccessMsgComponent implements OnInit {
       iframe.contentWindow.print();
     }, err => {
     });
+  }
 
+  activateProfile() {
+    this.router.navigate([`/resetPassword/${this.activateAccount}`])
   }
 }

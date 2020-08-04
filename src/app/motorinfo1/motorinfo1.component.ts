@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data.service';
@@ -600,7 +600,9 @@ export class NewMotorInfoScreen implements OnInit {
     let body = {
       ...this.autoData[this.selectedTrim]
     }
+    this.spinner.show();
     this.coreService.postInputsGreyImportService('am/findAutoMatrixEquivalent', body, '').subscribe(res => {
+      this.spinner.hide()
       if (!res) {
         this.openDialog();
       } else {
@@ -1065,6 +1067,4 @@ export class NewMotorInfoScreen implements OnInit {
   ngSelectBlur() {
     this.openDropDown = false;
   }
-
-
 }

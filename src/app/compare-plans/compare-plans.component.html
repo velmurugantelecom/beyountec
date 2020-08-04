@@ -264,7 +264,7 @@
                                 <ul class="mb-0">
                                     <div>
                                         <span class="mr-2 fbold">Discount Code</span>
-                                        <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
+                                        <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
                                         <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                             <i (click)="removePromoDiscountMob(plan.promoFieldId)" style="font-size:15px"
                                                 class="fas fa-times-circle fa-2x custom-cursor"></i>

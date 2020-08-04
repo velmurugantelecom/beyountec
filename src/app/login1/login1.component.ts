@@ -134,7 +134,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-     recaptcha: ['', Validators.required]
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -228,6 +228,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.dataService.setUserDetails({})
       this.router.navigate([`/User/dashboard`]);
     }, err => {
+      this.guestUserCall();
       // this.toastr.error("", err.error.error, {
       //   timeOut: 3000,
       // });
@@ -266,13 +267,13 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         } else {
           this.saveAuditData();
           this.dataService.setUserDetails(this.infoForm.value)
-          if(this.quoteNo){
+          if (this.quoteNo) {
             this.router.navigate(['/new-motor-info'], {
-              queryParams: {quoteNo:this.quoteNo }
+              queryParams: { quoteNo: this.quoteNo }
             })
           }
-          else{
-          this.router.navigate(['/new-motor-info'])
+          else {
+            this.router.navigate(['/new-motor-info'])
           }
         }
       }
@@ -473,7 +474,7 @@ export class QuoteDialog {
     this.spinner.show();
     this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails}`, '').subscribe(response => {
       if (response) {
-        this.isCompleted= true;
+        this.isCompleted = true;
         this.goForward(stepper)
         this.token = response;
         this.minutes = 2;

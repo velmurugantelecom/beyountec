@@ -31,7 +31,6 @@ export class AdditionalDetailsComponent implements OnInit {
   public quoteDetails: any;
   public options: any = {};
   public showBankField: boolean;
-  public questionnaireStatus:boolean=false;
   public quoteNo;
   public showHeader = false;
   public mailId: string;
@@ -52,9 +51,9 @@ export class AdditionalDetailsComponent implements OnInit {
   public nowTime: any;
   public minTime: any;
   public RegistrationNoRequired: boolean = true;
+  public questionnaireStatus:boolean=false;
   public RegistrationMarkRequired:boolean =true;
   public QuestionnaireStatusShow:boolean =false;
-
   yes: any;
   no: any;
   public language: any;
@@ -64,16 +63,14 @@ export class AdditionalDetailsComponent implements OnInit {
   filteredPlateCodes: Observable<string[]>;
   filteredNationality: Observable<string[]>;
   filteredOccupation: Observable<string[]>;
-
   public maxEffectiveDate;
   public today = moment(new Date()).subtract(1, 'd')
   public effectiveDateChanged = false
   public currentEffDate;
   public subscription: Subscription;
-
+  public goTo = '';
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
-    private appService: AppService,
     private router: Router, private route: ActivatedRoute,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
@@ -108,8 +105,9 @@ export class AdditionalDetailsComponent implements OnInit {
       address2: ['', []],
       occupation: ['', [Validators.required]],
       postBox: ['', []],
-      personalId: ['', [Validators.required,Validators.minLength(15)]],
+      personalId: ['', [Validators.required, Validators.minLength(15)]],
       questionnaire: ['', []]
+
     });
     this.DocUploadForm = this.fb.group({});
     this.route.queryParams
@@ -117,10 +115,15 @@ export class AdditionalDetailsComponent implements OnInit {
         this.quoteNo = params['quoteNo'];
         this.isReviseDetails = params['reviseDetails'];
         this.isOldQuote = params['retrieveQuote'];
+        this.goTo = params['goTo'];
       });
     this.spinner.show();
     if (this.isReviseDetails || this.isOldQuote) {
-      this.activeStepper = 'second';
+      if (this.goTo === '3') {
+        this.activeStepper = 'three'
+      } else {
+        this.activeStepper = 'second';
+      }
       this.doContinue('1');
       setTimeout(() => {
         this.goForward();
@@ -139,6 +142,10 @@ export class AdditionalDetailsComponent implements OnInit {
   ngAfterViewInit() {
     if (this.activeStepper === 'second')
       this.stepper.selectedIndex = 1;
+    else if (this.goTo === '3') {
+      this.isAttachmentArea = true;
+      this.stepper.selectedIndex = 2;
+    }
     this.cdr.detectChanges();
   }
 
@@ -203,10 +210,6 @@ export class AdditionalDetailsComponent implements OnInit {
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       if (response.data && response.data != null) {
         this.quoteDetails = response.data.quoteSummary;
-        // if (this.quoteDetails.productTypeId == '1116') {
-        //   this.additionalDetails.patchValue({ mortgagedYN: 'N' });
-        // }
-
         this.spinner.hide();
       }
       else {
@@ -225,9 +228,8 @@ export class AdditionalDetailsComponent implements OnInit {
         this.RegistrationMarkRequired = false;
       }
       if(this.quoteDetails.vehicleDetails.registeredAt == "1102"){
-      this.QuestionnaireStatusShow =true;
-
-      }
+        this.QuestionnaireStatusShow =true;
+        }
       this.translate.get('Yes').subscribe(value => {
         this.yes = value;
       });
@@ -260,7 +262,6 @@ export class AdditionalDetailsComponent implements OnInit {
               questionnaire: this.quoteDetails.vehicleDetails.regStatus
             });
           }
-
       if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
@@ -279,7 +280,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('motor_emirate', 'MOTOR_EMIRATE');
       this.getDropDownOptions('profession', 'PROFESSION');
       this.patchFormValues();
-    this.options['prefix'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
+      this.options['prefix'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
     });
   }
 
@@ -374,8 +375,8 @@ export class AdditionalDetailsComponent implements OnInit {
       registeredAt: this.quoteDetails.vehicleDetails.registeredAt,
       registrationMark: plateCode,
       regNo: this.additionalDetails.value['regNo'],
-      regStatus: this.additionalDetails.value['questionnaire'],
       engineNo: this.additionalDetails.value['engineNo'],
+      regStatus: this.additionalDetails.value['questionnaire'],
       trim: this.quoteDetails.vehicleDetails.trim
     }
     if (vehicledetails.mortgagedYN === 'N') {
@@ -412,6 +413,18 @@ export class AdditionalDetailsComponent implements OnInit {
     }
   }
 
+  registrationNoChange(regNoValue) {
+    if (regNoValue.target.value.length > 0) {
+      this.RegistrationMarkRequired=true;
+      this.additionalDetails.get('registrationMark').setValidators(Validators.required);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+    }
+    else {
+      this.RegistrationMarkRequired=false;
+      this.additionalDetails.get('registrationMark').setValidators([]);
+      this.additionalDetails.get('registrationMark').updateValueAndValidity();
+    }
+  }
   questionnaireStatusChange(value) {
     if (value === '04') {
       this.questionnaireStatus = true;
@@ -441,18 +454,6 @@ export class AdditionalDetailsComponent implements OnInit {
     }
   }
 
-  registrationNoChange(regNoValue) {
-    if (regNoValue.target.value.length > 0) {
-      this.RegistrationMarkRequired=true;
-      this.additionalDetails.get('registrationMark').setValidators(Validators.required);
-      this.additionalDetails.get('registrationMark').updateValueAndValidity();
-    }
-    else {
-      this.RegistrationMarkRequired=false;
-      this.additionalDetails.get('registrationMark').setValidators([]);
-      this.additionalDetails.get('registrationMark').updateValueAndValidity();
-    }
-  }
   emiratesChange(value) {
     let params = {
       productId: "*",
@@ -552,6 +553,7 @@ export class AdditionalDetailsComponent implements OnInit {
 
   goBack(stepper: MatStepper) {
     stepper.previous();
+    this.isAttachmentArea = false;
   }
 
   get VehicleDetails() {
@@ -631,7 +633,7 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   patchFormValues() {
-    if (this.isReviseDetails||this.isOldQuote) {
+    if (this.isReviseDetails || this.isOldQuote) {
       this.additionalDetails.patchValue({
         mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       });
@@ -677,9 +679,9 @@ export class AdditionalDetailsComponent implements OnInit {
     });
     if (this.isReviseDetails || this.isOldQuote) {
     } else {
-        this.additionalDetails.patchValue({
-          prefixBL: this.quoteDetails.userDetails['prefix']
-        })
+      this.additionalDetails.patchValue({
+        prefixBL: this.quoteDetails.userDetails['prefix']
+      })
     }
     this.selectedBank = this.quoteDetails.vehicleDetails['bankName'];
     // this.selectedColor = this.quoteDetails.vehicleDetails['colorName'];
@@ -857,9 +859,9 @@ export class AdditionalDetailsComponent implements OnInit {
 
   dropDownSelected(event: any, type) {
     if (type === 'bankName') {
-    this.selectedBank = event.option.value;
+      this.selectedBank = event.option.value;
     } else if (type === 'color') {
-    this.selectedColor = event.option.value;
+      this.selectedColor = event.option.value;
     } else if (type === 'plateCode') {
       this.selectedPlate = event.option.value;
     } else if (type === 'nationality') {

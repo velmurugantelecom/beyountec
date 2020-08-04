@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'payment-succeed',
     component: SuccessMsgComponent,
-    canActivate: [GuestAuthGuard]
+    // canActivate: [GuestAuthGuard]
   },
   {
     path: 'payment-failed',

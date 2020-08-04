@@ -21,8 +21,7 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'"
-                (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
                 {{ 'ReqForEndorsement' | translate }}
             </button>
 
@@ -30,8 +29,7 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'"
-                (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
                 {{ 'ReqForCancel' | translate }}
             </button>
 
@@ -110,7 +108,7 @@
                 <app-vehicletab></app-vehicletab>
             </mat-tab>
 
-            <mat-tab >
+            <mat-tab>
                 <ng-template mat-tab-label>
                     <div class="p-2" style="flex-direction: column;">
                         <img src="./assets/customer_360/insured.png" alt="">
@@ -153,18 +151,6 @@
                 </ng-template>
                 <app-print-package [policyNo]="currentpolicy?.policyNo"></app-print-package>
             </mat-tab>
-
-            <!-- <mat-tab>
-                <ng-template mat-tab-label>
-                    <div class="p-2" style="flex-direction: column;">
-                        <img src="./assets/customer_360/payment.png" alt="">
-                        <br>
-                        <label> {{'Payment Details'  | uppercase}} </label>
-                    </div>
-                </ng-template>
-                <app-paymenttabs [policyNo]="currentpolicy"></app-paymenttabs>
-
-            </mat-tab> -->
         </mat-tab-group>
 
     </mat-card>

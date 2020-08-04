@@ -27,12 +27,6 @@
                         <div class="text-color">
                             Interested in our Quote? Click <strong> Purchase Policy</strong> to buy our Policy
                         </div>
-
-
-                        <!-- <button type="button" class="btn button btn-default bggreen fwhite"
-                        (click)="openDialogs(stepper)">
-                        {{'PurchasePolicy' | translate }}
-                      </button> -->
                         <button type="button" class="btn button btn-default bggreen fwhite mt-3" matStepperNext (click)="doContinue('0')">{{'PurchasePolicy' | translate }}</button>
 
                     </div>
@@ -213,17 +207,6 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <!-- <mat-form-field appearance="outline">
-                                            <mat-label>{{'PlateCode'| translate }}</mat-label>
-                                            <mat-select required formControlName="registrationMark">
-                                                <mat-option *ngFor="let code of options.plateCode" [value]="code.value">
-                                                    {{ code.label }}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-error *ngIf="additionalDetails.controls.registrationMark.hasError('required')">
-                                                {{'Required.PlateCode'| translate }}
-                                            </mat-error>
-                                        </mat-form-field> -->
                                         <div *ngIf="questionnaireStatus" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Plate code</div>
 
                                         <mat-form-field appearance="outline">
@@ -464,7 +447,7 @@
                             <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 mt-2">
                                 <label class="upload-label">{{ container.label}}</label>
                                 <div class="upload-btn-wrapper">
-                                    <input type="file" (change)="selectFile($event,container.id,i)" formControlName="{{ container.controlName }}" id="{{container.id}}" accept="image/*, .pdf" />
+                                    <input type="file" (change)="selectFile($event, container.id, i, container.label)" formControlName="{{ container.controlName }}" id="{{container.id}}" accept="image/*, .pdf" />
                                     <label class="placeFont mb-0 blue-font" (click)="openAttachment(container.value)">{{container.value}}</label>
                                 </div>
                             </div>
@@ -475,7 +458,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 px-0">
                                 <img src="./assets/icon6.png" class="pl-1 pt-1 img-fluid" (click)="uploadTrigger.click()" />
                                 <div class="upload-btn-wrapper2">
-                                    <input type="file" (change)="selectFile($event ,container.id,i)" #uploadTrigger formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
+                                    <input type="file" (change)="selectFile($event, container.id, i, container.label)" #uploadTrigger formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
                                 </div>
                             </div>
                             <p style="margin-top:2px;margin-left:4px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">

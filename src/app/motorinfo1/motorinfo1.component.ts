@@ -223,11 +223,11 @@ export class NewMotorInfoScreen implements OnInit {
           }
         }
         this.patchAdditionalDetails(temp);
-        this.insuredForm.patchValue({
-          prefix: null,
-          fullName: null,
-          dob: null
-        });
+        // this.insuredForm.patchValue({
+        //   prefix: null,
+        //   fullName: null,
+        //   dob: null
+        // });
         return;
       } else {
         let fieldStatus;
@@ -578,6 +578,7 @@ export class NewMotorInfoScreen implements OnInit {
 
     }
   }
+  
   goBack() {
     if (this.isLoggedInUser) {
       this.router.navigate(['/User/dashboard'])

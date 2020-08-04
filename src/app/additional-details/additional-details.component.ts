@@ -751,11 +751,12 @@ export class AdditionalDetailsComponent implements OnInit {
         let sortedArray: any[] = result.sort((n1, n2) => n1.docId - n2.docId);
         sortedArray.forEach((element, index) => {
           this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
+          let fName = element.fileName.split('_0_');
           this.fileContainer.push(
             {
               id: element.docId,
               controlName: `documentName${index + 1}`,
-              value: element.fileName || null
+              value: fName[1] || null
             }
           )
         });
@@ -766,17 +767,19 @@ export class AdditionalDetailsComponent implements OnInit {
     });
   }
 
-  selectFile(event, docId, i) {
+  selectFile(event, docId, i, label) {
     this.spinner.show();
     let selectedFileName = event.srcElement.files[0].name;
     const formData = new FormData();
     formData.append('files', event.target.files[0], selectedFileName);
     formData.append('doctypeid', docId);
-    formData.append('docDesc', selectedFileName);
+    formData.append('docDesc', label);
     formData.append('quotenumber', this.quoteDetails['quoteNumber']);
     this.subscription = this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
+      console.log(response)
       this.spinner.hide();
-      this.fileContainer[i].value = response[0].docDesc;
+      let fName = response[0].fileName.split('_0_')
+      this.fileContainer[i].value = fName[1];
     }, err => {
       this.spinner.hide();
       this.toasterService.error("", "Invalid File Format", {
@@ -810,7 +813,7 @@ export class AdditionalDetailsComponent implements OnInit {
 
   openDialog(docId, i, value, controlName): void {
     if (i === 0) {
-      value = 'Vehicle Registration Card or Vehicle Transfer Certificate or Vehicle Customs Certificate';
+      value = 'Vehicle Registration Card';
     }
     let dialogRef = this.dialog.open(ScanAndUpload, {
       panelClass: 'my-class',

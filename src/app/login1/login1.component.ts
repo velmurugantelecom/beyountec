@@ -134,7 +134,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-      recaptcha: ['', Validators.required]
+      // recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -209,14 +209,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.isValidForm = false;
   }
   submitForm() {
-    localStorage.removeItem('tokenDetails');
-    localStorage.removeItem('Username');
-    localStorage.removeItem('guesttokenDetails');
-    localStorage.removeItem('isLoggedIn');
     if (this.LoginForm.status == 'INVALID') {
       this.isValidForm = true;
       return
     }
+    localStorage.removeItem('tokenDetails');
+    localStorage.removeItem('Username');
+    localStorage.removeItem('guesttokenDetails');
+    localStorage.removeItem('isLoggedIn');
     let value = this.LoginForm.value;
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;

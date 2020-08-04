@@ -85,6 +85,8 @@ export class QuoteSummaryComponent implements OnInit {
       }
       this.coreService.getInputs(`brokerservice/documentupload/uploadedDocs`, params1).subscribe(response => {
         response.forEach(file => {
+          let nameArray = file.fileName.split('_0_');
+          file.fileName = nameArray[1]; 
           if (file.fileName.toLowerCase().includes('pdf')) {
             file['src'] = './assets/sharedimg/pdf.png'
           } else if (file.fileName.toLowerCase().includes('jpg') || file.fileName.toLowerCase().includes('png') || file.fileName.toLowerCase().includes('jpeg')){

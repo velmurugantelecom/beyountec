@@ -204,7 +204,7 @@
 
                                 <mat-form-field class="mt-2" appearance="outline">
                                     <mat-label>{{'PasswordLabel' | translate }}</mat-label>
-                                    <input id="myInput" type="password" matInput placeholder="Enter Password" formControlName="password" autocomplete="new-password">
+                                    <input id="myInput" type="password"  maxlength="16" matInput placeholder="Enter Password" formControlName="password" autocomplete="new-password">
                                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">
                                         visibility &nbsp;&nbsp;
                                     </mat-icon>
@@ -218,7 +218,7 @@
 
                                 <mat-form-field class="mt-2" appearance="outline">
                                     <mat-label>{{'ConfirmPasswordLabel' | translate }}</mat-label>
-                                    <input id="myInput1" type="password" matInput placeholder="Enter Confirm Password" formControlName="confirmPassword" autocomplete="new-password">
+                                    <input id="myInput1" type="password"  maxlength="16" matInput placeholder="Enter Confirm Password" formControlName="confirmPassword" autocomplete="new-password">
                                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput1')">
                                         visibility &nbsp;&nbsp;
                                     </mat-icon>

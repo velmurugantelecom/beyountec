@@ -5,7 +5,6 @@ import { AppMaterialModule } from '../app-material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthGuard } from '../core/guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { OwlModule } from 'ngx-owl-carousel';
 import { OrderByPipe } from '../shared/custom-pipe/order-by.pipe';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
@@ -50,7 +49,7 @@ const routes: Routes = [
         CoreModule,
         NgSelectModule,
         NgxGaugeModule,
-        AppMaterialModule, RouterModule.forChild(routes), OwlModule,
+        AppMaterialModule, RouterModule.forChild(routes),
 
 
         OwlDateTimeModule,

@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { EmailPopupComponent } from 'src/app/modal/email-popup/email-popup.component';
 import { AppService } from 'src/app/core/services/app.service';
-import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import swal from 'sweetalert'
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -33,7 +33,6 @@ export class SuccessMsgComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
-    private toastr: ToastrService,
     private router: Router) {
 
     this.route.queryParams
@@ -87,9 +86,9 @@ export class SuccessMsgComponent implements OnInit {
         if (this.mailId)
           this.policyNo = response.policyNo;
         this.policyId = response.policyId;
-        this.toastr.success('', this.poclicyCreated, {
-          timeOut: 3000
-        });
+        swal(
+          '', this.poclicyCreated, 'success'
+        );
       }
     }, err => {
       this.spinner.hide();

@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, Ng
 import { ErrorStateMatcher } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../../core/services/core.service';
-// import { PostsService } from '../_service/post.service';
-import { ToastrService } from 'ngx-toastr';
+import swal from 'sweetalert'
 import { HeaderComponent } from '../../shared/header/header.component';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -47,7 +46,6 @@ export class ChangePasswordComponent implements OnInit {
    public postService: CoreService,
    public actRoute: ActivatedRoute,
    private translate: TranslateService,
-   private toastr: ToastrService,
    private header : HeaderComponent) { }
 
   ngOnInit() {
@@ -117,15 +115,15 @@ export class ChangePasswordComponent implements OnInit {
         this.changePassword.patchValue({newpassword: '', confirmpassword: ''});
       }
       else if(result.status === 404){
-        this.toastr.error('', result.message, {
-          timeOut: 3000
-        }); 
+        swal(
+          '', result.message, 'error'
+        );
         this.changePassword.patchValue({oldpassword: ''});
       }
       else if (result.status === 200) {        
-         this.toastr.success('', result.message, {
-           timeOut: 2000
-         });  
+         swal(
+          '', result.message, 'success'
+        ); 
          this.header.LogOut();
       }
 

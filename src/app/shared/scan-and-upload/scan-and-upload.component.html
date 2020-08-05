@@ -13,23 +13,16 @@
 
 <mat-horizontal-stepper class="m-3" linear #stepper>
     <mat-step>
-        <div>
+        <div style="width: 100%;">
             <div *ngIf="!showCapturedImage">
-                <p>Kindly scan the front side of the document</p>
+                <p style="text-align: center;">Kindly scan the front side of the document</p>
                 <div class="d-flex justify-content-center m-1">
-                    <webcam [height]="300" [width]="400" [trigger]="triggerObservable"
-                        [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleFrontSideImage($event)"
-                        [switchCamera]="nextWebcamObservable">
+                    <webcam (initError)="handleInitError($event)" [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleFrontSideImage($event)" [switchCamera]="nextWebcamObservable">
                     </webcam>
                 </div>
                 <div class="d-flex justify-content-center m-1">
-                    <button type="submit" (click)="triggerSnapshot(true)"
-                        class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
+                    <button type="submit" (click)="triggerSnapshot(true)" class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
                         {{ 'TakeSnapshot' | translate }}
-                    </button>
-                    <button type="submit" (click)="switchCamaraOption(true)"
-                        class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton ml-2 bggreen fwhite button d-none d-sm-block d-md-none">
-                        Switch Camara
                     </button>
                 </div>
             </div>
@@ -42,42 +35,22 @@
                 </div>
                 <mat-divider></mat-divider>
                 <div class="d-flex justify-content-end pt-1">
-                    <button mat-button matStepperNext
-                        class="btn btn-home button fwhite bggreen centercss">PROCEED</button>
+                    <button mat-button matStepperNext class="btn btn-home button fwhite bggreen centercss">PROCEED</button>
                 </div>
             </div>
         </div>
     </mat-step>
     <mat-step>
-        <div>
-            <!-- <div *ngIf="!showCamera2 && !go2">
-                <p style="text-align: center;">
-                    Do you want to upload back side of the Document?
-                </p>
-                <div class="d-flex justify-content-center">
-                    <button class="btn btn-home button fwhite bggreen centercss"
-                    (click)="uploadDocs()" matStepperNext>NO</button>
-                <button mat-button (click)="uploadBackSide()"
-                    class="btn btn-home button fwhite bggreen centercss ml-2">YES</button>
-                </div>
-            </div> -->
-            <!-- <div *ngIf="showCamera2"> -->
+        <div style="width: 100%;">
             <div *ngIf="!showCapturedImage2">
-                <p>Kindly scan the back side of the document</p>
+                <p style="text-align: center;">Kindly scan the back side of the document</p>
                 <div class="d-flex justify-content-center m-1">
-                    <webcam [height]="300" [width]="400" [trigger]="triggerObservable"
-                        [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleBackSideImage($event)"
-                        [switchCamera]="nextWebcamObservable">
+                    <webcam (initError)="handleInitError($event)" [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleBackSideImage($event)" [switchCamera]="nextWebcamObservable">
                     </webcam>
                 </div>
                 <div class="d-flex justify-content-center m-1">
-                    <button type="submit" (click)="triggerSnapshot2(true)"
-                        class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
+                    <button type="submit" (click)="triggerSnapshot2(true)" class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
                         {{ 'TakeSnapshot' | translate }}
-                    </button>
-                    <button type="submit" (click)="switchCamaraOption(true)"
-                        class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton ml-2 bggreen fwhite button d-none d-sm-block d-md-none">
-                        Switch Camara
                     </button>
                 </div>
             </div>
@@ -90,30 +63,10 @@
                 </div>
                 <mat-divider></mat-divider>
                 <div class="d-flex justify-content-between">
-                    <button mat-button matStepperPrevious
-                        class="btn btn-home button fwhite bggreen centercss">REVISE</button>
-                    <button mat-button (click)="uploadDocs()"
-                        class="btn btn-home button fwhite bggreen centercss">UPLOAD</button>
+                    <button mat-button matStepperPrevious class="btn btn-home button fwhite bggreen centercss">REVISE</button>
+                    <button mat-button (click)="uploadDocs()" class="btn btn-home button fwhite bggreen centercss">UPLOAD</button>
                 </div>
             </div>
         </div>
     </mat-step>
-    <!-- <mat-step>
-        <div>
-            <div class="d-flex justify-content-center m-1 img-box img_wrp">
-                <mat-icon class="close" (click)="closefunc()">
-                    close
-                </mat-icon>
-                <img [src]="reviewImage" />
-            </div>
-        </div>
-        <div>
-            <mat-divider></mat-divider>
-            <div class="d-flex justify-content-between">
-                <button mat-button matStepperPrevious class="btn btn-home button fwhite bggreen centercss">REVISE</button>
-                <button mat-button matStepperNext (click)="uploadDocs()"
-                    class="btn btn-home button fwhite bggreen centercss">UPLOAD</button>
-            </div>
-        </div>
-    </mat-step> -->
 </mat-horizontal-stepper>

@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Customer360Service } from '../../../customer360.service';
 import { ClaimdetailsComponent } from '../claimdetails.component';
-import { ToastrService } from 'ngx-toastr';
 import * as _moment from "moment";
+import swal from 'sweetalert'
 const moment = _moment;
 
 @Component({
@@ -19,7 +19,7 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
   public minEffectiveDate;
   public maxEffectiveDate: Date;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
-  constructor(private toastr: ToastrService,
+  constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -82,8 +82,9 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
     let values = this.cancelReq.value;
 
     this.service.requestForCancellation(values).subscribe((data: any) => {
-      this.toastr.success(data);
-
+      swal(
+        '', data, 'success'
+      );
       setTimeout(() => {
 
         this.customer360();

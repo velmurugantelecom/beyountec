@@ -3,10 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../core/services/app.service';
 import { CoreService } from '../core/services/core.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
+import swal from 'sweetalert'
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../core/services/data.service';
-import { Event } from 'jquery';
 
 export interface KeyValue<K, V> {
   key: K;
@@ -51,7 +50,6 @@ export class ComparePlansComponent implements OnInit {
     private appService: AppService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private toastr: ToastrService,
     private dataService: DataService) {
     this.route.queryParams
       .subscribe(params => {
@@ -169,17 +167,17 @@ export class ComparePlansComponent implements OnInit {
       this.translate.get('Required.SelectPlan').subscribe(value => {
         this.selectAlert = value;
       });
-      this.toastr.error('', this.selectAlert, {
-        timeOut: 3000
-      });
+      swal(
+        '', this.selectAlert, 'error'
+      );
     }
     else if (this.selectedPlanAmount == '0' || this.selectedPlanAmount == null) {
       this.translate.get('Required.RatingError').subscribe(value => {
         this.ratingError = value;
       });
-      this.toastr.error('', this.ratingError, {
-        timeOut: 3000
-      });
+      swal(
+        '', this.ratingError, 'error'
+      );
     }
     else {
       if (this.showPromoDiscount) {
@@ -394,9 +392,9 @@ export class ComparePlansComponent implements OnInit {
   onBlurMethodMob(event, type) {
     let code;
     if (type)
-    code = event;
+      code = event;
     else
-     code = event.target.value;
+      code = event.target.value;
     if (!code) {
       return
     }
@@ -416,7 +414,7 @@ export class ComparePlansComponent implements OnInit {
     }, err => {
       this.spinner.hide();
       if (!type)
-      event.target.value = '';
+        event.target.value = '';
     })
   }
 

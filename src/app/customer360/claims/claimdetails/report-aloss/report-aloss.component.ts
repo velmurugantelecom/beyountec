@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Customer360Service } from '../../../customer360.service'
-import { ToastrService } from 'ngx-toastr';
+import swal from 'sweetalert'
 import { ClaimdetailsComponent } from '../claimdetails.component';
 import { DatePipe } from '@angular/common';
 
@@ -28,7 +28,7 @@ export class ReportALOssComponent implements OnInit {
   maxLossDate;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
 
-  constructor(private datePipe: DatePipe,private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
+  constructor(private datePipe: DatePipe, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
     // this.navParams = this.router.getCurrentNavigation().extras.state;
     this.route.queryParams
       .subscribe(params => {
@@ -57,7 +57,7 @@ export class ReportALOssComponent implements OnInit {
       this.policyarr = data.data;
       this.currentDate =moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       if (this.policyarr) {
-        this.minLossDate = moment(new Date(this.policyarr.startDate));
+        this.minLossDate = moment(this.policyarr.startDate + " " + "00:00");
         this.maxLossDate = new Date(this.policyarr.endDate);
         if(this.currentDate>=this.maxLossDate){
           this.maxLossDate=this.maxLossDate;
@@ -79,15 +79,17 @@ export class ReportALOssComponent implements OnInit {
 
     let value = this.ReportaLoss.value;
     this.service1.reportaloss(value).subscribe((data) => {
-      this.toastr.success(data, 'FNOL Created Succcessfully', {
-        timeOut: 2000
-      });
+      swal(
+        data, 'FNOL Created Succcessfully', 'success'
+      );
 
       setTimeout(() => {
         this.customer360();
       }, 3000);
     }, err => {
-      this.toastr.error('Please try again');
+      swal(
+        '', 'Please try again', 'error'
+      );
     })
   }
   customer360() {

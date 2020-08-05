@@ -9,7 +9,7 @@ import {
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { tap, catchError, retry } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
+import swal from 'sweetalert'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from "@angular/router";
 import { AppService } from "./core/services/app.service";
@@ -18,7 +18,6 @@ import { AppService } from "./core/services/app.service";
 export class AppHttpInterceptor implements HttpInterceptor {
   public invalidAutoDataCount = 0;
   constructor(
-    public toasterService: ToastrService,
     public spinner: NgxSpinnerService,
     public router: Router,
     public appService: AppService
@@ -64,27 +63,29 @@ export class AppHttpInterceptor implements HttpInterceptor {
             this.spinner.hide();
             if (err.status == 401) {
               this.router.navigate([`/new-login`]);
-              this.toasterService.error("Token Expired", "Please try again", {
-                timeOut: 3000,
-              });
+              swal(
+                'Token Expired', 'Please try again', 'error'
+              );
               
             } else if (err.status === 503) {
-              this.toasterService.error("Service Unavailable", "Please try again", {
-                timeOut: 3000,
-              });
+              swal(
+                'Service Unavailable', 'Please try again', 'error'
+              );
             } else if (err.status === 400) {
-              this.toasterService.error("Invalid Input", "Please try again", {
-                timeOut: 3000,
-              });
+              swal(
+                'Invalid Input', 'Please try again', 'error'
+              );
             }else if(err.status === 500) {
-              this.toasterService.error("Service is not available", "Please try again", {
-                timeOut: 3000,
+              swal({
+                title: 'Service is not available',
+                text: 'Please try again',
+                icon: 'error'
               });
             }
             else if (!err.status) {
-              this.toasterService.error('', errorMsg, {
-                timeOut: 3000
-              });
+              swal(
+                '', errorMsg, 'error'
+              );
             }
             // let errorMsg = err.error.text || err.error.error || err.error;
             // this.spinner.hide();
@@ -138,8 +139,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
             //  );
             // }
           } catch (e) {
-
-            this.toasterService.error("An error occurred", "");
+            swal(
+              'An error occurred', '', 'error'
+            );
             this.spinner.hide();
           }
         }

@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CoreService } from 'src/app/core/services/core.service';
-import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { WebCamComponent } from '../web-cam/web-cam.component';
-import { MatDialog } from '@angular/material';
-import { ScanAndUpload } from '../scan-and-upload/scan-and-upload.component';
+import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-request-redirect',
@@ -16,59 +9,67 @@ import { ScanAndUpload } from '../scan-and-upload/scan-and-upload.component';
 })
 export class RequestRedirectComponent implements OnInit {
 
-  constructor(
-    private dialog: MatDialog,
-    private spinner: NgxSpinnerService,
-    private coreService: CoreService
-  ) {
+  // toggle webcam on/off
+  public showWebcam = true;
+  public allowCameraSwitch = true;
+  public multipleWebcamsAvailable = false;
+  public deviceId: string;
+  public videoOptions: MediaTrackConstraints = {
+    // width: {ideal: 1024},
+    // height: {ideal: 576}
+  };
+  public errors: WebcamInitError[] = [];
+
+  // webcam snapshot trigger
+  private trigger: Subject<void> = new Subject<void>();
+  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+
+  public triggerSnapshot(): void {
+    this.trigger.next();
+  }
+
+  public toggleWebcam(): void {
+    this.showWebcam = !this.showWebcam;
+  }
+
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+
+  public showNextWebcam(directionOrDeviceId: boolean|string): void {
+    // true => move forward through devices
+    // false => move backwards through devices
+    // string => move to device with given deviceId
+    this.nextWebcam.next(directionOrDeviceId);
+  }
+
+  public handleImage(webcamImage: WebcamImage): void {
+    console.info('received webcam image', webcamImage);
+    this.webcamImage = webcamImage;
+  }
+
+  public cameraWasSwitched(deviceId: string): void {
+    console.log('active device: ' + deviceId);
+    this.deviceId = deviceId;
+  }
+
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+
+  public get nextWebcamObservable(): Observable<boolean|string> {
+    return this.nextWebcam.asObservable();
+  }
+  
+  constructor() {
   }
 
   ngOnInit() {
-    // this.openDialog(1,2,'temp')
+    WebcamUtil.getAvailableVideoInputs()
+    .then((mediaDevices: MediaDeviceInfo[]) => {
+      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    });
   }
-
-  openWebCam(docId, i, value, q) {
-    if (i === 0) {
-      value = 'Vehicle Registration Card or Vehicle Transfer Certificate or Vehicle Customs Certificate';
-    }
-    let dialogRef = this.dialog.open(ScanAndUpload, {
-      panelClass: 'my-class',
-      // data: { docId: docId, index: i, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
-      data: { docId: docId, fileName: value, quoteNo: q }
-
-    });  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
-    })
-  }
-
-  scanUpload(blob, docId, i, filename) {
-    this.spinner.show();
-    const formData = new FormData();
-    formData.append('files', blob, filename);
-    formData.append('doctypeid', docId);
-    formData.append('docDesc', `${filename}`);
-    formData.append('quotenumber', 'Q/1113/3/20/0000076');
-    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
-      this.spinner.hide();
-    }, err => {
-      this.spinner.hide();
-    })
-  }
-  dataURItoBlob(dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-      byteString = atob(dataURI.split(',')[1]);
-    else
-      byteString = unescape(dataURI.split(',')[1]);
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ia], { type: mimeString });
-  }
+  public webcamImage: WebcamImage = null;
 }

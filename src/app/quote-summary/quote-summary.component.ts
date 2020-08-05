@@ -2,10 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreService } from '../core/services/core.service';
 import { AppService } from '../core/services/app.service';
-import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from 'jquery';
-import { FormBuilder } from '@angular/forms';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { TranslateService } from '@ngx-translate/core';
 import { DropDownService } from '../core/services/dropdown.service';
@@ -45,7 +43,6 @@ export class QuoteSummaryComponent implements OnInit {
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
     private appService: AppService,
-    private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private dropdownservice: DropDownService,
@@ -192,11 +189,12 @@ export class QuoteSummaryComponent implements OnInit {
     }
   }
 
-  openAttachment(fileName) {
-    this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fileName).subscribe((response: any) => {
+  openAttachment(value) {
+    let fName = `${this.quoteDetails.quoteId}_0_${value}`;
+    this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fName).subscribe((response: any) => {
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
-      link.download = fileName;
+      link.download = value;
       link.click();
     });
   }

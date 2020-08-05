@@ -5,7 +5,7 @@ import { AuthService } from '../core/services/auth.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as _moment from "moment";
 const moment = _moment;
-import { ToastrService } from 'ngx-toastr';
+import swal from 'sweetalert'
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
 import { MatDialog, MatStepper, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -91,7 +91,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private dataService: DataService,
-    private toastr: ToastrService,
     public runtimeConfigService: RuntimeConfigService) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
@@ -134,7 +133,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-      // recaptcha: ['', Validators.required]
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -243,7 +242,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     let value = {
       emailId: this.infoForm.value['email']
     }
+    this.spinner.show();
     this.subscription = this.coreService.getInputs(`brokerservice/user/existsByEmail`, value).subscribe(res => {
+      this.spinner.hide();
       if (res == true) {
         this.invalidEmail = true;
         let dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -364,15 +365,15 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.PwdSopList = res.errorMessages;
       }
       else {
-        this.toastr.success('', 'Password Saved Succcessfully', {
-          timeOut: 2000
-        });
+        swal(
+          '', 'Password Saved Succcessfully', 'success'
+        );
         this.router.navigate([`new-login`]);
       }
     }, err => {
-      this.toastr.error('', err.error.error, {
-        timeOut: 2000
-      });
+      swal(
+        '', err.error.error, 'error'
+      );
     });
   }
   getOtp() {

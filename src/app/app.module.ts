@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ToastrModule } from 'ngx-toastr';
 import { UserIdleModule } from 'angular-user-idle';
 import { MAT_DATE_LOCALE, } from '@angular/material/core';
 
@@ -46,6 +45,8 @@ import { DataService } from './core/services/data.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
+
+import swal from 'sweetalert';
 const userIdleConfig = {
   idle: 540,
   timeout: 1,
@@ -88,11 +89,6 @@ export const configFactory = (configService: RuntimeConfigService) => {
     HttpClientModule,
     NgxCurrencyModule,
     NgxGaugeModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-top-right',
-      preventDuplicates: true
-    }),
     UserIdleModule.forRoot(userIdleConfig),
 
     //angularModules

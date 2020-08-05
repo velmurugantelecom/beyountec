@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Customer360Service } from '../../../customer360.service';
-import { ToastrService } from 'ngx-toastr';
 import { ViewChild, AfterViewInit, } from '@angular/core';
+import swal from 'sweetalert'
 import { MatDatepicker } from '@angular/material';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -26,7 +26,6 @@ export class ReqForEndorsmentComponent implements OnInit {
   public maxEffectiveDate;
   constructor(
 
-    private toastr: ToastrService,
     private router: Router,
     private formBuilder: FormBuilder,
     private service: Customer360Service,
@@ -125,8 +124,9 @@ export class ReqForEndorsmentComponent implements OnInit {
     let values = this.endorsmentreq.value;
     this.service.requestForEndorsement(values).subscribe(
       (data: any) => {
-        this.toastr.success(data);
-
+        swal(
+          '', data, 'success'
+        );
         setTimeout(() => {
 
           this.customer360();

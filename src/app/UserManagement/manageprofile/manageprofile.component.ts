@@ -2,8 +2,8 @@ import { Component, OnInit,Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormControlDirective, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import swal from 'sweetalert'
 import { CoreService } from '../../core/services/core.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,7 +27,6 @@ export class ManageprofileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private postService: CoreService,
     private spinner: NgxSpinnerService,
-    private toaster: ToastrService,
     private translate: TranslateService,
     private dialog: MatDialog,
     private service: CoreService) { }
@@ -133,7 +132,6 @@ export class ProfileUpdateDialog {
     private router: Router,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private toaster: ToastrService,
     private postService: CoreService,
     public dialogRef: MatDialogRef<ProfileUpdateDialog>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -177,9 +175,9 @@ export class ProfileUpdateDialog {
         this.postService.postInputs('dbsync/insured/update', obj, {}).subscribe((result: any) => {
         // this.postService.postInputs('dbsync/user/update', obj, {}).subscribe((result: any) => {
           this.spinner.hide();
-          this.toaster.success('', this.profileUpdated, {
-            timeOut: 2000
-          });
+          swal(
+            '', this.profileUpdated, 'success'
+          );
           this.router.navigate(['/User/dashboard']);
         }, err => {
           this.spinner.hide();

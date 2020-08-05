@@ -1,9 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, Observable } from 'rxjs';
-import { WebcamImage } from 'ngx-webcam';
+import { WebcamImage, WebcamUtil } from 'ngx-webcam';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CoreService } from 'src/app/core/services/core.service';
+import swal from 'sweetalert'
 
 @Component({
   selector: 'app-scan-and-upload',
@@ -25,6 +26,7 @@ export class ScanAndUpload {
   public showCapturedImage2 = false;
   public blob = {};
   public allowCameraSwitch = true;
+  public multipleWebcamsAvailable = false;
 
   constructor(public dialogRef: MatDialogRef<ScanAndUpload>,
     private spinner: NgxSpinnerService,
@@ -33,6 +35,10 @@ export class ScanAndUpload {
   }
 
   ngOnInit() {
+    WebcamUtil.getAvailableVideoInputs()
+    .then((mediaDevices: MediaDeviceInfo[]) => {
+      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    });
   }
 
   public get triggerObservable(): Observable<void> {
@@ -131,11 +137,14 @@ export class ScanAndUpload {
       this.spinner.hide();
     })
   }
-  switchCamaraOption(directionOrDeviceId: boolean|string) {
-    this.nextWebcam.next(directionOrDeviceId)
-  }
-
   public get nextWebcamObservable(): Observable<boolean|string> {
     return this.nextWebcam.asObservable();
+  }
+
+  handleInitError(event) {
+    console.log(event)
+    swal(
+      '', 'Camera not working', 'error'
+    );
   }
 }

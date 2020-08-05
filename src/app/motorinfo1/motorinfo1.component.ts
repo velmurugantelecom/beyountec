@@ -5,13 +5,13 @@ import { DataService } from 'src/app/core/services/data.service';
 import { CoreService } from 'src/app/core/services/core.service';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { Subscription } from 'rxjs';
 import { ProductChangePopupComponent } from 'src/app/modal/product-change/product-change.component';
 import { MatDialog } from '@angular/material';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
+import swal from 'sweetalert'
 
 export function PolicyExpDateValidator(control: AbstractControl) {
   if (control.value != '') {
@@ -41,6 +41,7 @@ export function RegisteredDateValidator(control: AbstractControl) {
     const momentDate = moment({ year: year, month: month, day: date }).startOf('day');
     const now = moment().startOf('day');
     const diff = momentDate.diff(now, 'days');
+    console.log(diff)
     if (diff > 0) {
       return { futureDate: true };
     } else {
@@ -55,7 +56,7 @@ export function RegisteredDateValidator(control: AbstractControl) {
 })
 export class NewMotorInfoScreen implements OnInit {
 
-  public today = new Date();
+  public today = new Date()
   public items = [];
   public selected = [];
   public basicUserDetails:any = {};
@@ -104,7 +105,6 @@ export class NewMotorInfoScreen implements OnInit {
     private formBuilder: FormBuilder,
     private coreService: CoreService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
     private dropdownservice: DropDownService,
@@ -489,8 +489,11 @@ export class NewMotorInfoScreen implements OnInit {
           data['vehicleDetails']['prevPolicyExpDate'].setDate(data['vehicleDetails']['prevPolicyExpDate'].getDate() + 1)
         }
         if (data['vehicleDetails']['registeredDate']['_d']) {
-          data['vehicleDetails']['registeredDate'] = new Date(data['vehicleDetails']['registeredDate']);
-          data['vehicleDetails']['registeredDate'].setDate(data['vehicleDetails']['registeredDate'].getDate() + 1)
+          data['vehicleDetails']['registeredDate'] = moment(data['vehicleDetails']['registeredDate']).format(
+            "YYYY-MM-DDTHH:mm:ss.sss"
+           )
+          // data['vehicleDetails']['registeredDate'] = new Date(data['vehicleDetails']['registeredDate']);
+          // data['vehicleDetails']['registeredDate'].setDate(data['vehicleDetails']['registeredDate'].getDate() + 1)
         }
       }
       // auto populating gender based on prefix;
@@ -831,9 +834,9 @@ export class NewMotorInfoScreen implements OnInit {
             break;
           }
         }
-        this.toastr.error('', errorMsg, {
-          timeOut: 3000
-        });
+        swal(
+          '', errorMsg, 'error'
+        );
       }
     }, err => {
       this.spinner.hide();

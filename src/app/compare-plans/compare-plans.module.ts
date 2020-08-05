@@ -5,7 +5,6 @@ import { AppMaterialModule } from '../app-material.module';
 
 import { AuthGuard } from '../core/guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { OwlModule } from 'ngx-owl-carousel';
 
 
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
@@ -49,7 +48,7 @@ const routes: Routes = [
         MatInputModule,
         MatIconModule,
         CoreModule,
-        AppMaterialModule, RouterModule.forChild(routes), OwlModule,
+        AppMaterialModule, RouterModule.forChild(routes),
 
 
         OwlDateTimeModule,

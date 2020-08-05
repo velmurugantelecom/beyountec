@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CoreService } from 'src/app/core/services/core.service';
-import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-email-popup',
@@ -20,7 +20,6 @@ export class EmailPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     private dialogRef: MatDialogRef<any>,
     private coreService: CoreService,
-    private toastr: ToastrService,
     private translate: TranslateService) {
 
   }
@@ -56,15 +55,15 @@ export class EmailPopupComponent implements OnInit {
       this.coreService.getOptions(url).subscribe((result: any) => {
         if (result) {
           this.dialogRef.close();
-          this.toastr.success('', this.emailSuccessAlert, {
-            timeOut: 3000
-          });
+          swal(
+            '', this.emailSuccessAlert, 'success'
+          );
         }
         else{
           this.dialogRef.close();
-          this.toastr.error('', this.emailFailureAlert, {
-            timeOut: 3000
-          });
+          swal(
+            '', this.emailFailureAlert, 'error'
+          );
         }
       });
     }

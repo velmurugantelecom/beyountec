@@ -3,275 +3,300 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 // @import "~@ng-select/ng-select/themes/material.theme.css";
 @include mat-core();
-$my-primary: (
-  A800: #26715e,
-  contrast: (
-    50: #000000
-  )
-);
-$custom-typography: mat-typography-config(
-  $headline: mat-typography-level(22px, 48px, 700),
-  $font-family: 'Verdana, "Helvetica Neue", sans-serif',
-  $body-1: mat-typography-level(12px, 12px, 500)
-);
-
+$my-primary: ( A800: #26715e, contrast: ( 50: #000000));
+$custom-typography: mat-typography-config( $headline: mat-typography-level(22px, 48px, 700), $font-family: 'Verdana, "Helvetica Neue", sans-serif', $body-1: mat-typography-level(12px, 12px, 500));
 @include mat-core($custom-typography);
-
 $customerPortal-primary: mat-palette($my-primary, A800);
 $customerPortal-accent: mat-palette($mat-pink);
 $customerPortal-warn: mat-palette($mat-red);
 $customerPortal-theme: mat-light-theme($customerPortal-primary, $customerPortal-accent, $customerPortal-warn);
 @include angular-material-theme($customerPortal-theme);
 @import "~ng-pick-datetime/assets/style/picker.min.css";
-
 html,
 body {
-  height: 100%;
+    height: 100%;
 }
+
 body {
-  margin: 0;
-  font-size: 12px;
-  font-family: Verdana, "Helvetica Neue", sans-serif;
+    margin: 0;
+    font-size: 12px;
+    font-family: Verdana, "Helvetica Neue", sans-serif;
 }
+
 .enlanguage {
-  direction: ltr;
+    direction: ltr;
 }
+
 .arlanguage {
-  direction: rtl;
+    direction: rtl;
 }
-.entextalign{
-  text-align:left;
+
+.entextalign {
+    text-align: left;
 }
-.artextalign{
-  text-align:right;
+
+.artextalign {
+    text-align: right;
 }
+
 // declarations
 $themecolor: #007759;
 $primaryFont: white;
 $secondaryFont: black;
-
 .fgreen {
-  color: $themecolor;
+    color: $themecolor;
 }
+
 .fwhite {
-  color: $primaryFont;
+    color: $primaryFont;
 }
+
 .fblack {
-  color: $secondaryFont;
+    color: $secondaryFont;
 }
+
 .bggreen {
-  background-color: $themecolor;
+    background-color: $themecolor;
 }
+
 .bgred {
-  background-color: #ff3333;
+    background-color: #ff3333;
 }
+
 .bgwhite {
-  background-color: $primaryFont;
+    background-color: $primaryFont;
 }
+
 .bgblack {
-  background-color: $secondaryFont;
+    background-color: $secondaryFont;
 }
+
 .bgblue {
-  background-color: #5068de;
+    background-color: #5068de;
 }
+
 .f8 {
-  font-size: 8px;
+    font-size: 8px;
 }
+
 .f10 {
-  font-size: 10px;
+    font-size: 10px;
 }
+
 .f12 {
-  font-size: 12px;
+    font-size: 12px;
 }
+
 .f13 {
-  font-size: 13px;
+    font-size: 13px;
 }
+
 .f14 {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 .f16 {
-  font-size: 16px;
+    font-size: 16px;
 }
+
 .f18 {
-  font-size: 18px;
+    font-size: 18px;
 }
+
 .f20 {
-  font-size: 20px;
+    font-size: 20px;
 }
+
 .f22 {
-  font-size: 22px;
+    font-size: 22px;
 }
+
 .f24 {
-  font-size: 24px;
+    font-size: 24px;
 }
+
 .f26 {
-  font-size: 26px;
+    font-size: 26px;
 }
+
 .f28 {
-  font-size: 28px;
+    font-size: 28px;
 }
+
 .f30 {
-  font-size: 30px;
+    font-size: 30px;
 }
+
 .f34 {
-  font-size: 34px;
+    font-size: 34px;
 }
+
 .button:hover {
-  color: white;
+    color: white;
 }
 
 // css classes
 .centercss {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .centertext {
-  margin: 0 auto;
-  text-align: center;
+    margin: 0 auto;
+    text-align: center;
 }
+
 *:focus {
-  outline: none !important;
+    outline: none !important;
 }
+
 .mat-form-field {
-  width: 100%;
-  //  height: 52px;
+    width: 100%;
+    //  height: 52px;
 }
 
 mat-form-field {
-  font: 600 15px/1.125 Verdana, Helvetica Neue, Arial, sans-serif;
+    font: 600 15px/1.125 Verdana, Helvetica Neue, Arial, sans-serif;
 }
+
 // .mat-form-field-wrapper {
 //   padding-bottom: 1.24375em;
 // }
-
 .mat-form-field-label-wrapper {
-  top: -1.2em;
-  padding-top: 0.84375em;
+    top: -1.2em;
+    padding-top: 0.84375em;
 }
 
-mat-form-field.mat-form-field.mat-form-field-appearance-outline
-  > div.mat-form-field-wrapper
-  > div.mat-form-field-flex
-  > div.mat-form-field-infix {
-  padding: 0.7em 0px;
+mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix {
+    padding: 0.7em 0px;
 }
-mat-form-field.mat-form-field.mat-form-field-appearance-outline
-  > div.mat-form-field-wrapper
-  > div.mat-form-field-flex
-  > div.mat-form-field-infix
-  > span.mat-form-field-label-wrapper {
-  top: -1.1em;
+
+mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix>span.mat-form-field-label-wrapper {
+    top: -1.1em;
 }
 
 // .mat-form-field-appearance-outline .mat-form-field-infix {
 //   padding: 0.5em 0.5em 0.5em 0.5em;
 // }
-
 // mat-form-field.mat-form-field {
 //   font-size: 14px;
 //   font-weight: 400;
 // }
-
 // .mat-form-field-label-wrapper {
 //   top: -1.2em;
 //   padding-top: 0.84375em;
 // }
-
 .mat-accent .mat-slider-track-fill,
 .mat-accent .mat-slider-thumb,
 .mat-accent .mat-slider-thumb-label {
-  background-color: #06b900;
+    background-color: #06b900;
 }
 
 .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
-  background-color: #06b900;
+    background-color: #06b900;
 }
+
 .custom-cursor {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mat-horizontal-stepper-header-container {
-  white-space: nowrap;
-  display: none !important;
-  align-items: center;
+    white-space: nowrap;
+    display: none !important;
+    align-items: center;
 }
 
 .mat-horizontal-content-container {
-  overflow: hidden;
-  padding: 0 !important;
+    overflow: hidden;
+    padding: 0 !important;
 }
 
 .cdk-global-scrollblock {
-  overflow-y: hidden;
-  overflow-x: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-prefix {
-  top: -0em !important;
+    top: -0em !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #007759;
+    border-color: #007759;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #007759;
+    background-color: #007759;
 }
+
 * {
-  outline: none;
+    outline: none;
 }
 
 // newly added
-
 .fbold {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .mat-error {
-  padding-left: 0rem;
-  margin-left: 0rem;
+    padding-left: 0rem;
+    margin-left: 0rem;
 }
 
-#toast-container > div {
-  opacity: 1;
+#toast-container>div {
+    opacity: 1;
 }
+
 .toast {
-  font-size: initial !important;
-  border: initial !important;
-  backdrop-filter: blur(0) !important;
-}
-.toast-success {
-  background-color: #51A351 !important;
-}
-.toast-error {
-  background-color: #BD362F !important;
-}
-.toast-info {
-  background-color: #2F96B4 !important;
-}
-.toast-warning {
-  background-color: #F89406 !important;
+    font-size: initial !important;
+    border: initial !important;
+    backdrop-filter: blur(0) !important;
 }
 
+.toast-success {
+    background-color: #51A351 !important;
+}
+
+.toast-error {
+    background-color: #BD362F !important;
+}
+
+.toast-info {
+    background-color: #2F96B4 !important;
+}
+
+.toast-warning {
+    background-color: #F89406 !important;
+}
 
 .btn {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .disable-cursor {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
-
 
 // disabled field's css
-
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline {
-  color: rgba(0, 0, 0, 0.2) !important;
-} 
-.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-  color: rgba(0, 0, 0, 0.77) !important;
+    color: rgba(0, 0, 0, 0.2) !important;
 }
+
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, 0.77) !important;
+}
+
 .mat-select-disabled .mat-select-value {
-  color: rgba(0, 0, 0, 0.77) !important;
+    color: rgba(0, 0, 0, 0.77) !important;
+}
+
+.swal-footer {
+    text-align: center !important;
+    padding-top: 5px !important;
+    margin-top: 0px !important;
+    padding: 13px 16px;
+    border-radius: inherit;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

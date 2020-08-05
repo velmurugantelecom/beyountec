@@ -9,7 +9,7 @@ import { AppService } from '../core/services/app.service';
 import { EmailPopupComponent } from '../modal/email-popup/email-popup.component';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
-import { ToastrService } from 'ngx-toastr';
+import swal from 'sweetalert'
 import { WebCamComponent } from '../shared/web-cam/web-cam.component';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -75,7 +75,6 @@ export class AdditionalDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private fb: FormBuilder,
-    public toasterService: ToastrService,
     private cdr: ChangeDetectorRef,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
@@ -219,6 +218,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
       this.getUploadedDocs();
+      // if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "1102") {
       if (this.quoteDetails.vehicleDetails.regStatus === 'N' && this.quoteDetails.vehicleDetails.registeredAt != "1102") {
         this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
@@ -228,23 +228,23 @@ export class AdditionalDetailsComponent implements OnInit {
         this.RegistrationMarkRequired = false;
       }
       if (this.quoteDetails.vehicleDetails.regStatus === 'N' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
-      this.questionnaireStatus = false;
-      this.RegistrationNoRequired= false;
-      this.RegistrationMarkRequired=false;
-      this.additionalDetails.get('registrationMark').setValidators([]);
-      this.additionalDetails.get('registrationMark').updateValueAndValidity();
-      this.additionalDetails.get('regNo').setValidators([]);
-      this.additionalDetails.get('regNo').updateValueAndValidity();
-      }
-      else if (this.quoteDetails.vehicleDetails.regStatus === '03' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
         this.questionnaireStatus = false;
-        this.RegistrationNoRequired= true;
-        this.RegistrationMarkRequired=true;
-        this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
+        this.RegistrationNoRequired= false;
+        this.RegistrationMarkRequired=false;
+        this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
-        this.additionalDetails.get('regNo').setValidators([Validators.required]);
+        this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
-      }
+        }
+        else if (this.quoteDetails.vehicleDetails.regStatus === '03' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
+          this.questionnaireStatus = false;
+          this.RegistrationNoRequired= true;
+          this.RegistrationMarkRequired=true;
+          this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
+          this.additionalDetails.get('registrationMark').updateValueAndValidity();
+          this.additionalDetails.get('regNo').setValidators([Validators.required]);
+          this.additionalDetails.get('regNo').updateValueAndValidity();
+        }
       if(this.quoteDetails.vehicleDetails.registeredAt == "1102"){
         this.QuestionnaireStatusShow =true;
         }
@@ -275,11 +275,11 @@ export class AdditionalDetailsComponent implements OnInit {
             value: '03'
           }];
        
-         // if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.isReviseDetails)){
+          // if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.isReviseDetails)){
             this.additionalDetails.patchValue({
               questionnaire: this.quoteDetails.vehicleDetails.regStatus
             });
-         // }
+          // }
       if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
@@ -800,9 +800,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.fileContainer[i].value = fName[1];
     }, err => {
       this.spinner.hide();
-      this.toasterService.error("", "Invalid File Format", {
-        timeOut: 3000
-      })
+      swal('', 'Invalid File Format', 'error')
     })
 
   }
@@ -834,7 +832,7 @@ export class AdditionalDetailsComponent implements OnInit {
       value = 'Vehicle Registration Card';
     }
     let dialogRef = this.dialog.open(ScanAndUpload, {
-      panelClass: 'my-class',
+      width: '40%',
       data: { docId: docId, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
     });
     dialogRef.afterClosed().subscribe(result => {

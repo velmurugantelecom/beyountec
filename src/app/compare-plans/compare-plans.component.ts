@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../core/services/app.service';
 import { CoreService } from '../core/services/core.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../core/services/data.service';
 
@@ -195,7 +195,6 @@ export class ComparePlansComponent implements OnInit {
       };
 
       this.coreService.saveInputs('confirmPlan', params, null).subscribe(res => {
-        console.log(this.planOb)
         this.router.navigate([`/quote-summary`], { queryParams: { quoteNo: this.planOb['quoteId'], isQuickSummary: true } });
       });
     }
@@ -237,6 +236,19 @@ export class ComparePlansComponent implements OnInit {
   }
 
   goBack() {
+    let value;
+    if (this.showPromoDiscount) {
+      value = {
+        discountsAvailable: true,
+        promoDiscounts: this.promoDiscounts,
+        discountCode: this.discountCode
+      }
+    } else {
+      value = {
+        discountsAvailable: false 
+      }
+    }
+    this.appService.setDiscountDetails(value);
     if (!this.planOb) {
       this.router.navigate(['/new-motor-info']);
       return
@@ -559,6 +571,11 @@ export class ComparePlansComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.planOb['discountsAvailable']) {
+      this.applyDiscounts();
+    }
+    let data = this.appService.getDiscountDetails();
+    if (data['discountsAvailable']) {
+      this.planOb['discountCode'] = data['discountCode']
       this.applyDiscounts();
     }
   }

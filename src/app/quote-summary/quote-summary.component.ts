@@ -4,10 +4,11 @@ import { CoreService } from '../core/services/core.service';
 import { AppService } from '../core/services/app.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from 'jquery';
+import swal from 'sweetalert';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { TranslateService } from '@ngx-translate/core';
 import { DropDownService } from '../core/services/dropdown.service';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DynamicContentDialog } from '../shared/dynamic-content/dynamic-content.component';
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
@@ -17,8 +18,8 @@ export const MY_NATIVE_FORMATS = {
   selector: "app-quote-summary",
   templateUrl: "./quote-summary.component.html",
   styleUrls: ["./quote-summary.component.scss"],
-  providers:[
-    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS},
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
   ]
 })
 export class QuoteSummaryComponent implements OnInit {
@@ -31,14 +32,14 @@ export class QuoteSummaryComponent implements OnInit {
   public isAgreed: boolean;
   public isQuickSummary = 'true';
   public attachments: any;
-  public pageHeader:any;
-  public summaryFor:any;
+  public pageHeader: any;
+  public summaryFor: any;
   public grossPremium;
   public selectedCovers = [];
   public mailId: string;
   public ncdDeclaration: boolean
   public isValidQuote = 'true';
-  public language:any ;
+  public language: any;
 
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
@@ -57,11 +58,11 @@ export class QuoteSummaryComponent implements OnInit {
           this.isValidQuote = 'true';
         }
       });
-      this.translate.get('QuoteSummary') .subscribe(value => { 
-        this.pageHeader = value; 
-      } );
+    this.translate.get('QuoteSummary').subscribe(value => {
+      this.pageHeader = value;
+    });
   }
-  
+
   ngOnInit() {
     let url = "brokerservice/quotes/quoteDetailsSummary";
     let params = {
@@ -69,6 +70,19 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
+      // make and model mapping not found in db issue
+      if (!this.quoteDetails.vehicleDetails.makeName || !this.quoteDetails.vehicleDetails.modelName) {
+        swal({
+          text: 'Vehicle information not found in our database. Please try again.',
+          icon: 'error',
+        }).then(response => {
+          if (localStorage.getItem('isLoggedIn') === "true")
+            this.router.navigate(['/User/dashboard'])
+          else
+            this.router.navigate(['/new-login']);
+        });
+        return;
+      }
       if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
         this.ncdDeclaration = true;
       }
@@ -83,10 +97,10 @@ export class QuoteSummaryComponent implements OnInit {
       this.coreService.getInputs(`brokerservice/documentupload/uploadedDocs`, params1).subscribe(response => {
         response.forEach(file => {
           let nameArray = file.fileName.split('_0_');
-          file.fileName = nameArray[1]; 
+          file.fileName = nameArray[1];
           if (file.fileName.toLowerCase().includes('pdf')) {
             file['src'] = './assets/sharedimg/pdf.png'
-          } else if (file.fileName.toLowerCase().includes('jpg') || file.fileName.toLowerCase().includes('png') || file.fileName.toLowerCase().includes('jpeg')){
+          } else if (file.fileName.toLowerCase().includes('jpg') || file.fileName.toLowerCase().includes('png') || file.fileName.toLowerCase().includes('jpeg')) {
             file['src'] = './assets/sharedimg/image-icon.png';
           } else {
             file['src'] = './assets/sharedimg/image-icon.png';
@@ -96,29 +110,29 @@ export class QuoteSummaryComponent implements OnInit {
       });
     });
     if (this.isQuickSummary == 'false') {
-      this.translate.get('SummaryForThe') .subscribe(value => { 
-        this.summaryFor = value; 
-      } );
-      this.pageHeader = this.summaryFor+' ' + this.quoteNo;
+      this.translate.get('SummaryForThe').subscribe(value => {
+        this.summaryFor = value;
+      });
+      this.pageHeader = this.summaryFor + ' ' + this.quoteNo;
     }
-    this.language=localStorage.getItem("language") ;
+    this.language = localStorage.getItem("language");
   }
-  ngDoCheck(){
-    if(this.language!=localStorage.getItem("language")){
-      this.language=localStorage.getItem("language") ;
-      this.translate.get('QuoteSummary') .subscribe(value => { 
-        this.pageHeader = value; 
-      } );
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+      this.translate.get('QuoteSummary').subscribe(value => {
+        this.pageHeader = value;
+      });
     }
   }
-  
+
   coverageMakeover() {
     this.quoteDetails.risks[0].coverages.forEach(coverage => {
       if (coverage['coverageDesc'] != 'Compulsory Agency repair for 1st Year'
-      && coverage['coverageDesc'] != 'Total Loss for Chassis Repair'
-      && coverage['coverageDesc'] != 'TPPD Limit 2Million'
-      && coverage['coverageDesc'] != 'RAC for TP Vehicle'
-      && coverage['coverageDesc'] != 'Rent a Car for TP Vehicle') {
+        && coverage['coverageDesc'] != 'Total Loss for Chassis Repair'
+        && coverage['coverageDesc'] != 'TPPD Limit 2Million'
+        && coverage['coverageDesc'] != 'RAC for TP Vehicle'
+        && coverage['coverageDesc'] != 'Rent a Car for TP Vehicle') {
         this.selectedCovers.push(coverage['coverageDesc'])
       }
     })
@@ -129,7 +143,7 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   generateQuote() {
-      
+
     this.coreService.postInputs1('generateQuote', this.quoteDetails.quoteId).subscribe(res => {
       this.quoteNumber = res;
       this.appService.setQuoteDetails(this.quoteDetails);
@@ -209,7 +223,7 @@ export class QuoteSummaryComponent implements OnInit {
 
   readTermsAndCond(value) {
     let file, windowName;
-    switch(value) {
+    switch (value) {
       case 1: {
         file = 'Terms&Conditions.pdf';
         windowName = 'Terms & Conditions';
@@ -232,7 +246,7 @@ export class QuoteSummaryComponent implements OnInit {
     this.spinner.show();
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
       let fileUrl = window.URL.createObjectURL(response);
-      window.open(fileUrl,'_blank');
+      window.open(fileUrl, '_blank');
       this.spinner.hide();
     }, err => {
       this.spinner.hide();

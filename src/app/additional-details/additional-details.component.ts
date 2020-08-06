@@ -54,6 +54,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public questionnaireStatus:boolean=false;
   public RegistrationMarkRequired:boolean =true;
   public QuestionnaireStatusShow:boolean =false;
+  public uploadedDocs = []
   yes: any;
   no: any;
   public language: any;
@@ -718,36 +719,6 @@ export class AdditionalDetailsComponent implements OnInit {
     this.currentEffDate = effectivDate;
   }
 
-  // dynamic 
-  addMoreDocuments() {
-    if (this.addMoreDoc) {
-      return;
-    }
-    this.addMoreDoc = true;
-    let params = {
-      quoteId: this.quoteDetails['quoteId'],
-      loadAllDocs: 'Y'
-    }
-    this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, params).subscribe((response: any) => {
-      let shallowcopy = this.fileContainer.slice();
-      let value = shallowcopy.splice(1);
-      const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
-      let index = 4;
-      result.forEach((element) => {
-        this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
-        this.fileContainer.push(
-          {
-            id: element.polDoId,
-            label: element.polDocDes,
-            controlName: `documentName${index + 1}`,
-            value: ''
-          }
-        )
-        index++;
-      });
-    });
-  }
-
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field, index) => {
       const control = formGroup.get(field);
@@ -765,7 +736,9 @@ export class AdditionalDetailsComponent implements OnInit {
       quotenumber: this.quoteDetails['quoteId']
     }
     this.subscription = this.coreService.getInputs('brokerservice/documentupload/uploadedDocs', params).subscribe((result: any) => {
-      if (result.length > 0) {
+      this.uploadedDocs = result;
+      if (result.length === 10) {
+        this.addMoreDoc = true;
         let sortedArray: any[] = result.sort((n1, n2) => n1.docId - n2.docId);
         sortedArray.forEach((element, index) => {
           this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
@@ -778,9 +751,17 @@ export class AdditionalDetailsComponent implements OnInit {
             }
           )
         });
+      } else if (result.length === 0 || result.length === 3) {
+        this.getDocuments();
       }
       else {
-        this.getDocuments()
+        // first get mandatory docs
+        this.getDocuments();
+        this.addMoreDoc = false;
+        // second get optional docs
+        // if (this.uploadedDocs.length > 3)
+        // this.addMoreDocuments();
+
       }
     });
   }
@@ -794,7 +775,6 @@ export class AdditionalDetailsComponent implements OnInit {
     formData.append('docDesc', label);
     formData.append('quotenumber', this.quoteDetails['quoteNumber']);
     this.subscription = this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
-      console.log(response)
       this.spinner.hide();
       let fName = response[0].fileName.split('_0_')
       this.fileContainer[i].value = fName[1];
@@ -803,6 +783,50 @@ export class AdditionalDetailsComponent implements OnInit {
       swal('', 'Invalid File Format', 'error')
     })
 
+  }
+
+  
+  // dynamic 
+  addMoreDocuments() {
+    if (this.addMoreDoc) {
+      return;
+    }
+    let params = {
+      quoteId: this.quoteDetails['quoteId'],
+      loadAllDocs: 'Y'
+    }
+    if (this.DocUploadForm.status === 'INVALID') {
+      swal('','Please upload all mandatory documents.', 'error');
+      return;
+    }
+    this.addMoreDoc = true;
+    this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, params).subscribe((response: any) => {
+      let shallowcopy = this.fileContainer.slice();
+      let value = shallowcopy.splice(1);
+      const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
+      let index = 4;
+      result.forEach((element) => {
+      let fName, f=[,];
+        this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
+        if (this.uploadedDocs.length > 3) {
+          fName = this.uploadedDocs.filter(ele => 
+            ele.docId === element.polDoId.toString()   
+          );
+          if (fName.length > 0) {
+            f = fName[0].fileName.split('_0_');
+          }
+        }
+        this.fileContainer.push(
+          {
+            id: element.polDoId,
+            label: element.polDocDes,
+            controlName: `documentName${index + 1}`,
+            value: f[1]
+          }
+        )
+        index++;
+      });
+    });
   }
 
   // get mandatory docs
@@ -814,12 +838,23 @@ export class AdditionalDetailsComponent implements OnInit {
     this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, body).subscribe((response: any) => {
       if (response) {
         response.forEach((element, index) => {
+          let fName, f=[,];
           this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
+          if (this.uploadedDocs.length > 0) {
+            fName = this.uploadedDocs.filter(ele => 
+              ele.docId === element.polDoId.toString()   
+            );
+            if (fName.length > 0) {
+              f = fName[0].fileName.split('_0_');
+              this.DocUploadForm.get(`documentName${index + 1}`).clearValidators();
+              this.DocUploadForm.get(`documentName${index + 1}`).updateValueAndValidity();
+            }
+          }
           this.fileContainer.push({
             id: element.polDoId,
             label: element.polDocDes,
             controlName: `documentName${index + 1}`,
-            value: '',
+            value: f[1] || null,
             message: `${element.polDocDes} is required`
           });
         });
@@ -832,7 +867,7 @@ export class AdditionalDetailsComponent implements OnInit {
       value = 'Vehicle Registration Card';
     }
     let dialogRef = this.dialog.open(ScanAndUpload, {
-      width: '40%',
+      panelClass: 'my-class',
       data: { docId: docId, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -899,14 +934,12 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   onStepperSelectionChange(event: StepperSelectionEvent) {
-    console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
     this.scrollToSectionHook();
   }
 
   private scrollToSectionHook() {
     const element = document.querySelector('.stepperTop');
-    console.log(element);
     if (element) {
       setTimeout(() => {
         element.scrollIntoView({

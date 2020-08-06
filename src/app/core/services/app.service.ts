@@ -11,6 +11,7 @@ export class AppService {
   userDetails: any = {};
   quoteDetails: any = {};
   planDetails: any = {};
+  discountData: any = {}
   vehicleAutoData: any = {};
   policyPopup: boolean;
   
@@ -40,6 +41,14 @@ export class AppService {
 
   setPlanDetails(details) {
     this.planDetails = details;
+  }
+
+  getDiscountDetails() {
+    return this.discountData;
+  }
+
+  setDiscountDetails(value) {
+    this.discountData = value
   }
 
   getPlanDetails() {

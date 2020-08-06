@@ -41,7 +41,6 @@ export function RegisteredDateValidator(control: AbstractControl) {
     const momentDate = moment({ year: year, month: month, day: date }).startOf('day');
     const now = moment().startOf('day');
     const diff = momentDate.diff(now, 'days');
-    console.log(diff)
     if (diff > 0) {
       return { futureDate: true };
     } else {
@@ -774,10 +773,14 @@ export class NewMotorInfoScreen implements OnInit {
     })
     if (value === '1102') {
       this.tcNoLength = 8;
+      if (this.vehicleForm.get('tcFileNumber').value  && this.vehicleForm.get('tcFileNumber').value.length === 10)
+      this.vehicleForm.get('tcFileNumber').setValue(null)
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     } else {
       this.tcNoLength = 10;
+      if (this.vehicleForm.get('tcFileNumber').value && this.vehicleForm.get('tcFileNumber').value.length === 8)
+      this.vehicleForm.get('tcFileNumber').setValue(null)
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     }

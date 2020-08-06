@@ -58,6 +58,8 @@ export class AdditionalDetailsComponent implements OnInit {
   yes: any;
   no: any;
   public language: any;
+  public tribeQuesYN:any;
+  public tribeQuesValue:any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   filteredColors: Observable<string[]>;
@@ -276,11 +278,11 @@ export class AdditionalDetailsComponent implements OnInit {
             value: '03'
           }];
        
-          // if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.isReviseDetails)){
+           if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.quoteDetails.vehicleDetails.tribeQuesYN=="Y")){
             this.additionalDetails.patchValue({
               questionnaire: this.quoteDetails.vehicleDetails.regStatus
             });
-          // }
+           }
       if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
@@ -385,6 +387,14 @@ export class AdditionalDetailsComponent implements OnInit {
         plateCode = element.value;
       }
     });
+    if(this.additionalDetails.value['questionnaire']){
+  this.tribeQuesYN="Y";
+  this.tribeQuesValue=this.additionalDetails.value['questionnaire'];
+    }
+    else{
+      this.tribeQuesYN="N";
+      this.tribeQuesValue=this.quoteDetails.vehicleDetails.regStatus;
+    }
     let vehicledetails = {
       colorId: color,
       mortgagedYN: this.additionalDetails.value['mortgagedYN'],
@@ -395,7 +405,8 @@ export class AdditionalDetailsComponent implements OnInit {
       registrationMark: plateCode,
       regNo: this.additionalDetails.value['regNo'],
       engineNo: this.additionalDetails.value['engineNo'],
-      regStatus: this.additionalDetails.value['questionnaire'],
+      regStatus: this.tribeQuesValue,
+      tribeQuesYN:this.tribeQuesYN,
       trim: this.quoteDetails.vehicleDetails.trim
     }
     if (vehicledetails.mortgagedYN === 'N') {

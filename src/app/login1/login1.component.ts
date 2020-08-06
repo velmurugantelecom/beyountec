@@ -132,8 +132,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]],
-      recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]]
+    //  recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -473,7 +473,7 @@ export class QuoteDialog {
       return
     }
     this.spinner.show();
-    this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails}`, '').subscribe(response => {
+    this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails.trim()}`, '').subscribe(response => {
       if (response) {
         this.isCompleted = true;
         this.goForward(stepper)
@@ -495,7 +495,7 @@ export class QuoteDialog {
         this.dialogRef.close();
         this.router.navigate([`/additional-details`], {
           queryParams: {
-            quoteNo: this.dialogeDetails,
+            quoteNo: this.dialogeDetails.trim(),
             retrieveQuote: true
           }
         });

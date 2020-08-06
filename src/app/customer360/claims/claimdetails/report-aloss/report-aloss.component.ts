@@ -26,6 +26,7 @@ export class ReportALOssComponent implements OnInit {
   minDate: any;
   minLossDate;
   maxLossDate;
+  maxIntimatedDate:any;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
 
   constructor(private datePipe: DatePipe, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
@@ -57,8 +58,11 @@ export class ReportALOssComponent implements OnInit {
       this.policyarr = data.data;
       this.currentDate =moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
       if (this.policyarr) {
-        this.minLossDate = moment(this.policyarr.startDate + " " + "00:00");
+        this.minLossDate = moment(new Date(this.policyarr.startDate)).format("YYYY-MM-DD");
+       // this.minLossDate = moment(new Date(this.policyarr.startDate));
+        //this.minLossDate = moment(this.policyarr.startDate + " " + "00:00");
         this.maxLossDate = new Date(this.policyarr.endDate);
+        this.maxIntimatedDate=new Date(this.policyarr.endDate);
         if(this.currentDate>=this.maxLossDate){
           this.maxLossDate=this.maxLossDate;
         }

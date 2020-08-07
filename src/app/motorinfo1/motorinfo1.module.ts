@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { NewMotorInfoScreen } from './motorinfo1.component';
+import { NewMotorInfoScreen, VehicleBottomSheet } from './motorinfo1.component';
 import { AppMaterialModule } from '../app-material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthGuard } from '../core/guard/auth.guard';
@@ -16,7 +16,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule, MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
-
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 export const MY_CUSTOM_FORMATS = {
     fullPickerInput: 'DD/MM/YYYY',
     parseInput: 'DD/MM/YYYY',
@@ -39,7 +39,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         NewMotorInfoScreen,
-        OrderByPipe
+        OrderByPipe,
+        VehicleBottomSheet
     ], imports: [
         TranslateModule,
         SharedModule,
@@ -54,7 +55,8 @@ const routes: Routes = [
 
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        OwlMomentDateTimeModule
+        OwlMomentDateTimeModule,
+        MatBottomSheetModule
     ],
 
     providers: [

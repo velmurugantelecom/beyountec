@@ -70,19 +70,6 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
-      // make and model mapping not found in db issue
-      if (!this.quoteDetails.vehicleDetails.makeName || !this.quoteDetails.vehicleDetails.modelName) {
-        swal({
-          text: 'Vehicle information not found in our database. Please try again.',
-          icon: 'error',
-        }).then(response => {
-          if (localStorage.getItem('isLoggedIn') === "true")
-            this.router.navigate(['/User/dashboard'])
-          else
-            this.router.navigate(['/new-login']);
-        });
-        return;
-      }
       if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
         this.ncdDeclaration = true;
       }

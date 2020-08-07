@@ -300,3 +300,18 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.swal-title {
+    padding: 0px !important;
+    font-size: 20px !important;
+}
+
+.swal-icon {
+    margin: 5px auto !important;
+}
+
+@media only screen and (min-width: 992px) {
+    .swal-modal {
+        width: 440px;
+    }
+}

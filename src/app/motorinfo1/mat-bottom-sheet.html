@@ -1,0 +1,76 @@
+<mat-nav-list>
+    <mat-toolbar class="header row justify-content-between">
+        <div class="col-xs-10 col-xs-10">Trim Details</div>
+        <div class="col-xs-2 col-2">
+            <mat-icon class="close" (click)="closeSheet()">close</mat-icon>
+        </div>
+
+
+    </mat-toolbar>
+    <div class="contents">
+        <div class="row ">
+            <div class="col-6">
+                <h6>Year</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.makeYear?.label}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>Make</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.make?.label}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>Model</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.model?.label}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>No of Cylinders</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.noOfCylinders}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>No of Seats</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.noOfSeats}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>No of Doors</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.noOfDoors}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>Engine Size</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.engineSize}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h6>Trim</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{selectedData?.trim}}</h6>
+            </div>
+        </div>
+    </div>
+</mat-nav-list>

@@ -1,4 +1,4 @@
-<div style="text-align:center">
+<!-- <div style="text-align:center">
     <div>
         <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
             (initError)="handleInitError($event)"></webcam>
@@ -11,4 +11,18 @@
 
 <div class="snapshot" *ngIf="webcamImage">
     <img [src]="webcamImage.imageAsDataUrl" />
+</div> -->
+
+<div>
+    <ngx-gauge [type]="gaugeType" [value]="v" [min]="minValue" [max]="maxValue" [size]="100">
+    </ngx-gauge>
 </div>
+<div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-9">
+    <input type="range" [min]="minValue" [max]="maxValue" [value]="v" step="100" class="slider" [(ngModel)]="v" (input)="gaugeChange()">
+</div>
+
+<ngx-gauge [value]="v" [min]="minValue" [max]="maxValue" [size]="100">
+    <!-- <ngx-gauge-value>
+        {{ v }}
+    </ngx-gauge-value> -->
+</ngx-gauge>

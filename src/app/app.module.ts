@@ -47,8 +47,10 @@ import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
 
 import swal from 'sweetalert';
+import { VehicleBottomSheet } from './motorinfo1/motorinfo1.component';
+import { NewMotorInfoScreenModule } from './motorinfo1/motorinfo1.module';
 const userIdleConfig = {
-  idle: 540,
+  idle: 600,
   timeout: 1,
   ping: 0
 };
@@ -109,11 +111,12 @@ export const configFactory = (configService: RuntimeConfigService) => {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    NewMotorInfoScreenModule
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload,  
-    DynamicContentDialog],
+    DynamicContentDialog, VehicleBottomSheet],
   providers: [
     CoreService,
     AuthGuard,

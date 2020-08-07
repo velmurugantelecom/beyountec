@@ -54,38 +54,23 @@ export class AppHttpInterceptor implements HttpInterceptor {
         }
       }),
       catchError((err: any) => {
-
         if (err instanceof HttpErrorResponse) {
-
           try {
             console.log(err)
-            let errorMsg = err.error.text || err.error.error || err.error;
             this.spinner.hide();
-            if (err.status == 401) {
+            let errorMsg = err.error.text || err.error.error || err.error;
+            let errorStatus = err.status.toString();
+            if (errorStatus == '401') {
               this.router.navigate([`/new-login`]);
               swal(
                 'Token Expired', 'Please try again', 'error'
               );
-              
-            } else if (err.status === 503) {
+            } else if (errorStatus.startsWith('5')) {
               swal(
-                'Service Unavailable', 'Please try again', 'error'
+                'Internal Server Error', 'Please try again', 'error'
               );
-            } else if (err.status === 400) {
-              swal(
-                'Invalid Input', 'Please try again', 'error'
-              );
-            }else if(err.status === 500) {
-              swal({
-                title: 'Service is not available',
-                text: 'Please try again',
-                icon: 'error'
-              });
-            }
-            else if (!err.status) {
-              swal(
-                '', errorMsg, 'error'
-              );
+            } else {
+              swal('', errorMsg, 'error');
             }
             // let errorMsg = err.error.text || err.error.error || err.error;
             // this.spinner.hide();

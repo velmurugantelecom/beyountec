@@ -18,6 +18,7 @@ import { chooseProduct } from './product-selection/product-selection.component';
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 import { ScanAndUpload } from './scan-and-upload/scan-and-upload.component';
 import { DynamicContentDialog } from './dynamic-content/dynamic-content.component';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 export const MY_CUSTOM_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY',
@@ -51,7 +52,8 @@ export const MY_CUSTOM_FORMATS = {
 
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule
+    OwlMomentDateTimeModule,
+    NgxGaugeModule
   ],
   exports: [
     HeaderComponent,

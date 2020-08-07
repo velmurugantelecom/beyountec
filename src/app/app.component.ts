@@ -45,14 +45,12 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
         if (this.routerurl === 'new-login') {
-          console.log('stop watching...');
           this.stopWatching();
         } else {
           if (!localStorage.getItem('guesttokenDetails')) {
             console.log('start watching...');
             this.startWatching();
           } else {
-            console.log('stop watching...');
             this.stopWatching();
           }
         }
@@ -68,28 +66,11 @@ export class AppComponent implements OnInit {
       ping: config.ping
     });
 
-    // this.auth.isUserLoggedIn.subscribe(value => {
-    //   if (value) {
-    //     this.isLoggedInUser = true;
-    //     setTimeout(() => {
-    //       this.startWatching('user');
-    //     }, 2000);
-    //   } else {
-    //     this.isLoggedInUser = false;
-    //     this.stopWatching('user');
-    //   }
-    // })
-
-    // this.auth.isGuestUser.subscribe(value => {
-    //   if (value) {
-    //     setTimeout(() => {
-    //       this.startWatching('guest');
-    //     }, 2000);
-    //   } else {
-    //     this.stopWatching('guest');
-    //   }
-    // })
-
+    this.auth.isUserLoggedIn.subscribe(val => {
+      if (val)
+      this.isLoggedInUser = true;
+    });
+    
     this.userIdle.onTimerStart().subscribe(count => {
       if (this.isLoggedInUser)
         if (count === 1) {
@@ -125,11 +106,10 @@ export class AppComponent implements OnInit {
   startWatching() {
     this.userIdle.startWatching();
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
-      if (!this.isLoggedInUser)
-      this.auth.ocall().subscribe(() => {
-      });
+      // if (!this.isLoggedInUser)
+      // this.auth.ocall().subscribe(() => {
+      // });
     });
-
   }
 
   restart() {

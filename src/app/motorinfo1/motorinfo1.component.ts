@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/services/data.service';
@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { Subscription } from 'rxjs';
 import { ProductChangePopupComponent } from 'src/app/modal/product-change/product-change.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheetRef, MatBottomSheet, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
 import swal from 'sweetalert'
@@ -108,7 +108,8 @@ export class NewMotorInfoScreen implements OnInit {
     private router: Router,
     private dropdownservice: DropDownService,
     public dialog: MatDialog,
-    public runtimeConfigService: RuntimeConfigService) {
+    public runtimeConfigService: RuntimeConfigService,
+    private _bottomSheet: MatBottomSheet) {
     this.route.queryParams
       .subscribe(params => {
         if (params['quoteNo']) {
@@ -190,6 +191,12 @@ export class NewMotorInfoScreen implements OnInit {
     })
   }
 
+  openBottomSheet() {
+    this._bottomSheet.open(VehicleBottomSheet, {
+      data: { data: this.selectedData }
+    });
+  }
+
   onFormValueChanges() {
     this.insuredForm.get('dob').statusChanges.subscribe(val => {
       if (val === 'VALID') {
@@ -222,11 +229,15 @@ export class NewMotorInfoScreen implements OnInit {
           }
         }
         this.patchAdditionalDetails(temp);
-        // this.insuredForm.patchValue({
-        //   prefix: null,
-        //   fullName: null,
-        //   dob: null
-        // });
+        this.insuredForm.patchValue({
+          prefix: null,
+          fullName: null,
+          dob: null
+        });
+        this.vehicleForm.patchValue({
+          prevPolicyExpDate: null,
+          registeredDate: null
+        });
         return;
       } else {
         let fieldStatus;
@@ -443,6 +454,7 @@ export class NewMotorInfoScreen implements OnInit {
       let data = {
         lobId: 3,
         quoteNumber: this.quoteNo,
+        quoteId: this.quoteNo,
         productId: this.productId,
         prodID: this.productId,
         customerType: "I",
@@ -502,7 +514,10 @@ export class NewMotorInfoScreen implements OnInit {
         data['insured']['gender'] = 'M';
       }
       // auto populating claimsHistory
+      if (data['vehicleDetails']['ncdYears'])
       data['vehicleDetails']['claimsHistory'] = "3";
+      else 
+      data['vehicleDetails']['claimsHistory'] = null;
       if (this.isLoggedInUser) {
         data['customerId'] = this.loggedInUserName;
       }
@@ -1073,5 +1088,23 @@ export class NewMotorInfoScreen implements OnInit {
 
   ngSelectBlur() {
     this.openDropDown = false;
+  }
+}
+
+@Component({
+  selector: 'bottom-sheet-overview-example-sheet',
+  templateUrl: 'mat-bottom-sheet.html',
+})
+export class VehicleBottomSheet {
+
+  public selectedData: any;
+  constructor(private _bottomSheetRef: MatBottomSheetRef<VehicleBottomSheet>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+      this.selectedData = data.data;
+      console.log(this.selectedData)
+    }
+
+  closeSheet(): void {
+    this._bottomSheetRef.dismiss();
   }
 }

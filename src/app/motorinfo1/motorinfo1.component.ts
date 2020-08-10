@@ -99,6 +99,7 @@ export class NewMotorInfoScreen implements OnInit {
   gaugeValue;
   minValue = 0;
   maxValue = 300000;
+  public mortgagedYn:any;
 
   constructor(private dataService: DataService,
     private formBuilder: FormBuilder,
@@ -526,6 +527,7 @@ export class NewMotorInfoScreen implements OnInit {
       data['vehicleDetails']['registerNumber'] = this.additionalDetails['registerNumber'];
       data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
       data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
+      data['vehicleDetails']['mortgagedYn'] =this.mortgagedYn;
       // validating tc & chassis numbers
       // let params = {
       //   chassisNo: this.vehicleForm.getRawValue().chassisNo,
@@ -689,6 +691,7 @@ export class NewMotorInfoScreen implements OnInit {
           licenseIssueDate: res.userDetails.licenseIssuedDate,
           registeredDate: res.vehicleDetails.registeredDate
         });
+        this.mortgagedYn=res.vehicleDetails.mortgagedYn;
         this.patchAdditionalDetails(res);
       }
     }, err => {

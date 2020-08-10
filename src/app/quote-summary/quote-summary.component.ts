@@ -209,7 +209,8 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   readTermsAndCond(value) {
-    let file, windowName;
+    let file
+    let windowName;
     switch (value) {
       case 1: {
         file = 'Terms&Conditions.pdf';

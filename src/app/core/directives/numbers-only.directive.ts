@@ -23,7 +23,7 @@ export class NumbersDirective {
       (e.keyCode >= 35 && e.keyCode <= 39)
     ) {
       // let it happen, don't do anything
-      return;
+      return true;
     }
     // Ensure that it is a number and stop the keypress
     if (
@@ -31,6 +31,7 @@ export class NumbersDirective {
       (e.keyCode < 96 || e.keyCode > 105)
     ) {
       e.preventDefault();
+      return false;
     }
   }
 }

@@ -1,32 +1,33 @@
 .success-content {
-  margin-top: 1%;
-  margin-left: 0%;
-  text-align: center;
+    margin-top: 1%;
+    margin-left: 0%;
+    text-align: center;
 }
+
 .bg-color {
-  background-color: #32ba7c;
-  color: white;
-  border-radius: 50%;
-  border:0px;
-  margin: 0px;
-  padding: 0px;
+    background-color: #32ba7c;
+    color: white;
+    border-radius: 50%;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
-.fullwidth{
-  display:inline-block;
-  width: 100%;
-}
-.columns{
-  display:inline-block;
-  width: 20%;
-  text-align: center;
+.fullwidth {
+    display: inline-block;
+    width: 100%;
 }
 
-.ensucessalign{
-  text-align: left;
-  margin-left: 30%;
+.columns {
+    display: inline-block;
+    width: 20%;
+    text-align: center;
 }
-.arsuccessalign{
-  text-align:right;
-  margin-right: 30%;
+
+.ensucessalign {
+    margin: 10px;
+}
+
+.arsuccessalign {
+    margin: 10px;
 }

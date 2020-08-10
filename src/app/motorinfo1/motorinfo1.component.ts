@@ -304,11 +304,11 @@ export class NewMotorInfoScreen implements OnInit {
       this.trimOption = [];
       this.spinner.show();
       let greyParams = {
-        chassisNo: this.chassisNoForm.value.chassisNo,
+        chassisNo: this.chassisNoForm.value.chassisNo.toUpperCase(),
         productId: this.productId
       }
       let params = {
-        chassisNo: this.chassisNoForm.value.chassisNo
+        chassisNo: this.chassisNoForm.value.chassisNo.toUpperCase()
       }
       this.coreService.greyImportService(this.autoDataURL, params).subscribe(res => {
         this.spinner.hide();
@@ -546,7 +546,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   validateImportedStatus(data) {
     let params = {
-      chassisNo: this.vehicleForm.getRawValue().chassisNo,
+      chassisNo: this.vehicleForm.getRawValue().chassisNo.toUpperCase(),
       tcNo: data['vehicleDetails']['tcFileNumber']
     }
     if (data['vehicleDetails']['regStatus'] === '03') {
@@ -558,7 +558,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.spinner.show();
     if (this.productId === '1113') {
       let greyParams = {
-        chassisNo: data['vehicleDetails']['chassisNo'],
+        chassisNo: data['vehicleDetails']['chassisNo'].toUpperCase(),
         productId: this.productId
       }
       this.coreService.greyImportService('ae/isImportedVehicle', greyParams).subscribe(res => {
@@ -681,7 +681,7 @@ export class NewMotorInfoScreen implements OnInit {
     }
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
-      chassisNo: this.vehicleForm.getRawValue().chassisNo
+      chassisNo: this.vehicleForm.getRawValue().chassisNo.toUpperCase()
     }
     this.subscription = this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
       if (res) {
@@ -691,9 +691,9 @@ export class NewMotorInfoScreen implements OnInit {
           licenseIssueDate: res.userDetails.licenseIssuedDate,
           registeredDate: res.vehicleDetails.registeredDate
         });
-        this.mortgagedYn=res.vehicleDetails.mortgagedYn;
         this.patchAdditionalDetails(res);
       }
+      this.mortgagedYn=res.vehicleDetails.mortgagedYn;
     }, err => {
     });
   }

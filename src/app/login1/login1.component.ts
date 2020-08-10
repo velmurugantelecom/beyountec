@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataService } from 'src/app/core/services/data.service';
 import { Subscription } from 'rxjs';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
+import { AppService } from '../core/services/app.service';
 function confirmPassword(control: AbstractControl) {
   if (!control.parent || !control) {
     return;
@@ -90,6 +91,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     private authService: AuthService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
+    private appService: AppService,
     private dataService: DataService,
     public runtimeConfigService: RuntimeConfigService) {
     router.events.forEach(event => {
@@ -132,8 +134,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]]
-    //  recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]],
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -169,6 +171,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.LoginForm.get('recaptcha').setValidators([]);
       this.LoginForm.get('recaptcha').updateValueAndValidity();
     }
+    this.appService.setDiscountDetails({});
+    this.appService.setPlanDetails({})
   }
 
   guestUserCall() {
@@ -350,6 +354,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       if (res) {
         this.router.navigate(['/resetPassword', this.forgotPWToken, 'FP'])
       }
+    }, err => {
+      this.ForgotForm.get('otp').setValue(null);
+      this.ForgotForm.get('otp').updateValueAndValidity();
     })
   }
   resetPwd() {

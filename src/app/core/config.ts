@@ -4,5 +4,5 @@ export const config = {
     "currencyFormat": ".2-2",
     "idle": 600,
     "timeout": 1,
-    "ping": 0
+    "ping": 120
 }

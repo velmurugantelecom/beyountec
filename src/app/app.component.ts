@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   pingSubscription: Subscription;
   routerurl: any;
   isLoggedInUser: boolean;
+  isPingStarted: boolean;
 
   constructor(private userIdle: UserIdleService,
     private auth: AuthService,
@@ -44,15 +45,10 @@ export class AppComponent implements OnInit {
     router.events.forEach(event => {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
-        if (this.routerurl === 'new-login') {
+        if (this.routerurl === 'new-login' || localStorage.getItem('guesttokenDetails')) {
           this.stopWatching();
         } else {
-          if (!localStorage.getItem('guesttokenDetails')) {
-            console.log('start watching...');
-            this.startWatching();
-          } else {
-            this.stopWatching();
-          }
+          this.startWatching();
         }
       }
     });
@@ -87,10 +83,16 @@ export class AppComponent implements OnInit {
           });
         }
     });
+    localStorage.setItem('maxValue', '0');
+    localStorage.setItem('minValue', '0');
   }
 
   stopWatching() {
     this.userIdle.stopWatching();
+    if (this.isPingStarted) {
+      this.isPingStarted = false;
+      this.pingSubscription.unsubscribe();
+    }
   }
 
   bodyStyleChange(value) {
@@ -106,9 +108,9 @@ export class AppComponent implements OnInit {
   startWatching() {
     this.userIdle.startWatching();
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
-      // if (!this.isLoggedInUser)
-      // this.auth.ocall().subscribe(() => {
-      // });
+      this.auth.ocall().subscribe(() => {
+      });
+      this.isPingStarted = true;
     });
   }
 

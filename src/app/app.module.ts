@@ -52,7 +52,7 @@ import { NewMotorInfoScreenModule } from './motorinfo1/motorinfo1.module';
 const userIdleConfig = {
   idle: 600,
   timeout: 1,
-  ping: 0
+  ping: 100
 };
 
 export function HttpLoaderFactory(httpClient: HttpClient) {

@@ -61,6 +61,12 @@ export class AppHttpInterceptor implements HttpInterceptor {
             let errorMsg = err.error.text || err.error.error || err.error;
             let errorStatus = err.status.toString();
             if (errorStatus == '401') {
+              if (localStorage.getItem('isLoggedIn') === 'true') {
+                localStorage.removeItem('tokenDetails');
+                localStorage.removeItem('Username');
+                localStorage.removeItem('guesttokenDetails');
+                localStorage.setItem('isLoggedIn', 'false');
+              }
               this.router.navigate([`/new-login`]);
               swal(
                 'Token Expired', 'Please try again', 'error'

@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   routerurl: any;
   isLoggedInUser: boolean;
   isPingStarted: boolean;
+  isWatchStarted: boolean;
 
   constructor(private userIdle: UserIdleService,
     private auth: AuthService,
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
         if (this.routerurl === 'new-login' || localStorage.getItem('guesttokenDetails')) {
           this.stopWatching();
         } else {
+          if (!this.isWatchStarted)
           this.startWatching();
         }
       }
@@ -88,6 +90,7 @@ export class AppComponent implements OnInit {
   }
 
   stopWatching() {
+    this.isWatchStarted = false;
     this.userIdle.stopWatching();
     if (this.isPingStarted) {
       this.isPingStarted = false;
@@ -107,10 +110,12 @@ export class AppComponent implements OnInit {
 
   startWatching() {
     this.userIdle.startWatching();
+    this.isWatchStarted = true;
+    this.isPingStarted = true;
     this.pingSubscription = this.userIdle.ping$.subscribe(value => {
-      this.auth.ocall().subscribe(() => {
+      console.log(value)
+      this.auth.ocall().subscribe((val) => {
       });
-      this.isPingStarted = true;
     });
   }
 
@@ -122,6 +127,7 @@ export class AppComponent implements OnInit {
 
   LogOut() {
     this.spinner.show();
+    this.isWatchStarted = false;
     this.auth.logout().subscribe(Response => {
       if (Response) {
        localStorage.removeItem('tokenDetails');

@@ -394,10 +394,10 @@
                 </div>
                 <div class="row col-md-12 col-sm-6 align-items-center mt-2" *ngIf="productId === '1113'">
                     <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-3">
-                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}</div> -->
-                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-2x mt-n4 text-success" placement="right" ngbTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"
-                                aria-hidden="true"></i>
-                        </div>
+                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}</div>
+                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-2x mt-n4 text-success" placement="right" ngbTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae" -->
+                        <!-- aria-hidden="true"></i> -->
+                        <!-- </div> -->
                         <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue" [size]="100">
                         </ngx-gauge>
                     </div>

@@ -12,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { NgxGaugeModule } from 'ngx-gauge';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -57,8 +56,7 @@ const routes: Routes = [
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         OwlMomentDateTimeModule,
-        MatBottomSheetModule,
-        NgbModule
+        MatBottomSheetModule
     ],
 
     providers: [

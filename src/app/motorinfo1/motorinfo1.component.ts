@@ -94,6 +94,7 @@ export class NewMotorInfoScreen implements OnInit {
   dobMinVDate;
   changedProductType: boolean;
   openDropDown: boolean;
+  chassisNumber = '';
   // gauge properties
   gaugeType = "semi";
   gaugeValue;
@@ -206,6 +207,45 @@ export class NewMotorInfoScreen implements OnInit {
         this.minIssueDate = date.toISOString();
       }
     });
+    this.vehicleForm.get('chassisNo').statusChanges.subscribe(value => {
+      if (value === 'INVALID') {
+        let temp = {
+          userDetails: {
+            address1: null,
+            address2: null,
+            address4: null,
+            city: null,
+            fullNameBL: null,
+            nationality: null,
+            occupation: null,
+            personalId: null,
+            taxId: null,
+            postBox: null
+          },
+          vehicleDetails: {
+            engineNumber: null,
+            registerNumber: null,
+            registrationMark: null,
+            colorId: null,
+            customerId: null
+          }
+        }
+        this.patchAdditionalDetails(temp);
+        this.insuredForm.patchValue({
+          prefix: null,
+          fullName: null,
+          dob: null
+        });
+        this.vehicleForm.patchValue({
+          prevPolicyExpDate: null,
+          registeredDate: null,
+          licenseIssueDate: null
+        });
+        return;
+      } else {
+        this.checkTCNumberAndChassisNoStatus();
+      }
+    })
     this.vehicleForm.get('tcFileNumber').statusChanges.subscribe(value => {
       if (value === 'INVALID') {
         let temp = {
@@ -237,22 +277,22 @@ export class NewMotorInfoScreen implements OnInit {
         });
         this.vehicleForm.patchValue({
           prevPolicyExpDate: null,
-          registeredDate: null
+          registeredDate: null,
+          licenseIssueDate: null
         });
         return;
       } else {
-        let fieldStatus;
-        if (this.vehicleForm.controls['chassisNo'].status === 'DISABLED') {
-          fieldStatus = 'VALID'
-        } else {
-          fieldStatus = this.vehicleForm.controls['chassisNo'].status;
-        }
-        if (value === 'VALID' && this.checkTcNoStatus && fieldStatus === 'VALID') {
-          setTimeout(() => this.getUserDetailsByTcNo(), 1000);
-        }
+        this.checkTCNumberAndChassisNoStatus();
       }
     });
 
+  }
+
+  checkTCNumberAndChassisNoStatus() {
+        if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && this.checkTcNoStatus &&
+         (this.vehicleForm.controls['chassisNo'].status === 'VALID' || this.vehicleForm.controls['chassisNo'].status === 'DISABLED')) {
+          setTimeout(() => this.getUserDetailsByTcNo(), 1000);
+      }
   }
 
   patchBasicUserDetails(value) {
@@ -663,8 +703,7 @@ export class NewMotorInfoScreen implements OnInit {
       this.vehicleForm.patchValue({
         tcFileNumber: this.dataService.getUserDetails().tcNumber
       });
-      let chassisField = this.vehicleForm.controls.chassisNo.status;
-      if (chassisField === 'VALID' || chassisField === 'DISABLED') {
+      if (this.chassisNoForm.value.chassisNo) {
         this.getUserDetailsByTcNo();
       }
     }
@@ -679,9 +718,10 @@ export class NewMotorInfoScreen implements OnInit {
       || !(status === 'VALID')) {
       return;
     }
+    console.log(this.vehicleForm.getRawValue())
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
-      chassisNo: this.vehicleForm.getRawValue().chassisNo.toUpperCase()
+      chassisNo: this.vehicleForm.getRawValue().chassisNo ? this.vehicleForm.getRawValue().chassisNo.toUpperCase() : null
     }
     this.subscription = this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
       if (res) {

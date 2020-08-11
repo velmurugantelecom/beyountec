@@ -100,6 +100,7 @@ export class NewMotorInfoScreen implements OnInit {
   gaugeValue;
   minValue = 0;
   maxValue = 300000;
+  public language: any;
   public mortgagedYn:any;
 
   constructor(private dataService: DataService,
@@ -184,6 +185,12 @@ export class NewMotorInfoScreen implements OnInit {
     this.dobMinVDate.setDate(this.today.getDate() - 1);
     this.dobMinVDate.setMonth(this.today.getMonth());
     this.dobMinVDate.setFullYear(this.today.getFullYear() - 75);
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   manualSearchListing(url, key, value) {

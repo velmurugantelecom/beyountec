@@ -67,6 +67,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public isValidForm: boolean;
   public forgotPWToken;
   public quoteNo = '';
+  public language: any;
 
   public routes = [
     'new-login',
@@ -173,8 +174,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
     this.appService.setDiscountDetails({});
     this.appService.setPlanDetails({})
+    this.language = localStorage.getItem("language");
   }
-
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+      this.loadDropdownValues();
+    }
+  }
   guestUserCall() {
     this.spinner.show();
     localStorage.removeItem('tokenDetails');

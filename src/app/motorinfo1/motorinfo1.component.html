@@ -83,32 +83,32 @@
 
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Product Type: {{basicUserDetails?.productTypeName}}
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">{{ 'ProductType' | translate }}: {{basicUserDetails?.productTypeName}}
         </div>
-        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Mobile No: {{basicUserDetails?.mobileCode}} - {{basicUserDetails?.mobileNo}}
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">{{ 'MobileNoLabel' | translate }}: {{basicUserDetails?.mobileCode}} - {{basicUserDetails?.mobileNo}}
         </div>
-        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">Email: {{basicUserDetails?.email}}</div>
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3"> {{ 'EmailLabel' | translate }}: {{basicUserDetails?.email}}</div>
     </div>
     <div class="d-flex justify-content-center mt-3 f24">
         <p>{{runtimeConfigService.config.heading}}</p>
     </div>
     <div class="row d-flex justify-content-center my-2">
-        <div class="border-block col-md-4">
+        <div class="col-md-4" [ngClass]="{enborderblock :language=='en',arborderblock :language=='ar'}">
             <div class="d-flex justify-content-center mb-2">
                 <img src="./assets/new-screen/chassis-blue.png" style="height: 48px;" />
             </div>
             <form [formGroup]="chassisNoForm" focusInvalidInput autocomplete="off" class="row">
                 <div class="col-md-10 col-sm-10 col-xs-10 col-10">
                     <mat-form-field appearance="outline">
-                        <mat-label>Search by Chassis Number</mat-label>
+                        <mat-label>{{ 'SearchByChassisNumber' | translate }}</mat-label>
                         <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" class="tansformToUpper" autocomplete="off" formControlName="chassisNo" (focus)="onEnterChassisField()">
                         <!-- <mat-icon matSuffix class="custom-cursor" (click)="getAutoData()">search</mat-icon> -->
-                        <mat-hint>Chassis Number should be minimum of 15 digits</mat-hint>
+                        <mat-hint>{{ 'Required.ChassisNumber' | translate }}</mat-hint>
                         <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
-                            Chassis Number should be minimum of 15 digits
+                            {{ 'Required.ChassisNumber' | translate }}
                         </mat-error>
                         <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.required">
-                            Chassis Number is required
+                             {{ 'Required.ChassisNumberRequired' | translate }}
                         </mat-error>
                         <mat-error *ngIf="invalidChassisNo && formCtrl.chassisNo.errors">
                             {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
@@ -127,7 +127,7 @@
                 <img src="./assets/new-screen/car-blue.png" />
             </div>
             <div>
-                <ng-select style=" text-align: center;" bindLabel="label" class="custom" placeholder="Search by Vehicle Details" appendTo="body" [(ngModel)]="selected" [searchable]="true" maxSelectedItems="3" appendTo="body" multiple="true" (change)="onchangeLoadDropdown()"
+                <ng-select style=" text-align: center;" bindLabel="label" class="custom" placeholder="{{ 'SearchbyVehicleDetails' | translate}}" appendTo="body" [(ngModel)]="selected" [searchable]="true" maxSelectedItems="3" appendTo="body" multiple="true" (change)="onchangeLoadDropdown()"
                     (clear)="resetDropDown()" [items]="items" [clearOnBackspace]="false" [isOpen]="openDropDown" (focus)="enableDropDown()" (blur)="ngSelectBlur()" (remove)="deSelectedItem($event)">
                     <!-- <ng-option [value]="item" *ngFor="let item of items">
                         {{item.label}}
@@ -143,16 +143,17 @@
             <table class="table table-striped">
                 <thead>
                     <tr style="text-align: center;">
-                        <th>Model</th>
-                        <th class=" d-none d-sm-table-cell">No of Cylinders</th>
-                        <th class=" d-none d-sm-table-cell">No of Seats</th>
-                        <th class=" d-none d-sm-table-cell">No of Doors</th>
-                        <th class=" d-none d-sm-table-cell">Engine Size</th>
-                        <th class=" d-none d-sm-table-cell">Hp</th>
-                        <th class=" d-none d-sm-table-cell">Transmission</th>
-                        <th>Trim</th>
+                        <th> {{ 'ModelLabel' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell"> {{ 'NoofCylinders' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'NoofSeats' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'NoofDoors' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'EngineSize' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'Hp' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'BodyType' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'Transmission' | translate }}</th>
+                        <th> {{ 'Trim' | translate }}</th>
                         <th class="d-table-cell d-sm-none"></th>
-                        <th>Select One</th>
+                        <th> {{ 'SelectOne' | translate }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -164,6 +165,7 @@
                         <td class="d-none d-sm-table-cell">{{data.noOfDoors}}</td>
                         <td class="d-none d-sm-table-cell">{{data.engineSize}}</td>
                         <td class="d-none d-sm-table-cell">{{data.hp}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.type.label}}</td>
                         <td class="d-none d-sm-table-cell">{{data.transmission}}</td>
                         <td #trimValue>{{data.trim}}</td>
                         <td class="d-table-cell d-sm-none">
@@ -179,7 +181,7 @@
             </table>
 
             <div class="row d-flex justify-content-center">
-                <button [disabled]="enableGridBtn" (click)="submitGrid()" class="pr-3 btn button btn-default bggreen fwhite">Submit</button>
+                <button [disabled]="enableGridBtn" (click)="submitGrid()" class="pr-3 btn button btn-default bggreen fwhite">{{ 'Submit' | translate }}</button>
             </div>
         </mat-card>
     </div>
@@ -193,7 +195,7 @@
                 <hr class="horizontal-line" />
             </div>
             <div class="fwhite  comp-header col-md-2 col-sm-4 col-12">
-                <label class="label-pad f12 fw900">Vehicle Information</label>
+                <label class="label-pad f12 fw900">{{ 'VehicleInformation' | translate }}</label>
             </div>
             <div class="zero-pad col-md-5 col-sm-4 col-0">
                 <hr class="horizontal-line" />
@@ -209,7 +211,7 @@
                             {{ 'Required.ChassisNo' | translate }}
                         </mat-error>
                         <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('minlength')">
-                            Chassis Number should be minimum of 15 digits
+                            {{ 'Required.ChassisNumber' | translate }}
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -394,10 +396,14 @@
                 </div>
                 <div class="row col-md-12 col-sm-6 align-items-center mt-2" *ngIf="productId === '1113'">
                     <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-3">
-                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}</div>
-                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-2x mt-n4 text-success" placement="right" ngbTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae" -->
-                        <!-- aria-hidden="true"></i> -->
-                        <!-- </div> -->
+                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}  <mat-icon  matTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"  matTooltipPosition="after" >info</mat-icon></div>  -->
+                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-2x mt-n4 text-success"  matTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"  matTooltipPosition="after" ></i></div> 
+                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }}  <i class="fa fa-info-circle fa-2x mt-n4 text-success" placement="right"  aria-hidden="true"></i>
+                        </div> -->
+                        
+                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-2x mt-n4 text-success" placement="right" ngbTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"
+                                aria-hidden="true"></i>
+                        </div> -->
                         <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue" [size]="100">
                         </ngx-gauge>
                     </div>
@@ -415,7 +421,7 @@
                 <hr class="horizontal-line" />
             </div>
             <div class="fwhite   comp-header col-md-2 col-sm-4 col-12">
-                <label class="label-pad f12 fw900">Insured Information</label>
+                <label class="label-pad f12 fw900">{{ 'InsuredInformation' | translate }}</label>
             </div>
             <div class="zero-pad col-md-5 col-sm-4 col-0">
                 <hr class="horizontal-line" />
@@ -472,9 +478,9 @@
             <div class="d-flex justify-content-between">
                 <button (click)="goBack()" class=" pr-3 btn button btn-default bggreen fwhite">
                         <i class="fa fa-arrow-left"></i>
-                        Back</button>
+                        {{ 'Back' | translate }}    </button>
                 <button [disabled]="enableContinue" class="pr-3 btn button btn-default bggreen fwhite" (click)="getPlans()">
-                        Continue
+                    {{ 'ContinueButton' | translate }}  
                         <i class="fa fa-arrow-right"></i>
                     </button>
             </div>

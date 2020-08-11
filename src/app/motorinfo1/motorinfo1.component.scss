@@ -19,10 +19,15 @@
     border-radius: 25px;
 }
 
-.border-block {
+.enborderblock {
     border-right-style: solid;
     border-right-color: lightgrey;
     border-right-width: medium;
+}
+.arborderblock {
+    border-left-style: solid;
+    border-left-color: lightgrey;
+    border-left-width: medium;
 }
 
 ng-value-icon {

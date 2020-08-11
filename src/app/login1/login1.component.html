@@ -51,7 +51,7 @@
                             <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
                                 {{ 'Required.Email' | translate }} </mat-error>
                             <mat-error *ngIf="invalidEmail && formCtrls.email.errors">
-                                Email address is aldready exist</mat-error>
+                                {{ 'Invalid.EmailAlreadyExist' | translate }}</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
             </form>
             <div class="centercss mt-4">
-                <a class="f14 textGreen" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">Retrieve Quote</a>
+                <a class="f14 textGreen" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">{{ 'RetrieveQuote' | translate }}</a>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <div *ngIf="runtimeConfig.Environment != 'QC'">
+                 <div *ngIf="runtimeConfig.Environment != 'QC'">
                     <div class="row d-flex justify-content-center captcharesize">
 
                         <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha" (success)="handleSuccess($event)">

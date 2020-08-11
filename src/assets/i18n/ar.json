@@ -335,6 +335,20 @@
     "ImportedVehicle": "Vehicle information not found in our system, Our Call center representative will call you shortly.",
     "EmailSuccessAlert": "Email Sent Successfully..._fa",
     "EmailFailureAlert": "Email Sent Failed_fa",
+    "SearchByChassisNumber":"Search by Chassis Number_fa",
+    "NoofCylinders":"No of Cylinders_fa",
+    "NoofSeats":"No of Seats_fa",
+    "NoofDoors":"No of Doors_fa",
+    "EngineSize":"Engine Size_fa",
+    "Hp":"Hp_fa",
+    "BodyType":"Body Type_fa",
+    "Transmission":"Transmission_fa",
+    "SelectOne":"Select One_fa",
+    "VehicleInformation":"Vehicle Information_fa",
+    "InsuredInformation":"Insured Information_fa",
+    "Back":"Back_fa",
+    "ContinueButton":"Continue_fa",
+    "SearchbyVehicleDetails":"Search by Vehicle Details_fa",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",
@@ -414,7 +428,9 @@
         "ConfirmPasswordIsRequired": "Confirm Password is required_fa",
         "QuoteNo": "Quote Number is required_fa",
         "OTPIsRequired": "OTP is required_fa",
-        "EmiratesIDLength": "Emirates ID should be 15 digits_fa"
+        "EmiratesIDLength": "Emirates ID should be 15 digits_fa",
+        "ChassisNumber": "Chassis Number should be minimum of 15 digits_fa",
+        "ChassisNumberRequired":"Chassis Number is required_fa"
     },
     "PlaceHolder": {
         "InsuredName": "أدخل اسم المؤمن عليه",
@@ -459,6 +475,7 @@
         "Digits": "أرقام",
         "PolicyExpDate": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أقل من التاريخ الحالي",
         "PolicyExpDateMorethan60": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أكثر من 60 يومًا من التاريخ الحالي",
-        "ChassisNumber": "Please enter valid Chassis no._fa"
+        "ChassisNumber": "Please enter valid Chassis no._fa",
+        "EmailAlreadyExist":"Email address is aldready exist_fa"
     }
 }

@@ -310,6 +310,16 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
     margin: 5px auto !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 @media only screen and (min-width: 992px) {
     .swal-modal {
         width: 440px;

@@ -16,6 +16,7 @@
     font-size: 14px;
     // color: #000000;
     font-weight: bold;
+    overflow-wrap: break-word;
 }
 
 .custom-bg {
@@ -148,6 +149,10 @@ img {
 
 .bor-box {
     border: 1px solid #adacac;
+}
+
+mat-error+mat-error {
+    display: none;
 }
 
 // mobile

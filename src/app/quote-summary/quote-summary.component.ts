@@ -193,6 +193,10 @@ export class QuoteSummaryComponent implements OnInit {
   openAttachment(value) {
     let fName = `${this.quoteDetails.quoteId}_0_${value}`;
     this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fName).subscribe((response: any) => {
+      // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      //   window.navigator.msSaveOrOpenBlob(response);
+      //   return;
+      // } 
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
       link.download = value;

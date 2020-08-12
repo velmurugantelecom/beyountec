@@ -375,6 +375,7 @@
         "DrivingExperience": "مطلوب خبرة في القيادة",
         "EmiratesID": "مطلوب هوية الإمارات",
         "InsuredName": "مطلوب اسم المؤمن عليه",
+        "InsuredNameAlphabets": "please enter alphabets",
         "NoofDoors": "عدد الأبواب مطلوب",
         "VehicleColor": "لون المركبة مطلوب",
         "Emirates": "مطلوب طيران الإمارات",

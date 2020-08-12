@@ -33,12 +33,16 @@
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-8 pl-0">
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
-                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" formControlName="mobileNo" required maxlength="7" NumbersOnly>
+                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" NumbersOnly formControlName="mobileNo" required maxlength="7">
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
                                     {{ 'Required.MobileNo' | translate }} </mat-error>
+                                <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.pattern">
+                                    {{ 'NumberOnly' | translate }}
+                                </mat-error>
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
                                     {{ 'MobileNoLength' | translate }}
                                 </mat-error>
+
                             </mat-form-field>
                         </div>
                     </div>
@@ -92,7 +96,7 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                 <div *ngIf="runtimeConfig.Environment != 'QC'">
+                <div *ngIf="runtimeConfig.Environment != 'QC'">
                     <div class="row d-flex justify-content-center captcharesize">
 
                         <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha" (success)="handleSuccess($event)">

@@ -34,6 +34,7 @@
     "MobileNoLabel": "Mobile No",
     "MobileCode": "Mobile Code",
     "MobileNoLength": "Mobile No should be 7 Digits",
+    "NumberOnly": "Please enter valid input",
     "EmailLabel": "Email",
     "EmailFormat": "Invalid Email Format",
     "GetQoute": "GET QUOTE",
@@ -336,20 +337,20 @@
     "ImportedVehicle": "This vehicle has an import history., Our Call center representative will call you shortly.",
     "EmailSuccessAlert": "Email Sent Successfully...",
     "EmailFailureAlert": "Email Sent Failed",
-    "SearchByChassisNumber":"Search by Chassis Number",
-    "NoofCylinders":"No of Cylinders",
-    "NoofSeats":"No of Seats",
-    "NoofDoors":"No of Doors",
-    "EngineSize":"Engine Size",
-    "Hp":"Hp",
-    "BodyType":"Body Type",
-    "Transmission":"Transmission",
-    "SelectOne":"Select One",
-    "VehicleInformation":"Vehicle Information",
-    "InsuredInformation":"Insured Information",
-    "Back":"Back",
-    "ContinueButton":"Continue",
-    "SearchbyVehicleDetails":"Search by Vehicle Details",
+    "SearchByChassisNumber": "Search by Chassis Number",
+    "NoofCylinders": "No of Cylinders",
+    "NoofSeats": "No of Seats",
+    "NoofDoors": "No of Doors",
+    "EngineSize": "Engine Size",
+    "Hp": "Hp",
+    "BodyType": "Body Type",
+    "Transmission": "Transmission",
+    "SelectOne": "Select One",
+    "VehicleInformation": "Vehicle Information",
+    "InsuredInformation": "Insured Information",
+    "Back": "Back",
+    "ContinueButton": "Continue",
+    "SearchbyVehicleDetails": "Search by Vehicle Details",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name in Arabic is required",
@@ -376,6 +377,7 @@
         "DrivingExperience": "Driving Experience is required",
         "EmiratesID": "Emirates ID is required",
         "InsuredName": "Insured Name is required",
+        "InsuredNameAlphabets": "please enter alphabets",
         "NoofDoors": "No of Doors is required",
         "VehicleColor": "Vehicle Color is required",
         "Emirates": "Emirates is required",
@@ -432,7 +434,7 @@
         "OTPIsRequired": "OTP is required",
         "EmiratesIDLength": "Emirates ID should be 15 digits",
         "ChassisNumber": "Chassis Number should be minimum of 15 digits",
-        "ChassisNumberRequired":"Chassis Number is required"
+        "ChassisNumberRequired": "Chassis Number is required"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",
@@ -481,6 +483,6 @@
         "ChassisNumber": "Please enter valid Chassis no.",
         "FutureDate": "License Issue Date can't be future date",
         "RegisteredDate": "First Registered Date can't be future date",
-        "EmailAlreadyExist":"Email address is aldready exist"
+        "EmailAlreadyExist": "Email address is aldready exist"
     }
 }

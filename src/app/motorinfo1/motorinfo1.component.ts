@@ -90,6 +90,7 @@ export class NewMotorInfoScreen implements OnInit {
   subscription: Subscription;
   public manualOptions: any = {};
   public currentYear:any;
+
   minIssueDate
   dobVDate;
   dobMinVDate;
@@ -141,7 +142,7 @@ export class NewMotorInfoScreen implements OnInit {
       repairType: ['', [Validators.required]],
       noOfPassengers: [{ value: '', disabled: true }, [Validators.required]],
       registeredAt: ['', [Validators.required]],
-      tcFileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      tcFileNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       regStatus: ['', [Validators.required]],
       registeredDate: ['', []],
       prevPolicyExpDate: ['', []],
@@ -152,7 +153,7 @@ export class NewMotorInfoScreen implements OnInit {
     });
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
-      fullName: ['', [Validators.required]],
+      fullName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       dob: ['', [Validators.required]]
     });
 
@@ -706,7 +707,7 @@ export class NewMotorInfoScreen implements OnInit {
       let tcNumber = this.dataService.getUserDetails().tcNumber;
       if (tcNumber.length === 8) {
         this.tcNoLength = 8;
-        this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+        this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
         this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
       }
       this.vehicleForm.patchValue({
@@ -842,13 +843,13 @@ export class NewMotorInfoScreen implements OnInit {
       this.tcNoLength = 8;
       if (this.vehicleForm.get('tcFileNumber').value  && this.vehicleForm.get('tcFileNumber').value.length === 10)
       this.vehicleForm.get('tcFileNumber').setValue(null)
-      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     } else {
       this.tcNoLength = 10;
       if (this.vehicleForm.get('tcFileNumber').value && this.vehicleForm.get('tcFileNumber').value.length === 8)
       this.vehicleForm.get('tcFileNumber').setValue(null)
-      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10)]);
+      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     }
   }
@@ -965,7 +966,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.gaugeValue = this.quoteDetails['vehicleDetails']['vehicleValue'];
     if (this.quoteDetails['vehicleDetails']['registeredAt'] === '1102') {
       this.tcNoLength = 8;
-      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+      this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     }
   }

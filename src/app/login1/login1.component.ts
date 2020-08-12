@@ -14,6 +14,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import { Subscription } from 'rxjs';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { AppService } from '../core/services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 function confirmPassword(control: AbstractControl) {
   if (!control.parent || !control) {
     return;
@@ -68,7 +69,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public forgotPWToken;
   public quoteNo = '';
   public language: any;
-
+  public errorMessages = [];
   public routes = [
     'new-login',
     'new-motor-info',
@@ -94,7 +95,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private appService: AppService,
     private dataService: DataService,
-    public runtimeConfigService: RuntimeConfigService) {
+    public runtimeConfigService: RuntimeConfigService,
+    private translate: TranslateService) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.formType = event.url.slice(1).split("/")[0];
@@ -142,7 +144,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       productType: ['', Validators.required],
       mobileCode: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.minLength(7),
-      Validators.maxLength(7)]],
+      Validators.maxLength(7), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       email: ['', [Validators.required, Validators.email]],
     });
     this.ForgotForm = this.formBuilder.group({
@@ -201,6 +203,16 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   loadDropdownValues() {
+    // this.errorMessages = [];
+    // this.translate.get('Required.MobileNo').subscribe(val => {
+    //   this.errorMessages.push(val);
+    // });
+    // this.translate.get('MobileNoLength').subscribe(val => {
+    //   this.errorMessages.push(val);
+    // });
+    // this.translate.get('NumberOnly').subscribe(val => {
+    //   this.errorMessages.push(val);
+    // });
     this.subscription = this.dropdownservice.getInputs('brokerservice/options/product/list', '').subscribe((response: any) => {
       this.options['products'] = response.data;
     });
@@ -239,9 +251,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.router.navigate([`/User/dashboard`]);
     }, err => {
       this.guestUserCall();
-      // this.toastr.error("", err.error.error, {
-      //   timeOut: 3000,
-      // });
     });
   }
 
@@ -249,7 +258,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     return this.infoForm.controls;
   }
 
+  // getErrorMessage() {
+  //   return this.infoForm.controls['mobileNo'].hasError('required') ? this.errorMessages[0] :
+  //   this.infoForm.controls['mobileNo'].hasError('minlength') ? this.errorMessages[1] :
+  //   this.infoForm.controls['mobileNo'].hasError('pattern') ? this.errorMessages[2] : '';
+  // }
+
   getMotorInfo(): void {
+    console.log(this.infoForm)
     let value = {
       emailId: this.infoForm.value['email']
     }
@@ -434,6 +450,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+  
 }
 
 

@@ -51,15 +51,15 @@ export class AdditionalDetailsComponent implements OnInit {
   public nowTime: any;
   public minTime: any;
   public RegistrationNoRequired: boolean = true;
-  public questionnaireStatus:boolean=false;
-  public RegistrationMarkRequired:boolean =true;
-  public QuestionnaireStatusShow:boolean =false;
+  public questionnaireStatus: boolean = false;
+  public RegistrationMarkRequired: boolean = true;
+  public QuestionnaireStatusShow: boolean = false;
   public uploadedDocs = []
   yes: any;
   no: any;
   public language: any;
-  public tribeQuesYN:any;
-  public tribeQuesValue:any;
+  public tribeQuesYN: any;
+  public tribeQuesValue: any;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   filteredBanks: Observable<string[]>;
   filteredColors: Observable<string[]>;
@@ -81,18 +81,16 @@ export class AdditionalDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
-    private datePipe: DatePipe
-
-  ) { }
+    private datePipe: DatePipe) { }
 
   ngOnInit() {
     let date = moment(new Date()).add(1, 'd')
     this.additionalDetails = this.formBuilder.group({
       colorId: ['', [Validators.required]],
-      noOfDoors: ['', [Validators.required, Validators.min(1), Validators.max(99)]],
+      noOfDoors: ['', [Validators.required, Validators.min(1), Validators.max(99), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       mortgagedYN: ['', [Validators.required]],
       bankName: ['', [Validators.required]],
-      regNo: ['', [Validators.required]],
+      regNo: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       engineNo: ['', []],
       registrationMark: ['', [Validators.required]],
       effectiveDate: [date, [Validators.required]],
@@ -106,7 +104,7 @@ export class AdditionalDetailsComponent implements OnInit {
       address1: ['', [Validators.required]],
       address2: ['', []],
       occupation: ['', [Validators.required]],
-      postBox: ['', []],
+      postBox: ['', [Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       personalId: ['', [Validators.required, Validators.minLength(15)]],
       questionnaire: ['', []]
 
@@ -180,7 +178,7 @@ export class AdditionalDetailsComponent implements OnInit {
     //   this.effectiveDateChanged = true;
     //   effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
     // } else {
-      
+
     // }
     effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     this.effetiveDates = this.dateConversion(effectiveDate);
@@ -233,25 +231,25 @@ export class AdditionalDetailsComponent implements OnInit {
       }
       if (this.quoteDetails.vehicleDetails.regStatus === 'N' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
         this.questionnaireStatus = false;
-        this.RegistrationNoRequired= false;
-        this.RegistrationMarkRequired=false;
+        this.RegistrationNoRequired = false;
+        this.RegistrationMarkRequired = false;
         this.additionalDetails.get('registrationMark').setValidators([]);
         this.additionalDetails.get('registrationMark').updateValueAndValidity();
         this.additionalDetails.get('regNo').setValidators([]);
         this.additionalDetails.get('regNo').updateValueAndValidity();
-        }
-        else if (this.quoteDetails.vehicleDetails.regStatus === '03' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
-          this.questionnaireStatus = false;
-          this.RegistrationNoRequired= true;
-          this.RegistrationMarkRequired=true;
-          this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
-          this.additionalDetails.get('registrationMark').updateValueAndValidity();
-          this.additionalDetails.get('regNo').setValidators([Validators.required]);
-          this.additionalDetails.get('regNo').updateValueAndValidity();
-        }
-      if(this.quoteDetails.vehicleDetails.registeredAt == "1102"){
-        this.QuestionnaireStatusShow =true;
-        }
+      }
+      else if (this.quoteDetails.vehicleDetails.regStatus === '03' && this.quoteDetails.vehicleDetails.registeredAt == "1102") {
+        this.questionnaireStatus = false;
+        this.RegistrationNoRequired = true;
+        this.RegistrationMarkRequired = true;
+        this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
+        this.additionalDetails.get('registrationMark').updateValueAndValidity();
+        this.additionalDetails.get('regNo').setValidators([Validators.required]);
+        this.additionalDetails.get('regNo').updateValueAndValidity();
+      }
+      if (this.quoteDetails.vehicleDetails.registeredAt == "1102") {
+        this.QuestionnaireStatusShow = true;
+      }
       this.translate.get('Yes').subscribe(value => {
         this.yes = value;
       });
@@ -267,23 +265,23 @@ export class AdditionalDetailsComponent implements OnInit {
           label: this.yes,
           value: 'Y'
         },];
-        this.options['questionnaire'] = [
-          {
-            label: 'Is the vehicle already registered in Dubai?',
-            value: '04'
-          }, {
-            label: 'First time registered in Dubai?',
-            value: 'N'
-          }, {
-            label: 'Renewing your existing vehicle in Dubai?',
-            value: '03'
-          }];
-       
-           if(( this.quoteDetails.vehicleDetails.registeredAt != "1102")||(this.quoteDetails.vehicleDetails.tribeQuesYN=="Y")){
-            this.additionalDetails.patchValue({
-              questionnaire: this.quoteDetails.vehicleDetails.regStatus
-            });
-           }
+      this.options['questionnaire'] = [
+        {
+          label: 'Is the vehicle already registered in Dubai?',
+          value: '04'
+        }, {
+          label: 'First time registered in Dubai?',
+          value: 'N'
+        }, {
+          label: 'Renewing your existing vehicle in Dubai?',
+          value: '03'
+        }];
+
+      if ((this.quoteDetails.vehicleDetails.registeredAt != "1102") || (this.quoteDetails.vehicleDetails.tribeQuesYN == "Y")) {
+        this.additionalDetails.patchValue({
+          questionnaire: this.quoteDetails.vehicleDetails.regStatus
+        });
+      }
       if ((!this.isReviseDetails) && (!this.isOldQuote)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
@@ -388,13 +386,13 @@ export class AdditionalDetailsComponent implements OnInit {
         plateCode = element.value;
       }
     });
-    if(this.additionalDetails.value['questionnaire']){
-  this.tribeQuesYN="Y";
-  this.tribeQuesValue=this.additionalDetails.value['questionnaire'];
+    if (this.additionalDetails.value['questionnaire']) {
+      this.tribeQuesYN = "Y";
+      this.tribeQuesValue = this.additionalDetails.value['questionnaire'];
     }
-    else{
-      this.tribeQuesYN="N";
-      this.tribeQuesValue=this.quoteDetails.vehicleDetails.regStatus;
+    else {
+      this.tribeQuesYN = "N";
+      this.tribeQuesValue = this.quoteDetails.vehicleDetails.regStatus;
     }
     let vehicledetails = {
       colorId: color,
@@ -407,7 +405,7 @@ export class AdditionalDetailsComponent implements OnInit {
       regNo: this.additionalDetails.value['regNo'],
       engineNo: this.additionalDetails.value['engineNo'],
       regStatus: this.tribeQuesValue,
-      tribeQuesYN:this.tribeQuesYN,
+      tribeQuesYN: this.tribeQuesYN,
       trim: this.quoteDetails.vehicleDetails.trim
     }
     if (vehicledetails.mortgagedYN === 'N') {
@@ -416,10 +414,10 @@ export class AdditionalDetailsComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-   // if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
-    //  this.updateEffectiveDate('change')
-  //  else
-     this.updateEffectiveDate()
+    // if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
+    //   this.updateEffectiveDate('change')
+    // else
+    this.updateEffectiveDate()
     this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
@@ -446,12 +444,12 @@ export class AdditionalDetailsComponent implements OnInit {
 
   registrationNoChange(regNoValue) {
     if (regNoValue.target.value.length > 0) {
-      this.RegistrationMarkRequired=true;
+      this.RegistrationMarkRequired = true;
       this.additionalDetails.get('registrationMark').setValidators(Validators.required);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
     else {
-      this.RegistrationMarkRequired=false;
+      this.RegistrationMarkRequired = false;
       this.additionalDetails.get('registrationMark').setValidators([]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
     }
@@ -459,25 +457,25 @@ export class AdditionalDetailsComponent implements OnInit {
   questionnaireStatusChange(value) {
     if (value === '04') {
       this.questionnaireStatus = true;
-      this.RegistrationNoRequired= true;
-      this.RegistrationMarkRequired=true;
+      this.RegistrationNoRequired = true;
+      this.RegistrationMarkRequired = true;
       this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
       this.additionalDetails.get('regNo').setValidators([Validators.required]);
       this.additionalDetails.get('regNo').updateValueAndValidity();
-    } else if(value === 'N'){
+    } else if (value === 'N') {
       this.questionnaireStatus = false;
-      this.RegistrationNoRequired= false;
-      this.RegistrationMarkRequired=false;
+      this.RegistrationNoRequired = false;
+      this.RegistrationMarkRequired = false;
       this.additionalDetails.get('registrationMark').setValidators([]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
       this.additionalDetails.get('regNo').setValidators([]);
       this.additionalDetails.get('regNo').updateValueAndValidity();
     }
-    else if(value === '03'){
+    else if (value === '03') {
       this.questionnaireStatus = false;
-      this.RegistrationNoRequired= true;
-      this.RegistrationMarkRequired=true;
+      this.RegistrationNoRequired = true;
+      this.RegistrationMarkRequired = true;
       this.additionalDetails.get('registrationMark').setValidators([Validators.required]);
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
       this.additionalDetails.get('regNo').setValidators([Validators.required]);
@@ -722,19 +720,14 @@ export class AdditionalDetailsComponent implements OnInit {
     let effectivDate;
     effectivDate = moment(new Date());
     if (this.isReviseDetails || this.isOldQuote) {
-          if (this.quoteDetails['startDate']) {
-      effectivDate = moment(this.quoteDetails['startDate']);
+      if (this.quoteDetails['startDate']) {
+        effectivDate = moment(this.quoteDetails['startDate']);
+      } else {
+        effectivDate = moment(new Date());
+      }
     } else {
       effectivDate = moment(new Date());
     }
-    } else {
-      effectivDate = moment(new Date());
-    }
-    // if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
-    //   effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
-    // } else {
-    //   effectivDate = moment(new Date());
-    // }
     this.additionalDetails.patchValue({
       effectiveDate: effectivDate
     });
@@ -807,7 +800,7 @@ export class AdditionalDetailsComponent implements OnInit {
 
   }
 
-  
+
   // dynamic 
   addMoreDocuments() {
     if (this.addMoreDoc) {
@@ -818,7 +811,7 @@ export class AdditionalDetailsComponent implements OnInit {
       loadAllDocs: 'Y'
     }
     if (this.DocUploadForm.status === 'INVALID') {
-      swal('','Please upload all mandatory documents.', 'error');
+      swal('', 'Please upload all mandatory documents.', 'error');
       return;
     }
     this.addMoreDoc = true;
@@ -828,11 +821,11 @@ export class AdditionalDetailsComponent implements OnInit {
       const result = response.filter(({ polDoId }) => !value.some(x => x.id == polDoId));
       let index = 4;
       result.forEach((element) => {
-      let fName, f=[,];
+        let fName, f = [,];
         this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
         if (this.uploadedDocs.length > 3) {
-          fName = this.uploadedDocs.filter(ele => 
-            ele.docId === element.polDoId.toString()   
+          fName = this.uploadedDocs.filter(ele =>
+            ele.docId === element.polDoId.toString()
           );
           if (fName.length > 0) {
             f = fName[0].fileName.split('_0_');
@@ -860,11 +853,11 @@ export class AdditionalDetailsComponent implements OnInit {
     this.subscription = this.coreService.postInputs('brokerservice/documentupload/getUploadDocName', {}, body).subscribe((response: any) => {
       if (response) {
         response.forEach((element, index) => {
-          let fName, f=[,];
+          let fName, f = [,];
           this.DocUploadForm.addControl(`documentName${index + 1}`, new FormControl('', (element.mandatoryYN && element.mandatoryYN == 'Y' ? Validators.required : [])));
           if (this.uploadedDocs.length > 0) {
-            fName = this.uploadedDocs.filter(ele => 
-              ele.docId === element.polDoId.toString()   
+            fName = this.uploadedDocs.filter(ele =>
+              ele.docId === element.polDoId.toString()
             );
             if (fName.length > 0) {
               f = fName[0].fileName.split('_0_');

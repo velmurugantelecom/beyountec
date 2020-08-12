@@ -54,6 +54,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public questionnaireStatus: boolean = false;
   public RegistrationMarkRequired: boolean = true;
   public QuestionnaireStatusShow: boolean = false;
+  public mortgagedYNDisabled: boolean = false;
   public uploadedDocs = []
   yes: any;
   no: any;
@@ -67,7 +68,7 @@ export class AdditionalDetailsComponent implements OnInit {
   filteredNationality: Observable<string[]>;
   filteredOccupation: Observable<string[]>;
   public maxEffectiveDate;
-  public today = moment(new Date());
+  public today = moment(new Date()).format("YYYY-MM-DD");
   public effectiveDateChanged = false
   public currentEffDate;
   public subscription: Subscription;
@@ -293,6 +294,10 @@ export class AdditionalDetailsComponent implements OnInit {
             mortgagedYN: '',
           });
         }
+      }
+      if (this.quoteDetails.productTypeId == '1116') {
+        this.mortgagedYNDisabled=true;
+        
       }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');

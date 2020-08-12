@@ -29,7 +29,7 @@
     "IsYourCar": "IS YOUR CAR A BRAND NEW?",
     "ChooseProduct": "Choose Product Type",
     "InsuredNameLabel": "Insured Name",
-    "InsuredNameArabicLabel": "Insured Name in Arabic",
+    "InsuredNameArabicLabel": "Insured Name",
     "AreaCode": "Area Code",
     "MobileNoLabel": "Mobile No",
     "MobileCode": "Mobile Code",
@@ -353,7 +353,7 @@
     "SearchbyVehicleDetails": "Search by Vehicle Details",
     "Required": {
         "Dob": "Date of Birth is required",
-        "InsuredNameArabic": "Insured Name in Arabic is required",
+        "InsuredNameArabic": "Insured Name is required",
         "MobileNo": "Mobile No is required",
         "Email": "Email is required",
         "ChassisNo": "Chassis Number is required",
@@ -439,7 +439,7 @@
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",
         "TaxRegNo": "Enter Tax Reg. No",
-        "InsuredNameArabic": "Enter Insured Name in Arabic",
+        "InsuredNameArabic": "Enter Insured Name",
         "MobileNo": "Enter Mobile No",
         "Email": "Enter Email",
         "ChassisNo": "Enter Chassis No",

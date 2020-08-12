@@ -99,7 +99,7 @@ export class NewMotorInfoScreen implements OnInit {
   chassisNumber = '';
   // gauge properties
   gaugeType = "semi";
-  gaugeValue;
+  gaugeValue = 0;
   minValue = 0;
   maxValue = 300000;
   public language: any;
@@ -151,6 +151,7 @@ export class NewMotorInfoScreen implements OnInit {
       vehicleTypeId: ['', []],
       noOfDoors: ['', []]
     });
+    // this.vehicleForm.get('vehicleValue').setValue()
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
       fullName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],

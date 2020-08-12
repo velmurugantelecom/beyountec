@@ -54,8 +54,8 @@ export class AdditionalDetailsComponent implements OnInit {
   public questionnaireStatus: boolean = false;
   public RegistrationMarkRequired: boolean = true;
   public QuestionnaireStatusShow: boolean = false;
+  public uploadedDocs = [];
   public mortgagedYNDisabled: boolean = false;
-  public uploadedDocs = []
   yes: any;
   no: any;
   public language: any;
@@ -296,8 +296,7 @@ export class AdditionalDetailsComponent implements OnInit {
         }
       }
       if (this.quoteDetails.productTypeId == '1116') {
-        this.mortgagedYNDisabled=true;
-        
+        this.mortgagedYNDisabled=true; 
       }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');

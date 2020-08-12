@@ -191,10 +191,14 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   openAttachment(value) {
+    console.log('called')
     let fName = `${this.quoteDetails.quoteId}_0_${value}`;
     this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fName).subscribe((response: any) => {
-      // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-      //   window.navigator.msSaveOrOpenBlob(response);
+      // console.log('kaboom', response)
+      // if (window.navigator && window.navigator.msSaveBlob) {
+      //   console.log('boom')
+      //   var newBlob = new Blob([response], {type: "application/pdf"})
+      //   window.navigator.msSaveBlob(newBlob);
       //   return;
       // } 
       var link = document.createElement("a");
@@ -238,7 +242,10 @@ export class QuoteSummaryComponent implements OnInit {
     this.spinner.show();
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
       let fileUrl = window.URL.createObjectURL(response);
-      window.open(fileUrl, '_blank');
+      var newWindow = window.open(fileUrl, '_blank');
+         setTimeout(function () {
+           newWindow.document.title = windowName;
+         }, 1000);
       this.spinner.hide();
     }, err => {
       this.spinner.hide();

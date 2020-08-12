@@ -1,7 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import {
     MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule,
-    MatListModule, MatRadioModule, MatSliderModule
+    MatListModule, MatRadioModule, MatSliderModule, MatTooltipModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -53,6 +53,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatBadgeModule,
         MatTabsModule,
         MatAutocompleteModule,
+        MatTooltipModule
         // FlexLayoutModule
       
     ],
@@ -88,6 +89,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatTabsModule,
         MatSliderModule,
         MatAutocompleteModule,
+        MatTooltipModule
         // FlexLayoutModule,
     ],
 })

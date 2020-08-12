@@ -322,7 +322,7 @@
                         </ngx-gauge>
                     </div>
                     <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-9">
-                        <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (input)="gaugeChange()">
+                        <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
                     </div>
                 </div>
             </form>

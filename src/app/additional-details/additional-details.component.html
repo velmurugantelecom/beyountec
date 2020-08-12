@@ -454,33 +454,21 @@
             <mat-step>
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
-                        <div class="m-3 row" *ngFor="let container of fileContainer ; index as i">
-                            <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 mt-2">
-                                <label class="upload-label">{{ container.label}}</label>
+                        <div class="m-1 row" *ngFor="let container of fileContainer ; index as i">
+                            <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 pl-1 pr-0 mt-2">
+                                <label class="upload-label" #tooltip="matTooltip" (click)="tooltip.toggle()" matTooltip="{{container.label}}" matTooltipPosition="above" aria-label="Button that shows a tooltip">{{ container.label | slice:0:20 }} <span *ngIf="container.label.length>20">...</span></label>
                                 <div class="upload-btn-wrapper">
-                                    <input type="file" (change)="selectFile($event, container.id, i, container.label)" formControlName="{{ container.controlName }}" id="{{container.id}}" accept="image/*, .pdf" />
                                     <label class="placeFont mb-0 blue-font" (click)="openAttachment(container.value)">{{container.value | slice:0:20}}</label>
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 col-2 px-0 ml-1 mt-2">
-                                <img (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/scan-upload.png" class="img-fluid" />
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 px-0 mt-2">
-                                <img src="./assets/file-upload.png" class="img-fluid" (click)="uploadTrigger.click()" />
+                            <div class="col-lg-2 col-md-5 col-sm-5 col-xs-5 col-5 px-0  mt-2">
+                                <img style="object-fit: cover;" (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/scan-upload.png" />
+
+                                <img style="object-fit: cover;border-left: 1px solid white;" src="./assets/file-upload.png" class="img-fluid " (click)="uploadTrigger.click()" />
                                 <div class="upload-btn-wrapper2">
                                     <input type="file" (change)="selectFile($event ,container.id,i,container.label)" #uploadTrigger formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 col-2 px-0 bor-box ml-1">
-                                <img (click)="openDialog(container.id,i,container.label, container.controlName)" src="./assets/motor/insurer-details/camera.png" class="px-3 pt-2 img-fluid" />
-                                <p class="px-0 f8 mb-0">Scan & Upload</p>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 px-0">
-                                <img src="./assets/icon6.png" class="pl-1 pt-1 img-fluid" (click)="uploadTrigger.click()" />
-                                <div class="upload-btn-wrapper2">
-                                    <input type="file" (change)="selectFile($event, container.id, i, container.label)" #uploadTrigger formControlName="{{ container.controlName }}" accept="image/*, .pdf" />
-                                </div>
-                            </div> -->
                             <p style="margin-top:2px;margin-left:4px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
                                 {{container.label}} is required</p>
                             <ng-template #elseBlock>

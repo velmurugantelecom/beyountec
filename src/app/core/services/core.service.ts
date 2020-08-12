@@ -252,4 +252,8 @@ export class CoreService {
   mergeDocument(url) {
     return this.http.get(this.DevEndpoint + url, { responseType: "blob" });
   }
+
+  // mergeDocument(url) {
+  //   return this.http.get(this.DevEndpoint + url);
+  // }
 }

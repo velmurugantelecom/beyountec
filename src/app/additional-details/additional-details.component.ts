@@ -67,7 +67,7 @@ export class AdditionalDetailsComponent implements OnInit {
   filteredNationality: Observable<string[]>;
   filteredOccupation: Observable<string[]>;
   public maxEffectiveDate;
-  public today = moment(new Date()).subtract(1, 'd')
+  public today = moment(new Date());
   public effectiveDateChanged = false
   public currentEffDate;
   public subscription: Subscription;
@@ -174,14 +174,15 @@ export class AdditionalDetailsComponent implements OnInit {
     }
     return formatDate(date);
   }
-  updateEffectiveDate(type) {
+  updateEffectiveDate() {
     let effectiveDate;
-    if (type === 'change') {
-      this.effectiveDateChanged = true;
-      effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    } else {
-      effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
-    }
+    // if (type === 'change') {
+    //   this.effectiveDateChanged = true;
+    //   effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
+    // } else {
+      
+    // }
+    effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     this.effetiveDates = this.dateConversion(effectiveDate);
     this.nowTime = this.dateConversion(new Date());
     this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
@@ -415,10 +416,10 @@ export class AdditionalDetailsComponent implements OnInit {
     let params = {
       quoteNumber: this.quoteNo
     }
-    if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
-      this.updateEffectiveDate('change')
-    else
-      this.updateEffectiveDate(null)
+   // if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
+    //  this.updateEffectiveDate('change')
+  //  else
+     this.updateEffectiveDate()
     this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
       this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
         insuredDetails, null).subscribe(response => {
@@ -719,11 +720,21 @@ export class AdditionalDetailsComponent implements OnInit {
     // this.selectedNationality = this.quoteDetails.vehicleDetails['nationalityDesc'];
     // this.selectedOccupation = this.quoteDetails.vehicleDetails['professionName'];
     let effectivDate;
-    if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
-      effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
+    effectivDate = moment(new Date());
+    if (this.isReviseDetails || this.isOldQuote) {
+          if (this.quoteDetails['startDate']) {
+      effectivDate = moment(this.quoteDetails['startDate']);
     } else {
       effectivDate = moment(new Date());
     }
+    } else {
+      effectivDate = moment(new Date());
+    }
+    // if (this.quoteDetails.vehicleDetails['prevPolicyExpDate']) {
+    //   effectivDate = moment(this.quoteDetails.vehicleDetails['prevPolicyExpDate']).add(1, 'd');
+    // } else {
+    //   effectivDate = moment(new Date());
+    // }
     this.additionalDetails.patchValue({
       effectiveDate: effectivDate
     });

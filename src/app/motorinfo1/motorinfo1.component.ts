@@ -89,6 +89,7 @@ export class NewMotorInfoScreen implements OnInit {
   public searchType;
   subscription: Subscription;
   public manualOptions: any = {};
+  public currentYear:any;
   minIssueDate
   dobVDate;
   dobMinVDate;
@@ -207,6 +208,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   onFormValueChanges() {
+    this.currentYear=moment().format("YYYY-01-01");
     this.insuredForm.get('dob').statusChanges.subscribe(val => {
       if (val === 'VALID') {
         let dob = this.insuredForm.get('dob').value;

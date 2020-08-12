@@ -355,7 +355,7 @@
                 <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
                     <mat-form-field appearance="outline">
                         <mat-label>{{'PrevPolExpiryDate'| translate }}</mat-label>
-                        <input matInput [owlDateTime]="expDate" [owlDateTimeTrigger]="expDate" placeholder="{{ 'PlaceHolder.PrevPolExpiryDate' | translate }}" formControlName="prevPolicyExpDate" required AutoDateFormat />
+                        <input matInput [owlDateTime]="expDate" [owlDateTimeTrigger]="expDate" placeholder="{{ 'PlaceHolder.PrevPolExpiryDate' | translate }}" formControlName="prevPolicyExpDate" [min]="currentYear"  required AutoDateFormat />
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #expDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="expDate">
                             date_range</mat-icon>

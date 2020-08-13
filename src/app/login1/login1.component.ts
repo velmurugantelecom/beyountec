@@ -15,6 +15,8 @@ import { Subscription } from 'rxjs';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { AppService } from '../core/services/app.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MediaObserver } from '@angular/flex-layout';
+
 function confirmPassword(control: AbstractControl) {
   if (!control.parent || !control) {
     return;
@@ -60,6 +62,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public captchaSuccess = false;
   public captchaIsExpired = false;
   public captchaResponse?: string;
+  public showWindow:any="guestFlow";
   public email;
   public theme: 'light' | 'dark' = 'light';
   public size: 'compact' | 'normal' = 'normal';
@@ -96,7 +99,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     private appService: AppService,
     private dataService: DataService,
     public runtimeConfigService: RuntimeConfigService,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    public media: MediaObserver) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.formType = event.url.slice(1).split("/")[0];
@@ -373,6 +377,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   verifyFPOTP() {
+    if (this.ForgotForm.status === 'INVALID')
+    return;
     this.subscription = this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.forgotPWToken}&otp=${this.ForgotForm.value['otp']}`, '').subscribe(res => {
       if (res) {
         this.router.navigate(['/resetPassword', this.forgotPWToken, 'FP'])
@@ -446,11 +452,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.showPassword = true;
     });
   }
+ 
+  scrollToFunc(value:string){
+    this.showWindow=value
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
 }
 
 

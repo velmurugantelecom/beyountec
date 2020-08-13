@@ -1,12 +1,12 @@
-<div class="row loginBg ">
-    <div class="col-12 col-xs-12  col-sm-6  col-md-7  col-lg-9 app-highlight loginimage mt-2">
-        <div class="row m-2 p-3">
+<div class="row loginBg m-0 p-0">
+    <div *ngIf="!media.isActive('xs') || showWindow =='guestFlow'" id="guestFlow" class="col-12  col-xs-12  col-sm-6   col-md-7  col-lg-9  app-highlight loginimage mt-2">
+        <div class="row m-2 ">
             <div class="fgreen mx-auto headFtSize">
                 {{ 'GetYourQuote' | translate }}
             </div>
         </div>
         <hr class="hr-line">
-        <div class="py-5 my-4 mx-auto ">
+        <div class="infoMarginCss mx-auto ">
             <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off" class="m-4">
                 <div class="my-4 mx-0">
                     <div class="row radiocenter m-4">
@@ -33,7 +33,7 @@
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-8 pl-0">
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'MobileNoLabel' | translate }}</mat-label>
-                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" NumbersOnly formControlName="mobileNo" required maxlength="7">
+                                <input matInput placeholder="{{ 'PlaceHolder.MobileNo' | translate }}" formControlName="mobileNo" required maxlength="7" NumbersOnly>
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.required">
                                     {{ 'Required.MobileNo' | translate }} </mat-error>
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.pattern">
@@ -42,7 +42,6 @@
                                 <mat-error *ngIf="formCtrls.mobileNo.errors && formCtrls.mobileNo.errors.minlength">
                                     {{ 'MobileNoLength' | translate }}
                                 </mat-error>
-
                             </mat-form-field>
                         </div>
                     </div>
@@ -59,27 +58,38 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-4 ">
+                <div class="row justify-content-center">
                     <button type="submit" class="col-md-3 col-sm-4 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn">
                         {{ 'Continue' | translate }}
                     </button>
                 </div>
+                <div class="centercss mt-2">
+                    <a style="text-decoration: underline;" class="f14 textGreen" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">{{ 'RetrieveQuote' | translate }}</a>
+                </div>
+
+                <div class="mt-2 d-block d-sm-none">
+                    <p class="centercss f14 m-0 p-0">Existing User?&nbsp;
+                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('loginForm')">Login</a>
+                    </p>
+                </div>
             </form>
-            <div class="centercss mt-4">
-                <a class="f14 textGreen" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">{{ 'RetrieveQuote' | translate }}</a>
-            </div>
+
         </div>
     </div>
-    <div class="col-12 col-xs-12  col-sm-6  col-md-5 col-lg-3  mat-elevation-z1" id="loginForm">
-        <div class="login-form">
-            <div class="mx-auto img-container mt-1">
+
+    <div *ngIf="!media.isActive('xs') || showWindow =='loginForm' " class="col-12  col-xs-12  col-sm-6   col-md-5  col-lg-3  mat-elevation-z1 centercss" id="loginForm">
+
+        <div class="login-form ">
+            <div class="LoginFtSize centercss mb-3">{{'LoginTo' | translate }}</div>
+
+            <!-- <div class="d-flex justify-content-center img-container mt-1">
                 <img src="./assets/home/AFNIC_Logo.png" alt="" />
-            </div>
+            </div> -->
 
             <!-- Login Form -->
-            <form class="pt-4" [formGroup]="LoginForm" focusInvalidInput autocomplete="off" *ngIf="formType=='new-login'">
-                <div class="LoginFtSize centercss mb-3">{{'LoginTo' | translate }}</div>
-                <mat-form-field class="m-1" appearance="outline">
+
+            <form [formGroup]="LoginForm" focusInvalidInput autocomplete="off" *ngIf="formType=='new-login'">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'UsernameLabel' | translate }}</mat-label>
                     <input matInput placeholder="{{'PlaceHolder.Username' | translate }}" formControlName="userName">
                     <mat-icon matSuffix>perm_identity &nbsp;&nbsp;</mat-icon>
@@ -87,9 +97,9 @@
                         {{'Required.Username' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="m-1" appearance="outline">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'PasswordLabel' | translate }}</mat-label>
-                    <input matInput id="myInput" type="password" placeholder="{{'PlaceHolder.Password' | translate }}" formControlName="password">
+                    <input matInput id="myInput" type="password" placeholder="{{'PlaceHolder.Password' | translate }}" formControlName="password" autocomplete="new-password">
                     <mat-icon class="custom-cursor" matSuffix (click)="showHidePwd('myInput')">visibility &nbsp;&nbsp;
                     </mat-icon>
                     <mat-error *ngIf="LoginForm.controls.password.hasError('required')">
@@ -108,8 +118,13 @@
                 <div class="centercss mt-2">
                     <button type="submit" class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn" (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>
-                <div class="mt-4 ml-1 centercss" (click)="ForgotNavigate()" style="text-decoration: underline;">
+                <div class="mt-2 ml-1 centercss" (click)="ForgotNavigate()" style="text-decoration: underline;">
                     <a class="f14 textGreen">{{'ForgotPassword' | translate }}</a>
+                </div>
+                <div class="mt-2 d-block d-sm-none">
+                    <p class="centercss f14 m-0 p-0">New User?&nbsp;
+                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('guestFlow')">click here</a>
+                    </p>
                 </div>
             </form>
 

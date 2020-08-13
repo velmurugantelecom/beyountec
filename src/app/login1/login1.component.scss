@@ -28,7 +28,7 @@ hr {
 }
 
 .img-container {
-    width: 128px;
+    // width: 128px;
     margin-bottom: 32px;
 }
 
@@ -99,10 +99,17 @@ mat-error+mat-error {
     display: none;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 
 @media only screen and (max-width: 600px) {
+    // .headFtSize{
+    // font-size: 20px;
+    // }
     .LoginFtSize {
         font-size: 20px;
     }
@@ -112,6 +119,10 @@ mat-error+mat-error {
 /* Small devices (portrait tablets and large phones, 600px and up) */
 
 @media only screen and (min-width: 600px) {
+    .infoMarginCss {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
     .captcharesize {
         height: 85px;
     }
@@ -121,6 +132,10 @@ mat-error+mat-error {
 /* Medium devices (landscape tablets, 768px and up) */
 
 @media only screen and (min-width: 768px) {
+    .infoMarginCss {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
     .captcharesize {
         height: 85px;
     }
@@ -130,9 +145,13 @@ mat-error+mat-error {
 /* Large devices (laptops/desktops, 992px and up) */
 
 @media only screen and (min-width: 992px) {
+    .infoMarginCss {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
     // .captcharesize{
     //   height: 85px;
-    // } 
+    // }
     .radiocenter {
         display: flex;
         justify-content: center;
@@ -149,6 +168,10 @@ mat-error+mat-error {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 
 @media only screen and (min-width: 1200px) {
+    .infoMarginCss {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
     // .captcharesize{
     //   height: 85px;
     // }

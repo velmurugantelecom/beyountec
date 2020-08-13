@@ -20,7 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-// import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from "@angular/flex-layout";
 @NgModule({
     imports: [
         CommonModule,
@@ -53,8 +53,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatBadgeModule,
         MatTabsModule,
         MatAutocompleteModule,
-        MatTooltipModule
-        // FlexLayoutModule
+        MatTooltipModule,
+        FlexLayoutModule
       
     ],
     exports: [
@@ -89,8 +89,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatTabsModule,
         MatSliderModule,
         MatAutocompleteModule,
-        MatTooltipModule
-        // FlexLayoutModule,
+        MatTooltipModule,
+        FlexLayoutModule
     ],
 })
 export class AppMaterialModule { }

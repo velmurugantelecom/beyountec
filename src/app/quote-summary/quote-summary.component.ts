@@ -191,16 +191,13 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   openAttachment(value) {
-    console.log('called')
     let fName = `${this.quoteDetails.quoteId}_0_${value}`;
     this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fName).subscribe((response: any) => {
-      // console.log('kaboom', response)
-      // if (window.navigator && window.navigator.msSaveBlob) {
-      //   console.log('boom')
-      //   var newBlob = new Blob([response], {type: "application/pdf"})
-      //   window.navigator.msSaveBlob(newBlob);
-      //   return;
-      // } 
+      if (window.navigator && window.navigator.msSaveBlob) {
+        var newBlob = new Blob([response], { type: response.type })
+        window.navigator.msSaveBlob(newBlob);
+        return;
+      }
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
       link.download = value;
@@ -241,12 +238,20 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.spinner.show();
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
-      let fileUrl = window.URL.createObjectURL(response);
-      var newWindow = window.open(fileUrl, '_blank');
-         setTimeout(function () {
-           newWindow.document.title = windowName;
-         }, 1000);
-      this.spinner.hide();
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        console.log('IE Download')
+        var newBlob = new Blob([response], { type: response.type })
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        this.spinner.hide();
+      } else {
+        console.log('Normal Download')
+        let fileUrl = window.URL.createObjectURL(response);
+        var newWindow = window.open(fileUrl, '_blank');
+        setTimeout(function () {
+          newWindow.document.title = windowName;
+        }, 1000);
+        this.spinner.hide();
+      }
     }, err => {
       this.spinner.hide();
     })

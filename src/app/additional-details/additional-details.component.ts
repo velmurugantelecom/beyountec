@@ -608,6 +608,11 @@ export class AdditionalDetailsComponent implements OnInit {
     let url = `brokerservice/quotes/quotePdfreport?quoteNumber=${this.quoteNo}`
     this.subscription = this.coreService.getDownload(url, '').subscribe((response) => {
       if (response) {
+        if (window.navigator && window.navigator.msSaveBlob) {
+          var newBlob = new Blob([response], {type: response.type})
+          window.navigator.msSaveBlob(newBlob);
+          return;
+        } 
         var link = document.createElement("a");
         link.href = URL.createObjectURL(response);
         link.download = `Motor_Insurance_Quote.pdf`;
@@ -619,6 +624,11 @@ export class AdditionalDetailsComponent implements OnInit {
   openAttachment(value) {
     let fileName = `${this.quoteDetails.quoteId}_0_${value}`;
     this.subscription = this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fileName).subscribe((response: any) => {
+      if (window.navigator && window.navigator.msSaveBlob) {
+        var newBlob = new Blob([response], {type: response.type})
+        window.navigator.msSaveBlob(newBlob);
+        return;
+      } 
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
       link.download = value;

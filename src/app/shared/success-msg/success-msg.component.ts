@@ -99,6 +99,11 @@ export class SuccessMsgComponent implements OnInit {
     let url = 'brokerservice/document/policyDocs?policyId=' + this.policyId;
     this.coreService.getDownload(url, '').subscribe((response) => {
       if (response) {
+        if (window.navigator && window.navigator.msSaveBlob) {
+          var newBlob = new Blob([response], {type: response.type})
+          window.navigator.msSaveBlob(newBlob);
+          return;
+        } 
         var link = document.createElement("a");
         link.href = URL.createObjectURL(response);
         link.download = `Motor Insurance`;

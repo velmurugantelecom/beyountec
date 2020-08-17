@@ -69,14 +69,15 @@
 
                         <mat-form-field appearance="outline">
 
-                            <input matInput placeholder="{{ 'PlaceHolder.EffectiveDate' | translate }}" formControlName="effectivedate" required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [min]="minEffectiveDate" [max]="maxEffectiveDate">
+                            <input #pickerInput matInput placeholder="{{ 'PlaceHolder.EffectiveDate' | translate }}" formControlName="effectivedate" required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [min]="minEffectiveDate" [max]="maxEffectiveDate">
                             <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dt1></owl-date-time>
                             <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
-                            <mat-error *ngIf="endorsmentreq.controls.effectivedate.hasError('required')">{{ 'Required.EffectiveDate' | translate }}
+                            <!-- <mat-error *ngIf="endorsmentreq.controls.effectivedate.hasError('required')">{{ 'Required.EffectiveDate' | translate }}
                             </mat-error>
                             <mat-error *ngIf="endorsmentreq.controls.effectivedate.hasError('owlDateTimeMin') || endorsmentreq.controls.effectivedate.hasError('owlDateTimeMax') ">
                                 {{ 'Invalid.PolicyPeriod' | translate }}
-                            </mat-error>
+                            </mat-error> -->
+                            <mat-error >{{getErrorMessage(pickerInput.value)}}</mat-error>
 
                         </mat-form-field>
 

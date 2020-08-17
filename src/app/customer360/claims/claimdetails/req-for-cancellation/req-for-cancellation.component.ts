@@ -18,6 +18,7 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
   navParams: any = {};
   public minEffectiveDate;
   public maxEffectiveDate: Date;
+  public selectedEffectiveDate:any;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
   constructor(
     private router: Router,
@@ -52,7 +53,7 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
         this.cancelReq.patchValue({ emailid: value.data.userDetails.email, contactme: value.data.userDetails.mobileNo })
 
         //setting min and max date for effective date
-        this.minEffectiveDate = moment(new Date(value.data.startDate)).subtract(1, 'd');
+        this.minEffectiveDate = moment(new Date(value.data.startDate)).format("YYYY-MM-DD");
         this.maxEffectiveDate = new Date(value.data.endDate);
       }
 
@@ -101,5 +102,42 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
   }
 
   onDateChange(event) {
+  }
+
+  getErrorMessage(pickerInput: string): string {
+    if (!pickerInput || pickerInput === '' ) {
+      return 'Effective Date is required';
+    }
+    return this.isMyDateFormat(pickerInput);
+  }
+  isMyDateFormat(date: string): string {
+    this.selectedEffectiveDate=date;
+    let selectedMinEffectiveDateChangedFormat=this.dateConversion(this.minEffectiveDate);
+    let selectedEffectiveDateChangedFormat=this.dateConversion(this.selectedEffectiveDate) ;
+    let selectedMaxEffectiveDateChangedFormat=this.dateConversion(this.maxEffectiveDate);
+    if (date.length !== 10) {
+      return 'Please enter valid input';
+    } else {
+     if ( selectedMinEffectiveDateChangedFormat > selectedEffectiveDateChangedFormat) {
+        return 'Effective date cannot be less than Policy period';
+      } else if (selectedMaxEffectiveDateChangedFormat < selectedEffectiveDateChangedFormat) {
+        return 'Effective date cannot be greater than policy period';
+      }
+    }
+   // return 'Unknown error.';
+  }
+
+  dateConversion(date: any) {
+    function formatDate(date) {
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [year, month, day].join('-');
+    }
+    return formatDate(date);
   }
 }

@@ -15,7 +15,7 @@ import { DropDownService } from 'src/app/core/services/dropdown.service';
   styleUrls: ['./dash-notification.component.scss']
 })
 export class DashNotificationComponent implements OnInit {
-  displayedColumns: string[] =['PolicyNo', 'QuoteNo', 'startDate', 'endDate', 'product', 'status'];
+  displayedColumns: string[] =['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status'];
   selectedColumns: any = [];
   tableData: any = [];
   subscription: Subscription;
@@ -43,7 +43,7 @@ export class DashNotificationComponent implements OnInit {
     this.selectedColumns['Quotes'] = ['quoteNo', 'insuredName', 'product', 'emailId', 'status'];
     this.selectedColumns['Renewal'] = ['quoteNo', 'insuredName', 'product', 'startDate', 'endDate', 'status'];
     this.selectedColumns['Payment'] = ['refNo', 'insuredName', 'dueDate', 'amount'];
-    this.selectedColumns['Policy'] = ['PolicyNo', 'QuoteNo', 'startDate', 'endDate', 'product', 'status'];
+    this.selectedColumns['Policy'] = ['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status'];
 
 
     // this.selectedColumns['Comments'] =['quote_number', 'client', 'product', 'email_address', 'status'];

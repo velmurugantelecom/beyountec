@@ -162,6 +162,9 @@ export class ReportALOssComponent implements OnInit {
   customer360() {
     this.router.navigate(['/Customer360'], { queryParams: { policyNo: this.navParams.policyNo } });
   }
+  policyPage() {
+    this.router.navigate(['/User/dashboard']);
+  }
 
   onDateChange(event) {
     this.minDate = this.ReportaLoss.value.lossDate

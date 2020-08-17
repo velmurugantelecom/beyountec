@@ -58,7 +58,7 @@ export class NewMotorInfoScreen implements OnInit {
   public today = new Date()
   public items = [];
   public selected = [];
-  public basicUserDetails:any = {};
+  public basicUserDetails: any = {};
   public chassisNoForm: FormGroup;
   public vehicleForm: FormGroup;
   public insuredForm: FormGroup;
@@ -89,7 +89,7 @@ export class NewMotorInfoScreen implements OnInit {
   public searchType;
   subscription: Subscription;
   public manualOptions: any = {};
-  public currentYear:any;
+  public currentYear: any;
 
   minIssueDate
   dobVDate;
@@ -103,7 +103,7 @@ export class NewMotorInfoScreen implements OnInit {
   minValue = 0;
   maxValue = 300000;
   public language: any;
-  public mortgagedYn:any;
+  public mortgagedYn: any;
 
   constructor(private dataService: DataService,
     private formBuilder: FormBuilder,
@@ -154,7 +154,7 @@ export class NewMotorInfoScreen implements OnInit {
     // this.vehicleForm.get('vehicleValue').setValue()
     this.insuredForm = this.formBuilder.group({
       prefix: ['', [Validators.required]],
-      fullName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
+      fullName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       dob: ['', [Validators.required]]
     });
 
@@ -210,7 +210,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   onFormValueChanges() {
-    this.currentYear=moment().format("YYYY-01-01");
+    this.currentYear = moment().format("YYYY-01-01");
     this.insuredForm.get('dob').statusChanges.subscribe(val => {
       if (val === 'VALID') {
         let dob = this.insuredForm.get('dob').value;
@@ -300,10 +300,10 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   checkTCNumberAndChassisNoStatus() {
-        if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && this.checkTcNoStatus &&
-         (this.vehicleForm.controls['chassisNo'].status === 'VALID' || this.vehicleForm.controls['chassisNo'].status === 'DISABLED')) {
-          setTimeout(() => this.getUserDetailsByTcNo(), 1000);
-      }
+    if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && this.checkTcNoStatus &&
+      (this.vehicleForm.controls['chassisNo'].status === 'VALID' || this.vehicleForm.controls['chassisNo'].status === 'DISABLED')) {
+      setTimeout(() => this.getUserDetailsByTcNo(), 1000);
+    }
   }
 
   patchBasicUserDetails(value) {
@@ -554,7 +554,7 @@ export class NewMotorInfoScreen implements OnInit {
         if (data['vehicleDetails']['registeredDate']['_d']) {
           data['vehicleDetails']['registeredDate'] = moment(data['vehicleDetails']['registeredDate']).format(
             "YYYY-MM-DDTHH:mm:ss.sss"
-           )
+          )
           // data['vehicleDetails']['registeredDate'] = new Date(data['vehicleDetails']['registeredDate']);
           // data['vehicleDetails']['registeredDate'].setDate(data['vehicleDetails']['registeredDate'].getDate() + 1)
         }
@@ -567,9 +567,9 @@ export class NewMotorInfoScreen implements OnInit {
       }
       // auto populating claimsHistory
       if (data['vehicleDetails']['ncdYears'])
-      data['vehicleDetails']['claimsHistory'] = "3";
-      else 
-      data['vehicleDetails']['claimsHistory'] = null;
+        data['vehicleDetails']['claimsHistory'] = "3";
+      else
+        data['vehicleDetails']['claimsHistory'] = null;
       if (this.isLoggedInUser) {
         data['customerId'] = this.loggedInUserName;
       }
@@ -578,7 +578,7 @@ export class NewMotorInfoScreen implements OnInit {
       data['vehicleDetails']['registerNumber'] = this.additionalDetails['registerNumber'];
       data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
       data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
-      data['vehicleDetails']['mortgagedYn'] =this.mortgagedYn;
+      data['vehicleDetails']['mortgagedYn'] = this.mortgagedYn;
       // validating tc & chassis numbers
       // let params = {
       //   chassisNo: this.vehicleForm.getRawValue().chassisNo,
@@ -648,21 +648,21 @@ export class NewMotorInfoScreen implements OnInit {
 
     }
   }
-  
+
   goBack() {
     if (this.isLoggedInUser) {
       this.router.navigate(['/User/dashboard'])
     } else {
-      if(this.quoteNo){
+      if (this.quoteNo) {
         this.router.navigate(['/new-login'], {
-          queryParams: { reviseDetails: true,quoteNo:this.quoteNo }
+          queryParams: { reviseDetails: true, quoteNo: this.quoteNo }
         })
       }
-      else{
-      this.router.navigate(['/new-login'], {
-        queryParams: { reviseDetails: true }
-      })
-    }
+      else {
+        this.router.navigate(['/new-login'], {
+          queryParams: { reviseDetails: true }
+        })
+      }
     }
   }
 
@@ -744,7 +744,7 @@ export class NewMotorInfoScreen implements OnInit {
         });
         this.patchAdditionalDetails(res);
       }
-      this.mortgagedYn=res.vehicleDetails.mortgagedYn;
+      this.mortgagedYn = res.vehicleDetails.mortgagedYn;
     }, err => {
     });
   }
@@ -842,20 +842,20 @@ export class NewMotorInfoScreen implements OnInit {
     })
     if (value === '1102') {
       this.tcNoLength = 8;
-      if (this.vehicleForm.get('tcFileNumber').value  && this.vehicleForm.get('tcFileNumber').value.length === 10)
-      this.vehicleForm.get('tcFileNumber').setValue(null)
+      if (this.vehicleForm.get('tcFileNumber').value && this.vehicleForm.get('tcFileNumber').value.length === 10)
+        this.vehicleForm.get('tcFileNumber').setValue(null)
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     } else {
       this.tcNoLength = 10;
       if (this.vehicleForm.get('tcFileNumber').value && this.vehicleForm.get('tcFileNumber').value.length === 8)
-      this.vehicleForm.get('tcFileNumber').setValue(null)
+        this.vehicleForm.get('tcFileNumber').setValue(null)
       this.vehicleForm.get('tcFileNumber').setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]);
       this.vehicleForm.get('tcFileNumber').updateValueAndValidity();
     }
   }
 
-  trimChanged(event:any) {
+  trimChanged(event: any) {
     this.enableGridBtn = false;
     this.selectedTrim = event.target.value
   }
@@ -887,10 +887,24 @@ export class NewMotorInfoScreen implements OnInit {
   validateTCnoAndChassisNo(params, data) {
     this.spinner.show();
     this.subscription = this.coreService.getInputsDbsync('validateChassisNoAndTcNo', params).subscribe(res => {
+      this.spinner.hide();
       if (res.responseCode === -1) {
-        this.fetchAllPlans(data);
+        var slider = document.createElement("input");
+        slider.type = "range";
+        swal({
+          title: "Are you sure?",
+          text: "Please Confirm Chassis No. and TC number entered as per Mulkiya",
+          icon: "warning",
+          dangerMode: true,
+          buttons: {
+            cancel: true,
+            confirm: true,
+          },
+        }).then(val => {
+          if (val)
+            this.fetchAllPlans(data);
+        });
       } else {
-        this.spinner.hide();
         let errorMsg = '';
         switch (res.responseCode) {
           case 1: {
@@ -917,6 +931,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   // Fetching Plan Details
   fetchAllPlans(data) {
+    this.spinner.show()
     this.subscription = this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
       this.spinner.hide();
       if (response.status === 'VF') {
@@ -1154,9 +1169,9 @@ export class VehicleBottomSheet {
   public selectedData: any;
   constructor(private _bottomSheetRef: MatBottomSheetRef<VehicleBottomSheet>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
-      this.selectedData = data.data;
-      console.log(this.selectedData)
-    }
+    this.selectedData = data.data;
+    console.log(this.selectedData)
+  }
 
   closeSheet(): void {
     this._bottomSheetRef.dismiss();

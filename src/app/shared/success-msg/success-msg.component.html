@@ -10,6 +10,9 @@
         </div>
         <div *ngIf="policyNo">
             <p class="mt-4"> {{'PolicyNoHash' | translate }}: {{policyNo}}</p>
+            <div class="text-color mb-1" *ngIf="activateAccount">
+                Click <strong>Activate Account</strong> to activate your account
+            </div>
             <div *ngIf="activateAccount" class="centercss mb-3">
                 <button class="btn btn-home button fwhite bggreen centercss" (click)="activateProfile()">Activate Account</button>
             </div>

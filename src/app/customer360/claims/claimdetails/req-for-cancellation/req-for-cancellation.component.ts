@@ -93,9 +93,6 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
     });
   }
 
-  customer360() {
-    this.router.navigate(['/Customer360'], { queryParams: { policyNo: this.navParams.policyNo } });
-  }
 
   get formCtrls() {
     return this.cancelReq.controls;
@@ -139,5 +136,12 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
       return [year, month, day].join('-');
     }
     return formatDate(date);
+  }
+
+  customer360() {
+    this.router.navigate(['/Customer360'], { queryParams: { policyNo: this.navParams.policyNo } });
+  }
+  policyPage() {
+    this.router.navigate(['/User/dashboard']);
   }
 }

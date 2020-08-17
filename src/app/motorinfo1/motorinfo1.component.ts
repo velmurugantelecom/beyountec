@@ -103,7 +103,7 @@ export class NewMotorInfoScreen implements OnInit {
   minValue = 0;
   maxValue = 300000;
   public language: any;
-  public mortgagedYn: any;
+  public mortgagedYN: any;
 
   constructor(private dataService: DataService,
     private formBuilder: FormBuilder,
@@ -578,7 +578,7 @@ export class NewMotorInfoScreen implements OnInit {
       data['vehicleDetails']['registerNumber'] = this.additionalDetails['registerNumber'];
       data['vehicleDetails']['registrationMark'] = this.additionalDetails['registrationMark'];
       data['vehicleDetails']['colorId'] = this.additionalDetails['colorId'];
-      data['vehicleDetails']['mortgagedYn'] = this.mortgagedYn;
+      data['vehicleDetails']['mortgagedYN'] = this.mortgagedYN;
       // validating tc & chassis numbers
       // let params = {
       //   chassisNo: this.vehicleForm.getRawValue().chassisNo,
@@ -744,7 +744,7 @@ export class NewMotorInfoScreen implements OnInit {
         });
         this.patchAdditionalDetails(res);
       }
-      this.mortgagedYn = res.vehicleDetails.mortgagedYn;
+      this.mortgagedYN = res.vehicleDetails.mortgagedYn;
     }, err => {
     });
   }
@@ -765,6 +765,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.additionalDetails['engineNumber'] = data.vehicleDetails.engineNo;
     this.additionalDetails['registerNumber'] = data.vehicleDetails.regNo;
     this.additionalDetails['registrationMark'] = data.vehicleDetails.registrationMark;
+    this.mortgagedYN = data.vehicleDetails.mortgagedYN;
     this.additionalDetails['colorId'] = data.vehicleDetails.colorId;
     this.additionalDetails['customerId'] = data.userDetails.customerId;
   }

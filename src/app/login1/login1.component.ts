@@ -194,16 +194,15 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
     localStorage.removeItem('isLoggedIn');
-    let value = {
-      guestUser: true
-    }
-    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-      let data = response.data;
-      localStorage.setItem('guesttokenDetails', data.token);
-      localStorage.setItem('isLoggedIn', 'false');
-      this.authService.isGuestUser.next(true);
-      this.loadDropdownValues();
-    });
+
+    this.loadDropdownValues();
+    // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+    //   let data = response.data;
+    //   localStorage.setItem('guesttokenDetails', data.token);
+    //   localStorage.setItem('isLoggedIn', 'false');
+    //   this.authService.isGuestUser.next(true);
+     
+    // });
   }
 
   loadDropdownValues() {
@@ -297,16 +296,28 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.infoForm.status == 'INVALID') {
           return;
         } else {
-          this.saveAuditData();
-          this.dataService.setUserDetails(this.infoForm.value)
-          if (this.quoteNo) {
-            this.router.navigate(['/new-motor-info'], {
-              queryParams: { quoteNo: this.quoteNo }
-            })
+          //
+          let value = {
+            guestUser: true
           }
-          else {
-            this.router.navigate(['/new-motor-info'])
-          }
+              this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+      let data = response.data;
+      localStorage.setItem('guesttokenDetails', data.token);
+      localStorage.setItem('isLoggedIn', 'false');
+      this.authService.isGuestUser.next(true);
+      this.dataService.setUserDetails(this.infoForm.value);
+      this.saveAuditData();
+      if (this.quoteNo) {
+        this.router.navigate(['/new-motor-info'], {
+          queryParams: { quoteNo: this.quoteNo }
+        })
+      }
+      else {
+        this.router.navigate(['/new-motor-info'])
+      }
+    });
+    //
+   
         }
       }
     });
@@ -346,6 +357,16 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   retrieveQuote(Type: string, Title: string): void {
+    let value = {
+      guestUser: true
+    }
+    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+      let data = response.data;
+      localStorage.setItem('guesttokenDetails', data.token);
+      localStorage.setItem('isLoggedIn', 'false');
+      this.authService.isGuestUser.next(true);
+    });
+
     let dialogRef = this.dialog.open(QuoteDialog, {
       width: '500px',
       data: { QType: Type, QTitle: Title }

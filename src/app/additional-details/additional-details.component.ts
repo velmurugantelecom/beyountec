@@ -17,6 +17,7 @@ import { ScanAndUpload } from '../shared/scan-and-upload/scan-and-upload.compone
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { RequestRedirectComponent } from '../shared/request-redirect/request-redirect.component';
 
 @Component({
   selector: 'app-additional-details',
@@ -895,7 +896,8 @@ export class AdditionalDetailsComponent implements OnInit {
     if (i === 0) {
       value = 'Vehicle Registration Card';
     }
-    let dialogRef = this.dialog.open(ScanAndUpload, {
+    // let dialogRef = this.dialog.open(ScanAndUpload, {
+    let dialogRef = this.dialog.open(RequestRedirectComponent, {
       panelClass: 'my-class',
       data: { docId: docId, fileName: value, quoteNo: this.quoteDetails['quoteNumber'] }
     });

@@ -1,9 +1,31 @@
-<div style="text-align:center">
-    <div>
-        <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
-            (initError)="handleInitError($event)"></webcam>
-        <br/>
-        <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
-        <div class="actionBtn" (click)="showNextWebcam(true);" title="Switch Camera">🔁</div>
-    </div>
-</div>
+<mat-horizontal-stepper class="m-3" linear #stepper>
+    <mat-step>
+        <div style="text-align:center">
+            <div *ngIf="!showCapturedImage1">
+                <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event, 'front')" *ngIf="showWebcam1" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"></webcam>
+                <br/>
+                <button class="btn button btn-default bggreen fwhite" (click)="triggerSnapshot();">Take Snapshot</button>
+            </div>
+            <div *ngIf="showCapturedImage1">
+                <img [src]="photoOne.imageAsDataUrl" />
+                <br/>
+                <br/>
+                <button class="mt-0 btn button btn-default bggreen fwhite" matStepperNext>PROCEED</button>
+            </div>
+        </div>
+    </mat-step>
+    <mat-step>
+        <div style="text-align:center">
+            <div *ngIf="!showCapturedImage2">
+                <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event, 'back')" *ngIf="showWebcam2" [allowCameraSwitch]="allowCameraSwitch2" [switchCamera]="nextWebcamObservable2" [videoOptions]="videoOptions2" (cameraSwitched)="cameraWasSwitched2($event)"></webcam>
+                <br/>
+                <button class="btn button btn-default bggreen fwhite" (click)="triggerSnapshot2();">Take Snapshot</button>
+            </div>
+            <div *ngIf="showCapturedImage2">
+                <img [src]="photoTwo.imageAsDataUrl" />
+                <br/>
+                <br/>
+                <button class="mt-0 btn button btn-default bggreen fwhite" (click)="uploadImage();">Upload</button>
+            </div>
+        </div>
+    </mat-step>

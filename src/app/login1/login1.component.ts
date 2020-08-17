@@ -286,6 +286,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           }
         });
         dialogRef.afterClosed().subscribe(result => {
+          this.showWindow = 'loginForm';
           this.LoginForm.get('userName').setValue(this.infoForm.get('email').value);
           this.LoginForm.get('password').reset();
         });

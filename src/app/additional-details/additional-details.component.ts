@@ -175,34 +175,7 @@ export class AdditionalDetailsComponent implements OnInit {
     return formatDate(date);
   }
   updateEffectiveDate() {
-    let effectiveDate;
-    // if (type === 'change') {
-    //   this.effectiveDateChanged = true;
-    //   effectiveDate = new Date(this.additionalDetails.value['effectiveDate']).setUTCHours(0, 0, 0, 0);
-    // } else {
 
-    // }
-    effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
-    this.effetiveDates = this.dateConversion(effectiveDate);
-    this.nowTime = this.dateConversion(new Date());
-    this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
-    if (this.effetiveDates <= this.nowTime) {
-      this.effetiveDates = this.effetiveDates.concat('T' + this.minTime + ':00.000Z');
-    }
-    else {
-      this.effetiveDates = this.effetiveDates.concat('T00:00:00.000Z');
-
-    }
-    let params = {
-      quoteId: this.quoteDetails.quoteId,
-      amndVerNo: 0,
-      //  startDate: new Date(effectiveDate).toISOString(),
-      startDate: this.effetiveDates,
-      productId: this.quoteDetails.productTypeId
-    }
-    this.subscription = this.coreService.postInputs2('changeStartDate', '', params).subscribe(res => {
-    }, err => {
-    });
   }
 
   loadQuoteDetails() {
@@ -273,7 +246,7 @@ export class AdditionalDetailsComponent implements OnInit {
           value: '04'
         }, {
           label: 'First time registered in Dubai?',
-          value: 'N'
+          value: '01'
         }, {
           label: 'Renewing your existing vehicle in Dubai?',
           value: '03'
@@ -422,17 +395,53 @@ export class AdditionalDetailsComponent implements OnInit {
     // if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
     //   this.updateEffectiveDate('change')
     // else
-    this.updateEffectiveDate()
-    this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
-      this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
-        insuredDetails, null).subscribe(response => {
-          this.spinner.hide();
-          stepper.next();
-        }, err => {
-          this.spinner.hide();
-        });
+  //  this.updateEffectiveDate();
+
+    //
+    let effectiveDate;
+    effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
+    this.effetiveDates = this.dateConversion(effectiveDate);
+    this.nowTime = this.dateConversion(new Date());
+    this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
+    if (this.effetiveDates <= this.nowTime) {
+      this.effetiveDates = this.effetiveDates.concat('T' + this.minTime + ':00.000Z');
+    }
+    else {
+      this.effetiveDates = this.effetiveDates.concat('T00:00:00.000Z');
+
+    }
+    let changeStartDateparams = {
+      quoteId: this.quoteDetails.quoteId,
+      amndVerNo: 0,
+      //  startDate: new Date(effectiveDate).toISOString(),
+      startDate: this.effetiveDates,
+      productId: this.quoteDetails.productTypeId
+    }
+    this.subscription = this.coreService.postInputs2('changeStartDate', '', changeStartDateparams).subscribe(res => {
+      this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
+        this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
+          insuredDetails, null).subscribe(response => {
+            this.spinner.hide();
+            stepper.next();
+          }, err => {
+            this.spinner.hide();
+          });
+      });
+      this.isAttachmentArea = true;
+    }, err => {
+      this.subscription = this.coreService.postInputs(`brokerservice/vehicledetails/updateVehicleDetails`, [vehicledetails], params).subscribe(response => {
+        this.subscription = this.coreService.postInputs(`brokerservice/insuredetails/addinsure`,
+          insuredDetails, null).subscribe(response => {
+            this.spinner.hide();
+            stepper.next();
+          }, err => {
+            this.spinner.hide();
+          });
+      });
+      this.isAttachmentArea = true;
     });
-    this.isAttachmentArea = true;
+    //
+
   }
 
 
@@ -468,7 +477,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.additionalDetails.get('registrationMark').updateValueAndValidity();
       this.additionalDetails.get('regNo').setValidators([Validators.required]);
       this.additionalDetails.get('regNo').updateValueAndValidity();
-    } else if (value === 'N') {
+    } else if (value === '01') {
       this.questionnaireStatus = false;
       this.RegistrationNoRequired = false;
       this.RegistrationMarkRequired = false;
@@ -736,7 +745,17 @@ export class AdditionalDetailsComponent implements OnInit {
     effectivDate = moment(new Date());
     if (this.isReviseDetails || this.isOldQuote) {
       if (this.quoteDetails['startDate']) {
-        effectivDate = moment(this.quoteDetails['startDate']);
+        //
+       let startDateCheck = this.dateConversion(this.quoteDetails['startDate']);
+        let currentTime = this.dateConversion(new Date());
+        if (startDateCheck < currentTime) {
+          effectivDate = moment(new Date());
+        }
+        //
+        else{
+          effectivDate = moment(this.quoteDetails['startDate']);
+        }
+        
       } else {
         effectivDate = moment(new Date());
       }

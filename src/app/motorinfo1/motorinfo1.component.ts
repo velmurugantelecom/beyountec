@@ -90,6 +90,7 @@ export class NewMotorInfoScreen implements OnInit {
   subscription: Subscription;
   public manualOptions: any = {};
   public currentYear: any;
+  public minRegisteredDate:any
 
   minIssueDate
   dobVDate;
@@ -682,6 +683,7 @@ export class NewMotorInfoScreen implements OnInit {
         this.showForm = true;
         this.showGrid = false;
         this.enableContinue = false;
+        this.minRegisteredDate=formValue['makeYear']['value'].concat('-01-01');
         localStorage.setItem('maxValue', formValue['maxValue']);
         localStorage.setItem('minValue', formValue['vehicleValue']);
         this.vehicleForm.patchValue({
@@ -973,6 +975,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   patchQuoteDetails() {
+    this.minRegisteredDate=this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
     this.vehicleForm.patchValue(this.quoteDetails['vehicleDetails']);
     this.insuredForm.patchValue(this.quoteDetails['userDetails']);
     this.vehicleForm.patchValue({
@@ -1125,9 +1128,9 @@ export class NewMotorInfoScreen implements OnInit {
         this.navigateToMsgScreen('autodata-failed');
       } else {
         if (this.searchType != 'ChassisNoSearch') {
-          this.selected = [];
-          this.items = this.manualOptions['makeYear'];
-          this.showGrid = false;
+       //   this.selected = [];
+        //  this.items = this.manualOptions['makeYear'];
+        //  this.showGrid = false;
         }
       }
     });

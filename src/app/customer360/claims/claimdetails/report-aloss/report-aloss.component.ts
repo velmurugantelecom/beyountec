@@ -7,7 +7,6 @@ import { ClaimdetailsComponent } from '../claimdetails.component';
 import { DatePipe } from '@angular/common';
 
 import * as _moment from "moment";
-import { bindCallback } from 'rxjs';
 const moment = _moment;
 
 
@@ -28,8 +27,6 @@ export class ReportALOssComponent implements OnInit {
   minLossDate;
   maxLossDate;
   maxIntimatedDate:any;
-  public selectedLossDate:any;
-  public selectedIntimatedDate:any;
   @ViewChild(ClaimdetailsComponent, { static: false }) ClaimDetail: ClaimdetailsComponent;
 
   constructor(private datePipe: DatePipe, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
@@ -76,66 +73,6 @@ export class ReportALOssComponent implements OnInit {
       }
     })
   }
-  isMyDateFormat(date: string): string {
-    this.selectedLossDate=date;
-    let selectedLossDateChanged=this.dateConversion(this.selectedLossDate);
-    let selectedminLossDateChanged=this.dateConversion(this.minLossDate) ;
-    let selectedmaxLossDateChanged=this.dateConversion(this.maxLossDate);
-    if (date.length !== 10) {
-      return 'Please enter valid input';
-    } else {
-     if (selectedminLossDateChanged > selectedLossDateChanged) {
-        return 'Loss date cannot be less than Policy period';
-      } else if (selectedmaxLossDateChanged <  selectedLossDateChanged) {
-        return 'Loss date should be current date or less than the current date';
-      }
-    }
-   // return 'Unknown error.';
-  }
-  getErrorMessage(pickerInput: string): string {
-    if (!pickerInput || pickerInput === '' ) {
-      return 'Loss Date is required';
-    }
-    return this.isMyDateFormat(pickerInput);
-  }
-  getIntimatedDateErrorMessage(pickerInput1: string): string {
-    if (!pickerInput1 || pickerInput1 === '' ) {
-      return 'Intimated Date is required';
-    }
-    return this.isMyIntimatedDateFormat(pickerInput1);
-  }
-
-
-  isMyIntimatedDateFormat(date: string): string {
-    this.selectedIntimatedDate=date;
-    let selectedLossDateChangedFormat=this.dateConversion(this.selectedLossDate);
-    let selectedIntimatedDateChangedFormat=this.dateConversion(this.selectedIntimatedDate) ;
-    let selectedMaxIntimatedDateChangedFormat=this.dateConversion(this.maxIntimatedDate);
-    if (date.length !== 10) {
-      return 'Please enter valid input';
-    } else {
-     if ( selectedLossDateChangedFormat > selectedIntimatedDateChangedFormat) {
-        return 'Intimated date cannot be less than Loss date';
-      } else if (selectedMaxIntimatedDateChangedFormat < selectedIntimatedDateChangedFormat) {
-        return 'Intimated date cannot be greater than policy period';
-      }
-    }
-   // return 'Unknown error.';
-  }
-  dateConversion(date: any) {
-    function formatDate(date) {
-      var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [year, month, day].join('-');
-    }
-    return formatDate(date);
-  }
-
   ngAfterViewInit() {
     this.ReportaLoss.patchValue({ policyNo: this.navParams['policyNo'] })
   }

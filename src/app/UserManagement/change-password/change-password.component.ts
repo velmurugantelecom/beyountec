@@ -127,9 +127,9 @@ export class ChangePasswordComponent implements OnInit {
          this.header.LogOut();
       }
 
-      if (result.status === 404) {
-        this.errors = result.message;
-      }
+      // if (result.status === 404) {
+      //   this.errors = result.message;
+      // }
 
     }, err => {
       alert("Network Error");

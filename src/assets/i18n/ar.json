@@ -235,7 +235,7 @@
     "ChangeTypeLabel": "نوع التغيير",
     "ChangeReasonLabel": "سبب التغيير",
     "PolicyPeriod": "فترة السياسة",
-    "TotalDiscount": "إجمالي الخصم",
+    "TotalDiscount": "Total VAT_fa",
     "DriverName": "اسم السائق",
     "CountryOfLicense": "بلد الترخيص",
     "DrivingExp": "إكسب القيادة",
@@ -477,6 +477,13 @@
         "PolicyExpDate": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أقل من التاريخ الحالي",
         "PolicyExpDateMorethan60": "السابق. تاريخ انتهاء الصلاحية لا يمكن أن يكون التاريخ أكثر من 60 يومًا من التاريخ الحالي",
         "ChassisNumber": "Please enter valid Chassis no._fa",
-        "EmailAlreadyExist":"Email address is aldready exist_fa"
+        "EmailAlreadyExist":"Email address is aldready exist_fa",
+        "MinRegisteredDate": "First Registered Date can't be less than Make year_fa",
+        "MinEffectiveDate": "Effective date can't be less than Policy period_fa",
+        "MaxEffectiveDate": "Effective date can't be greater than policy period_fa",
+        "MinLossDate": "Loss date can't be less than Policy period_fa",
+        "MaxLossDate": "Loss date should be current date or less than the Current date_fa",
+        "MinIntimatedDate": "Intimated date can't be less than Loss date_fa",
+        "MaxIntimatedDate": "Intimated date can't be greater than Policy period_fa"
     }
 }

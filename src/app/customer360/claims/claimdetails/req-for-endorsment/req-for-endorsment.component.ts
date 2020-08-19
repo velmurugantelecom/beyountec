@@ -24,7 +24,6 @@ export class ReqForEndorsmentComponent implements OnInit {
 
   public minEffectiveDate;
   public maxEffectiveDate;
-  public selectedEffectiveDate:any;
   constructor(
 
     private router: Router,
@@ -146,42 +145,5 @@ export class ReqForEndorsmentComponent implements OnInit {
   }
 
 
-
-  getErrorMessage(pickerInput: string): string {
-    if (!pickerInput || pickerInput === '' ) {
-      return 'Effective Date is required';
-    }
-    return this.isMyDateFormat(pickerInput);
-  }
-  isMyDateFormat(date: string): string {
-    this.selectedEffectiveDate=date;
-    let selectedMinEffectiveDateChangedFormat=this.dateConversion(this.minEffectiveDate);
-    let selectedEffectiveDateChangedFormat=this.dateConversion(this.selectedEffectiveDate) ;
-    let selectedMaxEffectiveDateChangedFormat=this.dateConversion(this.maxEffectiveDate);
-    if (date.length !== 10) {
-      return 'Please enter valid input';
-    } else {
-     if ( selectedMinEffectiveDateChangedFormat > selectedEffectiveDateChangedFormat) {
-        return 'Effective date cannot be less than Policy period';
-      } else if (selectedMaxEffectiveDateChangedFormat < selectedEffectiveDateChangedFormat) {
-        return 'Effective date cannot be greater than policy period';
-      }
-    }
-   // return 'Unknown error.';
-  }
-
-  dateConversion(date: any) {
-    function formatDate(date) {
-      var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [year, month, day].join('-');
-    }
-    return formatDate(date);
-  }
 
 }

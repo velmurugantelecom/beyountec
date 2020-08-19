@@ -13,94 +13,127 @@ import swal from 'sweetalert'
 })
 export class ScanAndUpload {
 
-  public title = 'Scan the Document';
-  private trigger: Subject<void> = new Subject<void>();
-  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
-  public frontSide: WebcamImage = null;
-  public backSide: WebcamImage = null;
-  public previewImage = null;
-  public showCamera2 = false;
-  public go = false;
-  public go2 = false;
-  public showCapturedImage = false;
-  public showCapturedImage2 = false;
-  public blob = {};
   public allowCameraSwitch = true;
+  public uploadedDoc = 'front';
   public multipleWebcamsAvailable = false;
+  public deviceId: string;
+  public imageSrc = null;
+  public blobImage = [];
+  public imageTwo = null;
+  public imageOne = null;
+  public videoOptions: MediaTrackConstraints = {
+  };
+  public videoOptions2: MediaTrackConstraints = {
+  };
 
-  constructor(public dialogRef: MatDialogRef<ScanAndUpload>,
-    private spinner: NgxSpinnerService,
+  // webcam snapshot trigger
+  private trigger: Subject<void> = new Subject<void>();
+  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+
+  public showCapturedImage: boolean;
+
+  constructor(private spinner: NgxSpinnerService,
     private coreService: CoreService,
+    public dialogRef: MatDialogRef<ScanAndUpload>,
     @Inject(MAT_DIALOG_DATA) public data) {
+    
+  }
+  public ngOnInit(): void {
+    WebcamUtil.getAvailableVideoInputs()
+      .then((mediaDevices: MediaDeviceInfo[]) => {
+        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      });
   }
 
-  ngOnInit() {
-    WebcamUtil.getAvailableVideoInputs()
-    .then((mediaDevices: MediaDeviceInfo[]) => {
-      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-    });
+  public triggerSnapshot(): void {
+    this.trigger.next();
+  }
+
+  showCamTwo() {
+    this.showCapturedImage = false;
+  }
+  public showNextWebcam(directionOrDeviceId: boolean|string): void {
+    this.nextWebcam.next(directionOrDeviceId);
+  }
+
+  public handleImage(webcamImage: WebcamImage): void {
+    if (this.uploadedDoc === 'front') {
+    this.uploadedDoc = 'back';
+      this.imageOne = webcamImage
+      this.imageSrc = this.imageOne.imageAsDataUrl;
+    } else {
+      this.imageTwo = webcamImage
+      this.imageSrc = this.imageTwo.imageAsDataUrl;
+    }
+    this.showCapturedImage = true;
+    console.log(this.imageOne)
+    console.log(this.imageTwo)
+  }
+
+  public cameraWasSwitched(deviceId: string): void {
+    this.deviceId = deviceId;
   }
 
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
   }
 
-  public uploadBackSide() {
-    this.showCamera2 = true;
+
+  public get nextWebcamObservable(): Observable<boolean|string> {
+    return this.nextWebcam.asObservable();
   }
 
-  public triggerSnapshot(value): void {
-    if (value) {
-      this.showCapturedImage = true;
-      this.trigger.next();
-    } else {
+  public get nextWebcamObservable2(): Observable<boolean|string> {
+    return this.nextWebcam.asObservable();
+  }
+
+  reviseImage() {
+    this.imageSrc = this.imageOne.imageAsDataUrl;
+    this.imageTwo = null;
+  }
+
+  close() {
+    if (!this.imageTwo) {
+      this.uploadedDoc = 'front'
+      this.imageOne = null;
       this.showCapturedImage = false;
-      this.frontSide = null;
-    }
-  }
-
-  public triggerSnapshot2(value) {
-    if (value) {
-      this.showCapturedImage2 = true;
-      this.go2 = true;
-      this.showCamera2 = false;
-      this.trigger.next();
+      this.imageSrc = null;
     } else {
-      this.showCamera2 = false;
-      this.showCapturedImage2 = false;
-      this.go2 = false;
-      this.backSide = null;
+      this.uploadedDoc = 'back'
+      this.imageTwo = null;
+      this.showCapturedImage = false;
+      this.imageSrc = null; 
     }
   }
 
   public onNoClick(): void {
     this.dialogRef.close();
   }
-
-  public handleFrontSideImage(webcamImage: WebcamImage): void {
-    this.frontSide = webcamImage;
-  }
-
-  public handleBackSideImage(webcamImage: WebcamImage): void {
-    this.backSide = webcamImage;
-  }
-
-  switchCamera() {
-    this.showCamera2 = true;
-    this.showCapturedImage2 = true;
-  }
-
-  public closefunc() {
-    this.previewImage = null;
-  }
-
-  public uploadDocs() {
-    this.dataURItoBlob(this.frontSide.imageAsDataUrl, 'front');
-    if (this.backSide)
-      this.dataURItoBlob(this.backSide.imageAsDataUrl, 'back');
+  
+  uploadImage() {
+    this.dataURItoBlob(this.imageOne.imageAsDataUrl, 0);
+    this.dataURItoBlob(this.imageTwo.imageAsDataUrl, 1);
     setTimeout(() => {
-      this.scanUpload(this.blob['front'], this.blob['back'], this.data.docId, this.data.fileName, this.data.quoteNo)
-    }, 1000);
+      this.scanUpload(this.blobImage[0], this.blobImage[1], this.data.docId, this.data.fileName, this.data.quoteNo)
+    },2000)
+  }
+
+  scanUpload(blob1, blob2, docId, filename, q) {
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('files', blob1, filename);
+    formData.append('files', blob2, 'back');
+    formData.append('doctypeid', docId);
+    formData.append('docDesc', `${filename}`);
+    formData.append('quotenumber', q);
+    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
+      this.spinner.hide();
+      this.dialogRef.close(response);
+
+    }, err => {
+      this.spinner.hide();
+    })
   }
 
   dataURItoBlob(dataURI, side) {
@@ -117,34 +150,6 @@ export class ScanAndUpload {
     for (var i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    this.blob[side] = new Blob([ia], { type: mimeString });
-  }
-  
-  scanUpload(blob1, blob2, docId, filename, q) {
-    this.spinner.show();
-    const formData = new FormData();
-    formData.append('files', blob1, filename);
-    if (blob2 != null)
-      formData.append('files', blob2, 'back');
-    formData.append('doctypeid', docId);
-    formData.append('docDesc', `${filename}`);
-    formData.append('quotenumber', q);
-    this.coreService.postInputs('brokerservice/documentupload/uploadMultipleFiles', formData, null).subscribe(response => {
-      this.spinner.hide();
-      this.dialogRef.close(response);
-
-    }, err => {
-      this.spinner.hide();
-    })
-  }
-  public get nextWebcamObservable(): Observable<boolean|string> {
-    return this.nextWebcam.asObservable();
-  }
-
-  handleInitError(event) {
-    console.log(event)
-    swal(
-      '', 'Camera not working', 'error'
-    );
+    this.blobImage[side] = new Blob([ia], { type: mimeString });
   }
 }

@@ -1,6 +1,6 @@
 .loginBg {
     width: 100%;
-    min-height: 80%;
+    min-height: 80vh;
     max-height: auto;
     overflow-x: hidden;
 }
@@ -107,9 +107,9 @@ html {
 /* Extra small devices (phones, 600px and down) */
 
 @media only screen and (max-width: 600px) {
-    // .headFtSize{
-    // font-size: 20px;
-    // }
+    .headFtSize {
+        font-size: 18px;
+    }
     .LoginFtSize {
         font-size: 20px;
     }

@@ -489,6 +489,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getPlans() {
+    console.log(this.vehicleForm.getRawValue())
     if (this.productId === '1116') {
       this.manipulateFields(['vehicleValue', 'repairType'], 0);
     }
@@ -496,12 +497,12 @@ export class NewMotorInfoScreen implements OnInit {
     this.validateAllFormFields(this.vehicleForm);
     this.validateAllFormFields(this.insuredForm);
     if (this.vehicleForm.status === 'VALID' && this.insuredForm.status === 'VALID') {
-      // auto populating traffic location
+      // auto populating traffic location and traffic type
       let trafficLoc: any;
       if (this.vehicleForm['value']['registeredAt'] == '1102') {
         trafficLoc = '02'
       } else {
-        trafficLoc = '01'
+        trafficLoc = '01';
       }
 
       let data = {
@@ -515,6 +516,7 @@ export class NewMotorInfoScreen implements OnInit {
         transactionType: "FQ",
         policySource: "CP",
         trafficLoc: trafficLoc,
+        // trafficType: ,
         branchId: this.additionalDetails['branchId'],
         vehicleDetails: { ...this.vehicleForm.getRawValue() },
         driverDetails: [
@@ -1128,9 +1130,9 @@ export class NewMotorInfoScreen implements OnInit {
         this.navigateToMsgScreen('autodata-failed');
       } else {
         if (this.searchType != 'ChassisNoSearch') {
-       //   this.selected = [];
-        //  this.items = this.manualOptions['makeYear'];
-        //  this.showGrid = false;
+          // this.selected = [];
+          // this.items = this.manualOptions['makeYear'];
+          // this.showGrid = false;
         }
       }
     });

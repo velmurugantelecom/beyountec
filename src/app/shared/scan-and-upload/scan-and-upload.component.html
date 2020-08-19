@@ -1,6 +1,6 @@
 <div class="row m-0 p-0">
     <div class="col-md-10 col-9">
-        <h5 style="display: flex;align-content: center;">{{title}}</h5>
+        <h5 style="display: flex;align-content: center;">Scan the Document</h5>
     </div>
     <div class="col-md-2 col-3 custom-cursor" (click)="onNoClick()">
         <mat-icon>
@@ -9,64 +9,25 @@
     </div>
 </div>
 <mat-divider></mat-divider>
-
-
-<mat-horizontal-stepper class="m-3" linear #stepper>
-    <mat-step>
-        <div style="width: 100%;">
-            <div *ngIf="!showCapturedImage">
-                <p style="text-align: center;">Kindly scan the front side of the document</p>
-                <div class="d-flex justify-content-center m-1">
-                    <webcam (initError)="handleInitError($event)" [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleFrontSideImage($event)" [switchCamera]="nextWebcamObservable">
-                    </webcam>
-                </div>
-                <div class="d-flex justify-content-center m-1">
-                    <button type="submit" (click)="triggerSnapshot(true)" class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
-                        {{ 'TakeSnapshot' | translate }}
-                    </button>
-                </div>
-            </div>
-            <div *ngIf="showCapturedImage">
-                <div class="d-flex justify-content-center m-1 img-box img_wrp">
-                    <mat-icon class="close" (click)="triggerSnapshot(false)">
-                        close
-                    </mat-icon>
-                    <img [src]="frontSide?.imageAsDataUrl" />
-                </div>
-                <mat-divider></mat-divider>
-                <div class="d-flex justify-content-end pt-1">
-                    <button mat-button matStepperNext class="btn btn-home button fwhite bggreen centercss">PROCEED</button>
-                </div>
-            </div>
+<div style="text-align:center">
+    <div *ngIf="!showCapturedImage">
+        <p style="text-align: center;" class="mt-2">Kindly scan the {{ uploadedDoc }} side of the document</p>
+        <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)">
+        </webcam>
+        <br/>
+        <button class="btn button btn-default bggreen fwhite" (click)="triggerSnapshot();">Take Snapshot</button>
+    </div>
+    <div *ngIf="showCapturedImage">
+        <div class="d-flex justify-content-center m-1 img-box img_wrp">
+            <mat-icon class="close" (click)="close()">
+                close
+            </mat-icon>
+            <img [src]="imageSrc" /></div>
+        <br/>
+        <button class="mt-0 btn button btn-default bggreen fwhite mt-2" *ngIf="imageOne && !imageTwo" (click)="showCamTwo()">PROCEED</button>
+        <div *ngIf="imageTwo" class="d-flex justify-content-between">
+            <button class="mt-0 btn button btn-default bggreen fwhite mt-2" (click)="reviseImage()">REVISE</button>
+            <button class="mt-0 btn button btn-default bggreen fwhite mt-2" (click)="uploadImage()">UPLOAD</button>
         </div>
-    </mat-step>
-    <mat-step>
-        <div style="width: 100%;">
-            <div *ngIf="!showCapturedImage2">
-                <p style="text-align: center;">Kindly scan the back side of the document</p>
-                <div class="d-flex justify-content-center m-1">
-                    <webcam (initError)="handleInitError($event)" [height]="300" [width]="400" [trigger]="triggerObservable" [allowCameraSwitch]="allowCameraSwitch" (imageCapture)="handleBackSideImage($event)" [switchCamera]="nextWebcamObservable">
-                    </webcam>
-                </div>
-                <div class="d-flex justify-content-center m-1">
-                    <button type="submit" (click)="triggerSnapshot2(true)" class="col-md-6 col-sm-12 col-xs-12 col-12 btn blockbutton btn-block bggreen fwhite button">
-                        {{ 'TakeSnapshot' | translate }}
-                    </button>
-                </div>
-            </div>
-            <div *ngIf="showCapturedImage2">
-                <div class="d-flex justify-content-center m-1 img-box img_wrp">
-                    <mat-icon class="close" (click)="triggerSnapshot2(false)">
-                        close
-                    </mat-icon>
-                    <img [src]="backSide?.imageAsDataUrl" />
-                </div>
-                <mat-divider></mat-divider>
-                <div class="d-flex justify-content-between">
-                    <button mat-button matStepperPrevious class="btn btn-home button fwhite bggreen centercss">REVISE</button>
-                    <button mat-button (click)="uploadDocs()" class="btn btn-home button fwhite bggreen centercss">UPLOAD</button>
-                </div>
-            </div>
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
+    </div>
+</div>

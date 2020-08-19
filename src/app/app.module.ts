@@ -48,6 +48,7 @@ import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.c
 
 import { VehicleBottomSheet } from './motorinfo1/motorinfo1.component';
 import { NewMotorInfoScreenModule } from './motorinfo1/motorinfo1.module';
+import { RequestRedirectComponent } from './shared/request-redirect/request-redirect.component';
 const userIdleConfig = {
   idle: 600,
   timeout: 1,
@@ -116,7 +117,7 @@ export const configFactory = (configService: RuntimeConfigService) => {
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload,  
-    DynamicContentDialog, VehicleBottomSheet],
+    DynamicContentDialog, VehicleBottomSheet,RequestRedirectComponent],
   providers: [
     CoreService,
     AuthGuard,

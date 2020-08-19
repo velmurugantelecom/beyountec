@@ -99,7 +99,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     private appService: AppService,
     private dataService: DataService,
     public runtimeConfigService: RuntimeConfigService,
-    private translate: TranslateService,
     public media: MediaObserver) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
@@ -108,6 +107,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           this.formType = 'new-login';
         if (this.formType.includes('resetPassword')) {
           this.formType = 'resetPassword';
+          if (this.formType === 'resetPassword')
+          this.showWindow = 'loginForm';
           this.routerToken = event.url.slice(1).split("/")[1];
           this.routerTokenType = event.url.slice(1).split("/")[2];
         }
@@ -117,7 +118,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
             res = true;
         });
         if (!res) {
-          this.formType = 'new-login'
+          this.formType = 'new-login';
         }
       }
     });

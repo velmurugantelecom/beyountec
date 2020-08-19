@@ -11,30 +11,26 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./request-redirect.component.scss']
 })
 export class RequestRedirectComponent implements OnInit {
-  // toggle webcam on/off
-  public showWebcam1 = true;
-  public showWebcam2 = true;
+
   public allowCameraSwitch = true;
-  public allowCameraSwitch2 = true;
+  public uploadedDoc = 'front';
   public multipleWebcamsAvailable = false;
   public deviceId: string;
+  public imageSrc = null;
   public blobImage = [];
+  public imageTwo = null;
+  public imageOne = null;
   public videoOptions: MediaTrackConstraints = {
   };
   public videoOptions2: MediaTrackConstraints = {
   };
-  public errors: WebcamInitError[] = [];
 
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
-  private trigger2: Subject<void> = new Subject<void>();
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
-  public showCapturedImage1: boolean;
-  public showCapturedImage2: boolean;
-  public photoOne;
-  public photoTwo;
+  public showCapturedImage: boolean;
 
   constructor(private spinner: NgxSpinnerService,
     private coreService: CoreService,
@@ -50,49 +46,36 @@ export class RequestRedirectComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
-    this.showCapturedImage1 = true;
     this.trigger.next();
   }
 
-  public triggerSnapshot2(): void {
-    this.showCapturedImage2 = true;
-    this.trigger2.next();
+  showCamTwo() {
+    this.showCapturedImage = false;
   }
-
-  public toggleWebcam1(): void {
-    this.showWebcam1 = !this.showWebcam1;
-  }
-
-  public toggleWebcam2(): void {
-    this.showWebcam2 = !this.showWebcam2;
-  }
-
   public showNextWebcam(directionOrDeviceId: boolean|string): void {
     this.nextWebcam.next(directionOrDeviceId);
   }
 
-  public handleImage(webcamImage: WebcamImage, type): void {
-    if (type === 'front')
-    this.photoOne = webcamImage;
-    else
-    this.photoTwo = webcamImage;
+  public handleImage(webcamImage: WebcamImage): void {
+    if (this.uploadedDoc === 'front') {
+    this.uploadedDoc = 'back';
+      this.imageOne = webcamImage
+      this.imageSrc = this.imageOne.imageAsDataUrl;
+    } else {
+      this.imageTwo = webcamImage
+      this.imageSrc = this.imageTwo.imageAsDataUrl;
+    }
+    this.showCapturedImage = true;
+    console.log(this.imageOne)
+    console.log(this.imageTwo)
   }
 
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;
   }
 
-  public cameraWasSwitched2(deviceId: string): void {
-    this.deviceId = deviceId;
-  }
-
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
-  }
-
-
-  public get triggerObservable2(): Observable<void> {
-    return this.trigger2.asObservable();
   }
 
 
@@ -104,9 +87,32 @@ export class RequestRedirectComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 
+  reviseImage() {
+    this.imageSrc = this.imageOne.imageAsDataUrl;
+    this.imageTwo = null;
+  }
+
+  close() {
+    if (!this.imageTwo) {
+      this.uploadedDoc = 'front'
+      this.imageOne = null;
+      this.showCapturedImage = false;
+      this.imageSrc = null;
+    } else {
+      this.uploadedDoc = 'back'
+      this.imageTwo = null;
+      this.showCapturedImage = false;
+      this.imageSrc = null; 
+    }
+  }
+
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+  
   uploadImage() {
-    this.dataURItoBlob(this.photoOne.imageAsDataUrl, 0);
-    this.dataURItoBlob(this.photoTwo.imageAsDataUrl, 1);
+    this.dataURItoBlob(this.imageOne.imageAsDataUrl, 0);
+    this.dataURItoBlob(this.imageTwo.imageAsDataUrl, 1);
     setTimeout(() => {
       this.scanUpload(this.blobImage[0], this.blobImage[1], this.data.docId, this.data.fileName, this.data.quoteNo)
     },2000)

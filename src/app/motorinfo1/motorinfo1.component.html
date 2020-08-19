@@ -4,7 +4,7 @@
         </div>
         <div class="curve-btn custom-bg fwhite fbold centercss col-md-3">{{ 'MobileNoLabel' | translate }}: {{basicUserDetails?.mobileCode}} - {{basicUserDetails?.mobileNo}}
         </div>
-        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3"> {{ 'EmailLabel' | translate }}: {{basicUserDetails?.email}}</div>
+        <div class="curve-btn custom-bg fwhite fbold centercss"> {{ 'EmailLabel' | translate }}: {{basicUserDetails?.email}}</div>
     </div>
     <div class="d-flex justify-content-center mt-3 f24">
         <p>{{runtimeConfigService.config.heading}}</p>
@@ -15,10 +15,11 @@
                 <img src="./assets/new-screen/chassis-blue.png" style="height: 48px;" />
             </div>
             <form [formGroup]="chassisNoForm" focusInvalidInput autocomplete="off" class="row">
-                <div class="col-md-10 col-sm-10 col-xs-10 col-10">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'SearchByChassisNumber' | translate }}</mat-label>
                         <input matInput placeholder="Enter Chassis Number" [AlphaNumericOnly]="true" class="tansformToUpper" autocomplete="off" formControlName="chassisNo" (focus)="onEnterChassisField()">
+                        <mat-icon matSuffix [ngStyle]="{'color':'white'}" class="search-btn custom-cursor" (click)="getAutoData('')">search</mat-icon>
                         <mat-hint>{{ 'Required.ChassisNumber' | translate }}</mat-hint>
                         <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
                             {{ 'Required.ChassisNumber' | translate }}
@@ -30,11 +31,11 @@
                             {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2 px-0 col-sm-2 col-xs-2 col-2 ">
+                <!-- <div class="col-md-2 px-0 col-sm-2 col-xs-2 col-2 ">
                     <button mat-mini-fab color="primary" (click)="getAutoData('')">
                             <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
                         </button>
-                </div>
+                </div> -->
             </form>
 
         </div>

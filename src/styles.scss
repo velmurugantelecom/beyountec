@@ -291,6 +291,7 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
     color: rgba(0, 0, 0, 0.77) !important;
 }
 
+// swal css changes
 .swal-footer {
     text-align: center !important;
     padding-top: 5px !important;
@@ -310,6 +311,31 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
     margin: 5px auto !important;
 }
 
+.swal-icon--success__hide-corners {
+    width: 5px;
+    height: 0px !important;
+    background-color: #fff;
+    padding: 1px;
+    position: absolute;
+    left: 28px;
+    top: 8px;
+    z-index: 1;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.swal-icon--success:after,
+.swal-icon--success:before {
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 60px;
+    height: 0px !important;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -324,4 +350,9 @@ input[type=number] {
     .swal-modal {
         width: 440px;
     }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-prefix,
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0em !important;
 }

@@ -983,7 +983,8 @@ export class NewMotorInfoScreen implements OnInit {
     this.vehicleForm.patchValue({
       makeYear: this.quoteDetails['vehicleDetails']['makeYear'].toString(),
       ncdYears: this.quoteDetails['vehicleDetails']['ncdYears'] ? this.quoteDetails['vehicleDetails']['ncdYears'].toString() : '',
-      licenseIssueDate: this.quoteDetails['userDetails']['licenseIssueDate']
+      licenseIssueDate: this.quoteDetails['userDetails']['licenseIssueDate'],
+      prevPolicyExpDate: this.quoteDetails['vehicleDetails']['prevPolicyExpDate']
     });
     this.gaugeValue = this.quoteDetails['vehicleDetails']['vehicleValue'];
     if (this.quoteDetails['vehicleDetails']['registeredAt'] === '1102') {

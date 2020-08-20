@@ -40,6 +40,7 @@ export class QuoteSummaryComponent implements OnInit {
   public ncdDeclaration: boolean
   public isValidQuote = 'true';
   public language: any;
+  public offersStatus = true;
 
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
@@ -146,6 +147,15 @@ export class QuoteSummaryComponent implements OnInit {
 
   makePayment() {
     this.spinner.show();
+    let body = {
+      quoteNo: this.quoteDetails['quoteId']
+    }
+    if (this.offersStatus)
+    body['adYn'] = 'Y';
+    else
+    body['adYn'] = 'N';
+    this.coreService.postInputs2('insured/dnd', '', body).subscribe(res=>{
+    });
     this.coreService.paymentService(this.quoteNo).subscribe(response => {
       this.spinner.hide();
       if (response) {

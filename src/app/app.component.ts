@@ -46,10 +46,10 @@ export class AppComponent implements OnInit {
     router.events.forEach(event => {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
-        if (this.routerurl === 'new-login' || localStorage.getItem('guesttokenDetails')) {
+        if (this.routerurl === 'new-login' || this.routerurl === 'resetPassword' || this.routerurl === 'forgotPwd' || localStorage.getItem('guesttokenDetails')) {
           this.stopWatching();
         } else {
-          if (!this.isWatchStarted)
+          if (!this.isWatchStarted) 
           this.startWatching();
         }
       }

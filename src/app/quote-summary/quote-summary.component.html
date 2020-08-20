@@ -319,6 +319,12 @@
       </mat-checkbox>
       <span class="blue-font fbold" (click)="readNCDDeclaration()">NCD Declaration</span>
     </div> -->
+        <div class="row mt-4 mb-1" *ngIf="isQuickSummary === 'false'">
+            <div class="col-md-10 mx-4">
+                <mat-checkbox [(ngModel)]="offersStatus" color="primary" class="mx-1 mt-1"></mat-checkbox>
+                <span class="blue-font fbold">News & Special offers</span>
+            </div>
+        </div>
         <div class="row mt-4 mb-1">
             <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                 <mat-checkbox color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>

@@ -6,7 +6,7 @@
             </div>
         </div>
         <hr class="hr-line">
-        <div class="infoMarginCss mx-auto ">
+        <div class="infoMarginCss mx-auto centercss">
             <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off" class="m-4">
                 <div class="my-4 mx-0">
                     <div class="row radiocenter m-4">
@@ -59,12 +59,12 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <button type="submit" class="col-md-3 col-sm-4 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn">
+                    <button type="submit" class="col-md-5 col-lg-3 col-sm-7 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn">
                         {{ 'Continue' | translate }}
                     </button>
                 </div>
-                <div class="centercss mt-2">
-                    <button type="button" class="mt-3 col-md-3 col-sm-4 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">{{ 'RetrieveQuote' | translate }}</button>
+                <div class="row justify-content-center">
+                    <button type="button" class="mt-3 col-md-5 col-lg-3 col-sm-7 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">RETRIEVE QUOTE</button>
                 </div>
 
                 <div class="mt-2 d-block d-sm-none">
@@ -115,7 +115,7 @@
 
                     <p class="error-message" *ngIf="isValidForm">Captcha is required</p>
                 </div>
-                <div class="centercss mt-2">
+                <div class="centercss">
                     <button type="submit" class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn" (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>
                 <div class="mt-2 ml-1 centercss" (click)="ForgotNavigate()" style="text-decoration: underline;">

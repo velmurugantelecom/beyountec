@@ -200,7 +200,7 @@
                                 <!-- <div class="row px-3" *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc != 'New'"> -->
                                 <div class="row px-3">
                                     <div class="col-md-6">
-                                        <div *ngIf="questionnaireStatus" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Registration number</div>
+                                        <div *ngIf="questionnaireStatus" style="min-height: 40px;" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Registration number</div>
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'RegistrationNo'| translate }}</mat-label>
                                             <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}" NumbersOnly [required]="RegistrationNoRequired" formControlName="regNo" maxlength="5" (change)="registrationNoChange($event)">
@@ -215,7 +215,7 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <div *ngIf="questionnaireStatus" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Plate code</div>
+                                        <div *ngIf="questionnaireStatus" style="min-height: 40px;" class="mdc-text-field-helper-text" aria-hidden="false" class="txt-color-blue pb-1">* Previous owner Plate code</div>
 
                                         <mat-form-field appearance="outline">
 

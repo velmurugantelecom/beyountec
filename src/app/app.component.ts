@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   ) {
     // multi language 
     this.translate.addLangs(['en', 'ar']);
-    let  browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
+    let browserLang = (localStorage.getItem('language')) ? localStorage.getItem('language') : 'en';
     this.appService._languageChange.next(browserLang);
 
     // back button disable
@@ -46,11 +46,18 @@ export class AppComponent implements OnInit {
     router.events.forEach(event => {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
-        if (this.routerurl === 'new-login' || this.routerurl === 'resetPassword' || this.routerurl === 'forgotPwd' || localStorage.getItem('guesttokenDetails')) {
+        
+        if (this.routerurl === '' || this.routerurl === 'new-login' || this.routerurl === 'resetPassword' || this.routerurl === 'forgotPwd' || localStorage.getItem('guesttokenDetails')) {
+          if (localStorage.getItem('isLoggedIn') === 'true') {
+            localStorage.removeItem('isLoggedIn')
+            localStorage.removeItem('tokenDetails');
+            localStorage.removeItem('Username');
+            localStorage.removeItem('email');
+          }
           this.stopWatching();
         } else {
-          if (!this.isWatchStarted) 
-          this.startWatching();
+          if (!this.isWatchStarted)
+            this.startWatching();
         }
       }
     });
@@ -66,9 +73,9 @@ export class AppComponent implements OnInit {
 
     this.auth.isUserLoggedIn.subscribe(val => {
       if (val)
-      this.isLoggedInUser = true;
+        this.isLoggedInUser = true;
     });
-    
+
     this.userIdle.onTimerStart().subscribe(count => {
       if (this.isLoggedInUser)
         if (count === 1) {
@@ -102,8 +109,8 @@ export class AppComponent implements OnInit {
     let body = document.getElementsByTagName('body')[0];
     if (value === 'en') {
       body.dir = "ltr";
-  }
-    else{
+    }
+    else {
       body.dir = "rtl";
     }
   }
@@ -130,9 +137,9 @@ export class AppComponent implements OnInit {
     this.isWatchStarted = false;
     this.auth.logout().subscribe(Response => {
       if (Response) {
-       localStorage.removeItem('tokenDetails');
-       localStorage.removeItem('Username');
-       localStorage.removeItem('guesttokenDetails');
+        localStorage.removeItem('tokenDetails');
+        localStorage.removeItem('Username');
+        localStorage.removeItem('guesttokenDetails');
         localStorage.setItem('isLoggedIn', 'false');
         this.router.navigate([`/new-login`])
         this.spinner.hide();

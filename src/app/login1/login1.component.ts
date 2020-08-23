@@ -62,7 +62,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public captchaSuccess = false;
   public captchaIsExpired = false;
   public captchaResponse?: string;
-  public showWindow:any="guestFlow";
+  public showWindow: any = "guestFlow";
   public email;
   public theme: 'light' | 'dark' = 'light';
   public size: 'compact' | 'normal' = 'normal';
@@ -73,6 +73,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public quoteNo = '';
   public language: any;
   public errorMessages = [];
+  public otpInterval;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -108,7 +109,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.formType.includes('resetPassword')) {
           this.formType = 'resetPassword';
           if (this.formType === 'resetPassword')
-          this.showWindow = 'loginForm';
+            this.showWindow = 'loginForm';
           this.routerToken = event.url.slice(1).split("/")[1];
           this.routerTokenType = event.url.slice(1).split("/")[2];
         }
@@ -202,7 +203,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     //   localStorage.setItem('guesttokenDetails', data.token);
     //   localStorage.setItem('isLoggedIn', 'false');
     //   this.authService.isGuestUser.next(true);
-     
+
     // });
   }
 
@@ -302,24 +303,24 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           let value = {
             guestUser: true
           }
-              this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-      let data = response.data;
-      localStorage.setItem('guesttokenDetails', data.token);
-      localStorage.setItem('isLoggedIn', 'false');
-      this.authService.isGuestUser.next(true);
-      this.dataService.setUserDetails(this.infoForm.value);
-      this.saveAuditData();
-      if (this.quoteNo) {
-        this.router.navigate(['/new-motor-info'], {
-          queryParams: { quoteNo: this.quoteNo }
-        })
-      }
-      else {
-        this.router.navigate(['/new-motor-info'])
-      }
-    });
-    //
-   
+          this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+            let data = response.data;
+            localStorage.setItem('guesttokenDetails', data.token);
+            localStorage.setItem('isLoggedIn', 'false');
+            this.authService.isGuestUser.next(true);
+            this.dataService.setUserDetails(this.infoForm.value);
+            this.saveAuditData();
+            if (this.quoteNo) {
+              this.router.navigate(['/new-motor-info'], {
+                queryParams: { quoteNo: this.quoteNo }
+              })
+            }
+            else {
+              this.router.navigate(['/new-motor-info'])
+            }
+          });
+          //
+
         }
       }
     });
@@ -378,7 +379,10 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   forgotPwd() {
+    clearInterval(this.otpInterval);
     this.totalMs = 120000;
+    this.minutes = 2;
+    this.seconds = 0;
     this.showTimer();
     this.ForgotForm.get('otp').setValidators([]);
     this.ForgotForm.get('otp').updateValueAndValidity();
@@ -401,7 +405,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
 
   verifyFPOTP() {
     if (this.ForgotForm.status === 'INVALID')
-    return;
+      return;
     this.subscription = this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.forgotPWToken}&otp=${this.ForgotForm.value['otp']}`, '').subscribe(res => {
       if (res) {
         this.router.navigate(['/resetPassword', this.forgotPWToken, 'FP'])
@@ -451,7 +455,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
   }
   showTimer() {
-    setInterval(() => {
+    this.otpInterval = setInterval(() => {
       if (this.totalMs >= 0) {
         this.minutes = Math.floor((this.totalMs % (1000 * 60 * 60)) / (1000 * 60));
         this.seconds = Math.floor((this.totalMs % (1000 * 60)) / 1000);
@@ -475,9 +479,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.showPassword = true;
     });
   }
- 
-  scrollToFunc(value:string){
-    this.showWindow=value
+
+  scrollToFunc(value: string) {
+    this.showWindow = value
   }
 
   ngOnDestroy() {
@@ -509,6 +513,7 @@ export class QuoteDialog {
   public totalMs;
   public doTimeout: boolean = false;
   public isCompleted: boolean = false;
+  public otpInterval;
   constructor(private service: CoreService,
     private router: Router,
     private spinner: NgxSpinnerService,
@@ -567,7 +572,7 @@ export class QuoteDialog {
   }
 
   showTimer() {
-    setInterval(() => {
+    this.otpInterval = setInterval(() => {
       if (this.totalMs >= 0) {
         this.minutes = Math.floor((this.totalMs % (1000 * 60 * 60)) / (1000 * 60));
         this.seconds = Math.floor((this.totalMs % (1000 * 60)) / 1000);

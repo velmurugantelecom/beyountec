@@ -153,6 +153,7 @@ export class DashNotificationComponent implements OnInit {
   openDialog(Type: string, Title: string): void {
     let dialogRef = this.dialog.open(chooseProduct, {
       width: '350px',
+      autoFocus: false,
       data: { QType: Type, QTitle: Title }
     });
   }

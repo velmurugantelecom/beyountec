@@ -195,7 +195,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     localStorage.removeItem('tokenDetails');
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
-    localStorage.removeItem('isLoggedIn');
+    localStorage.setItem('isLoggedIn', 'false');
 
     this.loadDropdownValues();
     // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
@@ -244,6 +244,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
     localStorage.removeItem('isLoggedIn');
+    this.LoginForm.value['userName']=this.LoginForm.value['userName'].trim().toLowerCase();
     let value = this.LoginForm.value;
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;
@@ -270,6 +271,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   // }
 
   getMotorInfo(): void {
+    this.infoForm.value['email']=this.infoForm.value['email'].trim().toLowerCase();
     console.log(this.infoForm)
     let value = {
       emailId: this.infoForm.value['email']
@@ -289,7 +291,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
           this.showWindow = 'loginForm';
-          this.LoginForm.get('userName').setValue(this.infoForm.get('email').value);
+          this.LoginForm.get('userName').setValue(this.infoForm.get('email').value.trim().toLowerCase());
           this.LoginForm.get('password').reset();
         });
       } else {
@@ -328,7 +330,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
 
   saveAuditData() {
     let body = {
-      email: this.infoForm.value['email'],
+      email: this.infoForm.value['email'].trim().toLowerCase(),
       mobNo: this.infoForm.value['mobileNo'],
       loginSrc: 'CP',
       mobileCode: this.infoForm.value['mobileCode']
@@ -372,6 +374,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
 
     let dialogRef = this.dialog.open(QuoteDialog, {
       width: '500px',
+      autoFocus: false,
       data: { QType: Type, QTitle: Title }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -390,8 +393,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       return;
     }
     this.spinner.show();
-    this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email}`, '').subscribe(res => {
-      localStorage.setItem('email', this.ForgotForm.value.email)
+    this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email.trim().toLowerCase()}`, '').subscribe(res => {
+      localStorage.setItem('email', this.ForgotForm.value.email.trim().toLowerCase())
       this.spinner.hide();
       this.isResetLinkSend = true;
       this.email = this.ForgotForm.value.email;

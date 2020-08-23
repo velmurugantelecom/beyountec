@@ -88,6 +88,7 @@ export class ManageprofileComponent implements OnInit {
     if (this.profileForm.invalid) {
       return;
     }
+    this.profileForm.value['email']=this.profileForm.value['email'].trim().toLowerCase();
     let dialogRef = this.dialog.open(ProfileUpdateDialog, {
       width: '450',
       data: { data: this.profileForm.value }

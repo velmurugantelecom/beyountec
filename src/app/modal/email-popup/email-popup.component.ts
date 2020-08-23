@@ -35,7 +35,7 @@ export class EmailPopupComponent implements OnInit {
     if (this.emailForm.invalid) {
       return;
     } else {
-      let emailId = this.emailForm.value.radio === 'OTHERS' ? this.emailForm.value.email : this.data.mailId;
+      let emailId = this.emailForm.value.radio === 'OTHERS' ? this.emailForm.value.email.trim().toLowerCase() : this.data.mailId;
       let url;
       
       if (this.data.transactionType == 'P') {

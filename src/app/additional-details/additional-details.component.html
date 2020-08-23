@@ -1,5 +1,5 @@
 <div class="container-fluid row  align-items-between m-0 p-0 stepperTop" style="height: 87%;">
-    <div class="col-lg-8 col-md-7 col-sm-7 mt-3">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 col-12 mt-3">
         <div class="row" *ngIf="showHeader">
             <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-7 headfont">
                 <span *ngIf="!isAttachmentArea">{{'AdditionalDetails' | translate }}</span>
@@ -488,7 +488,7 @@
             </mat-step>
         </mat-horizontal-stepper>
     </div>
-    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 col-12 m-0 p-0">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 m-0 p-0">
         <app-general-info-template [generalDetails]="quoteDetails"></app-general-info-template>
     </div>
 </div>

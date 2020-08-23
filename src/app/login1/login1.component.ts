@@ -143,8 +143,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]],
-      recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]]
+     // recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],

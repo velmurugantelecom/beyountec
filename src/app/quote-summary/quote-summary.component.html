@@ -285,7 +285,7 @@
 
     <div *ngIf="attachments!= undefined && attachments.length > 0 && isQuickSummary === 'false'">
         <p class="m-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'Attachments' | translate }}</p>
-        <div class="row d-flex justify-content-center">
+        <div class="row">
             <div *ngFor="let attachment of attachments" class="col-lg-3 col-md-6 col-sm-6 col-xs-8 col-8">
                 <mat-card class="custom-cursor text-center doc-card mat-elevation-z2 m-2" (click)="openAttachment(attachment.fileName)">
                     <img mat-card-lg-image [src]="attachment.src" class="p-1" />

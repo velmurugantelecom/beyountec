@@ -90,7 +90,7 @@ export class NewMotorInfoScreen implements OnInit {
   subscription: Subscription;
   public manualOptions: any = {};
   public currentYear: any;
-  public minRegisteredDate:any
+  public minRegisteredDate: any
 
   minIssueDate
   dobVDate;
@@ -432,6 +432,12 @@ export class NewMotorInfoScreen implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (!result) {
+              let data = {
+                vehicleDetails: {
+                  makeYear: this.autoData[0].makeYear
+                }
+              }
+              this.dataService.setVehicleDetails(data);
               this.navigateToMsgScreen('autodata-failed');
             } else {
               this.openDropDown = true;
@@ -451,6 +457,13 @@ export class NewMotorInfoScreen implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (!result) {
+              let data = {
+                vehicleDetails: {
+                  makeYear: this.autoData[0].makeYear,
+                  makeId: this.autoData[0].makeId
+                }
+              }
+              this.dataService.setVehicleDetails(data);
               this.navigateToMsgScreen('autodata-failed');
             } else {
               this.openDropDown = true;
@@ -489,7 +502,6 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getPlans() {
-    console.log(this.vehicleForm.getRawValue())
     if (this.productId === '1116') {
       this.manipulateFields(['vehicleValue', 'repairType'], 0);
     }
@@ -631,6 +643,13 @@ export class NewMotorInfoScreen implements OnInit {
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result) {
+              let data = {
+                vehicleDetails: { ...this.vehicleForm.getRawValue() }
+              }
+              this.dataService.setVehicleDetails(data);
+              let userData = this.dataService.getUserDetails();
+              userData['fullName'] = this.insuredForm.get('fullName').value
+              this.dataService.setUserDetails(userData)
               this.navigateToMsgScreen('imported-vehicle');
             } else {
               this.showForm = false;
@@ -685,7 +704,7 @@ export class NewMotorInfoScreen implements OnInit {
         this.showForm = true;
         this.showGrid = false;
         this.enableContinue = false;
-        this.minRegisteredDate=formValue['makeYear']['value'].concat('-01-01');
+        this.minRegisteredDate = formValue['makeYear']['value'].concat('-01-01');
         localStorage.setItem('maxValue', formValue['maxValue']);
         localStorage.setItem('minValue', formValue['vehicleValue']);
         this.vehicleForm.patchValue({
@@ -977,7 +996,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   patchQuoteDetails() {
-    this.minRegisteredDate=this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
+    this.minRegisteredDate = this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
     this.vehicleForm.patchValue(this.quoteDetails['vehicleDetails']);
     this.insuredForm.patchValue(this.quoteDetails['userDetails']);
     this.vehicleForm.patchValue({
@@ -1111,11 +1130,20 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   openDialog() {
-    let msg;
-    if (this.searchType === 'ChassisNoSearch') {
+    let msg, data;
+    if (this.searchType === 'ChassisNoSearch' || this.searchType == undefined) {
       msg = `Vehicle information not found , 
-      do you want to continue with Search By Vehicle information`
+      do you want to continue with Search By Vehicle information`;
+      data = {
+        chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
+      }
     } else {
+      data = {
+        makeYear: this.selected[0].value,
+        makeId: this.selected[1].value,
+        modelId: this.selected[2].value,
+        chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
+      }
       msg = `Vehicle information not found in our database, do you want to Try again`;
     }
     let dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -1128,6 +1156,7 @@ export class NewMotorInfoScreen implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) {
+        this.dataService.setVehicleDetails(data);
         this.navigateToMsgScreen('autodata-failed');
       } else {
         if (this.searchType != 'ChassisNoSearch') {

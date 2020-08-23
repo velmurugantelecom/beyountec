@@ -75,7 +75,7 @@ export class ComparePlansComponent implements OnInit {
       this.isPlanAvailable = false;
     }
     setTimeout(() => {
-    console.log(this.promoDiscounts);
+    console.log(this.discounts);
     }, 5000);
   }
 
@@ -377,9 +377,11 @@ export class ComparePlansComponent implements OnInit {
   initLoading() {
     this.planOb['plans'].forEach(plan => {
       plan.loading.forEach(item => {
-        let group = this.discounts[item.description] || [];
+        if (item.id === 'DIND02')
+        return;
+        let group =this.discounts[item.description] || [];
         if (group.length == 0) this.discounts[item.description] = [];
-        if (item.type === 'DI') {
+        if (item.id === '106') {
           this.discounts[item.description].push({
             planId: plan.planDetails[0].planId,
             id: item.id,

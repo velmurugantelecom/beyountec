@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   userBasicDetails: any = {};
+  vehicleDetails: any = {};
   planDetails: any = {};
 
   constructor() { }
@@ -19,10 +20,19 @@ export class DataService {
   }
 
   setPlanDetails(data) {
+    console.log(data)
     this.planDetails = data;
   }
 
   getPlanDetails() {
     return this.planDetails;
+  }
+
+  setVehicleDetails(data) {
+    this.vehicleDetails = data;
+  }
+
+  getVehicleDetails() {
+    return this.vehicleDetails;
   }
 }

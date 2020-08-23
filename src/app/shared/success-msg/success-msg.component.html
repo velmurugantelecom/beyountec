@@ -1,4 +1,4 @@
-<div class="success-content">
+<div class="success-content pt-1">
     <div>
         <i class="far fa-check-circle fa-5x bg-color"></i>
         <h3 class="mt-2"> {{ 'success' | translate }}</h3>
@@ -10,11 +10,11 @@
         </div>
         <div *ngIf="policyNo">
             <p class="mt-4"> {{'PolicyNoHash' | translate }}: {{policyNo}}</p>
-            <div class="text-color mb-1" *ngIf="activateAccount">
+            <!-- <div class="text-color mb-1" *ngIf="activateAccount">
                 Click <strong>Activate Account</strong> to activate your account
-            </div>
+            </div> -->
             <div *ngIf="activateAccount" class="centercss mb-3">
-                <button class="btn btn-home button fwhite bggreen centercss" (click)="activateProfile()">Activate Account</button>
+                Click here to <button class="btn btn-home button fwhite bggreen centercss ml-2" (click)="activateProfile()">Activate Account</button>
             </div>
             <div [ngClass]="{ensucessalign :language=='en',arsuccessalign :language=='ar'}">
                 <p>{{'PolicySuccessAlertOne' | translate }}</p>

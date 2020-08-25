@@ -74,6 +74,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public language: any;
   public errorMessages = [];
   public otpInterval;
+  public guestToken;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -143,8 +144,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.runtimeConfig = this.runtimeConfigService.config;
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
-      password: ['', [Validators.required,]]
-     // recaptcha: ['', Validators.required]
+      password: ['', [Validators.required,]],
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -169,8 +170,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     if (this.routerToken) {
       this.getOtp();
     }
+    this.guestUserCall();
     if (!this.isRevisedDetail) {
-      this.guestUserCall();
+      // this.guestUserCall();
     }
     else {
       this.patchBasicDetails();
@@ -198,13 +200,16 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     localStorage.setItem('isLoggedIn', 'false');
 
     this.loadDropdownValues();
-    // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-    //   let data = response.data;
-    //   localStorage.setItem('guesttokenDetails', data.token);
-    //   localStorage.setItem('isLoggedIn', 'false');
-    //   this.authService.isGuestUser.next(true);
+    let value = {
+      guestUser: true
+    }
+    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+      this.guestToken = response.data;
+      // localStorage.setItem('guesttokenDetails', data.token);
+      // localStorage.setItem('isLoggedIn', 'false');
+      // this.authService.isGuestUser.next(true);
 
-    // });
+    });
   }
 
   loadDropdownValues() {
@@ -244,7 +249,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
     localStorage.removeItem('isLoggedIn');
-    this.LoginForm.value['userName']=this.LoginForm.value['userName'].trim().toLowerCase();
+    this.LoginForm.value['userName'] = this.LoginForm.value['userName'].trim().toLowerCase();
     let value = this.LoginForm.value;
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;
@@ -271,7 +276,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   // }
 
   getMotorInfo(): void {
-    this.infoForm.value['email']=this.infoForm.value['email'].trim().toLowerCase();
+    this.infoForm.value['email'] = this.infoForm.value['email'].trim().toLowerCase();
     console.log(this.infoForm)
     let value = {
       emailId: this.infoForm.value['email']
@@ -301,13 +306,12 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.infoForm.status == 'INVALID') {
           return;
         } else {
-          //
-          let value = {
-            guestUser: true
-          }
-          this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-            let data = response.data;
-            localStorage.setItem('guesttokenDetails', data.token);
+          // let value = {
+          //   guestUser: true
+          // }
+          // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+          //   let data = response.data;
+            localStorage.setItem('guesttokenDetails', this.guestToken.token);
             localStorage.setItem('isLoggedIn', 'false');
             this.authService.isGuestUser.next(true);
             this.dataService.setUserDetails(this.infoForm.value);
@@ -320,7 +324,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
             else {
               this.router.navigate(['/new-motor-info'])
             }
-          });
+          // });
           //
 
         }
@@ -382,11 +386,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   }
 
   forgotPwd() {
-    clearInterval(this.otpInterval);
-    this.totalMs = 120000;
-    this.minutes = 2;
-    this.seconds = 0;
-    this.showTimer();
     this.ForgotForm.get('otp').setValidators([]);
     this.ForgotForm.get('otp').updateValueAndValidity();
     if (this.ForgotForm.status === 'INVALID') {
@@ -396,6 +395,11 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email.trim().toLowerCase()}`, '').subscribe(res => {
       localStorage.setItem('email', this.ForgotForm.value.email.trim().toLowerCase())
       this.spinner.hide();
+      clearInterval(this.otpInterval);
+      this.totalMs = 120000;
+      this.minutes = 2;
+      this.seconds = 0;
+      this.showTimer();
       this.isResetLinkSend = true;
       this.email = this.ForgotForm.value.email;
       this.forgotPWToken = res;
@@ -409,11 +413,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   verifyFPOTP() {
     if (this.ForgotForm.status === 'INVALID')
       return;
+    this.spinner.show();
     this.subscription = this.coreService.getInputs(`brokerservice/user/validateOtp?token=${this.forgotPWToken}&otp=${this.ForgotForm.value['otp']}`, '').subscribe(res => {
+      this.spinner.hide();
       if (res) {
         this.router.navigate(['/resetPassword', this.forgotPWToken, 'FP'])
       }
     }, err => {
+      this.spinner.hide();
       this.ForgotForm.get('otp').setValue(null);
       this.ForgotForm.get('otp').updateValueAndValidity();
     })

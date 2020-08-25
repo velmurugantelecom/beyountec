@@ -15,15 +15,15 @@
     <!--  -->
     <mat-step [stepControl]="quoteForm" class="m-2">
         <form [formGroup]="quoteForm" focusInvalidInput autocomplete="off" class="mt-2">
-            <ng-template matStepLabel>Fill out your Quote Number</ng-template>
-
+            <ng-template matStepLabel>Fill out  Quote No.</ng-template>
+            
 
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>{{ data.QTitle }}</mat-label>
-                    <input [(ngModel)]="dialogeDetails" matInput placeholder="Enter Your {{ data.QTitle }}" formControlName="type" required maxlength="50">
+                    <input [(ngModel)]="dialogeDetails" matInput placeholder="Enter Full Quote No" formControlName="type" required maxlength="50">
                     <mat-error *ngIf="quoteForm.controls.type.errors && quoteForm.controls.type.errors.required">
-                        Quote Number is required</mat-error>
+                       Full Quote No is required</mat-error>
                 </mat-form-field>
             </div>
 

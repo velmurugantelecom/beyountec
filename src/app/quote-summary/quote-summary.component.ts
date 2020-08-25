@@ -151,10 +151,10 @@ export class QuoteSummaryComponent implements OnInit {
       quoteNo: this.quoteDetails['quoteId']
     }
     if (this.offersStatus)
-    body['adYn'] = 'Y';
+      body['adYn'] = 'Y';
     else
-    body['adYn'] = 'N';
-    this.coreService.postInputs2('insured/dnd', '', body).subscribe(res=>{
+      body['adYn'] = 'N';
+    this.coreService.postInputs2('insured/dnd', '', body).subscribe(res => {
     });
     this.coreService.paymentService(this.quoteNo).subscribe(response => {
       this.spinner.hide();
@@ -248,11 +248,15 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.spinner.show();
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
+      const userAgent = window.navigator.userAgent;
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
         console.log('IE Download')
         var newBlob = new Blob([response], { type: response.type })
         window.navigator.msSaveOrOpenBlob(newBlob);
         this.spinner.hide();
+      } else if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) { //Safari & Opera iOS
+        var url = window.URL.createObjectURL(response);
+        window.location.href = url;
       } else {
         console.log('Normal Download')
         let fileUrl = window.URL.createObjectURL(response);

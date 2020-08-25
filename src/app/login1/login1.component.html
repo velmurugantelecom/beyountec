@@ -80,11 +80,12 @@
     <div *ngIf="!media.isActive('xs') || showWindow =='loginForm' " class="col-12  col-xs-12  col-sm-6   col-md-5  col-lg-4 col-xl-3  mat-elevation-z1 centercss" id="loginForm">
 
         <div class="login-form ">
-            <div class="LoginFtSize centercss mb-3">{{'LoginTo' | translate }}</div>
 
             <!-- Login Form -->
 
             <form [formGroup]="LoginForm" focusInvalidInput autocomplete="off" *ngIf="formType==='new-login'">
+                <div class="LoginFtSize centercss mb-3">{{'LoginTo' | translate }}</div>
+
                 <mat-form-field appearance="outline">
                     <mat-label>{{'UsernameLabel' | translate }}</mat-label>
                     <input matInput placeholder="{{'PlaceHolder.Username' | translate }}" formControlName="userName">

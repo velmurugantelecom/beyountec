@@ -20,6 +20,8 @@ export class RequestRedirectComponent implements OnInit {
   public blobImage = [];
   public imageTwo = null;
   public imageOne = null;
+  public width;
+  public height;
   public videoOptions: MediaTrackConstraints = {
   };
   public videoOptions2: MediaTrackConstraints = {
@@ -43,6 +45,20 @@ export class RequestRedirectComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+      if (screen.width <= 768) {
+        this.height = "350"
+        this.width = "250"
+      } else if (screen.width <= 992) {
+        this.height = "350"
+        this.width = "250"
+      } else if (screen.width <= 1200) {
+        this.height = "450"
+        this.width = "350"
+      } else if (screen.width >= 1200) {
+        console.log("check here")
+        this.height = "450"
+        this.width = "400"
+      }
   }
 
   public triggerSnapshot(): void {

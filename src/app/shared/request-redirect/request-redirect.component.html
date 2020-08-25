@@ -13,7 +13,7 @@
     <div style="text-align:center">
         <div *ngIf="!showCapturedImage">
             <p style="text-align: center;" class="mt-2">Kindly scan the {{ uploadedDoc }} side of the document</p>
-            <webcam [height]="300" [width]="250" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)">
+            <webcam [height]="height" [width]="width" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)">
             </webcam>
             <br/>
             <button class="btn button btn-default bggreen fwhite" (click)="triggerSnapshot();">Take Snapshot</button>

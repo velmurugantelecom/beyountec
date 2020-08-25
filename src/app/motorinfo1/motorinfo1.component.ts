@@ -1131,6 +1131,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   openDialog() {
     let msg, data;
+    console.log(this.selected)
     if (this.searchType === 'ChassisNoSearch' || this.searchType == undefined) {
       msg = `Vehicle information not found , 
       do you want to continue with Search By Vehicle information`;
@@ -1138,11 +1139,21 @@ export class NewMotorInfoScreen implements OnInit {
         chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
       }
     } else {
-      data = {
-        makeYear: this.selected[0].value,
-        makeId: this.selected[1].value,
-        modelId: this.selected[2].value,
-        chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
+      if (this.autoData.length <= 0) {
+        data = {
+          makeYear: this.selected[0].value,
+          makeId: this.selected[1].value + '-' + this.selected[1].label,
+          modelId: this.selected[2].value + '-' + this.selected[2].label,
+        }
+      } else {
+        data = {
+          makeYear: this.autoData[this.selectedTrim]['makeYear']['label'],
+          makeId: this.autoData[this.selectedTrim]['make']['value'] + '-' + this.autoData[this.selectedTrim]['make']['label'],
+          modelId: this.autoData[this.selectedTrim]['model']['value'] + '-' + this.autoData[this.selectedTrim]['model']['label'],
+          vehicleTypeId: this.autoData[this.selectedTrim]['type']['label'],
+          vehicleValue: this.autoData[this.selectedTrim]['vehicleValue'],
+          chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
+        }
       }
       msg = `Vehicle information not found in our database, do you want to Try again`;
     }

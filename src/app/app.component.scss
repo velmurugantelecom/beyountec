@@ -5,5 +5,32 @@
     // height: 35px;
     font-size: 14px;
     color: white;
-    line-height: 34px;
+    line-height: 23px;
+}
+
+.viewport-height {
+    min-height: 85vh;
+}
+
+@media only screen and (min-width: 992px) {
+    .right-align {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .small-txt {
+        font-size: 10px;
+        text-align: center;
+    }
+    // .viewport-height {
+    //     min-height: 81.3vh;
+    // }
+}
+
+@media only screen and (max-width: 991px) {
+    .small-txt {
+        text-align: center;
+    }
 }

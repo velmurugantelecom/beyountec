@@ -1,28 +1,28 @@
 <ngx-spinner></ngx-spinner>
 
 <app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>
-<div style="min-height: 83vh;">
+<div class="viewport-height">
     <router-outlet></router-outlet>
 </div>
 <!-- Footer Section -->
-<div class="d-flex" class="footer">
-    <div class="d-flex justify-content-between">
-        <div class="ml-1">
-            Copyright &copy; AFNIC | Powered by Beyontec
-        </div>
-        <div class="mr-1">
-            CALL 800 AFNIC or email us to : callcenter@fujinsco.ae
-        </div>
-    </div>
-</div>
-<!-- Footer Section -->
 <!-- <div class="d-flex" class="footer">
-    <div class="row d-flex justify-content-between">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-12 ml-1">
+    <div class="d-flex justify-content-between">
+        <div class="col-12 col-sm-6 ml-1">
             Copyright &copy; AFNIC | Powered by Beyontec
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 col-12 m-0 p-0 pl-1 ">
+        <div class="col-12 col-sm-6  mr-1">
             CALL 800 AFNIC or email us to : callcenter@fujinsco.ae
         </div>
     </div>
 </div> -->
+<!-- Footer Section -->
+<div class="d-flex" class="footer">
+    <div class="row p-0 m-0 justify-content-between">
+        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
+            Copyright &copy; AFNIC | Powered by Beyontec
+        </div>
+        <div class="right-align col-lg-7 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
+            CALL 800 AFNIC or email us to : callcenter@fujinsco.ae
+        </div>
+    </div>
+</div>

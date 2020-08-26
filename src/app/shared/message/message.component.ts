@@ -63,7 +63,7 @@ export class MessageComponent implements OnInit {
           vehicleDetails: { ...this.dataService.getVehicleDetails() },
           productTypeId: this.dataService.getUserDetails().productTypeName
         }
-        this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Make year for the vehicle is  greater than seven years' }).subscribe(res => {
+        this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Make year for the vehicle is  greater than ten years' }).subscribe(res => {
         });
         break;
       }

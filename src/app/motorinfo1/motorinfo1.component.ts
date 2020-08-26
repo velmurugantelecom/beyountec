@@ -58,13 +58,13 @@ export class NewMotorInfoScreen implements OnInit {
   public today = new Date()
   public items = [];
   public selected = [];
-  public addAllSelected = [];
-  public deleteSelected = [];
-  public addSelectedItemId:number=0;
   public basicUserDetails: any = {};
   public chassisNoForm: FormGroup;
   public vehicleForm: FormGroup;
   public insuredForm: FormGroup;
+  public addAllSelected = [];
+  public deleteSelected = [];
+  public addSelectedItemId:number=0;
   public autoData: any = {};
   public autoDataURL;
   public productId;
@@ -1036,7 +1036,7 @@ export class NewMotorInfoScreen implements OnInit {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const yearDiff = year - makeYear;
-    if (yearDiff > 7 && this.productId === '1113') {
+    if (yearDiff > 10 && this.productId === '1113') {
       let dialogRef = this.dialog.open(ProductChangePopupComponent, {
         width: '450px'
       });
@@ -1083,6 +1083,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.addAllSelected.push(item);
     this.onchangeLoadDropdown();
   }
+
   async onchangeLoadDropdown() {
     if (this.chassisNoForm.status === 'INVALID') {
       this.chassisNoForm.setErrors({});
@@ -1103,6 +1104,7 @@ export class NewMotorInfoScreen implements OnInit {
       if (this.selected[0].value && this.productId === '1113')
         this.makeYearValidation(this.selected[0].label)
       this.typeHint = 'Make';
+
       this.manualSearchListing('ae/options/make/findAll', 'make', { makeYear: this.selected[0].value });
       if (this.showGrid) {
         this.showGrid = false;

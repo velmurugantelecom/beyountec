@@ -83,8 +83,8 @@ ng-value-icon {
 // Scroll table
 tbody {
     display: block;
-    max-height: 130px;
-    min-height: 45px;
+    max-height: 130px !important;
+    min-height: 45px !important;
     overflow: auto;
 }
 

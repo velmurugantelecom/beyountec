@@ -58,6 +58,9 @@ export class NewMotorInfoScreen implements OnInit {
   public today = new Date()
   public items = [];
   public selected = [];
+  public addAllSelected = [];
+  public deleteSelected = [];
+  public addSelectedItemId:number=0;
   public basicUserDetails: any = {};
   public chassisNoForm: FormGroup;
   public vehicleForm: FormGroup;
@@ -198,10 +201,13 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   manualSearchListing(url, key, value) {
+    this.spinner.show();
     this.coreService.greyImportService(url, value).subscribe(res => {
+      this.spinner.hide();
       this.manualOptions[key] = res;
       this.items = res;
     })
+    this.spinner.hide();
   }
 
   openBottomSheet() {
@@ -342,7 +348,7 @@ export class NewMotorInfoScreen implements OnInit {
     if (type === 'ChassisNoSearch') {
       this.searchType = 'ChassisNoSearch';
     }
-    if (this.selected.length != 3) {
+    if (this.addSelectedItemId != 3) {
       this.vehicleForm.controls['chassisNo'].disable();
     } else {
       this.vehicleForm.controls['chassisNo'].enable();
@@ -1052,10 +1058,30 @@ export class NewMotorInfoScreen implements OnInit {
     };
   }
 
-  deSelectedItem(item) {
-    if (this.selected.length != 3) {
+  deSelectedItem(items) {
+    this.deleteSelected=[];
+    this.deleteSelected.push(items.value);
+    let selectedItemDiff= this.addSelectedItemId - items.value.id;
+    if(selectedItemDiff==1){
+      if(this.addSelectedItemId==2){
+        this.selected=[];
+      }else{
+       this.selected =this.selected.slice(0,1);
+    }
+    }else if(selectedItemDiff==2){
+      this.selected=[];
+    }
+    this.addSelectedItemId=--items.value.id;
+    this.onchangeLoadDropdown();
+    if (this.addSelectedItemId != 3) {
       this.openDropDown = true;
     }
+  }
+
+  addSelectedItem(item) {
+    item.id=++this.addSelectedItemId;
+    this.addAllSelected.push(item);
+    this.onchangeLoadDropdown();
   }
   async onchangeLoadDropdown() {
     if (this.chassisNoForm.status === 'INVALID') {
@@ -1068,16 +1094,15 @@ export class NewMotorInfoScreen implements OnInit {
     }
     this.searchType = 'Manual';
     this.checkTcNoStatus = true;
-    if (this.selected.length === 0) {
+    if (this.addSelectedItemId == 0) {
       this.items = this.manualOptions['makeYear'];
       this.openDropDown = true;
     }
-    if (this.selected.length == 1) {
+    if (this.addSelectedItemId == 1) {
       this.openDropDown = true;
       if (this.selected[0].value && this.productId === '1113')
         this.makeYearValidation(this.selected[0].label)
       this.typeHint = 'Make';
-
       this.manualSearchListing('ae/options/make/findAll', 'make', { makeYear: this.selected[0].value });
       if (this.showGrid) {
         this.showGrid = false;
@@ -1085,11 +1110,11 @@ export class NewMotorInfoScreen implements OnInit {
         this.trimOption = [];
         this.showForm = false;
       }
-    } else if (this.selected.length == 2) {
+    } else if (this.addSelectedItemId == 2) {
       this.typeHint = 'Model';
       this.manualSearchListing('ae/options/model/findAll', 'model', { makeYear: this.selected[0].value, makeId: this.selected[1].value });
     }
-    else if (this.selected.length == 3) {
+    else if (this.addSelectedItemId == 3) {
       this.openDropDown = false;
       this.vehicleForm.controls['chassisNo'].enable();
       this.spinner.show();
@@ -1196,7 +1221,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   enableDropDown() {
-    if (this.selected.length === 3) {
+    if (this.addSelectedItemId == 3) {
       return;
     }
     this.openDropDown = true;

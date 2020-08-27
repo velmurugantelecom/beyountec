@@ -313,12 +313,12 @@
         </div>
     </div>
     <div *ngIf="isValidQuote==='true'">
-        <!-- <div class="col-md-10 mt-4 ml-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"
-    *ngIf="isQuickSummary === 'true'">
-      <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration">
-      </mat-checkbox>
-      <span class="blue-font fbold" (click)="readNCDDeclaration()">NCD Declaration</span>
-    </div> -->
+        <div class="col-md-10 mt-4 ml-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}" *ngIf="isQuickSummary === 'true'">
+            <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration" (change)="onChangeDeclaration($event)">
+            </mat-checkbox>
+            <span class="blue-font fbold" (click)="readNCDDeclaration()">NCD Declaration</span>
+            <span class="mx-1" *ngIf="showNCDDisError" style="color: red;">(Please accept the NCD disclaimer)</span>
+        </div>
         <div class="row mt-4 mb-1" *ngIf="isQuickSummary === 'false'">
             <div class="col-md-10 mx-4">
                 <mat-checkbox [(ngModel)]="offersStatus" color="primary" class="mx-1 mt-1"></mat-checkbox>

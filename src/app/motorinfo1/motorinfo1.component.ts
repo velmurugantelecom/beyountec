@@ -595,6 +595,7 @@ export class NewMotorInfoScreen implements OnInit {
       if (this.isLoggedInUser) {
         data['customerId'] = this.loggedInUserName;
       }
+      data['vehicleDetails']['chassisNo'] = data['vehicleDetails']['chassisNo'].toUpperCase();
       data['customerId'] = this.additionalDetails['customerId']
       data['vehicleDetails']['engineNumber'] = this.additionalDetails['engineNumber'];
       data['vehicleDetails']['registerNumber'] = this.additionalDetails['registerNumber'];
@@ -921,8 +922,6 @@ export class NewMotorInfoScreen implements OnInit {
     this.subscription = this.coreService.getInputsDbsync('validateChassisNoAndTcNo', params).subscribe(res => {
       this.spinner.hide();
       if (res.responseCode === -1) {
-        var slider = document.createElement("input");
-        slider.type = "range";
         swal({
           title: "Are you sure?",
           text: "Please Confirm Chassis No. and TC number entered as per Mulkiya",

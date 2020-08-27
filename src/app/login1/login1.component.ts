@@ -245,6 +245,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.isValidForm = true;
       return
     }
+    this.spinner.show();
     localStorage.removeItem('tokenDetails');
     localStorage.removeItem('Username');
     localStorage.removeItem('guesttokenDetails');
@@ -252,6 +253,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm.value['userName'] = this.LoginForm.value['userName'].trim().toLowerCase();
     let value = this.LoginForm.value;
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
+      this.spinner.hide();
       let data = response.data;
       localStorage.setItem('tokenDetails', data.token);
       localStorage.setItem('Username', data.userName)
@@ -261,6 +263,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.dataService.setUserDetails({})
       this.router.navigate([`/User/dashboard`]);
     }, err => {
+      this.spinner.hide();
       this.guestUserCall();
     });
   }
@@ -311,19 +314,19 @@ export class NewLoginScreen implements OnInit, OnDestroy {
           // }
           // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
           //   let data = response.data;
-            localStorage.setItem('guesttokenDetails', this.guestToken.token);
-            localStorage.setItem('isLoggedIn', 'false');
-            this.authService.isGuestUser.next(true);
-            this.dataService.setUserDetails(this.infoForm.value);
-            this.saveAuditData();
-            if (this.quoteNo) {
-              this.router.navigate(['/new-motor-info'], {
-                queryParams: { quoteNo: this.quoteNo }
-              })
-            }
-            else {
-              this.router.navigate(['/new-motor-info'])
-            }
+          localStorage.setItem('guesttokenDetails', this.guestToken.token);
+          localStorage.setItem('isLoggedIn', 'false');
+          this.authService.isGuestUser.next(true);
+          this.dataService.setUserDetails(this.infoForm.value);
+          this.saveAuditData();
+          if (this.quoteNo) {
+            this.router.navigate(['/new-motor-info'], {
+              queryParams: { quoteNo: this.quoteNo }
+            })
+          }
+          else {
+            this.router.navigate(['/new-motor-info'])
+          }
           // });
           //
 
@@ -457,7 +460,13 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         'userName': localStorage.getItem('email'),
       })
     } else {
+      this.spinner.show();
       this.subscription = this.coreService.getInputs1(`brokerservice/user/confirmPasswordReset/${this.routerToken}`, '').subscribe(res => {
+        this.spinner.hide();
+        clearInterval(this.otpInterval);
+        this.totalMs = 120000;
+        this.minutes = 2;
+        this.seconds = 0;
         this.showTimer();
         this.PasswordForm.patchValue({ 'userName': res });
         this.OtpForm.patchValue({ 'email': res })

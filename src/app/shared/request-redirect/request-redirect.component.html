@@ -23,7 +23,7 @@
                 <mat-icon class="close" (click)="close()">
                     close
                 </mat-icon>
-                <img [src]="imageSrc" [height]="300" [width]="250" /></div>
+                <img [src]="imageSrc" [height]="height" [width]="width" /></div>
             <br/>
             <button class="mt-0 btn button btn-default bggreen fwhite mt-2" *ngIf="imageOne && !imageTwo" (click)="showCamTwo()">PROCEED</button>
             <div *ngIf="imageTwo" class="d-flex justify-content-between">

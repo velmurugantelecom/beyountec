@@ -1,7 +1,6 @@
 // custome theme
 @import "~@angular/material/theming";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-// @import "~@ng-select/ng-select/themes/material.theme.css";
 @include mat-core();
 $my-primary: ( A800: #26715e, contrast: ( 50: #000000));
 $custom-typography: mat-typography-config( $headline: mat-typography-level(22px, 48px, 700), $font-family: 'Verdana, "Helvetica Neue", sans-serif', $body-1: mat-typography-level(12px, 12px, 500));

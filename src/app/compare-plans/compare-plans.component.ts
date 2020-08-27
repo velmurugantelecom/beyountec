@@ -33,6 +33,7 @@ export class ComparePlansComponent implements OnInit {
   public loadings: any = {};
   public charges: any = {};
   public excess: any = {};
+  public excessAmount = [];
   public VatPercentage = '';
   showPromoDiscount = false;
   public discountCode = null;
@@ -286,6 +287,7 @@ export class ComparePlansComponent implements OnInit {
         if (group.length == 0) this.excess[item.description] = [];
         if (i === 0) {
           i++;
+          this.excessAmount.push(item.amount);
           this.excess[item.description].push({
             planId: plan.planDetails[0].planId,
             id: item.id,

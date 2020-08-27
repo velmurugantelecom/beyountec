@@ -38,10 +38,11 @@ export class QuoteSummaryComponent implements OnInit {
   public selectedCovers = [];
   public mailId: string;
   public ncdDeclaration: boolean
+  public needNcdDeclaration: boolean;
   public isValidQuote = 'true';
   public language: any;
   public offersStatus = true;
-
+  public showNCDDisError: boolean;
   constructor(private router: Router, private coreService: CoreService,
     private route: ActivatedRoute,
     private appService: AppService,
@@ -72,7 +73,7 @@ export class QuoteSummaryComponent implements OnInit {
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
       if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
-        this.ncdDeclaration = true;
+        this.needNcdDeclaration = true;
       }
       this.mailId = this.quoteDetails.userDetails.email;
       this.coverageMakeover();
@@ -130,14 +131,27 @@ export class QuoteSummaryComponent implements OnInit {
     this.isAgreed = event.checked;
   }
 
+  onChangeDeclaration(event) {
+    if (event.checked && this.needNcdDeclaration) {
+      this.showNCDDisError = false;
+    } else if (!event.checked && this.needNcdDeclaration) {
+      this.showNCDDisError = true;
+    }
+  }
   generateQuote() {
-
+    if (this.needNcdDeclaration && !this.ncdDeclaration) {
+      this.showNCDDisError = true;
+    }
+    this.spinner.show();
+    this.showNCDDisError = false;
     this.coreService.postInputs1('generateQuote', this.quoteDetails.quoteId).subscribe(res => {
+      this.spinner.hide()
       this.quoteNumber = res;
       this.appService.setQuoteDetails(this.quoteDetails);
       this.sendMail();
       this.router.navigate(['/additional-details'], { queryParams: { quoteNo: this.quoteNumber } });
     }, err => {
+      this.spinner.hide()
     })
   }
 
@@ -250,15 +264,14 @@ export class QuoteSummaryComponent implements OnInit {
     this.coreService.getDownload('brokerservice/document/downloadPDF', param).subscribe(response => {
       const userAgent = window.navigator.userAgent;
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        console.log('IE Download')
         var newBlob = new Blob([response], { type: response.type })
         window.navigator.msSaveOrOpenBlob(newBlob);
         this.spinner.hide();
       } else if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) { //Safari & Opera iOS
         var url = window.URL.createObjectURL(response);
         window.location.href = url;
+        this.spinner.hide();
       } else {
-        console.log('Normal Download')
         let fileUrl = window.URL.createObjectURL(response);
         var newWindow = window.open(fileUrl, '_blank');
         setTimeout(function () {

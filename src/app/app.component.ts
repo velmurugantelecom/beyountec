@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         this.routerurl = event.url.slice(1);
         
-        if (this.routerurl === '' || this.routerurl === 'new-login' || this.routerurl === 'resetPassword' || this.routerurl === 'forgotPwd' || localStorage.getItem('guesttokenDetails')) {
+        if (this.routerurl === '' || this.routerurl === 'new-login' || this.routerurl.includes('resetPassword') || this.routerurl === 'forgotPwd' || localStorage.getItem('guesttokenDetails')) {
           if (localStorage.getItem('isLoggedIn') === 'true') {
             localStorage.removeItem('isLoggedIn')
             localStorage.removeItem('tokenDetails');
@@ -56,8 +56,9 @@ export class AppComponent implements OnInit {
           }
           this.stopWatching();
         } else {
-          if (!this.isWatchStarted)
+          if (!this.isWatchStarted) {
             this.startWatching();
+          }
         }
       }
     });

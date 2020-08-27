@@ -94,7 +94,7 @@ export class NewMotorInfoScreen implements OnInit {
   public manualOptions: any = {};
   public currentYear: any;
   public minRegisteredDate: any
-
+ 
   minIssueDate
   dobVDate;
   dobMinVDate;
@@ -193,6 +193,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.dobMinVDate.setMonth(this.today.getMonth());
     this.dobMinVDate.setFullYear(this.today.getFullYear() - 75);
     this.language = localStorage.getItem("language");
+    this.vehicleForm.controls['tcFileNumber'].disable();
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
@@ -862,6 +863,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   registeredAtChange(value) {
+    this.vehicleForm.controls['tcFileNumber'].enable();
     let params = {
       productId: "*",
       filterByValue: value,

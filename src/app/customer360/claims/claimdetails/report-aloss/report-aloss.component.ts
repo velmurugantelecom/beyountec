@@ -67,7 +67,8 @@ export class ReportALOssComponent implements OnInit {
           this.maxLossDate=this.maxLossDate;
         }
         else{
-          this.maxLossDate=this.currentDate;
+          this.maxLossDate=moment(new Date()).format("YYYY-MM-DD");
+          ;
         }
         
       }

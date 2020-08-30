@@ -334,6 +334,8 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   getAutoData(type) {
+    if (type === 'chassis')
+    this.searchType = 'ChassisNoSearch'
     this.vehicleForm.reset();
     this.vehicleForm.clearValidators();
     this.insuredForm.reset();
@@ -362,10 +364,6 @@ export class NewMotorInfoScreen implements OnInit {
     if (this.chassisNoForm.status == 'VALID') {
       this.trimOption = [];
       this.spinner.show();
-      let greyParams = {
-        chassisNo: this.chassisNoForm.value.chassisNo.toUpperCase(),
-        productId: this.productId
-      }
       let params = {
         chassisNo: this.chassisNoForm.value.chassisNo.toUpperCase()
       }
@@ -1164,7 +1162,7 @@ export class NewMotorInfoScreen implements OnInit {
       msg = `Vehicle information not found , 
       do you want to continue with Search By Vehicle information`;
       data = {
-        chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value : this.vehicleForm.controls.chassisNo.value
+        chassisNo: this.chassisNoForm.controls.chassisNo.value ? this.chassisNoForm.controls.chassisNo.value.toUpperCase() : this.vehicleForm.controls.chassisNo.value.toUpperCase()
       }
     } else {
       if (this.autoData.length <= 0) {

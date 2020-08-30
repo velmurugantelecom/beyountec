@@ -51,6 +51,7 @@ export class MessageComponent implements OnInit {
           vehicleDetails: { ...this.dataService.getVehicleDetails() },
           productTypeId: this.dataService.getUserDetails().productTypeName
         }
+        if (params['productTypeId'])
         this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Auto Data not Returning Value' }).subscribe(res => {
         });
         break;
@@ -63,6 +64,7 @@ export class MessageComponent implements OnInit {
           vehicleDetails: { ...this.dataService.getVehicleDetails() },
           productTypeId: this.dataService.getUserDetails().productTypeName
         }
+        if (params['productTypeId'])
         this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Make year for the vehicle is  greater than ten years' }).subscribe(res => {
         });
         break;
@@ -75,6 +77,7 @@ export class MessageComponent implements OnInit {
           vehicleDetails: { ...this.dataService.getVehicleDetails() },
           productTypeId: this.dataService.getUserDetails().productTypeName
         }
+        if (params['productTypeId'])
         this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'This vehicle has an import history.' }).subscribe(res => {
         });
         break;
@@ -87,6 +90,7 @@ export class MessageComponent implements OnInit {
           vehicleDetails: { ...this.dataService.getVehicleDetails() },
           productTypeId: this.dataService.getUserDetails().productTypeName
         }
+        if (params['productTypeId'])
         this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Tariff not defined for the coverages.' }).subscribe(res => {
         });
         break;

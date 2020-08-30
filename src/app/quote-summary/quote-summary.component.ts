@@ -72,6 +72,7 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
+      console.log('efffe', this.quoteDetails.vehicleDetails.ncdYears)
       if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
         this.needNcdDeclaration = true;
       }
@@ -141,6 +142,7 @@ export class QuoteSummaryComponent implements OnInit {
   generateQuote() {
     if (this.needNcdDeclaration && !this.ncdDeclaration) {
       this.showNCDDisError = true;
+      return;
     }
     this.spinner.show();
     this.showNCDDisError = false;

@@ -5,284 +5,544 @@
     <div class="quote-header">
         <p class="f16 ml-1 my-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'PleaseReview' | translate }}</p>
     </div>
-    <div class="row grid-divider" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-        <div class="col-lg-3 order-lg-0 col-md-6 order-md-0 col-sm-6  order-sm-0 col-xs-12">
+    <div class="d-none d-xl-block">
+        <div class=" row grid-divider" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+            <div class="col-lg-3 order-lg-0 col-md-6 order-md-0 col-sm-6  order-sm-0 col-xs-12">
 
-            <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
-            <div class="text-center screenName fbold">{{ 'GeneralInfo' | translate }} </div>
-            <div>
-                <label class="label_form">{{ 'CoverType' | translate }}</label>
-                <div class="field-value">{{ quoteDetails?.productTypeName }}</div>
+                <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
+                <div class="text-center screenName fbold">{{ 'GeneralInfo' | translate }} </div>
+                <div>
+                    <label class="label_form">{{ 'CoverType' | translate }}</label>
+                    <div class="field-value">{{ quoteDetails?.productTypeName }}</div>
+                </div>
+                <div>
+                    <label class="label_form">{{ 'FromtoToDate' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.startDate | dateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | dateFormat }}</div>
+                </div>
             </div>
-            <div>
-                <label class="label_form">{{ 'FromtoToDate' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.startDate | dateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | dateFormat }}</div>
-            </div>
-        </div>
 
-        <div class="col-lg-3 order-lg-1 col-md-6 order-md-2 col-sm-6 order-sm-2 col-xs-12" style="margin-top: 13px;">
-            <div class="text-center"><img src='assets/quote-summary/vehicle.png' class="img_cls"></div>
-            <div class="text-center screenName fbold"> {{ 'VehicleDetails' | translate }} </div>
-            <div class="split-input">
-                <label class="label_form">{{'ChassisNo' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.vehicleDetails?.chassisNo}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+            <div class="col-lg-3 order-lg-1 col-md-6 order-md-2 col-sm-6 order-sm-2 col-xs-12" style="margin-top: 13px;">
+                <div class="text-center"><img src='assets/quote-summary/vehicle.png' class="img_cls"></div>
+                <div class="text-center screenName fbold"> {{ 'VehicleDetails' | translate }} </div>
+                <div class="split-input">
+                    <label class="label_form">{{'ChassisNo' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.vehicleDetails?.chassisNo}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
             'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                        <label class="label_form">{{ 'Make' | translate }}</label>
-                        <div> {{ quoteDetails?.vehicleDetails?.makeName}}</div>
+                            <label class="label_form">{{ 'Make' | translate }}</label>
+                            <div> {{ quoteDetails?.vehicleDetails?.makeName}}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
             'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                        <label class="label_form">{{ 'Model' | translate }}</label>
-                        <div> {{ quoteDetails?.vehicleDetails?.modelName}}</div>
+                            <label class="label_form">{{ 'Model' | translate }}</label>
+                            <div> {{ quoteDetails?.vehicleDetails?.modelName}}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'MakeYear' | translate }}</label>
-                    <div class="field-value">
-                        {{quoteDetails?.vehicleDetails?.makeYear}}
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'MakeYear' | translate }}</label>
+                        <div class="field-value">
+                            {{quoteDetails?.vehicleDetails?.makeYear}}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Trim' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.trim}}</div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'Trim' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.vehicleDetails?.trim}}</div>
-                </div>
-            </div>
 
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'UsageType' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'UsageType' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
+                        <label class="label_form">{{ 'RepairType' | translate }}</label>
+                        <div class="field-value">
+                            {{ quoteDetails?.vehicleDetails?.repairName}}</div>
+                    </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
-                    <label class="label_form">{{ 'RepairType' | translate }}</label>
-                    <div class="field-value">
-                        {{ quoteDetails?.vehicleDetails?.repairName}}</div>
+                <!-- start-->
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label class="label_form">{{ 'NoOfPassengersInclDriver' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'RegisteredAt' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.regCityDesc}}</div>
+                    </div>
                 </div>
-            </div>
-            <!-- start-->
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-12">
-                    <label class="label_form">{{ 'NoOfPassengersInclDriver' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
-                    <label class="label_form">{{ 'RegisteredAt' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.vehicleDetails?.regCityDesc}}</div>
-                </div>
-            </div>
-            <!-- end-->
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-12">
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                <!-- end-->
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
       'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                        <label class="label_form">{{ 'TCFNo' | translate }}</label>
-                        <div> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
+                            <label class="label_form">{{ 'TCFNo' | translate }}</label>
+                            <div> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'RegistrationType' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
                     </div>
                 </div>
-                <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
-                    <label class="label_form">{{ 'RegistrationType' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
+                <!-- end-->
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.registeredDate">
+                        <label class="label_form">{{ 'RegisteredDate' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | dateFormat}}</div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.prevPolicyExpDate">
+                        <label class="label_form">{{ 'PrevPolExpiryAt' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | dateFormat}}</div>
+                    </div>
                 </div>
-            </div>
-            <!-- end-->
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.registeredDate">
-                    <label class="label_form">{{ 'RegisteredDate' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | dateFormat}}</div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.prevPolicyExpDate">
-                    <label class="label_form">{{ 'PrevPolExpiryAt' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | dateFormat}}</div>
-                </div>
-            </div>
-            <!-- end-->
-            <!-- start-->
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
-                    <label class="label_form">{{ 'ClaimYears' | translate }}</label>
-                    <div class="field-value" [ngStyle]="{'height': quoteDetails?.vehicleDetails?.ncdYearsDesc == null ?  '30px': ''}">
-                        {{ quoteDetails?.vehicleDetails?.ncdYearsDesc}}</div>
+                <!-- end-->
+                <!-- start-->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'ClaimYears' | translate }}</label>
+                        <div class="field-value" [ngStyle]="{'height': quoteDetails?.vehicleDetails?.ncdYearsDesc == null ?  '30px': ''}">
+                            {{ quoteDetails?.vehicleDetails?.ncdYearsDesc}}</div>
 
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
+                        <label class="label_form">{{ 'VehicleValue' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.vehicleDetails?.vehicleValue | DecimalValue}}</div>
+                    </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
-                    <label class="label_form">{{ 'VehicleValue' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.vehicleDetails?.vehicleValue | DecimalValue}}</div>
+                <!-- end-->
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
+                        <label class="label_form">{{ 'EngineNo' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.engineNo}}</div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
+                        <label class="label_form">{{ 'VehicleColor' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.colorName}}</div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.noOfDoors">
+                        <label class="label_form">{{ 'NoofDoorsLabel' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.noOfDoors}}</div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.bankName">
+                        <label class="label_form">{{ 'VehicleFinancedBank' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.bankName}}</div>
+                    </div>
                 </div>
             </div>
-            <!-- end-->
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
-                    <label class="label_form">{{ 'EngineNo' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.engineNo}}</div>
+            <div class="col-lg-3 order-lg-2 col-md-6 order-md-3 col-sm-6 order-sm-3 col-xs-12">
+                <div class="text-center"><img src='assets/quote-summary/insured.png' class="img_cls"></div>
+                <div class="text-center screenName fbold"> {{ 'InsuredDetails' | translate }} </div>
+                <div *ngIf="isQuickSummary=='false'">
+                    <label class="label_form">{{ 'PersonalNumberID' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.userDetails?.personalId}} </div>
                 </div>
-                <div class="col-md-12 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
-                    <label class="label_form">{{ 'VehicleColor' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.colorName}}</div>
+                <div>
+                    <label class="label_form">{{ 'InsuredName' | translate }}</label>
+                    <!-- <div class="row"> -->
+                    <!-- <div class="field-value">{{quoteDetails?.userDetails?.prefix}}</div> -->
+                    <div class="field-value">{{ quoteDetails?.userDetails?.fullName}}</div>
                 </div>
-            </div>
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.noOfDoors">
-                    <label class="label_form">{{ 'NoofDoorsLabel' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.noOfDoors}}</div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.bankName">
-                    <label class="label_form">{{ 'VehicleFinancedBank' | translate }}</label>
-                    <div class="field-value"> {{quoteDetails?.vehicleDetails?.bankName}}</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 order-lg-2 col-md-6 order-md-3 col-sm-6 order-sm-3 col-xs-12">
-            <div class="text-center"><img src='assets/quote-summary/insured.png' class="img_cls"></div>
-            <div class="text-center screenName fbold"> {{ 'InsuredDetails' | translate }} </div>
-            <div *ngIf="isQuickSummary=='false'">
-                <label class="label_form">{{ 'PersonalNumberID' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.userDetails?.personalId}} </div>
-            </div>
-            <div>
-                <label class="label_form">{{ 'InsuredName' | translate }}</label>
-                <!-- <div class="row"> -->
-                <!-- <div class="field-value">{{quoteDetails?.userDetails?.prefix}}</div> -->
-                <div class="field-value">{{ quoteDetails?.userDetails?.fullName}}</div>
-            </div>
-            <!-- </div> -->
+                <!-- </div> -->
 
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-12">
-                    <!-- <div class="fixed-height-1"> -->
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-12">
+                        <!-- <div class="fixed-height-1"> -->
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                        <label class="label_form">{{ 'Dob' | translate }}</label>
-                        <div>{{ quoteDetails?.userDetails?.dob | dateFormat}}</div>
+                            <label class="label_form">{{ 'Dob' | translate }}</label>
+                            <div>{{ quoteDetails?.userDetails?.dob | dateFormat}}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-12">
-                    <!-- <div class="fixed-height-1"> -->
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                    <div class="col-md-4 col-sm-4 col-12">
+                        <!-- <div class="fixed-height-1"> -->
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                        <label class="label_form">{{ 'Age' | translate }}</label>
-                        <div>{{ quoteDetails?.userDetails?.age}}</div>
+                            <label class="label_form">{{ 'Age' | translate }}</label>
+                            <div>{{ quoteDetails?.userDetails?.age}}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-12">
-                    <!-- <div class="fixed-height-1"> -->
-                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                    <div class="col-md-4 col-sm-4 col-12">
+                        <!-- <div class="fixed-height-1"> -->
+                        <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
 
-                        <label class="label_form">{{ 'Gender' | translate }}</label>
-                        <div>{{quoteDetails?.userDetails?.genderName}}</div>
+                            <label class="label_form">{{ 'Gender' | translate }}</label>
+                            <div>{{quoteDetails?.userDetails?.genderName}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="label_form">{{ 'Email' | translate }}</label>
+                    <div class="field-value">{{quoteDetails?.userDetails?.email}}</div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Occupation' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.professionName}}</div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'TaxRegNo' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.taxId}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'ContactNumber' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.mobileCode}} - {{quoteDetails?.userDetails?.mobileNo}}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'LicenseAge' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.driverDetails?.licenseAge}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'LicenseIssuedAt' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | dateFormat}}</div>
+                    </div>
+                </div>
+                <div *ngIf="isQuickSummary === 'false'">
+                    <label class="label_form">{{ 'Address1' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
+                </div>
+                <div *ngIf="isQuickSummary === 'false'">
+                    <label class="label_form">{{ 'Address2' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form" [ngStyle]="{'height': quoteDetails?.userDetails?.postBox == null ?  '30px': ''}">{{ 'POBOXNo' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.postBox}} </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'EmiratesLabel' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.address4Desc}} </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'City' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.cityName}} </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Nationality' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.nationalityDesc}} </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Country' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.countryName}} </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <label class="label_form">{{ 'Email' | translate }}</label>
-                <div class="field-value">{{quoteDetails?.userDetails?.email}}</div>
-            </div>
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'Occupation' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.userDetails?.professionName}}</div>
+            <div class="col-lg-3 order-lg-3 col-md-6 order-md-1 col-sm-6 order-sm-1 col-xs-12" *ngIf="isValidQuote==='true'">
+                <div class="text-center"><img src='assets/quote-summary/premium.png' class="img_cls"></div>
+                <div class="text-center screenName fbold"> {{ 'PremiumDetails' | translate }} </div>
+
+                <div>
+                    <label class="label_form">{{ 'PremiumPackage' | translate }}</label>
+                    <div class="field-value">{{quoteDetails?.risks[0]?.riskDesc}}</div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'TaxRegNo' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.userDetails?.taxId}}</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'ContactNumber' | translate }}</label>
-                    <div class="field-value">{{quoteDetails?.userDetails?.mobileCode}} - {{quoteDetails?.userDetails?.mobileNo}}
+
+                <div>
+                    <label class="label_form">{{ 'Premium' | translate }}</label>
+                    <div class="field-value"> {{ quoteDetails?.premiumCurrencyId}} {{grossPremium | DecimalValue}}
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'LicenseAge' | translate }}</label>
-                    <div class="field-value">{{ quoteDetails?.driverDetails?.licenseAge}}</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'LicenseIssuedAt' | translate }}</label>
-                    <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | dateFormat}}</div>
-                </div>
-            </div>
-            <div *ngIf="isQuickSummary === 'false'">
-                <label class="label_form">{{ 'Address1' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
-            </div>
-            <div *ngIf="isQuickSummary === 'false'">
-                <label class="label_form">{{ 'Address2' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
-            </div>
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form" [ngStyle]="{'height': quoteDetails?.userDetails?.postBox == null ?  '30px': ''}">{{ 'POBOXNo' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.postBox}} </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'EmiratesLabel' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.address4Desc}} </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'City' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.cityName}} </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'Nationality' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.nationalityDesc}} </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="isQuickSummary === 'false'">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <label class="label_form">{{ 'Country' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.countryName}} </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 order-lg-3 col-md-6 order-md-1 col-sm-6 order-sm-1 col-xs-12" *ngIf="isValidQuote==='true'">
-            <div class="text-center"><img src='assets/quote-summary/premium.png' class="img_cls"></div>
-            <div class="text-center screenName fbold"> {{ 'PremiumDetails' | translate }} </div>
-
-            <div>
-                <label class="label_form">{{ 'PremiumPackage' | translate }}</label>
-                <div class="field-value">{{quoteDetails?.risks[0]?.riskDesc}}</div>
-            </div>
-
-            <div>
-                <label class="label_form">{{ 'Premium' | translate }}</label>
-                <div class="field-value"> {{ quoteDetails?.premiumCurrencyId}} {{grossPremium | DecimalValue}}
-                </div>
-            </div>
-            <div>
-                <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
+                <div>
+                    <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
             'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
-                    <label class="label_form">{{ 'VATonPremium' | translate }}  (5%)</label>
-                    <div>{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.risks[0]?.vat | DecimalValue}} </div>
+                        <label class="label_form">{{ 'VATonPremium' | translate }}  (5%)</label>
+                        <div>{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.risks[0]?.vat | DecimalValue}} </div>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label class="label_form">{{ 'TotalPremium' | translate }}</label>
-                <div class="field-value" style="border:none"><b>
+                <div>
+                    <label class="label_form">{{ 'TotalPremium' | translate }}</label>
+                    <div class="field-value" style="border:none"><b>
             {{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.risks[0]?.netPremium | DecimalValue}}</b></div>
-                <div class="field-value" style="opacity:0.6">{{ 'InclusiveOf' | translate }} 5% {{ 'VAT' | translate }}</div>
-            </div>
+                    <div class="field-value" style="opacity:0.6">{{ 'InclusiveOf' | translate }} 5% {{ 'VAT' | translate }}</div>
+                </div>
 
+            </div>
         </div>
     </div>
+    <!-- Responsiveness -->
+    <div class="d-xl-none">
+        <mat-accordion>
+            <!-- General Information -->
+            <mat-expansion-panel style="margin-top: 30px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
+                        <div class="text-center screenName fbold centercss ml-3">{{ 'GeneralInfo' | translate }} </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'CoverType' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.productTypeName }}</div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'FromtoToDate' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.startDate | dateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | dateFormat }}</div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <!-- Vehicle Details -->
+            <mat-expansion-panel style="margin-top: 30px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="text-center"><img src='assets/quote-summary/vehicle.png' class="img_cls"></div>
+                        <div class="text-center screenName fbold centercss ml-3"> {{ 'VehicleDetails' | translate }} </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{'ChassisNo' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.chassisNo}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Make' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.makeName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Model' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.modelName}}</div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'MakeYear' | translate }}</label>
+                        <div class="field-value">
+                            {{quoteDetails?.vehicleDetails?.makeYear}}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Trim' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.trim}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'UsageType' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
+                        <label class="label_form">{{ 'RepairType' | translate }}</label>
+                        <div class="field-value">
+                            {{ quoteDetails?.vehicleDetails?.repairName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'NoOfPassengersInclDriver' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'RegisteredAt' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.vehicleDetails?.regCityDesc}}</div>
+                    </div>
+                </div>
+                <!-- end-->
+                <!-- start-->
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'TCFNo' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'RegistrationType' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.registeredDate">
+                        <label class="label_form">{{ 'RegisteredDate' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | dateFormat}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.prevPolicyExpDate">
+                        <label class="label_form">{{ 'PrevPolExpiryAt' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | dateFormat}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                        <label class="label_form">{{ 'ClaimYears' | translate }}</label>
+                        <div class="field-value" [ngStyle]="{'height': quoteDetails?.vehicleDetails?.ncdYearsDesc == null ?  '30px': ''}">
+                            {{ quoteDetails?.vehicleDetails?.ncdYearsDesc}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.vehicleValue">
+                        <label class="label_form">{{ 'VehicleValue' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.vehicleDetails?.vehicleValue | DecimalValue}}</div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.engineNo">
+                        <label class="label_form">{{ 'EngineNo' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.engineNo}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.colorName">
+                        <label class="label_form">{{ 'VehicleColor' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.colorName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.noOfDoors">
+                        <label class="label_form">{{ 'NoofDoorsLabel' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.noOfDoors}}</div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.bankName">
+                        <label class="label_form">{{ 'VehicleFinancedBank' | translate }}</label>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.bankName}}</div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <!-- Insured Details -->
+            <mat-expansion-panel style="margin-top: 30px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="text-center"><img src='assets/quote-summary/insured.png' class="img_cls"></div>
+                        <div class="text-center screenName fbold centercss ml-3"> {{ 'InsuredDetails' | translate }} </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="isQuickSummary=='false'">
+                        <label class="label_form">{{ 'PersonalNumberID' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.personalId}} </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'InsuredName' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.fullName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Dob' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.dob | dateFormat}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Age' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.age}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Gender' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.genderName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Email' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.email}}</div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Occupation' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.professionName}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'TaxRegNo' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.taxId}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'ContactNumber' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.userDetails?.mobileCode}} - {{quoteDetails?.userDetails?.mobileNo}}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'LicenseAge' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.driverDetails?.licenseAge}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'LicenseIssuedAt' | translate }}</label>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | dateFormat}}</div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Address1' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Address2' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form" [ngStyle]="{'height': quoteDetails?.userDetails?.postBox == null ?  '30px': ''}">{{ 'POBOXNo' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.postBox}} </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'EmiratesLabel' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.address4Desc}} </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'City' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.cityName}} </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isQuickSummary === 'false'">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Nationality' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.nationalityDesc}} </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Country' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.countryName}} </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <!-- Premium Details -->
+            <mat-expansion-panel style="margin-top: 30px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="text-center"><img src='assets/quote-summary/premium.png' class="img_cls"></div>
+                        <div class="text-center screenName fbold centercss ml-3"> {{ 'PremiumDetails' | translate }} </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'PremiumPackage' | translate }}</label>
+                        <div class="field-value">{{quoteDetails?.risks[0]?.riskDesc}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'Premium' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.premiumCurrencyId}} {{grossPremium | DecimalValue}}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'VATonPremium' | translate }}  (5%)</label>
+                        <div class="field-value">{{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.risks[0]?.vat | DecimalValue}} </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                        <label class="label_form">{{ 'TotalPremium' | translate }}</label>
+                        <div class="field-value" style="border:none"><b>
+                        {{quoteDetails?.premiumCurrencyId}} {{quoteDetails?.risks[0]?.netPremium | DecimalValue}}</b></div>
+                        <div class="field-value" style="opacity:0.6">{{ 'InclusiveOf' | translate }} 5% {{ 'VAT' | translate }}</div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
     <div *ngIf="attachments!= undefined && attachments.length > 0 && isQuickSummary === 'false'">
         <p class="m-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">{{ 'Attachments' | translate }}</p>
         <div class="row">

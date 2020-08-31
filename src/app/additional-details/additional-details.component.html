@@ -522,6 +522,16 @@
             <mat-step>
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
+                       <!-- <div  class="row  mt-2" class="text-color d-flex justify-content-center" > Supported File types &nbsp;:&nbsp;&nbsp; <strong> JPEG/PNG/PDF/TXT</strong>
+                          </div>
+                          <div class="text-color d-flex justify-content-center">Max File Size &nbsp;:&nbsp;&nbsp; <strong> 10 MB </strong>
+                          </div> -->
+                          <mat-list  class="py-6" > 
+                            <mat-list-item *ngFor="let note of notes">
+                               <mat-icon  matListIcon>note</mat-icon>
+                               <p matLine>{{note.name}} &nbsp;:&nbsp; <strong> {{note.updated}}</strong></p>
+                            </mat-list-item>
+                         </mat-list>
                         <div class="m-1 row" *ngFor="let container of fileContainer ; index as i">
                             <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 pl-1 pr-0 mt-2">
                                 <label class="upload-label" #tooltip="matTooltip" (click)="tooltip.toggle()"

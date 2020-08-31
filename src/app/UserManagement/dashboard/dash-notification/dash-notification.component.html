@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <div class="col-md-12" style="margin-top:20px;display:inline-block;padding:0px;">
+            <div class="col-md-12" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
               <table class="table" mat-table [dataSource]="dataSource" matSort>
 
                 <ng-container class="poppins-light-15" [matColumnDef]="column" *ngFor="let column of displayedColumns">
@@ -119,9 +119,19 @@
                 <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
+              <mat-paginator 
+              [length]="totalRecords" 
+              [pageSize]="5" 
+              (page)="pageEvent = $event; onPaginateChange($event)"
+              showFirstLastButtons>
+          </mat-paginator>
+         
             </div>
+            <div class="centercss f16 py-4" *ngIf="totalRecords==0">
+              No record found
           </div>
-        </div>
+          </div>
+        </div> 
       </mat-expansion-panel>
     </mat-accordion>
   </div>

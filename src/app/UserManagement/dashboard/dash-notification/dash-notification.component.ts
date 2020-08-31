@@ -8,6 +8,7 @@ import { chooseProduct } from 'src/app/shared/product-selection/product-selectio
 import { AppService } from 'src/app/core/services/app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-dash-notification',
@@ -34,6 +35,9 @@ export class DashNotificationComponent implements OnInit {
   paymentData: any;
   inputData: any = {};
   public autoDataURL = '';
+  pageEvent: PageEvent;
+  totalRecords:any;
+  quoteTypeValue:any;
 
 
   constructor(private postService: CoreService,
@@ -55,12 +59,14 @@ export class DashNotificationComponent implements OnInit {
     this.getPolicy();
   }
   getQuoteList(quoteType) {
+    this.quoteTypeValue=quoteType;
     let params = {
       'page': 0,
-      'pageSize': 4,
-      'quoteType': quoteType
+      'pageSize': 5,
+      'quoteType': this.quoteTypeValue
     };
     this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
+      this.totalRecords =result.totalRecords;
       if (!result || result.length === 0) {
         return;
       }
@@ -75,11 +81,7 @@ export class DashNotificationComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      // this.dataSource.filterPredicate = function (data, filter: string): boolean {
-      //   return data.quoteType.includes(filter);
-      // };
     }, err => {
-      /* this.noResults = true; */
     });
   }
   getPaymentDetail() {
@@ -89,7 +91,7 @@ export class DashNotificationComponent implements OnInit {
     this.displayedColumns = this.selectedColumns['Payment'];
     let params = {
       'page': 0,
-      'pageSize': 4,
+      'pageSize': 5,
     };
     this.postService.getInputs('brokerservice/dashboard/outstandingDueAmount', params).subscribe((result: any) => {
       this.dataSource = new MatTableDataSource<any>(result);
@@ -136,14 +138,68 @@ export class DashNotificationComponent implements OnInit {
       page: 0,
       pageSize: 5,
     };
+    this.spinner.show();
     this.dropdownservice.getpolicy(params).subscribe((data: any) => {
+      this.spinner.hide();
       this.tableData = data.data;
-      // this.tableData = result.data;
+      this.totalRecords =data.totalRecords;
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-
+    },err => {
+      this.spinner.hide();
     })
+  }
+
+
+  onPaginateChange(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+
+      if(this.activeQuotes=="Policy"){
+        let params = {
+          quoteType: 'p',
+          page: page,
+          pageSize: size,
+        };
+      this.spinner.show();
+      this.dropdownservice.getpolicy(params).subscribe((data: any) => {
+        this.spinner.hide();
+        this.tableData = data.data;
+        this.dataSource = new MatTableDataSource<any>(this.tableData);
+        this.dataSource.sort = this.sort;
+      },err => {
+        this.spinner.hide();
+      })
+    }
+    else if(this.activeQuotes=="Quotes" || this.activeQuotes=="Renewal"){
+      let params = {
+        'page': page,
+        'pageSize': size,
+        'quoteType': this.quoteTypeValue
+      };
+      this.spinner.show();
+      this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
+        this.spinner.hide();
+        if (!result || result.length === 0) {
+          return;
+        }
+        let tempArray = [];
+        result.data.forEach((quote) => {
+          let sgsId = quote.sgsId + '';
+          if (quote.quoteNo != sgsId) {
+            tempArray.push(quote);
+          }
+        })
+        this.tableData = tempArray;
+        this.dataSource = new MatTableDataSource<any>(this.tableData);
+        this.dataSource.sort = this.sort;
+      }, err => {
+        this.spinner.hide();
+      });
+    }
+     
+
   }
 
   navpage(element) {

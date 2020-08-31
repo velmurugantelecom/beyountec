@@ -75,6 +75,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public subscription: Subscription;
   public goTo = '';
   public notes:any;
+
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
     private router: Router, private route: ActivatedRoute,
@@ -141,8 +142,6 @@ export class AdditionalDetailsComponent implements OnInit {
         updated: 'JPEG/PNG/PDF/TXT & Max 10 MB',
       }
     ];
-
- 
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {

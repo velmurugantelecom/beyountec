@@ -237,48 +237,56 @@
         <div class="d-xl-none">
             <mat-accordion>
                 <!-- first as isFirst" [expanded]="isFirst" -->
-                <mat-expansion-panel style="margin-top: 50px" *ngFor="let plan of planOb['plans'];" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel hideToggle style="margin-top: 20px" *ngFor="let plan of planOb['plans'];" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                     <mat-expansion-panel-header style="height: 120px !important;">
-                        <mat-panel-title class="fbold">
+                        <!-- <mat-panel-title class="fbold">
                             {{plan.planDetails[0].planName}}
                             <span *ngIf="plan.confirmed" class="ml-2"><i style="color: #32ba7c;"
                                 class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
                             </span>
-                        </mat-panel-title>
-                        <div class="mt-1 ml-4 row" *ngIf="plan.excess[0]">
-                            <div class="col-lg-7 col-md-6 col-sm-6 col-6">
-                                Excess Amount
+                        </mat-panel-title> -->
+                        <div class="d-flex justify-content-between">
+                            <div class="m-1 fbold">
+                                {{plan.planDetails[0].planName}}
+                                <span *ngIf="plan.confirmed" class="ml-2"><i style="color: #32ba7c;"
+                                class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
+                            </span>
                             </div>
-                            <div class="col-lg-5 col-md-6 col-sm-6 col-6">
-                                {{plan.planDetails[0].currency}} {{plan.excess[0].amount | DecimalValue}}
+                            <div class="m-1">
+                                <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.excess[0]">
+                                <div>
+                                    Excess Amount
+                                </div>
+                                <div class="fbold">
+                                    {{plan.planDetails[0].currency}} {{plan.excess[0].amount | DecimalValue}}
+                                </div>
+                            </div>
 
-                        <div class="mt-1 ml-4 row" *ngIf="plan.planDetails[0].grossPremium">
-                            <div class="col-lg-7 col-md-6 col-sm-6 col-6">
-                                Net Premium
+                            <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.planDetails[0].grossPremium">
+                                <div>
+                                    Net Premium
+                                </div>
+                                <div class="fbold">
+                                    {{plan.planDetails[0].currency}} {{plan.planDetails[0].grossPremium | DecimalValue}}
+                                </div>
                             </div>
-                            <div class="col-lg-5 col-md-6 col-sm-6 col-6">
-                                {{plan.planDetails[0].currency}} {{plan.planDetails[0].grossPremium | DecimalValue}}
+                            <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div>
+                                    Premium incl. VAT
+                                </div>
+                                <div class="fbold">
+                                    {{plan.planDetails[0].currency}} {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
+                                </div>
                             </div>
                         </div>
-
-                        <div class="mt-1 ml-4 row">
-                            <div class="col-lg-7 col-md-6 col-sm-6 col-6 fbold">
-                                Premium incl. VAT
-                            </div>
-                            <div class="col-lg-5 col-md-6 col-sm-6 col-6 fbold">
-                                {{plan.planDetails[0].currency}} {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
-                            </div>
-                        </div>
-                        <!-- <span *ngIf="plan.confirmed" style="margin:auto;"><i style="color: #32ba7c;"
-                                    class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
-                                </span> -->
-                        <!-- </mat-panel-description> -->
                     </mat-expansion-panel-header>
-                    <div class="d-flex justify-content-center">
+                    <!-- <div class="d-flex justify-content-center">
                         <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button>
-                    </div>
+                    </div> -->
                     <ng-container>
                         <div class="flex-container m-1 p-2">
                             <div style="flex-grow: 7">
@@ -292,12 +300,14 @@
                                 </ul>
                                 <ul class="mb-0">
                                     <div>
-                                        <span class="mr-2 fbold">Discount Code</span>
+                                        <span class="">
+                                        <span class="mr-2 fbold fgreen">Discount Code</span>
                                         <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
                                         <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                             <i (click)="removePromoDiscountMob(plan.promoFieldId)"
                                                 style="font-size:15px"
                                                 class="fas fa-times-circle fa-2x custom-cursor"></i>
+                                        </span>
                                         </span>
                                     </div>
                                 </ul>

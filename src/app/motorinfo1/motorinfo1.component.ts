@@ -64,7 +64,7 @@ export class NewMotorInfoScreen implements OnInit {
   public insuredForm: FormGroup;
   public addAllSelected = [];
   public deleteSelected = [];
-  public addSelectedItemId:number=0;
+  public addSelectedItemId: number = 0;
   public autoData: any = {};
   public autoDataURL;
   public productId;
@@ -94,7 +94,7 @@ export class NewMotorInfoScreen implements OnInit {
   public manualOptions: any = {};
   public currentYear: any;
   public minRegisteredDate: any
- 
+
   minIssueDate
   dobVDate;
   dobMinVDate;
@@ -335,7 +335,7 @@ export class NewMotorInfoScreen implements OnInit {
 
   getAutoData(type) {
     if (type === 'chassis')
-    this.searchType = 'ChassisNoSearch'
+      this.searchType = 'ChassisNoSearch'
     this.vehicleForm.reset();
     this.vehicleForm.clearValidators();
     this.insuredForm.reset();
@@ -377,7 +377,7 @@ export class NewMotorInfoScreen implements OnInit {
           const currentDate = new Date();
           const year = currentDate.getFullYear();
           const yearDiff = year - parseInt(this.autoData[0]['makeYear']['label']);
-          if (this.changedProductType && this.productId === '1116' && yearDiff < 7) {
+          if (this.changedProductType && this.productId === '1116' && yearDiff < 10) {
             this.changedProductType = false;
             this.productId = '1113';
             this.basicUserDetails['productTypeName'] = 'Full Insurance';
@@ -703,6 +703,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.coreService.postInputsGreyImportService('am/findAutoMatrixEquivalent', body, '').subscribe(res => {
       this.spinner.hide()
       if (!res) {
+        localStorage.setItem('BTmapping', 'true')
         this.openDialog();
       } else {
         formValue = res;
@@ -1058,19 +1059,19 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   deSelectedItem(items) {
-    this.deleteSelected=[];
+    this.deleteSelected = [];
     this.deleteSelected.push(items.value);
-    let selectedItemDiff= this.addSelectedItemId - items.value.id;
-    if(selectedItemDiff==1){
-      if(this.addSelectedItemId==2){
-        this.selected=[];
-      }else{
-       this.selected =this.selected.slice(0,1);
+    let selectedItemDiff = this.addSelectedItemId - items.value.id;
+    if (selectedItemDiff == 1) {
+      if (this.addSelectedItemId == 2) {
+        this.selected = [];
+      } else {
+        this.selected = this.selected.slice(0, 1);
+      }
+    } else if (selectedItemDiff == 2) {
+      this.selected = [];
     }
-    }else if(selectedItemDiff==2){
-      this.selected=[];
-    }
-    this.addSelectedItemId=--items.value.id;
+    this.addSelectedItemId = --items.value.id;
     this.onchangeLoadDropdown();
     if (this.addSelectedItemId != 3) {
       this.openDropDown = true;
@@ -1078,7 +1079,7 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   addSelectedItem(item) {
-    item.id=++this.addSelectedItemId;
+    item.id = ++this.addSelectedItemId;
     this.addAllSelected.push(item);
     this.onchangeLoadDropdown();
   }
@@ -1194,6 +1195,11 @@ export class NewMotorInfoScreen implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (!result) {
         this.dataService.setVehicleDetails(data);
+        if (localStorage.getItem('BTmapping') === 'true') {
+          localStorage.removeItem('BTmapping');
+          this.navigateToMsgScreen('mapping-failed');
+          return;
+        }
         this.navigateToMsgScreen('autodata-failed');
       } else {
         if (this.searchType != 'ChassisNoSearch') {

@@ -56,6 +56,19 @@ export class MessageComponent implements OnInit {
         });
         break;
       }
+      case 'mapping-failed': {
+        this.text = this.languageChange('MessageAlert');
+        this.icon = 'info';
+        let params = {
+          userDetails: { ...this.dataService.getUserDetails() },
+          vehicleDetails: { ...this.dataService.getVehicleDetails() },
+          productTypeId: this.dataService.getUserDetails().productTypeName
+        }
+        if (params['productTypeId'])
+        this.coreService.postInputs(`brokerservice/document/enquiryMail`, params, { reason: 'Vehicle Information not mapped in Beyontec' }).subscribe(res => {
+        });
+        break;
+      }
       case 'quotation-failed': {
         this.text = this.languageChange('QuotationFailedAlert');
         this.icon = 'info';
@@ -118,6 +131,10 @@ export class MessageComponent implements OnInit {
           break;
         }
         case 'autodata-failed': {
+          this.text = this.languageChange('MessageAlert');
+          break;
+        }
+        case 'mapping-failed': {
           this.text = this.languageChange('MessageAlert');
           break;
         }

@@ -410,7 +410,7 @@ export class AdditionalDetailsComponent implements OnInit {
     effectiveDate = new Date(this.additionalDetails.value['effectiveDate']);
     this.effetiveDates = this.dateConversion(effectiveDate);
     this.nowTime = this.dateConversion(new Date());
-    this.minTime = this.datePipe.transform(new Date(), 'H:mm');;
+    this.minTime = this.datePipe.transform(new Date(), 'HH:mm');
     if (this.effetiveDates <= this.nowTime) {
       this.effetiveDates = this.effetiveDates.concat('T' + this.minTime + ':00.000Z');
     }
@@ -421,7 +421,6 @@ export class AdditionalDetailsComponent implements OnInit {
     let changeStartDateparams = {
       quoteId: this.quoteDetails.quoteId,
       amndVerNo: 0,
-      //  startDate: new Date(effectiveDate).toISOString(),
       startDate: this.effetiveDates,
       productId: this.quoteDetails.productTypeId
     }

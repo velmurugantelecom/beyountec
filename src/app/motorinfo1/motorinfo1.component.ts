@@ -11,7 +11,8 @@ import { ProductChangePopupComponent } from 'src/app/modal/product-change/produc
 import { MatDialog, MatBottomSheetRef, MatBottomSheet, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import { TranslateService } from '@ngx-translate/core';
 
 export function PolicyExpDateValidator(control: AbstractControl) {
   if (control.value != '') {
@@ -94,6 +95,9 @@ export class NewMotorInfoScreen implements OnInit {
   public manualOptions: any = {};
   public currentYear: any;
   public minRegisteredDate: any
+  public invalidLicenseIssueDate:any;
+  public requiredDobFormat:any;
+  public invalidPolicyExpDateMorethan60:any;
 
   minIssueDate
   dobVDate;
@@ -118,6 +122,7 @@ export class NewMotorInfoScreen implements OnInit {
     private dropdownservice: DropDownService,
     public dialog: MatDialog,
     public runtimeConfigService: RuntimeConfigService,
+    private translate: TranslateService,
     private _bottomSheet: MatBottomSheet) {
     this.route.queryParams
       .subscribe(params => {
@@ -187,17 +192,36 @@ export class NewMotorInfoScreen implements OnInit {
     this.dobVDate = new Date();
     this.dobVDate.setDate(this.today.getDate() - 1);
     this.dobVDate.setMonth(this.today.getMonth());
-    this.dobVDate.setFullYear(this.today.getFullYear() - 18);
+    this.dobVDate.setFullYear(this.today.getFullYear() - this.runtimeConfigService.config.DateOfBirthGreaterThan);
     this.dobMinVDate = new Date();
     this.dobMinVDate.setDate(this.today.getDate() - 1);
     this.dobMinVDate.setMonth(this.today.getMonth());
     this.dobMinVDate.setFullYear(this.today.getFullYear() - 75);
     this.language = localStorage.getItem("language");
     this.vehicleForm.controls['tcFileNumber'].disable();
+    this.translate.get('Invalid.LicenseIssueDate') .subscribe(value => { 
+      this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB); 
+    } );
+    this.translate.get('Required.DobFormat') .subscribe(value => { 
+      this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan); 
+    } );
+    this.translate.get('Invalid.PolicyExpDateMorethan60') .subscribe(value => { 
+      this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate); 
+    } );
+
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
       this.language = localStorage.getItem("language");
+      this.translate.get('Invalid.LicenseIssueDate') .subscribe(value => { 
+        this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB); 
+      } );
+      this.translate.get('Required.DobFormat') .subscribe(value => { 
+        this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan); 
+      } );
+      this.translate.get('Invalid.PolicyExpDateMorethan60') .subscribe(value => { 
+        this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate); 
+      } );
     }
   }
 
@@ -222,7 +246,7 @@ export class NewMotorInfoScreen implements OnInit {
     this.insuredForm.get('dob').statusChanges.subscribe(val => {
       if (val === 'VALID') {
         let dob = this.insuredForm.get('dob').value;
-        let date = moment(dob).add('years', 18)['_d'];
+        let date = moment(dob).add('years', this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB)['_d'];
         this.minIssueDate = date.toISOString();
       }
     });
@@ -377,7 +401,7 @@ export class NewMotorInfoScreen implements OnInit {
           const currentDate = new Date();
           const year = currentDate.getFullYear();
           const yearDiff = year - parseInt(this.autoData[0]['makeYear']['label']);
-          if (this.changedProductType && this.productId === '1116' && yearDiff < 10) {
+          if (this.changedProductType && this.productId === '1116' && yearDiff < this.runtimeConfigService.config.FullInsuranceVehicleAgeGreaterThan) {
             this.changedProductType = false;
             this.productId = '1113';
             this.basicUserDetails['productTypeName'] = 'Full Insurance';
@@ -985,6 +1009,7 @@ export class NewMotorInfoScreen implements OnInit {
     }
     this.dropdownservice.getInputs(url, param).subscribe((response) => {
       this.spinner.hide();
+      this.vehicleForm.controls['tcFileNumber'].enable();
       this.quoteDetails = response.data.quoteSummary;
       if (this.quoteDetails) {
         this.patchAdditionalDetails(this.quoteDetails)
@@ -1036,7 +1061,7 @@ export class NewMotorInfoScreen implements OnInit {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const yearDiff = year - makeYear;
-    if (yearDiff > 10 && this.productId === '1113') {
+    if (yearDiff > this.runtimeConfigService.config.FullInsuranceVehicleAgeGreaterThan && this.productId === '1113') {
       let dialogRef = this.dialog.open(ProductChangePopupComponent, {
         width: '450px'
       });

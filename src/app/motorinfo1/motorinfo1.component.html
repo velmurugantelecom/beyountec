@@ -312,7 +312,7 @@
                         <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('required')">
                             {{ 'Required.LicenseIssueDate' | translate }}</mat-error>
                         <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('owlDateTimeMin')">
-                            {{ 'Invalid.LicenseIssueDate' | translate }}</mat-error>
+                            {{ invalidLicenseIssueDate }}</mat-error>
                         <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('owlDateTimeMax')">
                             {{ 'Invalid.FutureDate' | translate }}</mat-error>
                     </mat-form-field>
@@ -380,7 +380,7 @@
                             {{ 'Required.Dob' | translate }}
                         </mat-error>
                         <mat-error *ngIf="insuredForm.controls.dob.hasError('owlDateTimeMax')">
-                            {{ 'Required.DobFormat' | translate }}
+                            {{ requiredDobFormat }}
                         </mat-error>
                         <mat-error *ngIf="insuredForm.controls.dob.hasError('owlDateTimeMin')">
                             {{ 'Required.DobFormatMin' | translate }}

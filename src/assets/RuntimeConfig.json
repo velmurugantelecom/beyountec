@@ -8,5 +8,9 @@
     "PaymentEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/payment-service/",
     "OcrEndpoint": "https://dev.beyontec.com/bts-broker-portal/api/ocr-service/api/",
     "GreyImport": "https://dev.beyontec.com/bts-broker-portal/api/tpi-services/",
-    "enableLanguageChange": true
+    "enableLanguageChange": true,
+    "PrevPolExpiryDate":60,
+    "LicenseIssuedDateGreaterThanDOB":18,
+    "DateOfBirthGreaterThan":18,
+    "FullInsuranceVehicleAgeGreaterThan":10
 }

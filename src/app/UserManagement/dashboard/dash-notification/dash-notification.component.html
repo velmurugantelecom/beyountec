@@ -95,7 +95,7 @@
                       <span
                         *ngIf=" column!='quoteNo' && column!='policyNo' && column!=='refNo' && column!=='endDate' && column!=='startDate' &&  column!=='dueDate' && column!=='amount'">{{element[column]}}</span>
 
-                      <span class=" hyperlink-click" *ngIf="column=='quoteNo' && activeQuotes=='Quotes' || activeQuotes=='Renewal'" (click)="showDetails(element)">
+                      <span class=" hyperlink-click" *ngIf="column=='quoteNo' && activeQuotes=='Quotes' || column=='quoteNo' && activeQuotes=='Renewal'" (click)="showDetails(element)">
                         {{element[column]}}</span>
                         <span *ngIf="column=='quoteNo' && activeQuotes!='Quotes' && activeQuotes!='Renewal'" (click)="showDetails(element)">
                           {{element[column]}}</span>

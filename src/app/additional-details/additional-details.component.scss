@@ -63,6 +63,7 @@ img {
     position: absolute;
     left: 0;
     top: 0;
+    bottom: 0;
     opacity: 0;
     cursor: pointer;
     width: 100%;
@@ -146,6 +147,7 @@ img {
     font-size: 15px;
     font-weight: 8px;
 }
+
 .orange-color {
     display: flex;
     justify-content: left;
@@ -155,7 +157,6 @@ img {
     font-size: 16px;
     font-weight: 12px;
 }
-
 
 .bor-box {
     border: 1px solid #adacac;

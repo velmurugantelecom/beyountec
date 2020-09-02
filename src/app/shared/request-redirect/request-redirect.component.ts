@@ -21,6 +21,7 @@ export class RequestRedirectComponent implements OnInit {
   public imageTwo = null;
   public imageOne = null;
   public width;
+  public frameWidth;
   public height;
   public videoOptions: MediaTrackConstraints = {
   };
@@ -48,16 +49,20 @@ export class RequestRedirectComponent implements OnInit {
       if (screen.width <= 768) {
         this.height = "350"
         this.width = "250"
+        this.frameWidth = "230"
       } else if (screen.width <= 992) {
         this.height = "350"
         this.width = "250"
+        this.frameWidth = "230"
       } else if (screen.width <= 1200) {
         this.height = "450"
         this.width = "350"
+        this.frameWidth = "330"
       } else if (screen.width >= 1200) {
         console.log("check here")
         this.height = "450"
         this.width = "400"
+        this.frameWidth = "370"
       }
   }
 

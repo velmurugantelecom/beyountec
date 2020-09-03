@@ -735,7 +735,8 @@ export class NewMotorInfoScreen implements OnInit {
         this.showForm = true;
         this.showGrid = false;
         this.enableContinue = false;
-        this.minRegisteredDate = formValue['makeYear']['value'].concat('-01-01');
+        this.minRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-12-31'))).subtract('years', 1);
+        //this.minRegisteredDate = formValue['makeYear']['value'].concat('-01-01');
         localStorage.setItem('maxValue', formValue['maxValue']);
         localStorage.setItem('minValue', formValue['vehicleValue']);
         this.vehicleForm.patchValue({
@@ -947,7 +948,7 @@ export class NewMotorInfoScreen implements OnInit {
       if (res.responseCode === -1) {
         swal({
           title: "Are you sure?",
-          text: "Please Confirm Chassis No. and TC number entered as per Mulkiya",
+          text: "Please Confirm Chassis No. and Traffic File Number entered as per Mulkiya",
           icon: "warning",
           dangerMode: true,
           buttons: {
@@ -1027,7 +1028,8 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   patchQuoteDetails() {
-    this.minRegisteredDate = this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
+    //this.minRegisteredDate = this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
+    this.minRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-12-31'))).subtract('years', 1);
     this.vehicleForm.patchValue(this.quoteDetails['vehicleDetails']);
     this.insuredForm.patchValue(this.quoteDetails['userDetails']);
     this.vehicleForm.patchValue({

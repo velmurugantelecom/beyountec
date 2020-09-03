@@ -246,7 +246,8 @@
                             </span>
                             </div>
                             <div class="m-1">
-                                <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button>
+                                <mat-radio-button value="auto" [checked]="plan.confirmed" (click)="planselectMob(plan)">
+                                </mat-radio-button>
                             </div>
                         </div>
                         <div class="row">

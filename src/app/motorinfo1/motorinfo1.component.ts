@@ -736,9 +736,9 @@ export class NewMotorInfoScreen implements OnInit {
         this.showGrid = false;
         this.enableContinue = false;
         this.minRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-12-31'))).subtract('years', 1);
-        //this.minRegisteredDate = formValue['makeYear']['value'].concat('-01-01');
         localStorage.setItem('maxValue', formValue['maxValue']);
         localStorage.setItem('minValue', formValue['vehicleValue']);
+        console.log(this.chassisNoForm.value.chassisNo)
         this.vehicleForm.patchValue({
           chassisNo: this.chassisNoForm.value.chassisNo,
           makeId: formValue['make']['value'],
@@ -770,13 +770,18 @@ export class NewMotorInfoScreen implements OnInit {
         tcFileNumber: this.dataService.getUserDetails().tcNumber
       });
       if (this.chassisNoForm.value.chassisNo) {
-        this.getUserDetailsByTcNo();
+        setTimeout(() => {
+          this.getUserDetailsByTcNo();
+        }, 1000);
       }
     }
   }
 
   // based on tcNumber
   getUserDetailsByTcNo() {
+    if (this.isLoggedInUser) {
+    this.vehicleForm.controls['tcFileNumber'].enable();
+    }
     let status = this.vehicleForm.get('chassisNo').status;
     if (status === 'DISABLED')
       status = 'VALID'
@@ -784,12 +789,15 @@ export class NewMotorInfoScreen implements OnInit {
       || !(status === 'VALID')) {
       return;
     }
-    console.log(this.vehicleForm.getRawValue())
+    console.log(this.vehicleForm.getRawValue().chassisNo)
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
       chassisNo: this.vehicleForm.getRawValue().chassisNo ? this.vehicleForm.getRawValue().chassisNo.toUpperCase() : null
     }
+    console.log(this.vehicleForm)
+    console.log(params)
     this.subscription = this.coreService.getInputsDbsync('policy/fetchByChassisNoAndTcNo', params).subscribe(res => {
+      console.log(res)
       if (res) {
         this.insuredForm.patchValue(res.userDetails);
         this.vehicleForm.patchValue({
@@ -798,8 +806,8 @@ export class NewMotorInfoScreen implements OnInit {
           registeredDate: res.vehicleDetails.registeredDate
         });
         this.patchAdditionalDetails(res);
+        this.mortgagedYN = res.vehicleDetails.mortgagedYn;
       }
-      this.mortgagedYN = res.vehicleDetails.mortgagedYn;
     }, err => {
     });
   }
@@ -1028,7 +1036,6 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   patchQuoteDetails() {
-    //this.minRegisteredDate = this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01');
     this.minRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-12-31'))).subtract('years', 1);
     this.vehicleForm.patchValue(this.quoteDetails['vehicleDetails']);
     this.insuredForm.patchValue(this.quoteDetails['userDetails']);

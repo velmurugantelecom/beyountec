@@ -74,7 +74,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public currentEffDate;
   public subscription: Subscription;
   public goTo = '';
-  public notes:any;
+  public notes: any;
 
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
@@ -98,17 +98,19 @@ export class AdditionalDetailsComponent implements OnInit {
       engineNo: ['', []],
       registrationMark: ['', [Validators.required]],
       effectiveDate: [date, [Validators.required]],
-      fullNameBL: ['', Validators.required],
+      prefix: ['', [Validators.required]],
+      fullName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      fullNameBL: ['', []],
       prefixBL: ['', [Validators.required]],
       taxId: ['', []],
       nationality: ['', [Validators.required]],
       address4: ['', [Validators.required]],
       city: ['', [Validators.required]],
       country: ['12', [Validators.required]],
-      address1: ['', [Validators.required]],
-      address2: ['', []],
+      address2: ['', [Validators.required]],
+      address3: ['', []],
       occupation: ['', [Validators.required]],
-      postBox: ['', [Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      address1: ['', [Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       personalId: ['', [Validators.required, Validators.minLength(15)]],
       questionnaire: ['', []]
 
@@ -202,6 +204,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.maxEffectiveDate = moment(new Date()).add('days', 30)['_d'];
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
+      this.getDropDownOptions('prefix', 'UCD_PREFIX_NAME');
       this.getUploadedDocs();
       // if (this.quoteDetails.vehicleDetails.regStatusDesc === 'New' || this.quoteDetails.vehicleDetails.registeredAt != "1102") {
       if (this.quoteDetails.vehicleDetails.regStatus === 'N' && this.quoteDetails.vehicleDetails.registeredAt != "1102") {
@@ -278,7 +281,7 @@ export class AdditionalDetailsComponent implements OnInit {
         }
       }
       if (this.quoteDetails.productTypeId == '1116') {
-        this.mortgagedYNDisabled=true; 
+        this.mortgagedYNDisabled = true;
       }
       this.getDropDownOptions('vehicleColor', 'COLOUR');
       this.getDropDownOptions('country', 'COUNTRY');
@@ -332,10 +335,10 @@ export class AdditionalDetailsComponent implements OnInit {
     let insuredDetails = {
       quoteId: this.quoteDetails.quoteId,
       quoteNo: this.quoteNo,
-      address1: this.additionalDetails.value['address1'],
       address2: this.additionalDetails.value['address2'],
-      postBox: this.additionalDetails.value['postBox'],
-      fullName: this.quoteDetails.userDetails.fullName,
+      address3: this.additionalDetails.value['address3'],
+      address1: this.additionalDetails.value['address1'],
+      // fullName: this.quoteDetails.userDetails.fullName,
       age: this.quoteDetails.userDetails.age,
       licenseIssueDate: this.quoteDetails.userDetails.licenseIssueDate,
       email: this.quoteDetails.userDetails.email,
@@ -345,8 +348,10 @@ export class AdditionalDetailsComponent implements OnInit {
       personalId: this.additionalDetails.value['personalId'],
       nationality: nationality,
       fullNameBL: this.additionalDetails.value['fullNameBL'],
+      fullName: this.additionalDetails.value['fullName'],
       firstNameBL: this.additionalDetails.value['fullNameBL'],
       prefixBL: this.additionalDetails.value['prefixBL'],
+      prefix: this.additionalDetails.value['prefix'],
       taxId: this.additionalDetails.value['taxId'],
       city: this.additionalDetails.value['city'],
       country: this.additionalDetails.value['country'],
@@ -403,7 +408,7 @@ export class AdditionalDetailsComponent implements OnInit {
     // if (!moment(this.currentEffDate).isSame(this.additionalDetails.value.effectiveDate))
     //   this.updateEffectiveDate('change')
     // else
-  //  this.updateEffectiveDate();
+    //  this.updateEffectiveDate();
 
     //
     let effectiveDate;
@@ -626,10 +631,10 @@ export class AdditionalDetailsComponent implements OnInit {
     this.subscription = this.coreService.getDownload(url, '').subscribe((response) => {
       if (response) {
         if (window.navigator && window.navigator.msSaveBlob) {
-          var newBlob = new Blob([response], {type: response.type})
+          var newBlob = new Blob([response], { type: response.type })
           window.navigator.msSaveBlob(newBlob);
           return;
-        } 
+        }
         var link = document.createElement("a");
         link.href = URL.createObjectURL(response);
         link.download = `Motor_Insurance_Quote.pdf`;
@@ -642,10 +647,10 @@ export class AdditionalDetailsComponent implements OnInit {
     let fileName = `${this.quoteDetails.quoteId}_0_${value}`;
     this.subscription = this.coreService.mergeDocument('brokerservice/documentupload/downloadFile?fileName=' + fileName).subscribe((response: any) => {
       if (window.navigator && window.navigator.msSaveBlob) {
-        var newBlob = new Blob([response], {type: response.type})
+        var newBlob = new Blob([response], { type: response.type })
         window.navigator.msSaveBlob(newBlob);
         return;
-      } 
+      }
       var link = document.createElement("a");
       link.href = URL.createObjectURL(response);
       link.download = value;
@@ -725,13 +730,15 @@ export class AdditionalDetailsComponent implements OnInit {
       engineNo: this.quoteDetails.vehicleDetails['engineNo'],
       //Insured
       prefixBL: this.quoteDetails.userDetails['prefixBL'],
+      prefix: this.quoteDetails.userDetails['prefix'],
       fullNameBL: this.quoteDetails.userDetails['fullNameBL'],
+      fullName: this.quoteDetails.userDetails['fullName'],
       occupation: this.quoteDetails.userDetails['professionName'],
       personalId: this.quoteDetails.userDetails['personalId'],
       nationality: this.quoteDetails.userDetails['nationalityDesc'],
-      address1: this.quoteDetails.userDetails['address1'],
+      address3: this.quoteDetails.userDetails['address3'],
       address2: this.quoteDetails.userDetails['address2'],
-      postBox: this.quoteDetails.userDetails['postBox'],
+      address1: this.quoteDetails.userDetails['address1'],
       address4: this.quoteDetails.userDetails['address4'],
       taxId: this.quoteDetails.userDetails['taxId'],
       // city: this.quoteDetails.userDetails['city'],
@@ -753,16 +760,16 @@ export class AdditionalDetailsComponent implements OnInit {
     if (this.isReviseDetails || this.isOldQuote) {
       if (this.quoteDetails['startDate']) {
         //
-       let startDateCheck = this.dateConversion(this.quoteDetails['startDate']);
+        let startDateCheck = this.dateConversion(this.quoteDetails['startDate']);
         let currentTime = this.dateConversion(new Date());
         if (startDateCheck < currentTime) {
           effectivDate = moment(new Date());
         }
         //
-        else{
+        else {
           effectivDate = moment(this.quoteDetails['startDate']);
         }
-        
+
       } else {
         effectivDate = moment(new Date());
       }

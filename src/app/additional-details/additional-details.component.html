@@ -310,6 +310,35 @@
                                 <div class="row px-3">
                                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 col-5">
                                         <mat-form-field appearance="outline">
+                                            <mat-label>{{'Prefix' | translate}}</mat-label>
+                                            <mat-select formControlName="prefix">
+                                                <mat-option *ngFor="let prefix of options.prefix" [value]="prefix.value">
+                                                    {{ prefix.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="formCtrls.prefix.errors && formCtrls.prefix.errors.required">
+                                                {{ 'Required.Prefix' | translate }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-9 col-md-8 col-sm-8 col-xs-7 col-7">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
+                                            <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}" formControlName="fullName" required AlphabetOnly>
+                                            <mat-error *ngIf="formCtrls.fullName.errors && formCtrls.fullName.errors.required">
+                                                {{ 'Required.InsuredName' | translate }}
+                                            </mat-error>
+                                            <mat-error *ngIf="additionalDetails.controls.fullName.hasError('pattern')">
+                                                {{ 'Required.InsuredNameAlphabets' | translate }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row px-3">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 col-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>{{'PrefixArabic' | translate}}</mat-label>
                                             <mat-select formControlName="prefixBL">
                                                 <mat-option *ngFor="let prefix of options.prefix" [value]="prefix.value">
                                                     {{ prefix.label}}
@@ -320,10 +349,7 @@
                                     <div class="col-lg-9 col-md-8 col-sm-8 col-xs-7 col-7">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{ 'InsuredNameArabicLabel' | translate }}</mat-label>
-                                            <input matInput placeholder="{{ 'PlaceHolder.InsuredNameArabic' | translate }} " formControlName="fullNameBL" required AlphabetOnly>
-                                            <mat-error *ngIf=" formCtrls.fullNameBL.errors && formCtrls.fullNameBL.errors.required">
-                                                {{ 'Required.InsuredNameArabic' | translate }}
-                                            </mat-error>
+                                            <input matInput placeholder="{{ 'PlaceHolder.InsuredNameArabic' | translate }} " formControlName="fullNameBL" AlphabetOnly>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -371,8 +397,8 @@
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Address1' | translate}}</mat-label>
-                                            <input matInput placeholder="{{'PlaceHolder.Address1' | translate}}" required formControlName="address1">
-                                            <mat-error *ngIf="formCtrls.address1.errors && formCtrls.address1.errors.required">
+                                            <input matInput placeholder="{{'PlaceHolder.Address1' | translate}}" required formControlName="address2">
+                                            <mat-error *ngIf="formCtrls.address2.errors && formCtrls.address2.errors.required">
                                                 {{'Required.Address1' | translate}}
                                             </mat-error>
                                         </mat-form-field>
@@ -381,7 +407,7 @@
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Address2' | translate}}</mat-label>
-                                            <input matInput placeholder="{{'PlaceHolder.Address2' | translate}}" formControlName="address2">
+                                            <input matInput placeholder="{{'PlaceHolder.Address2' | translate}}" formControlName="address3">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -390,8 +416,8 @@
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'POBOXNo' | translate}}</mat-label>
-                                            <input matInput placeholder="{{'PlaceHolder.PoBoX' | translate}}" formControlName="postBox" NumbersOnly maxlength="6" />
-                                            <mat-error *ngIf="additionalDetails.controls.postBox.hasError('pattern')">
+                                            <input matInput placeholder="{{'PlaceHolder.PoBoX' | translate}}" formControlName="address1" NumbersOnly maxlength="6" />
+                                            <mat-error *ngIf="additionalDetails.controls.address1.hasError('pattern')">
                                                 {{ 'NumberOnly' | translate }}
                                             </mat-error>
                                         </mat-form-field>

@@ -103,7 +103,7 @@
                         {{'Required.Password' | translate }}
                     </mat-error>
                 </mat-form-field>
-                <div *ngIf="runtimeConfig.Environment != 'QC'">
+                <!-- <div *ngIf="runtimeConfig.Environment != 'QC'">
                     <div class="row d-flex justify-content-center captcharesize">
 
                         <ngx-recaptcha2 matInput #captchaElem siteKey="{{runtimeConfigService.config.siteKey}}" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme" [type]="type" formControlName="recaptcha" (success)="handleSuccess($event)">
@@ -111,7 +111,7 @@
                     </div>
 
                     <p class="error-message" *ngIf="isValidForm">Captcha is required</p>
-                </div>
+                </div> -->
                 <div class="centercss">
                     <button type="submit" class="col-md-6 col-sm-6 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn" (click)="submitForm()">{{'Login' | translate }}</button>
                 </div>

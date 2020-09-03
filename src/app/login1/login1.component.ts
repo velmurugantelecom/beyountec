@@ -145,7 +145,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-      recaptcha: ['', Validators.required]
+      // recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -562,6 +562,9 @@ export class QuoteDialog {
     this.spinner.show();
     this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails.trim()}`, '').subscribe(response => {
       if (response) {
+        this.OtpForm.reset();
+        this.OtpForm.clearValidators();
+        clearInterval(this.otpInterval);
         this.isCompleted = true;
         this.goForward(stepper)
         this.token = response;

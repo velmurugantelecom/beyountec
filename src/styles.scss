@@ -186,6 +186,10 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
 //   top: -1.2em;
 //   padding-top: 0.84375em;
 // }
+.mat-form-field.mat-primary .mat-select-arrow {
+    color: #26715e;
+}
+
 .mat-accent .mat-slider-track-fill,
 .mat-accent .mat-slider-thumb,
 .mat-accent .mat-slider-thumb-label {

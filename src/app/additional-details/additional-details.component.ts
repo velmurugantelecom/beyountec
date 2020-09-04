@@ -289,7 +289,7 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('motor_emirate', 'MOTOR_EMIRATE');
       this.getDropDownOptions('profession', 'PROFESSION');
       this.patchFormValues();
-      this.options['prefix'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
+      this.options['prefixBL'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
     });
   }
 

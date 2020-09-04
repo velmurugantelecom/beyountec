@@ -95,9 +95,9 @@ export class NewMotorInfoScreen implements OnInit {
   public manualOptions: any = {};
   public currentYear: any;
   public minRegisteredDate: any
-  public invalidLicenseIssueDate:any;
-  public requiredDobFormat:any;
-  public invalidPolicyExpDateMorethan60:any;
+  public invalidLicenseIssueDate: any;
+  public requiredDobFormat: any;
+  public invalidPolicyExpDateMorethan60: any;
 
   minIssueDate
   dobVDate;
@@ -199,29 +199,29 @@ export class NewMotorInfoScreen implements OnInit {
     this.dobMinVDate.setFullYear(this.today.getFullYear() - 75);
     this.language = localStorage.getItem("language");
     this.vehicleForm.controls['tcFileNumber'].disable();
-    this.translate.get('Invalid.LicenseIssueDate') .subscribe(value => { 
-      this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB); 
-    } );
-    this.translate.get('Required.DobFormat') .subscribe(value => { 
-      this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan); 
-    } );
-    this.translate.get('Invalid.PolicyExpDateMorethan60') .subscribe(value => { 
-      this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate); 
-    } );
+    this.translate.get('Invalid.LicenseIssueDate').subscribe(value => {
+      this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB);
+    });
+    this.translate.get('Required.DobFormat').subscribe(value => {
+      this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan);
+    });
+    this.translate.get('Invalid.PolicyExpDateMorethan60').subscribe(value => {
+      this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate);
+    });
 
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
       this.language = localStorage.getItem("language");
-      this.translate.get('Invalid.LicenseIssueDate') .subscribe(value => { 
-        this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB); 
-      } );
-      this.translate.get('Required.DobFormat') .subscribe(value => { 
-        this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan); 
-      } );
-      this.translate.get('Invalid.PolicyExpDateMorethan60') .subscribe(value => { 
-        this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate); 
-      } );
+      this.translate.get('Invalid.LicenseIssueDate').subscribe(value => {
+        this.invalidLicenseIssueDate = value.replace("18", this.runtimeConfigService.config.LicenseIssuedDateGreaterThanDOB);
+      });
+      this.translate.get('Required.DobFormat').subscribe(value => {
+        this.requiredDobFormat = value.replace("18", this.runtimeConfigService.config.DateOfBirthGreaterThan);
+      });
+      this.translate.get('Invalid.PolicyExpDateMorethan60').subscribe(value => {
+        this.invalidPolicyExpDateMorethan60 = value.replace("60", this.runtimeConfigService.config.PrevPolExpiryDate);
+      });
     }
   }
 
@@ -545,7 +545,7 @@ export class NewMotorInfoScreen implements OnInit {
       } else {
         trafficLoc = '01';
       }
-
+      console.log(this.additionalDetails['branchId'])
       let data = {
         lobId: 3,
         quoteNumber: this.quoteNo,
@@ -779,8 +779,9 @@ export class NewMotorInfoScreen implements OnInit {
 
   // based on tcNumber
   getUserDetailsByTcNo() {
-    if (this.isLoggedInUser) {
-    this.vehicleForm.controls['tcFileNumber'].enable();
+    if (this.isLoggedInUser && this.vehicleForm.get('tcFileNumber').status === 'DISABLED') {
+      this.vehicleForm.controls['tcFileNumber'].enable();
+      return;
     }
     let status = this.vehicleForm.get('chassisNo').status;
     if (status === 'DISABLED')
@@ -789,7 +790,6 @@ export class NewMotorInfoScreen implements OnInit {
       || !(status === 'VALID')) {
       return;
     }
-    console.log(this.vehicleForm.getRawValue().chassisNo)
     let params = {
       tcNo: this.vehicleForm.value['tcFileNumber'],
       chassisNo: this.vehicleForm.getRawValue().chassisNo ? this.vehicleForm.getRawValue().chassisNo.toUpperCase() : null
@@ -896,15 +896,21 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   registeredAtChange(value) {
-    this.vehicleForm.controls['tcFileNumber'].enable();
-    let params = {
-      productId: "*",
-      filterByValue: value,
-      optionType: 'LOC_DIVN'
+    if (!this.isLoggedInUser) {
+      this.vehicleForm.controls['tcFileNumber'].enable();
     }
-    this.subscription = this.coreService.getInputs('brokerservice/options/list', params).subscribe(res => {
-      this.additionalDetails['branchId'] = res.data[0].value;
-    })
+    if (value === '1105') {
+      this.additionalDetails['branchId'] = '2';
+    } else {
+      let params = {
+        productId: "*",
+        filterByValue: value,
+        optionType: 'LOC_DIVN'
+      }
+      this.subscription = this.coreService.getInputs('brokerservice/options/list', params).subscribe(res => {
+        this.additionalDetails['branchId'] = res.data[0].value;
+      })
+    }
     if (value === '1102') {
       this.tcNoLength = 8;
       if (this.vehicleForm.get('tcFileNumber').value && this.vehicleForm.get('tcFileNumber').value.length === 10)
@@ -956,7 +962,7 @@ export class NewMotorInfoScreen implements OnInit {
       if (res.responseCode === -1) {
         swal({
           title: "Are you sure?",
-          text: "Please Confirm Chassis No. and Traffic File Number entered as per Mulkiya",
+          text: "Please Confirm Chassis No. and Traffic File Number entered as per Mulkiya / Vehicle Registration Card",
           icon: "warning",
           dangerMode: true,
           buttons: {
@@ -1020,6 +1026,7 @@ export class NewMotorInfoScreen implements OnInit {
       this.spinner.hide();
       this.vehicleForm.controls['tcFileNumber'].enable();
       this.quoteDetails = response.data.quoteSummary;
+      this.additionalDetails['branchId'] = response.data.quoteSummary.branchId
       if (this.quoteDetails) {
         this.patchAdditionalDetails(this.quoteDetails)
         this.productId = this.quoteDetails['productTypeId']

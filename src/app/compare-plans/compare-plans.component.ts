@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../core/services/app.service';
 import { CoreService } from '../core/services/core.service';
@@ -50,7 +50,8 @@ export class ComparePlansComponent implements OnInit {
     private appService: AppService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef) {
     this.route.queryParams
       .subscribe(params => {
         if (params['reviseDetails']) {
@@ -80,6 +81,7 @@ export class ComparePlansComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.cdr.detectChanges();
     if (this.planOb['discountsAvailable']) {
       this.applyDiscounts();
     }

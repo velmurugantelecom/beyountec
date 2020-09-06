@@ -332,7 +332,13 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   checkTCNumberAndChassisNoStatus() {
-    if (this.vehicleForm.controls['tcFileNumber'].status === 'VALID' && this.checkTcNoStatus &&
+    let status;
+    if (this.searchType === 'Manual' && this.vehicleForm.controls['tcFileNumber'].status === 'DISABLED') {
+      status = 'VALID'
+    } else {
+      status = this.vehicleForm.controls['tcFileNumber'].status;
+    }
+    if (status === 'VALID' && this.checkTcNoStatus &&
       (this.vehicleForm.controls['chassisNo'].status === 'VALID' || this.vehicleForm.controls['chassisNo'].status === 'DISABLED')) {
       setTimeout(() => this.getUserDetailsByTcNo(), 1000);
     }

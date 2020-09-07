@@ -32,36 +32,77 @@ hr {
 }
 
 .silver-card-header {
-    background-color: #00c2d1;
+    // background-color: #00c2d1;
     // background-color: #ADD8E6;
     width: 100%;
+    background-image: url('../../assets/compare-plans/blue.jpg');
+    background-position: center;
 }
 
 .silver-card-body {
-    background-color: #e2f2f2;
-    // background-color: #ADD8E6;
+    // background-color: #e2f2f2;
+    background-color: #DEEBF7;
+    border: 1px solid #5B9BD5;
 }
 
 .platinum-card-header {
-    background-color: #f3c440;
+    // background-color: #f3c440;
     width: 100%;
+    background-image: url('../../assets/compare-plans/gold.jpg');
+    background-position: center;
     // background-color: #CECECE;
 }
 
 .platinum-card-body {
-    background-color: #fbf0d3;
-    // background-color: #CECECE;
+    // background-color: #5c5a54;
+    background-color: #FFF2CC;
+    border: 1px solid #FFC000;
+}
+
+input[type='radio']:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #26715e;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.card {
+    border: none;
 }
 
 .gold-card-header {
-    background-color: #81d54a;
+    // background-color: #81d54a;
     // background-color: #FBF1DE;
+    background-image: url('../../assets/compare-plans/silver.jpg');
+    background-position: center;
     width: 100%;
 }
 
 .gold-card-body {
-    background-color: #defeca;
-    // background-color: #fBf1de;
+    // background-color: #defeca;
+    background-color: #EDEDED;
+    border: 1px solid #A5A5A5;
 }
 
 .silver-card-header-2 {
@@ -171,7 +212,7 @@ button:hover {
 .flex-container {
     display: flex;
     align-items: stretch;
-    background-color: #f1f1f1;
+    // background-color: #f1f1f1;
 }
 
 .mat-expansion-panel-header {
@@ -194,4 +235,29 @@ button:hover {
     background-color: white;
     padding: 10px;
     border: 1px solid #28a745;
+}
+
+.mob-silver-header {
+    background-image: radial-gradient(rgb(0, 155, 196), rgb(1, 95, 129)) !important;
+    color: white;
+}
+
+.mob-gold-header {
+    background-image: radial-gradient(#A4A4A4, #AEAEAE) !important;
+}
+
+.mob-platinum-header {
+    background-image: radial-gradient(#DDC16E, #DFC36D) !important;
+}
+
+.mob-silver-body {
+    background-color: #DEEBF7;
+}
+
+.mob-gold-body {
+    background-color: #EDEDED;
+}
+
+.mob-platinum-body {
+    background-color: #FFF2CC;
 }

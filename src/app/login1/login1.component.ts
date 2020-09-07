@@ -146,7 +146,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-      // recaptcha: ['', Validators.required]
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
       productType: ['', Validators.required],
@@ -266,7 +266,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.spinner.hide();
       let data = response.data;
       localStorage.setItem('tokenDetails', data.token);
-      if(data.loggedfirst=="N"){
+      if(data.loggedfirst=="Y"){
         this.dataService.setEmailDetails(data.email);
         this.router.navigate(['/forgotPwd']);
       }

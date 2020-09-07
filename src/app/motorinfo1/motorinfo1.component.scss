@@ -162,6 +162,10 @@ thead {
     opacity: 1;
 }
 
+.btnFont {
+    font-size: 6px;
+}
+
 mat-error+mat-error {
     display: none;
 }
@@ -177,11 +181,13 @@ mat-error+mat-error {
         text-align: center;
     }
 }
+
 @media only screen and (max-width: 600px) {
     .vehicle-value-center {
         text-align: center;
     }
 }
+
 @media only screen and (max-width: 1024) {
     .vehicle-value-center {
         text-align: center;

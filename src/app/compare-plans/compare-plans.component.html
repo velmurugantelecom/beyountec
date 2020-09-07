@@ -34,7 +34,7 @@
                     </ul>
                 </div>
                 <div class="plan-container" style="width: 625px;">
-                    <mat-card *ngFor="let plan of planOb['plans'];" class="card mr-1" style="width: 200px;" [ngClass]="{
+                    <mat-card *ngFor="let plan of planOb['plans'];" class="card mr-1" style="width: 200px;height: 94%;" [ngClass]="{
       'mat-elevation-z24': isSelectedPlan(plan)
     }">
                         <div class="no_margin plan-name-amt">
@@ -237,20 +237,24 @@
         <div class="d-xl-none">
             <mat-accordion>
                 <mat-expansion-panel style="margin-top: 20px" *ngFor="let plan of planOb['plans'];let i = index" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header style="height: 120px !important;">
+                    <mat-expansion-panel-header style="height: 120px !important;" [ngClass]="{ 
+                        'mob-silver-header': plan.bgColor == 0,
+                        'mob-gold-header': plan.bgColor == 1,
+                        'mob-platinum-header':plan.bgColor == 2
+                       }">
                         <div class="d-flex">
                             <div class="m-1 fbold">
                                 {{plan.planDetails[0].planName}}
                                 <span *ngIf="plan.confirmed" class="ml-2"><i style="color: #32ba7c;"
-                                class="fa fa-check-circle fa-2x" aria-hidden="true"></i>
+                                class="fa fa-check-circle fa-x" aria-hidden="true"></i>
                             </span>
                             </div>
-                            <div class="ml-4 mt-2 row ">
-                                <div class="justify-content-center">
-                                    <input type="radio" value="auto" [checked]="plan.confirmed" (click)="planselectMob(plan)" />
-                                </div>
-                                <!-- <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button> -->
-                            </div>
+                            <!-- <div class="ml-4 mt-2 row ">
+                                <div class="justify-content-center"> -->
+                            <input class="mt-2 ml-2" type="radio" value="auto" [checked]="plan.confirmed" (click)="planselectMob(plan)" />
+                            <!-- <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button> -->
+                            <!-- </div>
+                            </div> -->
                         </div>
                         <div class="row">
                             <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.excess[0]">
@@ -282,124 +286,130 @@
                         <!-- <div class="mt-4 d-flex justify-content-center fgreen">
                             Click here for more info</div> -->
                     </mat-expansion-panel-header>
-                    <ng-container>
-                        <div class="flex-container m-1 p-2">
-                            <div style="flex-grow: 7">
-                                <ul role="list">
-                                    <li *ngFor="let item of mandatoryCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                        <span class="coverage-content">{{item.key}}</span>
-                                    </li>
-                                    <li *ngFor="let item of optionalCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                        <span class="coverage-content">{{item.key}}</span>
-                                    </li>
-                                </ul>
-                                <ul class="mb-0">
-                                    <div>
-                                        <span class="">
+                    <div [ngClass]="{ 
+                        'mob-silver-body': plan.bgColor == 0,
+                        'mob-gold-body': plan.bgColor == 1,
+                        'mob-platinum-body':plan.bgColor == 2
+                       }">
+                        <ng-container>
+                            <div class="flex-container m-1 p-2">
+                                <div style="flex-grow: 7">
+                                    <ul role="list">
+                                        <li *ngFor="let item of mandatoryCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
+                                            <span class="coverage-content">{{item.key}}</span>
+                                        </li>
+                                        <li *ngFor="let item of optionalCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
+                                            <span class="coverage-content">{{item.key}}</span>
+                                        </li>
+                                    </ul>
+                                    <ul class="mb-0">
+                                        <div>
+                                            <span class="">
                                         <span class="mr-2 fbold fgreen">Discount Code</span>
-                                        <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
-                                        <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
+                                            <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
+                                            <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                             <i (click)="removePromoDiscountMob(plan.promoFieldId)"
                                                 style="font-size:15px"
                                                 class="fas fa-times-circle fa-2x custom-cursor"></i>
                                         </span>
-                                        </span>
-                                    </div>
-                                </ul>
-                            </div>
-                            <div style="flex-grow: 3">
-                                <ul role="list" class="list-coverage MT10" style="text-align: center;">
-                                    <li *ngFor="let item of mandatoryCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                        <img class="sub-image" src="assets/compare-plans/tick.png" *ngIf="getData(plan.planDetails[0].planId, item.value);else NoCheckBox1">
-                                        <ng-template #NoCheckBox1>
-                                            <span style="font-size: 13px;color: red;">
+                                            </span>
+                                        </div>
+                                    </ul>
+                                </div>
+                                <div style="flex-grow: 3">
+                                    <ul role="list" class="list-coverage MT10" style="text-align: center;">
+                                        <li *ngFor="let item of mandatoryCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
+                                            <img class="sub-image" src="assets/compare-plans/tick.png" *ngIf="getData(plan.planDetails[0].planId, item.value);else NoCheckBox1">
+                                            <ng-template #NoCheckBox1>
+                                                <span style="font-size: 13px;color: red;">
                                                 <i class="fas fa-times-circle fa-1x custom-cursor"></i>
                                             </span>
 
-                                        </ng-template>
-                                        <!-- <hr /> -->
-                                    </li>
-                                    <li *ngFor="let item of optionalCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                        <mat-checkbox (change)="toggleCoverage(plan, item.value, $event)" *ngIf="getOptionalData(plan.planDetails[0].planId, item.value);else NoCheckBox2" [checked]="doCall(plan, item.value)">
-                                        </mat-checkbox>
-                                        <ng-template #NoCheckBox2>
-                                            <span style="font-size: 13px;">-</span>
-                                        </ng-template>
-                                        <!-- <hr /> -->
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Excess -->
-                        <div *ngIf="isNotEmpty(excess)">
-                            <div class="row" *ngFor="let item of excess | keyvalue">
-                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
-                                <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'E') | DecimalValue}}
+                                            </ng-template>
+                                            <!-- <hr /> -->
+                                        </li>
+                                        <li *ngFor="let item of optionalCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
+                                            <mat-checkbox (change)="toggleCoverage(plan, item.value, $event)" *ngIf="getOptionalData(plan.planDetails[0].planId, item.value);else NoCheckBox2" [checked]="doCall(plan, item.value)">
+                                            </mat-checkbox>
+                                            <ng-template #NoCheckBox2>
+                                                <span style="font-size: 13px;">-</span>
+                                            </ng-template>
+                                            <!-- <hr /> -->
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Premium -->
-                        <div class="row" id="headerDiv">
-                            <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'Premium' | translate}}{{'InAED' | translate}}
+                            <!-- Excess -->
+                            <div *ngIf="isNotEmpty(excess)">
+                                <div class="row" *ngFor="let item of excess | keyvalue">
+                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
+                                    <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
+                                        {{fetchAmount(plan.planDetails[0].planId, item.value, 'E') | DecimalValue}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                {{getPremiumWithCharges(plan.planDetails[0])| DecimalValue}}
+                            <!-- Premium -->
+                            <div class="row" id="headerDiv">
+                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'Premium' | translate}}{{'InAED' | translate}}
+                                </div>
+                                <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
+                                    {{getPremiumWithCharges(plan.planDetails[0])| DecimalValue}}
+                                </div>
                             </div>
-                        </div>
-                        <!-- Discount -->
-                        <div *ngIf="isNotEmpty(discounts)">
-                            <div class="row" *ngFor="let item of discounts | keyvalue">
+                            <!-- Discount -->
+                            <div *ngIf="isNotEmpty(discounts)">
+                                <div class="row" *ngFor="let item of discounts | keyvalue">
+                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">
+                                        {{item.key}}{{'InAED' | translate}}</div>
+                                    <div class="col-xs-3 col-3 d-flex justify-content-end mt-2 ">
+                                        {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Promotional Discount -->
+                            <div *ngIf="showPromoDiscount">
+                                <div class="row" *ngFor="let item of promoDiscounts | keyvalue">
+                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">Promotional Discount (in AED)
+                                    </div>
+                                    <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
+                                        {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Loadings section-->
+                            <div *ngIf="isNotEmpty(loadings)">
+                                <div class="row" *ngFor="let item of loadings | keyvalue">
+                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
+                                    <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
+                                        {{fetchAmount(plan.planDetails[0].planId, item.value, 'L') | DecimalValue}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Net Premium -->
+                            <div class="row" id="headerDiv">
                                 <div class="col-xs-9 col-9 mt-2 pl-4 fbold">
-                                    {{item.key}}{{'InAED' | translate}}</div>
-                                <div class="col-xs-3 col-3 d-flex justify-content-end mt-2 ">
-                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Promotional Discount -->
-                        <div *ngIf="showPromoDiscount">
-                            <div class="row" *ngFor="let item of promoDiscounts | keyvalue">
-                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">Promotional Discount (in AED)
+                                    {{'NetPremium' | translate}}{{'InAED' | translate}}
                                 </div>
                                 <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
+                                    {{getNetPremium(plan.planDetails[0]) | DecimalValue}}
                                 </div>
                             </div>
-                        </div>
-                        <!-- Loadings section-->
-                        <div *ngIf="isNotEmpty(loadings)">
-                            <div class="row" *ngFor="let item of loadings | keyvalue">
-                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
+                            <!-- VAT section -->
+                            <div class="row" id="headerDiv">
+                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'VAT' | translate}} {{ VatPercentage }} {{'InAED' | translate}}</div>
+                                <div class="col-xs-3 col-3 d-flex justify-content-end mt-2" *ngFor="let item of charges | keyvalue">
+                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'P') | DecimalValue}}
+                                </div>
+                            </div>
+                            <!-- Premium including VAT-->
+                            <div class="row" id="headerDiv">
+                                <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'PremiumIncludingVAT' | translate}} {{'InAED' | translate}}</div>
                                 <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'L') | DecimalValue}}
+                                    {{getPremiumWithVat(plan.planDetails[0]) | DecimalValue}}
                                 </div>
                             </div>
-                        </div>
-                        <!-- Net Premium -->
-                        <div class="row" id="headerDiv">
-                            <div class="col-xs-9 col-9 mt-2 pl-4 fbold">
-                                {{'NetPremium' | translate}}{{'InAED' | translate}}
-                            </div>
-                            <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                {{getNetPremium(plan.planDetails[0]) | DecimalValue}}
-                            </div>
-                        </div>
-                        <!-- VAT section -->
-                        <div class="row" id="headerDiv">
-                            <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'VAT' | translate}} {{ VatPercentage }} {{'InAED' | translate}}</div>
-                            <div class="col-xs-3 col-3 d-flex justify-content-end mt-2" *ngFor="let item of charges | keyvalue">
-                                {{fetchAmount(plan.planDetails[0].planId, item.value, 'P') | DecimalValue}}
-                            </div>
-                        </div>
-                        <!-- Premium including VAT-->
-                        <div class="row" id="headerDiv">
-                            <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'PremiumIncludingVAT' | translate}} {{'InAED' | translate}}</div>
-                            <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
-                                {{getPremiumWithVat(plan.planDetails[0]) | DecimalValue}}
-                            </div>
-                        </div>
-                    </ng-container>
+                        </ng-container>
+                    </div>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>

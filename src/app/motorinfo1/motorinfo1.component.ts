@@ -1277,6 +1277,23 @@ export class NewMotorInfoScreen implements OnInit {
     this.openDropDown = false;
   }
 
+  changeVehicleValue(type) {
+    if (type === 'add') {
+      let value = this.vehicleForm.value['vehicleValue'] + 100;
+      this.gaugeValue = value;
+      this.vehicleValue = value;
+      this.vehicleForm.patchValue({
+        vehicleValue: value
+      })
+    } else {
+      let value = this.vehicleForm.value['vehicleValue'] - 100;
+      this.gaugeValue = value;
+      this.vehicleValue = value;
+      this.vehicleForm.patchValue({
+        vehicleValue: value
+      })
+    }
+  }
   enableDropDown() {
     if (this.addSelectedItemId == 3) {
       return;

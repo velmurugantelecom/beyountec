@@ -354,6 +354,9 @@
     "TermsAndCondFile": "Terms&Conditions-AR.pdf",
     "RefundPolicyFile": "Refund Policy-AR.pdf",
     "PrivacyPolicyFile": "Privacy Policy-AR.pdf",
+    "TermsAndCondWindowName": "Terms&Conditions",
+    "RefundPolicyWindowName": "Refund Policy",
+    "PrivacyPolicyWindowName": "Privacy Policy",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",

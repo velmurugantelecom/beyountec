@@ -355,6 +355,9 @@
     "TermsAndCondFile": "Terms&Conditions-EN.pdf",
     "RefundPolicyFile": "Refund Policy-EN.pdf",
     "PrivacyPolicyFile": "Privacy Policy-EN.pdf",
+    "TermsAndCondWindowName": "Terms&Conditions",
+    "RefundPolicyWindowName": "Refund Policy",
+    "PrivacyPolicyWindowName": "Privacy Policy",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",

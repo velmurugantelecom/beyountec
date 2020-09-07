@@ -50,8 +50,8 @@ export class QuoteSummaryComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private dropdownservice: DropDownService,
-    public runtimeConfigService: RuntimeConfigService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public runtimeConfigService: RuntimeConfigService) {
 
     this.route.queryParams
       .subscribe(params => {
@@ -242,12 +242,14 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   readTermsAndCond(value) {
-    let file
+    let file;
     let windowName;
     switch (value) {
       case 1: {
         this.translate.get('TermsAndCondFile').subscribe(value => {
           file = value;
+        });
+        this.translate.get('TermsAndCondWindowName').subscribe(value => {
           windowName = value;
         });
         break;
@@ -255,6 +257,8 @@ export class QuoteSummaryComponent implements OnInit {
       case 2: {
         this.translate.get('RefundPolicyFile').subscribe(value => {
           file = value;
+        });
+        this.translate.get('RefundPolicyWindowName').subscribe(value => {
           windowName = value;
         });
         break;
@@ -262,6 +266,8 @@ export class QuoteSummaryComponent implements OnInit {
       case 3: {
         this.translate.get('PrivacyPolicyFile').subscribe(value => {
           file = value;
+        });
+        this.translate.get('PrivacyPolicyWindowName').subscribe(value => {
           windowName = value;
         });
         break;

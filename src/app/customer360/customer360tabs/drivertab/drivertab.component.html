@@ -47,7 +47,7 @@
         </div>
         <div *ngIf="driverdetails?.dob != null" class="col-md-4 col-12 mt-2">
           <label class="col-12 ">{{ 'Dob' | translate }}</label>
-          <p class="col-12 fbold">{{driverdetails?.dob | dateFormat }}</p>
+          <p class="col-12 fbold">{{driverdetails?.dob | date:runtimeConfigService.config.DisplayingDateFormat }}</p>
 
         </div>
 
@@ -88,12 +88,12 @@
 
         <div *ngIf="driverdetails?.licenseIssueDate != null" class="col-md-4 col-12 mt-2">
           <label class="col-12 ">{{ 'LicenseIssuedDate' | translate }}</label>
-          <p class="col-12 m-1 fbold">{{driverdetails?.licenseIssueDate | dateFormat }}</p>
+          <p class="col-12 m-1 fbold">{{driverdetails?.licenseIssueDate | date:runtimeConfigService.config.DisplayingDateFormat }}</p>
 
         </div>
         <div *ngIf="driverdetails?.licenseExpiryDate != null" class="col-md-4 col-12 mt-2">
           <label class="col-12 ">{{ 'LicenseExpiryDate' | translate }}</label>
-          <p class="col-12 fbold">{{driverdetails?.licenseExpiryDate | dateFormat }}</p>
+          <p class="col-12 fbold">{{driverdetails?.licenseExpiryDate | date:runtimeConfigService.config.DisplayingDateFormat }}</p>
 
         </div>
 

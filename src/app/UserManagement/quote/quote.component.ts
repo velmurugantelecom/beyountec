@@ -3,6 +3,7 @@ import { Customer360Service } from '../../customer360/customer360.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { CoreService } from 'src/app/core/services/core.service';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-quote',
@@ -16,7 +17,7 @@ export class QuoteComponent implements OnInit {
 
   tableData = [];
   displayedColumns: string[] = ['policyNo', 'quoteNo', 'mobileNo', 'startDate', 'endDate', 'productId', 'status'];
-  constructor(private Service: CoreService, private router: Router,private dropdownservice: DropDownService) { }
+  constructor(private Service: CoreService,public runtimeConfigService: RuntimeConfigService, private router: Router,private dropdownservice: DropDownService) { }
 
   ngOnInit() {
     this.getpolicy();

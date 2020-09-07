@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer360Service } from '../../customer360.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 @Component({
   selector: 'app-drivertab',
   templateUrl: './drivertab.component.html',
@@ -7,7 +8,7 @@ import { Customer360Service } from '../../customer360.service';
 })
 export class DrivertabComponent implements OnInit {
 
-  constructor(private service1: Customer360Service) { }
+  constructor(private service1: Customer360Service,public runtimeConfigService: RuntimeConfigService) { }
   driverdetails: any;
   tcfilenumber: number;
   ngOnInit() {

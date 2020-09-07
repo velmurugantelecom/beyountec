@@ -12,5 +12,6 @@
     "PrevPolExpiryDate":60,
     "LicenseIssuedDateGreaterThanDOB":18,
     "DateOfBirthGreaterThan":18,
-    "FullInsuranceVehicleAgeGreaterThan":10
+    "FullInsuranceVehicleAgeGreaterThan":10,
+    "DisplayingDateFormat":"dd/MM/yyyy"
 }

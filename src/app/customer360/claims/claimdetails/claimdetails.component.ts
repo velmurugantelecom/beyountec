@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Customer360Service } from '../../customer360.service'
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-claimdetails',
@@ -11,7 +12,9 @@ import { Customer360Service } from '../../customer360.service'
 export class ClaimdetailsComponent implements OnInit {
   policyNo: any;
   policyarr: any = [];
-  constructor(router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
+  constructor(router: Router, 
+    public runtimeConfigService: RuntimeConfigService,
+    private route: ActivatedRoute, private formBuilder: FormBuilder, private service1: Customer360Service) {
     this.policyNo = this.route.snapshot.params.policyNo;
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Customer360Service } from '../../customer360.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-insuredtab',
@@ -9,7 +10,7 @@ import { Customer360Service } from '../../customer360.service';
 })
 export class InsuredtabComponent implements OnInit {
 
-  constructor(private service1: Customer360Service) { }
+  constructor(private service1: Customer360Service,public runtimeConfigService: RuntimeConfigService) { }
   insureddetails: any;
   insuredsub: Subscription;
   customertype: any;

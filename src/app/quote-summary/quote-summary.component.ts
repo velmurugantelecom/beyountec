@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DropDownService } from '../core/services/dropdown.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DynamicContentDialog } from '../shared/dynamic-content/dynamic-content.component';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
 };
@@ -49,6 +50,7 @@ export class QuoteSummaryComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private dropdownservice: DropDownService,
+    public runtimeConfigService: RuntimeConfigService,
     public dialog: MatDialog) {
 
     this.route.queryParams

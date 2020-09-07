@@ -4,7 +4,7 @@
             <div class="f20"> {{ generalInfo?.userDetails?.fullName}}</div>
             <div class="f13 mt-2">{{ 'Email' | translate }}: {{generalInfo?.userDetails?.email}}</div>
             <div class="f13">{{ 'Mobile' | translate }}: {{ generalInfo?.userDetails?.mobileCode}} - {{ generalInfo?.userDetails?.mobileNo}}</div>
-            <div class="f13">{{ 'DOB' | translate }}: {{ generalInfo?.userDetails?.dob | dateFormat}}</div>
+            <div class="f13">{{ 'DOB' | translate }}: {{ generalInfo?.userDetails?.dob | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
             <div class="f13 ">{{ 'Age' | translate }}: {{ generalInfo?.userDetails?.age}}</div>
         </div>
         <div>

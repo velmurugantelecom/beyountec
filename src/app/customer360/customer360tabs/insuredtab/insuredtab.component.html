@@ -45,7 +45,7 @@
 
         <div *ngIf="insureddetails?.dob != null" class="col-md-4 col-12 ">
           <label class="col-12 "> {{ 'Dob' | translate }}</label>
-          <p class="col-12 fbold">{{insureddetails?.dob | dateFormat}}</p>
+          <p class="col-12 fbold">{{insureddetails?.dob | date:runtimeConfigService.config.DisplayingDateFormat}}</p>
         </div>
 
         <div class="col-md-4 col-12 ">

@@ -9,6 +9,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { PageEvent } from '@angular/material/paginator';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-dash-notification',
@@ -41,6 +42,7 @@ export class DashNotificationComponent implements OnInit {
 
 
   constructor(private postService: CoreService,
+    public runtimeConfigService: RuntimeConfigService,
     private router: Router, public dialog: MatDialog, private customerService: Customer360Service,
     private dropdownservice: DropDownService,
     private appService: AppService, private service: CoreService, private spinner: NgxSpinnerService) {

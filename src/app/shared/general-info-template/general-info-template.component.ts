@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'src/app/core/services/app.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-general-info-template',
@@ -10,7 +11,7 @@ export class GeneralInfoTemplateComponent implements OnInit {
   @Input()
   public generalDetails;
   public generalInfo;
-  constructor() { }
+  constructor(public runtimeConfigService: RuntimeConfigService) { }
 
   ngOnInit() {
   }

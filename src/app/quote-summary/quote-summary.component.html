@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <label class="label_form">{{ 'FromtoToDate' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.startDate | dateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | dateFormat }}</div>
+                    <div class="field-value"> {{ quoteDetails?.startDate | date:runtimeConfigService.config.DisplayingDateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | date:runtimeConfigService.config.DisplayingDateFormat }}</div>
                 </div>
             </div>
 
@@ -102,11 +102,11 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.registeredDate">
                         <label class="label_form">{{ 'RegisteredDate' | translate }}</label>
-                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | dateFormat}}</div>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.prevPolicyExpDate">
                         <label class="label_form">{{ 'PrevPolExpiryAt' | translate }}</label>
-                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | dateFormat}}</div>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </div>
                 <!-- end-->
@@ -166,7 +166,7 @@
                         <div [ngClass]="{'fixed-height-1': quoteDetails?.vehicleDetails?.modelName?.length > 19,
               'fixed-height-2': quoteDetails?.vehicleDetails?.modelName?.length < 19}">
                             <label class="label_form">{{ 'Dob' | translate }}</label>
-                            <div>{{ quoteDetails?.userDetails?.dob | dateFormat}}</div>
+                            <div>{{ quoteDetails?.userDetails?.dob | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-12">
@@ -215,7 +215,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-12">
                         <label class="label_form">{{ 'LicenseIssuedAt' | translate }}</label>
-                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | dateFormat}}</div>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </div>
                 <div *ngIf="isQuickSummary === 'false'">
@@ -302,7 +302,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                         <label class="label_form">{{ 'FromtoToDate' | translate }}</label>
-                        <div class="field-value"> {{ quoteDetails?.startDate | dateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | dateFormat }}</div>
+                        <div class="field-value"> {{ quoteDetails?.startDate | date:runtimeConfigService.config.DisplayingDateFormat }} {{ 'To' | translate }} {{ quoteDetails?.endDate | date:runtimeConfigService.config.DisplayingDateFormat }}</div>
                     </div>
                 </div>
             </mat-expansion-panel>
@@ -373,13 +373,13 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.registeredDate">
                         <label class="label_form">{{ 'RegisteredDate' | translate }}</label>
-                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | dateFormat}}</div>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.registeredDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.prevPolicyExpDate">
                         <label class="label_form">{{ 'PrevPolExpiryAt' | translate }}</label>
-                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | dateFormat}}</div>
+                        <div class="field-value"> {{quoteDetails?.vehicleDetails?.prevPolicyExpDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
                         <label class="label_form">{{ 'ClaimYears' | translate }}</label>
@@ -431,7 +431,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                         <label class="label_form">{{ 'Dob' | translate }}</label>
-                        <div class="field-value">{{ quoteDetails?.userDetails?.dob | dateFormat}}</div>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.dob | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </div>
                 <div class="row">
@@ -471,7 +471,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                         <label class="label_form">{{ 'LicenseIssuedAt' | translate }}</label>
-                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | dateFormat}}</div>
+                        <div class="field-value">{{ quoteDetails?.userDetails?.licenseIssueDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </div>
                 <div class="row" *ngIf="isQuickSummary === 'false'">

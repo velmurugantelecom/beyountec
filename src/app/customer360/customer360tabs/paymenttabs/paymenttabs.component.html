@@ -11,8 +11,8 @@
                             </div>
             <div class="col-md-4 col-12">
                 <label class="poppins-light-15">{{ 'PolicyPeriod' | translate }}</label> <br>
-                <p class="poppins-semi-bold-18">{{paydetails?.startDate | dateFormat}} {{ 'To' | translate }}
-                    {{paydetails?.endDate | dateFormat}}</p>
+                <p class="poppins-semi-bold-18">{{paydetails?.startDate | date:runtimeConfigService.config.DisplayingDateFormat}} {{ 'To' | translate }}
+                    {{paydetails?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</p>
             </div>
         </div>
     </mat-card>

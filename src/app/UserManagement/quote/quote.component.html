@@ -48,7 +48,7 @@
                         <span *ngIf="column !='policyNo' && column!='startDate' && column!='endDate'">
                             {{element[column]}}</span>
                         <span
-                            *ngIf="column=='startDate' || column=='endDate'">{{element[column] | date:'dd/MM/yyyy'}}</span>
+                            *ngIf="column=='startDate' || column=='endDate'">{{element[column] | date:runtimeConfigService.config.DisplayingDateFormat}}</span>
 
                     </td>
                 </tr>

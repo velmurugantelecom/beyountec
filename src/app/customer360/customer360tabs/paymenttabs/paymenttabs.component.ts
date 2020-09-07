@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Customer360Service } from '../../customer360.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-paymenttabs',
@@ -11,7 +12,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class PaymenttabsComponent implements OnChanges {
   subscriptionDetail: any = []
   @Input("policyNo") paydetails: any = [];
-  constructor(private service1: Customer360Service,private spinner: NgxSpinnerService) { }
+  constructor(private service1: Customer360Service,
+    public runtimeConfigService: RuntimeConfigService,private spinner: NgxSpinnerService) { }
 
   ngOnChanges() {
     if (this.paydetails.policyNo) {

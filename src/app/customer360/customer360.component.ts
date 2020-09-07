@@ -4,6 +4,7 @@ import { Customer360Service } from './customer360.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 @Component({
   selector: 'app-customer360',
   templateUrl: './customer360.component.html',
@@ -26,7 +27,9 @@ export class Customer360Component implements OnInit {
   productid;
   navParams: any = [];
   policyNo
-  constructor(private spinner: NgxSpinnerService, private customerService: Customer360Service, private router: Router, private route: ActivatedRoute) {
+  constructor(private spinner: NgxSpinnerService,
+    public runtimeConfigService: RuntimeConfigService,
+     private customerService: Customer360Service, private router: Router, private route: ActivatedRoute) {
     this.route.queryParams
       .subscribe(params => {
         this.policyNo = params['policyNo'];

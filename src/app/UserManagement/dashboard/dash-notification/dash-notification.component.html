@@ -108,7 +108,7 @@
 
                       <span *ngIf="column=='refNo'"> {{element[column]}}</span>
                       <span
-                        *ngIf="column=='dueDate' || column=='endDate' || column=='startDate'">{{element[column] | date:'dd/MM/yyyy'}}</span>
+                        *ngIf="column=='dueDate' || column=='endDate' || column=='startDate'">{{element[column] | date:runtimeConfigService.config.DisplayingDateFormat}}</span>
 
                       <span *ngIf="column=='amount'">{{ 'AED' | translate }}
                         {{element[column] }}</span>

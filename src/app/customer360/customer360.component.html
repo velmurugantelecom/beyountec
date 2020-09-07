@@ -14,7 +14,7 @@
                 <label>{{currentpolicy?.productTypeName}}</label>
                 <p class="ml-2 mr-2"> |</p>
                 <label>
-                    {{currentpolicy?.startDate | date:'dd/MM/yyyy'}} to {{currentpolicy?.endDate | date:'dd/MM/yyyy'}}
+                    {{currentpolicy?.startDate | date:runtimeConfigService.config.DisplayingDateFormat}} to {{currentpolicy?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}
                 </label>
             </div>
         </div>
@@ -58,12 +58,12 @@
                 <ng-container matColumnDef="IntimatedOn">
                     <th class="poppins-light-15" mat-header-cell *matHeaderCellDef>{{ 'IntimatedOn' | translate }} </th>
                     <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element">
-                        {{element.intimatedDate | date:'dd/MM/yyyy'}} </td>
+                        {{element.intimatedDate | date:runtimeConfigService.config.DisplayingDateFormat}} </td>
                 </ng-container>
                 <ng-container matColumnDef="lossOn">
                     <th class="poppins-light-15" mat-header-cell *matHeaderCellDef>{{ 'LossOn' | translate }} </th>
                     <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element">
-                        {{element.lossDate | date:'dd/MM/yyyy'}}
+                        {{element.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Reserve">

@@ -352,6 +352,9 @@
     "ContinueButton": "Continue",
     "SearchbyVehicleDetails": "Search by Vehicle Details",
     "FullInsuranceVehicleAge": "AFNIC will not cover Full Insurance for  Vehicle Age is Greater than 10 years, Do you want to proceed with Third Party Cover",
+    "TermsAndCondFile": "Terms&Conditions-EN.pdf",
+    "RefundPolicyFile": "Refund Policy-EN.pdf",
+    "PrivacyPolicyFile": "Privacy Policy-EN.pdf",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",

@@ -244,18 +244,24 @@ export class QuoteSummaryComponent implements OnInit {
     let windowName;
     switch (value) {
       case 1: {
-        file = 'Terms&Conditions.pdf';
-        windowName = 'Terms & Conditions';
+        this.translate.get('TermsAndCondFile').subscribe(value => {
+          file = value;
+          windowName = value;
+        });
         break;
       }
       case 2: {
-        file = 'Privacy Policy.pdf';
-        windowName = 'Privacy Policy';
+        this.translate.get('RefundPolicyFile').subscribe(value => {
+          file = value;
+          windowName = value;
+        });
         break;
       }
       case 3: {
-        file = 'REFUND POLICY FOR POLICY ONLINE PAYMENT.pdf';
-        windowName = 'REFUND POLICY FOR POLICY ONLINE PAYMENT';
+        this.translate.get('PrivacyPolicyFile').subscribe(value => {
+          file = value;
+          windowName = value;
+        });
         break;
       }
     }

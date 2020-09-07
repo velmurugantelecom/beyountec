@@ -51,6 +51,70 @@
 
             <mat-step>
                 <div class="row mb-4 ml-3" style="width: 100%;">
+                    <!-- Mobile Responsive Only -->
+                    <div class="d-xl-none d-lg-none col-md-12">
+                        <mat-accordion>
+                            <mat-expansion-panel style="margin-top: 20px;">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="text-center"><img src='assets/quote-summary/generalInfo.png' class="img_cls"></div>
+                                        <div class="text-center screenName fbold centercss ml-3">Quote Information</div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'ChasisNo'| translate }}</label>
+                                        <div class="value-field"> {{ quoteDetails?.vehicleDetails?.chassisNo}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'TCNO'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'RegisteredAt'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.regCityDesc}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2" *ngIf="quoteDetails?.vehicleDetails?.repairName">
+                                        <label class="label-field">{{'RepairType'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.repairName}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'NoOfPassengersLabel'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6  col-12 mt-2">
+                                        <label class="label-field">{{'RegistrationType'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'MakeYear'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.makeYear}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'VehicleUsageLabel'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'NCDLabel'| translate }}</label>
+                                        <div class="value-field" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                                            {{quoteDetails?.vehicleDetails?.ncdYearsDesc}}</div>
+                                        <div class="value-field" *ngIf="!quoteDetails?.vehicleDetails?.ncdYearsDesc">0</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-12 mt-2">
+                                        <label class="label-field">{{'Trim'| translate }}</label>
+                                        <div class="value-field">{{quoteDetails?.vehicleDetails?.trim}}</div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+
                     <div class=" p-4 d-none d-lg-block col-lg-4 custom-bg pb-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
@@ -58,22 +122,18 @@
                                 <div class="value-field"> {{ quoteDetails?.vehicleDetails?.chassisNo}}</div>
                             </div>
                         </div>
-                        <hr class="mt-2 dotted-line" />
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'TCNO'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
                             </div>
                         </div>
-                        <hr class="mt-2 dotted-line" />
-
                         <div class="row">
                             <div class="col-md-12  col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'RegisteredAt'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.regCityDesc}}</div>
                             </div>
                         </div>
-                        <hr class="mt-2 dotted-line" />
                         <div *ngIf="quoteDetails?.vehicleDetails?.repairName">
                             <div class="row">
 
@@ -82,7 +142,6 @@
                                     <div class="value-field">{{quoteDetails?.vehicleDetails?.repairName}}</div>
                                 </div>
                             </div>
-                            <hr class="mt-2 dotted-line" />
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
@@ -90,8 +149,6 @@
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.noOfPassengers}}</div>
                             </div>
                         </div>
-
-                        <hr class="mt-2 dotted-line" />
                         <div *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc != 'New'">
                             <div class="row mt-4">
                                 <div class="col-md-12 col-sm-12 col-xs-12 col-12">
@@ -99,7 +156,6 @@
                                     <div class="value-field">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
                                 </div>
                             </div>
-                            <hr class="mt-2 dotted-line" />
                         </div>
 
                         <div class="row">
@@ -109,15 +165,12 @@
                             </div>
 
                         </div>
-                        <hr class="mt-2 dotted-line" />
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'VehicleUsageLabel'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.usageDescription}}</div>
                             </div>
                         </div>
-
-                        <hr class="mt-2 dotted-line" />
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'NCDLabel'| translate }}</label>
@@ -127,14 +180,12 @@
                             </div>
 
                         </div>
-                        <hr class="mt-2 dotted-line" />
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-12">
                                 <label class="label-field">{{'Trim'| translate }}</label>
                                 <div class="value-field">{{quoteDetails?.vehicleDetails?.trim}}</div>
                             </div>
                         </div>
-                        <hr class="mt-2 dotted-line" />
                     </div>
 
 
@@ -149,7 +200,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'VehicleColor' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="colorId" [matAutocomplete]="colorField" required>
+                                            <input type="text" matInput formControlName="colorId" [matAutocomplete]="colorField" required (focusout)="colorFocusOut()">
                                             <mat-error *ngIf="formCtrls.colorId.errors && formCtrls.colorId.errors.required">
                                                 {{'Required.VehicleColor' | translate }}
                                             </mat-error>
@@ -220,7 +271,7 @@
                                         <mat-form-field appearance="outline">
 
                                             <mat-label>{{'PlateCode' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="registrationMark" [required]="RegistrationMarkRequired" [matAutocomplete]="plateCodeField">
+                                            <input type="text" matInput formControlName="registrationMark" [required]="RegistrationMarkRequired" [matAutocomplete]="plateCodeField" (focusout)="plateCodeFocusOut()">
                                             <mat-error *ngIf="formCtrls.registrationMark.errors && formCtrls.registrationMark.errors.required">
                                                 {{'Required.PlateCode' | translate }}
                                             </mat-error>
@@ -274,7 +325,7 @@
                                     <div class="col-md-6" *ngIf="showBankField">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'BankNameLabel' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="bankName" [matAutocomplete]="auto" required>
+                                            <input type="text" matInput formControlName="bankName" [matAutocomplete]="auto" required (focusout)="bankNameFocusOut()">
                                             <mat-error *ngIf="formCtrls.bankName.errors && formCtrls.bankName.errors.required">
                                                 {{'Required.BankName' | translate }}
                                             </mat-error>
@@ -366,7 +417,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Occupation' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="occupation" [matAutocomplete]="occupationField" required>
+                                            <input type="text" matInput formControlName="occupation" [matAutocomplete]="occupationField" required (focusout)="occupationFocusOut()">
                                             <mat-error *ngIf="formCtrls.occupation.errors && formCtrls.occupation.errors.required">
                                                 {{'Required.Occupation' | translate }}
                                             </mat-error>
@@ -381,7 +432,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Nationality' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField" required>
+                                            <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField" required (focusout)="nationalityFocusOut()">
                                             <mat-error *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
                                                 {{'Required.Nationality' | translate }}
                                             </mat-error>

@@ -290,32 +290,43 @@ export class AdditionalDetailsComponent implements OnInit {
       this.getDropDownOptions('profession', 'PROFESSION');
       this.patchFormValues();
       this.options['prefixBL'] = [{ "label": "السيد", "value": "Mr" }, { "label": "تصلب متعدد", "value": "Ms" }, { "label": "السيدة", "value": "Mrs" }]
+
+      if (!this.quoteDetails.userDetails.prefixBL) {
+        this.additionalDetails.patchValue({
+          prefixBL: this.quoteDetails.userDetails.prefix
+        });
+      } else {
+        this.additionalDetails.patchValue({
+          prefixBL: this.quoteDetails.userDetails.prefixBL
+        }); 
+      }
     });
   }
 
   addAdditionalDetail(stepper: MatStepper) {
-    if (this.showBankField) {
-      if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
-        this.additionalDetails.controls['bankName'].setValue(null);
-        this.selectedBank = '';
-      }
-    }
-    if (!this.selectedColor || this.selectedColor !== this.additionalDetails.controls['colorId'].value) {
-      this.additionalDetails.controls['colorId'].setValue(null);
-      this.selectedColor = '';
-    }
-    if (!this.selectedPlate || this.selectedPlate !== this.additionalDetails.controls['registrationMark'].value) {
-      this.additionalDetails.controls['registrationMark'].setValue(null);
-      this.selectedPlate = '';
-    }
-    if (!this.selectedNationality || this.selectedNationality !== this.additionalDetails.controls['nationality'].value) {
-      this.additionalDetails.controls['nationality'].setValue(null);
-      this.selectedNationality = '';
-    }
-    if (!this.selectedOccupation || this.selectedOccupation !== this.additionalDetails.controls['occupation'].value) {
-      this.additionalDetails.controls['occupation'].setValue(null);
-      this.selectedOccupation = '';
-    }
+
+    // if (this.showBankField) {
+    //   if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
+    //     this.additionalDetails.controls['bankName'].setValue(null);
+    //     this.selectedBank = '';
+    //   }
+    // }
+    // if (!this.selectedColor || this.selectedColor !== this.additionalDetails.controls['colorId'].value) {
+    //   this.additionalDetails.controls['colorId'].setValue(null);
+    //   this.selectedColor = '';
+    // }
+    // if (!this.selectedPlate || this.selectedPlate !== this.additionalDetails.controls['registrationMark'].value) {
+    //   this.additionalDetails.controls['registrationMark'].setValue(null);
+    //   this.selectedPlate = '';
+    // }
+    // if (!this.selectedNationality || this.selectedNationality !== this.additionalDetails.controls['nationality'].value) {
+    //   this.additionalDetails.controls['nationality'].setValue(null);
+    //   this.selectedNationality = '';
+    // }
+    // if (!this.selectedOccupation || this.selectedOccupation !== this.additionalDetails.controls['occupation'].value) {
+    //   this.additionalDetails.controls['occupation'].setValue(null);
+    //   this.selectedOccupation = '';
+    // }
     if (this.additionalDetails.invalid) {
       return;
     }
@@ -1011,6 +1022,43 @@ export class AdditionalDetailsComponent implements OnInit {
             'nearest'
         });
       }, 250);
+    }
+  }
+
+  plateCodeFocusOut() {
+    if (!this.selectedPlate || this.selectedPlate !== this.additionalDetails.controls['registrationMark'].value) {
+      this.additionalDetails.controls['registrationMark'].setValue(null);
+      this.selectedPlate = '';
+    }
+  }
+
+  bankNameFocusOut() {
+    if (this.showBankField) {
+      if (!this.selectedBank || this.selectedBank !== this.additionalDetails.controls['bankName'].value) {
+        this.additionalDetails.controls['bankName'].setValue(null);
+        this.selectedBank = '';
+      }
+    }
+  }
+
+  occupationFocusOut() {
+    if (!this.selectedOccupation || this.selectedOccupation !== this.additionalDetails.controls['occupation'].value) {
+      this.additionalDetails.controls['occupation'].setValue(null);
+      this.selectedOccupation = '';
+    }
+  }
+
+  nationalityFocusOut() {
+    if (!this.selectedNationality || this.selectedNationality !== this.additionalDetails.controls['nationality'].value) {
+      this.additionalDetails.controls['nationality'].setValue(null);
+      this.selectedNationality = '';
+    }
+  }
+
+  colorFocusOut() {
+    if (!this.selectedColor || this.selectedColor !== this.additionalDetails.controls['colorId'].value) {
+      this.additionalDetails.controls['colorId'].setValue(null);
+      this.selectedColor = '';
     }
   }
 }

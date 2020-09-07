@@ -260,18 +260,18 @@
                 <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
-                        <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate" placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}" formControlName="registeredDate" [max]="minRegisteredDate" required AutoDateFormat/>
+                        <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate" placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}" formControlName="registeredDate" [min]="minRegisteredDate" [max]="maxRegisteredDate" required AutoDateFormat/>
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #registeredDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
                             date_range</mat-icon>
                         <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('required')">
                             {{ 'Required.RegisteredDate' | translate }}
                         </mat-error>
-                        <!-- <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMin')">
-                            {{ 'Invalid.MinRegisteredDate' | translate }}
-                        </mat-error> -->
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMin')">
+                            {{ 'Invalid.MinFirseRegisteredDate' | translate }}
+                        </mat-error>
                         <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMax')">
-                            {{ 'Invalid.FirseRegisteredDate' | translate }}
+                            {{ 'Invalid.MaxFirseRegisteredDate' | translate }}
                         </mat-error>
                     </mat-form-field>
                 </div>

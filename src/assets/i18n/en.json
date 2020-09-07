@@ -492,6 +492,7 @@
         "MaxLossDate": "Loss date should be current date or less than the Current date",
         "MinIntimatedDate": "Intimated date can't be less than Loss date",
         "MaxIntimatedDate": "Intimated date can't be greater than Policy period",
-        "FirseRegisteredDate": "First Registered Date can't be greater than Make year"
+        "MaxFirseRegisteredDate": "First Registered Date can't be greater than Make year",
+        "MinFirseRegisteredDate": "First Registered Date will be 1 year less than Make year"
     }
 }

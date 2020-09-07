@@ -220,16 +220,16 @@
                 </div>
                 <div *ngIf="isQuickSummary === 'false'">
                     <label class="label_form">{{ 'Address1' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
+                    <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
                 </div>
                 <div *ngIf="isQuickSummary === 'false'">
                     <label class="label_form">{{ 'Address2' | translate }}</label>
-                    <div class="field-value"> {{ quoteDetails?.userDetails?.address2}} </div>
+                    <div class="field-value"> {{ quoteDetails?.userDetails?.address3}} </div>
                 </div>
                 <div class="row" *ngIf="isQuickSummary === 'false'">
                     <div class="col-md-6 col-sm-6 col-12">
-                        <label class="label_form" [ngStyle]="{'height': quoteDetails?.userDetails?.postBox == null ?  '30px': ''}">{{ 'POBOXNo' | translate }}</label>
-                        <div class="field-value"> {{ quoteDetails?.userDetails?.postBox}} </div>
+                        <label class="label_form" [ngStyle]="{'height': quoteDetails?.userDetails?.address1 == null ?  '30px': ''}">{{ 'POBOXNo' | translate }}</label>
+                        <div class="field-value"> {{ quoteDetails?.userDetails?.address1}} </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-12">
                         <label class="label_form">{{ 'EmiratesLabel' | translate }}</label>

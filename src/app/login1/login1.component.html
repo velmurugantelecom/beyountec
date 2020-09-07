@@ -132,7 +132,7 @@
                     <form class="customform pt-4" [formGroup]="ForgotForm" focusInvalidInput autocomplete="off" id="ForgotForm">
                         <mat-form-field appearance="outline" class="ml-4 col-md-10">
                             <mat-label>{{'EmailLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" formControlName="email" #emaild>
+                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" readonly="loggedfirstStatus" formControlName="email" #emaild>
                             <mat-icon matSuffix>email &nbsp;&nbsp; </mat-icon>
                             <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
                                 {{'Required.Email' | translate }}

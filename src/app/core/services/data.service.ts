@@ -8,6 +8,7 @@ export class DataService {
   userBasicDetails: any = {};
   vehicleDetails: any = {};
   planDetails: any = {};
+  email:any;
 
   constructor() { }
 
@@ -35,4 +36,11 @@ export class DataService {
   getVehicleDetails() {
     return this.vehicleDetails;
   }
+  setEmailDetails(data) {
+    this.email = data;
+}
+
+getEmailDetails() {
+    return this.email;
+}
 }

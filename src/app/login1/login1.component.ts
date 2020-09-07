@@ -75,6 +75,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public errorMessages = [];
   public otpInterval;
   public guestToken;
+  public loggedfirstStatus:boolean=false;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -124,7 +125,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         }
       }
     });
-
+    
     this.route.queryParams
       .subscribe(params => {
         if (params['reviseDetails']) {
@@ -185,6 +186,15 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.appService.setDiscountDetails({});
     this.appService.setPlanDetails({})
     this.language = localStorage.getItem("language");
+    if(this.dataService.getUserDetails()&& this.formType=="forgotPwd"){
+      this.isResetLinkSend = true;
+      this.loggedfirstStatus=true;
+      this.ForgotForm.patchValue({
+        'email': this.dataService.getEmailDetails()
+      })
+      this.dataService.setEmailDetails('');
+      this.forgotPwd();
+    }
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
@@ -256,12 +266,18 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.spinner.hide();
       let data = response.data;
       localStorage.setItem('tokenDetails', data.token);
-      localStorage.setItem('Username', data.userName)
-      localStorage.setItem('isLoggedIn', 'true');
-      this.authService.isUserLoggedIn.next(true);
-      this.authService.isGuestUser.next(false);
-      this.dataService.setUserDetails({})
-      this.router.navigate([`/User/dashboard`]);
+      if(data.loggedfirst=="N"){
+        this.dataService.setEmailDetails(data.email);
+        this.router.navigate(['/forgotPwd']);
+      }
+      else{
+        localStorage.setItem('Username', data.userName)
+        localStorage.setItem('isLoggedIn', 'true');
+        this.authService.isUserLoggedIn.next(true);
+        this.authService.isGuestUser.next(false);
+        this.dataService.setUserDetails({})
+        this.router.navigate([`/User/dashboard`]);
+      }
     }, err => {
       this.spinner.hide();
       this.guestUserCall();
@@ -391,9 +407,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   forgotPwd() {
     this.ForgotForm.get('otp').setValidators([]);
     this.ForgotForm.get('otp').updateValueAndValidity();
-    if (this.ForgotForm.status === 'INVALID') {
-      return;
-    }
+   if (this.ForgotForm.status === 'INVALID') {
+     return;
+   }
     this.spinner.show();
     this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email.trim().toLowerCase()}`, '').subscribe(res => {
       localStorage.setItem('email', this.ForgotForm.value.email.trim().toLowerCase())

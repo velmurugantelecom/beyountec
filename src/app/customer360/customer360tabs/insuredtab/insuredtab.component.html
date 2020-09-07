@@ -69,17 +69,17 @@
       <div style="height: 75px;" class="row mt-2">
         <div *ngIf="insureddetails?.address1 != null" class="col-md-4 col-12">
           <label class="col-12 ">{{ 'Address1' | translate }}</label>
-          <p class="col-12 fbold">{{insureddetails?.address1}}</p>
+          <p class="col-12 fbold">{{insureddetails?.address2}}</p>
         </div>
 
         <div *ngIf="insureddetails?.address2 != null" class="col-md-4 col-12">
           <label class="col-12 ">{{ 'Address2' | translate }}</label>
-          <p class="col-12 fbold">{{insureddetails?.address2}}</p>
+          <p class="col-12 fbold">{{insureddetails?.address3}}</p>
 
         </div>
         <div *ngIf="insureddetails?.postBox != null" class="col-md-4 col-12">
           <label class="col-12 ">{{ 'POBox' | translate }}</label>
-          <p class="col-12 fbold">{{insureddetails?.postBox}}</p>
+          <p class="col-12 fbold">{{insureddetails?.address1}}</p>
         </div>
       </div>
       <hr class="hrline mb-3">

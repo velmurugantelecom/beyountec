@@ -75,7 +75,7 @@ export class QuoteSummaryComponent implements OnInit {
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
       console.log('efffe', this.quoteDetails.vehicleDetails.ncdYears)
-      if (this.quoteDetails.vehicleDetails.ncdYears > 0) {
+      if (this.quoteDetails.vehicleDetails.ncdYears > this.runtimeConfigService.config.VehicleDetailsNCDYears) {
         this.needNcdDeclaration = true;
       }
       this.mailId = this.quoteDetails.userDetails.email;

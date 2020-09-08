@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { RequestRedirectComponent } from '../shared/request-redirect/request-redirect.component';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 @Component({
   selector: 'app-additional-details',
@@ -75,6 +76,7 @@ export class AdditionalDetailsComponent implements OnInit {
   public subscription: Subscription;
   public goTo = '';
   public notes: any;
+  public maxPolicyStartDate: any;
 
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
@@ -85,6 +87,7 @@ export class AdditionalDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
+    public runtimeConfigService: RuntimeConfigService,
     private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -144,10 +147,17 @@ export class AdditionalDetailsComponent implements OnInit {
         updated: 'JPEG/PNG/PDF/TXT & Max 10 MB',
       }
     ];
+
+    this.translate.get('Invalid.MaxPolicyStartDate').subscribe(value => {
+      this.maxPolicyStartDate = value.replace("30", this.runtimeConfigService.config.PolicyStartDateGreaterThan);
+    });
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
       this.language = localStorage.getItem("language");
+      this.translate.get('Invalid.MaxPolicyStartDate').subscribe(value => {
+        this.maxPolicyStartDate = value.replace("30", this.runtimeConfigService.config.PolicyStartDateGreaterThan);
+      });
     }
   }
 
@@ -201,7 +211,7 @@ export class AdditionalDetailsComponent implements OnInit {
       else {
         this.spinner.hide();
       }
-      this.maxEffectiveDate = moment(new Date()).add('days', 30)['_d'];
+      this.maxEffectiveDate = moment(new Date()).add('days', this.runtimeConfigService.config.PolicyStartDateGreaterThan)['_d'];
       this.getDropDownOptions('bankName', 'BANKNAME', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('plateCode', 'VEH_REG_MARK', response.data.quoteSummary.productTypeId);
       this.getDropDownOptions('prefix', 'UCD_PREFIX_NAME');

@@ -842,12 +842,12 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   setRepairTypeAndRegType(makeYear) {
-    if ((this.today.getFullYear() - makeYear) >= 5) {
+    if ((this.today.getFullYear() - makeYear) >= this.runtimeConfigService.config.OutsideAgency) {
       this.vehicleForm.patchValue({
         repairType: '2'
       });
       this.vehicleForm.controls.repairType.disable();
-    } else if ((this.today.getFullYear() - makeYear) <= 2) {
+    } else if ((this.today.getFullYear() - makeYear) <= this.runtimeConfigService.config.InsideAgency) {
       this.vehicleForm.patchValue({
         repairType: '1'
       });
@@ -1279,14 +1279,14 @@ export class NewMotorInfoScreen implements OnInit {
 
   changeVehicleValue(type) {
     if (type === 'add') {
-      let value = this.vehicleForm.value['vehicleValue'] + 100;
+      let value = this.vehicleForm.value['vehicleValue'] + this.runtimeConfigService.config.VehicleValueAdd;
       this.gaugeValue = value;
       this.vehicleValue = value;
       this.vehicleForm.patchValue({
         vehicleValue: value
       })
     } else {
-      let value = this.vehicleForm.value['vehicleValue'] - 100;
+      let value = this.vehicleForm.value['vehicleValue'] - this.runtimeConfigService.config.VehicleValueMinus;
       this.gaugeValue = value;
       this.vehicleValue = value;
       this.vehicleForm.patchValue({

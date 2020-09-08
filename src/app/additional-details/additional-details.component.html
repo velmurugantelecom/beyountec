@@ -303,9 +303,9 @@
                                                 Policy Start Date is required
                                             </mat-error>
                                             <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMin')">
-                                                Policy Start Date can't be less than current Date</mat-error>
+                                                {{'Invalid.MinPolicyStartDate' | translate }}</mat-error>
                                             <mat-error *ngIf="additionalDetails.controls.effectiveDate.hasError('owlDateTimeMax')">
-                                                Policy Start Date can't be greater than 30 Days</mat-error>
+                                                {{maxPolicyStartDate }}</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>

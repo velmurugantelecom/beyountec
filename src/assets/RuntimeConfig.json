@@ -13,5 +13,11 @@
     "LicenseIssuedDateGreaterThanDOB":18,
     "DateOfBirthGreaterThan":18,
     "FullInsuranceVehicleAgeGreaterThan":10,
+    "PolicyStartDateGreaterThan":30,
+    "InsideAgency":2,
+    "OutsideAgency":5,
+    "VehicleDetailsNCDYears":0,
+    "VehicleValueAdd":100,
+    "VehicleValueMinus":100,
     "DisplayingDateFormat":"dd/MM/yyyy"
 }

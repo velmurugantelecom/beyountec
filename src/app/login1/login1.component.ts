@@ -75,7 +75,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public errorMessages = [];
   public otpInterval;
   public guestToken;
-  public loggedfirstStatus:boolean=false;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -186,9 +185,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.appService.setDiscountDetails({});
     this.appService.setPlanDetails({})
     this.language = localStorage.getItem("language");
-    if(this.dataService.getUserDetails()&& this.formType=="forgotPwd"){
+    if(this.dataService.getEmailDetails()!='' && this.formType=="forgotPwd"){
+      this.ForgotForm.controls['email'].disable();
       this.isResetLinkSend = true;
-      this.loggedfirstStatus=true;
       this.ForgotForm.patchValue({
         'email': this.dataService.getEmailDetails()
       })

@@ -8,7 +8,7 @@ export class DataService {
   userBasicDetails: any = {};
   vehicleDetails: any = {};
   planDetails: any = {};
-  email:any;
+  email:any='';
 
   constructor() { }
 

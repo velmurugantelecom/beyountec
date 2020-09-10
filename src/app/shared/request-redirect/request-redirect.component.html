@@ -17,6 +17,7 @@
                 <img class="framecss" src="./assets/sharedimg/Frame-Border.png" [width]="frameWidth" />
                 <webcam [height]="height" [width]="width" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)">
                 </webcam>
+                <p>Please place your card inside square box</p>
             </div>
 
             <br/>

@@ -255,19 +255,19 @@ export class QuoteSummaryComponent implements OnInit {
         break;
       }
       case 2: {
-        this.translate.get('RefundPolicyFile').subscribe(value => {
+        this.translate.get('PrivacyPolicyFile').subscribe(value => {
           file = value;
         });
-        this.translate.get('RefundPolicyWindowName').subscribe(value => {
+        this.translate.get('PrivacyPolicyWindowName').subscribe(value => {
           windowName = value;
         });
         break;
       }
       case 3: {
-        this.translate.get('PrivacyPolicyFile').subscribe(value => {
+        this.translate.get('RefundPolicyFile').subscribe(value => {
           file = value;
         });
-        this.translate.get('PrivacyPolicyWindowName').subscribe(value => {
+        this.translate.get('RefundPolicyWindowName').subscribe(value => {
           windowName = value;
         });
         break;

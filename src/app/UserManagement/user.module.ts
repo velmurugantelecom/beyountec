@@ -4,7 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AppMaterialModule } from '../app-material.module';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashNotificationComponent } from './dashboard/dash-notification/dash-notification.component';
+import { DashNotificationComponent, DashboardBottomSheet } from './dashboard/dash-notification/dash-notification.component';
 import { PolicyComponent } from './policy/policy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManageprofileComponent, ProfileUpdateDialog } from './manageprofile/manageprofile.component';
@@ -12,6 +12,7 @@ import { AuthGuard } from "../core/guard/auth.guard";
 import { ChangePasswordComponent } from './change-password/change-password.component'
 import { QuoteComponent } from './quote/quote.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatBottomSheetModule } from '@angular/material';
 
 const routes: Routes = [
     {
@@ -45,16 +46,17 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [PolicyComponent, DashboardComponent, ManageprofileComponent, DashNotificationComponent, ChangePasswordComponent,
-        QuoteComponent, ProfileUpdateDialog],
+        QuoteComponent, ProfileUpdateDialog,DashboardBottomSheet],
     imports: [
         CommonModule,
         SharedModule,
         AppMaterialModule,
         RouterModule.forChild(routes),
-        TranslateModule
+        TranslateModule,
+        MatBottomSheetModule
     ],
     entryComponents: [
-        ProfileUpdateDialog
+        ProfileUpdateDialog, DashboardBottomSheet
     ]
 })
 export class userModule { }

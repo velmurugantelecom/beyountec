@@ -324,20 +324,15 @@
                         <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue" [size]="100">
                         </ngx-gauge>
                     </div>
-                    <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-9 vehicle-value-center">
-                        <div class="column">
-                            <div>
-                                <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
-                            </div>
-                            <div>
-                                <button type="button" class="pr-3 btn button btn-default bggreen fwhite" style="font-size: 6px;" (click)="changeVehicleValue('minus')">
-                                    <i class="fa fa-minus" aria-hidden="true"></i>
-                                    </button>
-                                <button type="button" class="pr-3 btn button btn-default bggreen fwhite" style="font-size: 6px;margin-left: 50px;" (click)="changeVehicleValue('add')">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-
-                            </div>
+                    <div class="row pl-2 col-12 col-xs-12 col-sm-12 col-md-3 d-flex justify-content-center">
+                        <div>
+                            <i class="fa fa-minus mr-2" #tooltip="matTooltip" matTooltip="To decrease vehicle value please click" aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
+                        </div>
+                        <div>
+                            <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
+                        </div>
+                        <div>
+                            <i class="fa fa-plus ml-2" #tooltip="matTooltip" matTooltip="To increase vehicle value please click" aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
                         </div>
                     </div>
                 </div>

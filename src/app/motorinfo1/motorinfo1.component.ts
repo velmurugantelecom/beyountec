@@ -1278,14 +1278,14 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   changeVehicleValue(type) {
-    if (type === 'add') {
+    if (type === 'add' && this.maxValue > this.vehicleForm.value['vehicleValue']) { 
       let value = this.vehicleForm.value['vehicleValue'] + this.runtimeConfigService.config.VehicleValueAdd;
       this.gaugeValue = value;
       this.vehicleValue = value;
       this.vehicleForm.patchValue({
         vehicleValue: value
       })
-    } else {
+    } else if (type === 'minus' && this.minValue < this.vehicleForm.value['vehicleValue']) {
       let value = this.vehicleForm.value['vehicleValue'] - this.runtimeConfigService.config.VehicleValueMinus;
       this.gaugeValue = value;
       this.vehicleValue = value;

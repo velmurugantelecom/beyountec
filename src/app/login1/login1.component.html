@@ -9,7 +9,7 @@
         <div class="d-flex align-items-center mx-auto py-auto centercss" style="min-height: 70vh;">
             <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off">
                 <div class=" mx-0">
-                    <div class="row radiocenter m-4">
+                    <div class="row radiocenter mx-4">
                         <mat-radio-group formControlName="productType" (change)="selectOption($event)">
                             <mat-radio-button class="m-2" *ngFor="let product of options['products']" [value]="product.value">{{product.label}}
                             </mat-radio-button>
@@ -132,7 +132,7 @@
                     <form class="customform pt-4" [formGroup]="ForgotForm" focusInvalidInput autocomplete="off" id="ForgotForm">
                         <mat-form-field appearance="outline" class="ml-4 col-md-10">
                             <mat-label>{{'EmailLabel' | translate }}</mat-label>
-                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}"  formControlName="email" #emaild>
+                            <input matInput placeholder="{{'PlaceHolder.Email' | translate }}" formControlName="email" #emaild>
                             <mat-icon matSuffix>email &nbsp;&nbsp; </mat-icon>
                             <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
                                 {{'Required.Email' | translate }}

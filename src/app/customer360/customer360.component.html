@@ -21,7 +21,8 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'"
+                (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
                 {{ 'ReqForEndorsement' | translate }}
             </button>
 
@@ -29,7 +30,8 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'"
+                (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
                 {{ 'ReqForCancel' | translate }}
             </button>
 
@@ -92,8 +94,7 @@
 
 
     </mat-card>
-    <mat-card *ngIf="claimdisplay" class="mx-4 mb-4 mt-0 pt-0">
-
+    <mat-card *ngIf="claimdisplay" class="d-none d-xl-block mx-4 mb-4 mt-0 pt-0">
         <mat-tab-group style="min-height:300px" class="custtab">
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -153,7 +154,101 @@
             </mat-tab>
         </mat-tab-group>
 
+
     </mat-card>
+
+    <div class="d-xl-none">
+
+        <mat-accordion>
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header style="height: 120px !important;">
+                    <div class="p-2">
+                        <img src="./assets/customer_360/vehicle.png">
+
+                        <label>{{ 'Vehicle' | translate }}</label>
+                    </div>
+
+                </mat-expansion-panel-header>
+
+                <ng-container>
+                    <app-vehicletab></app-vehicletab>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header style="height: 120px !important;">
+                    <div class="p-2">
+                        <img src="./assets/customer_360/insured.png" alt="">
+                        <label>{{ 'Driver' | translate }}</label>
+                    </div>
+
+                </mat-expansion-panel-header>
+
+                <ng-container>
+                    <app-drivertab></app-drivertab>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header style="height: 120px !important;">
+                    <div class="p-2 ">
+                        <img src="./assets/customer_360/insured.png" alt="">
+                        <label>{{ 'Insured' | translate }}</label>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <ng-container>
+                    <app-insuredtab></app-insuredtab>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header style="height: 120px !important;">
+                    <div class="p-2">
+                        <img src="./assets/customer_360/covered.png" alt="">
+                        <label>{{ 'Coverage' | translate }}</label>
+
+                    </div>
+
+                </mat-expansion-panel-header>
+
+                <ng-container>
+                    <app-coverage></app-coverage>
+
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header style="height: 120px !important;">
+                    <div class="p-2">
+                        <img src="./assets/customer_360/documents.png" alt="">
+                        <label>{{ 'Docs' | translate }}</label>
+
+                    </div>
+
+                </mat-expansion-panel-header>
+
+                <ng-container>
+                    <app-print-package [policyNo]="currentpolicy?.policyNo"></app-print-package>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+    </div>
 
 
 

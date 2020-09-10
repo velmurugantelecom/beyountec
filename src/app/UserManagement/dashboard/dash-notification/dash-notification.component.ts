@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
 import { Customer360Service } from '../../../customer360/customer360.service';
@@ -17,7 +17,7 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
   styleUrls: ['./dash-notification.component.scss']
 })
 export class DashNotificationComponent implements OnInit {
-  displayedColumns: string[] =['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status'];
+  displayedColumns: string[] =['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status', 'eye'];
   selectedColumns: any = [];
   tableData: any = [];
   subscription: Subscription;
@@ -39,17 +39,19 @@ export class DashNotificationComponent implements OnInit {
   pageEvent: PageEvent;
   totalRecords:any;
   quoteTypeValue:any;
-
+  screenType;
+  tableType;
 
   constructor(private postService: CoreService,
+    private _bottomSheet: MatBottomSheet,
     public runtimeConfigService: RuntimeConfigService,
     private router: Router, public dialog: MatDialog, private customerService: Customer360Service,
     private dropdownservice: DropDownService,
     private appService: AppService, private service: CoreService, private spinner: NgxSpinnerService) {
-    this.selectedColumns['Quotes'] = ['quoteNo', 'insuredName', 'product', 'emailId', 'status'];
+    this.selectedColumns['Quotes'] = ['quoteNo', 'insuredName', 'product', 'emailId', 'status', 'eye'];
     this.selectedColumns['Renewal'] = ['quoteNo', 'insuredName', 'product', 'startDate', 'endDate', 'status'];
     this.selectedColumns['Payment'] = ['refNo', 'insuredName', 'dueDate', 'amount'];
-    this.selectedColumns['Policy'] = ['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status'];
+    this.selectedColumns['Policy'] = ['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status', 'eye'];
 
 
     // this.selectedColumns['Comments'] =['quote_number', 'client', 'product', 'email_address', 'status'];
@@ -59,6 +61,13 @@ export class DashNotificationComponent implements OnInit {
   ngOnInit() {
     // this.getQuoteList('FQ');
     this.getPolicy();
+    if (screen.width >= 768) {
+      this.screenType = 1
+    } else if (screen.width >= 576) {
+      this.screenType = 2
+    } else if (screen.width < 576) {
+      this.screenType = 3
+    }
   }
   getQuoteList(quoteType) {
     this.quoteTypeValue=quoteType;
@@ -110,15 +119,18 @@ export class DashNotificationComponent implements OnInit {
     switch (type) {
       case 'Quotes':
         this.getQuoteList('FQ');
+        this.tableType = 'Quote Details';
         // this.dataSource.sort = this.sort;
         break;
 
       case 'Renewal':
         this.getQuoteList('RQ');
+        this.tableType = 'Renewal Details';
         // this.dataSource.sort = this.sort;
         break;
       case 'Policy':
         this.getPolicy();
+        this.tableType = 'Policy Details';
         // this.dataSource.sort = this.sort;
         break;
 
@@ -148,6 +160,7 @@ export class DashNotificationComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.tableType = 'Policy Details'
     },err => {
       this.spinner.hide();
     })
@@ -230,5 +243,29 @@ export class DashNotificationComponent implements OnInit {
     }
   }
 
+  showBottomSheet(data){
+    data['tableType'] = this.tableType;
+    this._bottomSheet.open(DashboardBottomSheet, {
+      data: { data: data }
+    });
+  }
+}
 
+@Component({
+  selector: 'bottom-sheet-overview-example-sheet2',
+  templateUrl: 'mat-bottom-sheet.html',
+})
+export class DashboardBottomSheet {
+
+  public data: any;
+  constructor(private _bottomSheetRef: MatBottomSheetRef<DashboardBottomSheet>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data1: any,
+    public runtimeConfigService: RuntimeConfigService) {
+    this.data = data1.data;
+    console.log(this.data)
+  }
+
+  closeSheet(): void {
+    this._bottomSheetRef.dismiss();
+  }
 }

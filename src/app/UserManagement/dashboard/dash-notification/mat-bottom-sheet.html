@@ -1,0 +1,111 @@
+<mat-nav-list>
+    <mat-toolbar class="header row justify-content-between">
+        <div class="col-xs-10 col-xs-10">{{data.tableType}}</div>
+        <div class="col-xs-2 col-2">
+            <mat-icon class="close" (click)="closeSheet()">close</mat-icon>
+        </div>
+
+
+    </mat-toolbar>
+    <div class="contents" *ngIf="data.tableType === 'Policy Details'">
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Policy No</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.policyNo}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Quote No</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.quoteNo}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Policy Start Date</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.startDate | date:runtimeConfigService.config.DisplayingDateFormat}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Policy End Date</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Product</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.product}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Status</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.status}}</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="contents" *ngIf="data.tableType === 'Quote Details'">
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Quote No</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.quoteNo}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Insured Name</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.insuredName}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Product Name</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.product}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Email Address</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.emailId}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Quote End Date</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6">
+                <h6>Status</h6>
+            </div>
+            <div class="col-6">
+                <h6>{{data?.status}}</h6>
+            </div>
+        </div>
+    </div>
+</mat-nav-list>

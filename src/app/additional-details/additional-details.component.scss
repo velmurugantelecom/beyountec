@@ -76,8 +76,9 @@ img {
 }
 
 .success-content {
-    margin-top: 10%;
-    margin-left: 0%;
+    margin: 0 auto;
+    // margin-top: 10%;
+    // margin-left: 0%;
     text-align: center;
 }
 
@@ -203,11 +204,10 @@ mat-error+mat-error {
 /* Large devices (laptops/desktops, 992px and up) */
 
 @media only screen and (min-width: 992px) {
-    .enstyle {
-        margin-left: 22%;
-    }
-    .arstyle {
-        margin-right: 22%;
+    .success-content {
+        margin: auto;
+        margin-top: 10%;
+        text-align: center;
     }
     .headfont {
         font-size: 22px;

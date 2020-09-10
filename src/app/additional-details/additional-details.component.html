@@ -14,7 +14,8 @@
             <mat-step>
                 <!-- <div class="success-content" style="margin-left: 22%;"> -->
 
-                <div class="success-content" [ngClass]="{enstyle :language=='en',arstyle :language=='ar'}">
+                <!-- <div class="success-content" [ngClass]="{enstyle :language=='en',arstyle :language=='ar'}"> -->
+                <div class="success-content">
                     <i class="far fa-check-circle fa-5x bg-color"></i>
                     <div>
                         <b class="mt-2">{{ 'success'| translate}}</b>
@@ -200,7 +201,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'VehicleColor' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="colorId" [matAutocomplete]="colorField" required (focusout)="colorFocusOut()">
+                                            <input type="text" matInput formControlName="colorId" [matAutocomplete]="colorField" required (focusout)="colorFocusOut($event)">
                                             <mat-error *ngIf="formCtrls.colorId.errors && formCtrls.colorId.errors.required">
                                                 {{'Required.VehicleColor' | translate }}
                                             </mat-error>
@@ -271,7 +272,7 @@
                                         <mat-form-field appearance="outline">
 
                                             <mat-label>{{'PlateCode' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="registrationMark" [required]="RegistrationMarkRequired" [matAutocomplete]="plateCodeField" (focusout)="plateCodeFocusOut()">
+                                            <input type="text" matInput formControlName="registrationMark" [required]="RegistrationMarkRequired" [matAutocomplete]="plateCodeField" (focusout)="plateCodeFocusOut($event)">
                                             <mat-error *ngIf="formCtrls.registrationMark.errors && formCtrls.registrationMark.errors.required">
                                                 {{'Required.PlateCode' | translate }}
                                             </mat-error>
@@ -325,7 +326,7 @@
                                     <div class="col-md-6" *ngIf="showBankField">
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'BankNameLabel' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="bankName" [matAutocomplete]="auto" required (focusout)="bankNameFocusOut()">
+                                            <input type="text" matInput formControlName="bankName" [matAutocomplete]="auto" required (focusout)="bankNameFocusOut($event)">
                                             <mat-error *ngIf="formCtrls.bankName.errors && formCtrls.bankName.errors.required">
                                                 {{'Required.BankName' | translate }}
                                             </mat-error>
@@ -417,7 +418,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Occupation' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="occupation" [matAutocomplete]="occupationField" required (focusout)="occupationFocusOut()">
+                                            <input type="text" matInput formControlName="occupation" [matAutocomplete]="occupationField" required (focusout)="occupationFocusOut($event)">
                                             <mat-error *ngIf="formCtrls.occupation.errors && formCtrls.occupation.errors.required">
                                                 {{'Required.Occupation' | translate }}
                                             </mat-error>
@@ -432,7 +433,7 @@
 
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{'Nationality' |translate }}</mat-label>
-                                            <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField" required (focusout)="nationalityFocusOut()">
+                                            <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField" required (focusout)="nationalityFocusOut($event)">
                                             <mat-error *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
                                                 {{'Required.Nationality' | translate }}
                                             </mat-error>

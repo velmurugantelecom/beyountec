@@ -576,7 +576,7 @@
         <div class="col-md-10 mt-4 ml-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}" *ngIf="isQuickSummary === 'true'">
             <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration" (change)="onChangeDeclaration($event)">
             </mat-checkbox>
-            <span class="blue-font fbold" (click)="readNCDDeclaration()">No Claims Declaration</span>
+            <span class="blue-font fbold" (click)="readNCDDeclaration()">No Claim Discount</span>
             <span class="mx-1" *ngIf="showNCDDisError" style="color: red;">(Please accept the No Claims Declaration disclaimer)</span>
         </div>
         <div class="row mt-4 mb-1" *ngIf="isQuickSummary === 'false'">

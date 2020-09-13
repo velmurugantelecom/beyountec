@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { Customer360Component } from './customer360.component';
+import { Customer360Component, Customer360BottomSheet } from './customer360.component';
 import { VehicletabComponent } from './customer360tabs/vehicletab/vehicletab.component';
 import { InsuredtabComponent } from './customer360tabs/insuredtab/insuredtab.component';
 import { DrivertabComponent } from './customer360tabs/drivertab/drivertab.component';
@@ -15,16 +15,10 @@ import { AppMaterialModule } from '../app-material.module';
 import { AuthGuard } from '../core/guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
 
-// import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-
 import { PaymenttabsComponent } from './customer360tabs/paymenttabs/paymenttabs.component';
 
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatBottomSheetModule } from '@angular/material';
 import { CoreModule } from '../core/core.module'
-// import { MAT_DATE_LOCALE, } from '@angular/material/core';
-
-// import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
-// import { MAT_DATE_FORMATS, } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -68,7 +62,7 @@ const routes: Routes = [
         ReqForCancellationComponent,
         ReportALOssComponent,
         PaymenttabsComponent,
-
+        Customer360BottomSheet
     ], imports: [
         TranslateModule,
         SharedModule,
@@ -81,17 +75,15 @@ const routes: Routes = [
 
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        OwlMomentDateTimeModule
+        OwlMomentDateTimeModule,
+        MatBottomSheetModule
     ],
-
-    providers: [Customer360Service
-        ,
-        // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-        // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
-
+    entryComponents: [Customer360BottomSheet],
+    providers: [Customer360Service,
         { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
         { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
-    ]
+    ],
+
 
 })
 export class Customer360Module {

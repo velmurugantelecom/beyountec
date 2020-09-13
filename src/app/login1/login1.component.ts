@@ -528,14 +528,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
 @Component({
   selector: 'Quotedialog',
   templateUrl: './Quotedialog.html',
-  styles: [`
- 
-.closeicon_css {
-  position: relative;
-  
-  cursor: pointer;
-}
-  `]
+  styleUrls: ['./Quotedialog.component.scss']
 })
 export class QuoteDialog {
   dialogeDetails: any;

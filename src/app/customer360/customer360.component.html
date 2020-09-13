@@ -21,8 +21,7 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'"
-                (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
                 {{ 'ReqForEndorsement' | translate }}
             </button>
 
@@ -30,8 +29,7 @@
 
         <div class="col-md-3 col-12">
 
-            <button [disabled]="currentpolicy?.statusId == 'CAN'"
-                (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
+            <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
                 {{ 'ReqForCancel' | translate }}
             </button>
 
@@ -49,7 +47,7 @@
     <mat-card *ngIf="claims && claims.length != 0" class="mx-4">
         <label class="poppins-semi-bold-18">{{ 'Claims' | translate }}</label>
         <div>
-            <table mat-table [dataSource]="claims" class="mat-elevation-z8">
+            <!-- <table mat-table [dataSource]="claims" class="mat-elevation-z8">
                 <ng-container matColumnDef="Claims">
                     <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'ClaimFnol' | translate }} #
                     </th>
@@ -85,6 +83,35 @@
                 <ng-container matColumnDef="Status">
                     <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'Status' | translate }} </th>
                     <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
+                <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table> -->
+            <table mat-table [dataSource]="claims" class="mat-elevation-z8">
+                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                    <tr>
+                        <th mat-header-cell *matHeaderCellDef style="padding-bottom: 15px;">
+                            <span *ngIf="column === 'Claims'">{{ 'ClaimFnol' | translate }} #</span>
+                            <span *ngIf="column === 'IntimatedOn'" class="d-none d-sm-block">{{ 'IntimatedOn' | translate }}</span>
+                            <span *ngIf="column === 'lossOn'" class="d-none d-sm-block">{{ 'LossOn' | translate }} </span>
+                            <span *ngIf="column === 'Reserve'" class="d-none d-sm-none d-md-block">{{ 'Reserve' | translate }} </span>
+                            <span *ngIf="column === 'Settled'" class="d-none d-sm-none d-md-block">{{ 'Settled' | translate }} </span>
+                            <span *ngIf="column === 'Balance'" class="d-none d-sm-none d-md-block">{{ 'Balance' | translate }}</span>
+                            <span *ngIf="column === 'Status'" class="d-none d-sm-block">{{ 'Status' | translate }}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td mat-cell *matCellDef="let element;">
+                            <span *ngIf="column === 'Claims'">{{(element.claimNo != null) ? element.claimNo : element.fnolNo}}</span>
+                            <span *ngIf="column === 'IntimatedOn'" class="d-none d-sm-block">{{element.intimatedDate | date:runtimeConfigService.config.DisplayingDateFormat}}</span>
+                            <span *ngIf="column === 'lossOn'" class="d-none d-sm-block">{{element.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}</span>
+                            <span *ngIf="column === 'Reserve'" class="d-none d-sm-none d-md-block">{{element.reserveAmount}}</span>
+                            <span *ngIf="column === 'Settled'" class="d-none d-sm-none d-md-block"> {{element.settledAmount}}</span>
+                            <span *ngIf="column === 'Balance'" class="d-none d-sm-none d-md-block"> {{element.balance}}</span>
+                            <span *ngIf="column === 'Status'" class="d-none d-sm-block"> {{element.status}} </span>
+                            <span (click)="showBottomSheet(element)" *ngIf="column==='eye'" class="d-block d-sm-block d-md-none"><mat-icon >remove_red_eye</mat-icon></span>
+                        </td>
+                    </tr>
                 </ng-container>
                 <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -160,8 +187,7 @@
     <div class="d-xl-none">
 
         <mat-accordion>
-            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/vehicle.png">
@@ -178,8 +204,7 @@
         </mat-accordion>
 
         <mat-accordion>
-            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/insured.png" alt="">
@@ -195,8 +220,7 @@
         </mat-accordion>
 
         <mat-accordion>
-            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2 ">
                         <img src="./assets/customer_360/insured.png" alt="">
@@ -211,8 +235,7 @@
         </mat-accordion>
 
         <mat-accordion>
-            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/covered.png" alt="">
@@ -230,8 +253,7 @@
         </mat-accordion>
 
         <mat-accordion>
-            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
+            <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/documents.png" alt="">

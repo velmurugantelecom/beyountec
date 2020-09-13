@@ -1,0 +1,66 @@
+<mat-nav-list>
+    <mat-toolbar class="header row justify-content-between">
+        <div class="col-xs-10 col-xs-10">Claim Details</div>
+        <div class="col-xs-2 col-2">
+            <mat-icon class="close" (click)="closeSheet()">close</mat-icon>
+        </div>
+    </mat-toolbar>
+    <div class="contents">
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Claim/FNOL No</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.fnolNo}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Intimated On</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.intimatedDate | date:runtimeConfigService.config.DisplayingDateFormat}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Loss On</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Reserve</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.reserveAmount}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Settled</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.settledAmount}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Balance</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.balance}}</h6>
+            </div>
+        </div>
+        <div class="row m-1">
+            <div class="col-6 px-0">
+                <h6>Status</h6>
+            </div>
+            <div class="col-6 px-0">
+                <h6>{{data?.status}}</h6>
+            </div>
+        </div>
+    </div>
+</mat-nav-list>

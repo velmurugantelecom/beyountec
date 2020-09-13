@@ -319,20 +319,20 @@
                 </div>
                 <div class="row col-md-12 col-sm-6 align-items-center mt-2" *ngIf="productId === '1113'">
                     <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-3 vehicle-value-center">
-                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip" (click)="tooltip.toggle()" matTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"
+                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip" matTooltip="Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae"
                                 matTooltipPosition="above" aria-label="Button that shows a tooltip"></i></div>
                         <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue" [size]="100">
                         </ngx-gauge>
                     </div>
-                    <div class="row pl-2 col-12 col-xs-12 col-sm-12 col-md-3 d-flex justify-content-center">
+                    <div class="row pl-4 col-12 col-xs-12 col-sm-12 col-md-3 d-flex justify-content-center">
                         <div>
-                            <i class="fa fa-minus mr-2" #tooltip="matTooltip" matTooltip="To decrease vehicle value please click" aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
+                            <i class="fa fa-minus mr-2" #tooltip="matTooltip" matTooltip="To decrease vehicle value please click" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
                         </div>
                         <div>
                             <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
                         </div>
                         <div>
-                            <i class="fa fa-plus ml-2" #tooltip="matTooltip" matTooltip="To increase vehicle value please click" aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
+                            <i class="fa fa-plus ml-2" #tooltip="matTooltip" matTooltip="To increase vehicle value please click" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
                         </div>
                     </div>
                 </div>
@@ -355,7 +355,7 @@
             <form id="form1" [formGroup]="insuredForm" class="row col-md-10 col-sm-12 m-0 p-0" focusInvalidInput autocomplete="off">
                 <div class="col-md-8 col-sm-6">
                     <div class="row ">
-                        <mat-form-field class="col-lg-3 col-md-4 col-sm-4 col-xs-3 col-3 pr-1" style="width: 71px;" appearance="outline">
+                        <mat-form-field class="col-lg-3 col-md-4 col-sm-4 col-xs-3 col-4 pr-1" style="width: 71px;" appearance="outline">
                             <mat-label>{{'Prefix' | translate}}</mat-label>
                             <mat-select formControlName="prefix">
                                 <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn" [value]="prefix.value">
@@ -366,7 +366,7 @@
                                 {{ 'Required.Prefix' | translate }}
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-lg-9 col-md-8 col-sm-8 col-xs-9 col-9 pl-0" appearance="outline">
+                        <mat-form-field class="col-lg-9 col-md-8 col-sm-8 col-xs-9 col-8 pl-0" appearance="outline">
                             <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
                             <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}" formControlName="fullName" required AlphabetOnly>
                             <mat-error *ngIf="insuredForm.controls.fullName.hasError('required')">

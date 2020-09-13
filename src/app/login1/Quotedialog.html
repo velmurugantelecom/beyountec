@@ -9,25 +9,18 @@
     </div>
 </div>
 <mat-divider></mat-divider>
-
-
 <mat-vertical-stepper class="m-3" #stepper>
-    <!--  -->
     <mat-step [stepControl]="quoteForm" class="m-2">
         <form [formGroup]="quoteForm" focusInvalidInput autocomplete="off" class="mt-2">
-            <ng-template matStepLabel>Enter Full Quote Number</ng-template>
-            
-
+            <ng-template matStepLabel>{{ 'FullQuoteNumber' | translate }}</ng-template>
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Quote Number</mat-label>
-                    <input [(ngModel)]="dialogeDetails" matInput placeholder="Enter Full Quote Number" formControlName="type" required maxlength="50">
+                    <input [(ngModel)]="dialogeDetails" matInput placeholder="Q/XXXX/X/XX/XXXXXXX" formControlName="type" required maxlength="50">
                     <mat-error *ngIf="quoteForm.controls.type.errors && quoteForm.controls.type.errors.required">
-                       Full Quote Number is required</mat-error>
+                        Full Quote Number is required</mat-error>
                 </mat-form-field>
             </div>
-
-
             <div class="d-flex justify-content-center">
                 <button (click)="sendEmail(stepper)" class="btn btn-home button fwhite bggreen centercss">Get OTP</button>
             </div>
@@ -39,7 +32,7 @@
 
     <mat-step class="m-2">
         <form [formGroup]="OtpForm">
-            <ng-template matStepLabel>Fill out your OTP</ng-template>
+            <ng-template matStepLabel>{{ 'EnterYourOTP' | translate }}</ng-template>
             <div *ngIf="isCompleted">
                 <div class="centertext fgreen p-1">
                     <div>We've sent you an OTP. Check your email and enter below
@@ -65,7 +58,7 @@
                 </div>
             </div>
             <div *ngIf="!isCompleted">
-                Please complete previous step.
+                {{ 'CompletePrevStep' | translate }}
             </div>
         </form>
 

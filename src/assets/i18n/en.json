@@ -358,6 +358,9 @@
     "TermsAndCondWindowName": "Terms&Conditions",
     "RefundPolicyWindowName": "Refund Policy",
     "PrivacyPolicyWindowName": "Privacy Policy",
+    "FullQuoteNumber": "Enter Full Quote Number",
+    "EnterYourOTP": "Enter your OTP",
+    "CompletePrevStep": "Please complete previous step.",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",
@@ -498,10 +501,10 @@
         "MaxLossDate": "Loss date should be current date or less than the Current date",
         "MinIntimatedDate": "Intimated date can't be less than Loss date",
         "MaxIntimatedDate": "Intimated date can't be greater than Policy period",
-        "MaxFirseRegisteredDate": "First Registration date should be less than or equal to Make Year",
-        "MinFirseRegisteredDate": "First Registration date should be 1 year less than make year",
+        "MaxFirseRegisteredDate": "First Reg. Date should be less than or equal to Make Year",
+        "MinFirseRegisteredDate": "First Reg. Date should be 1 year less than make year",
         "MinPolicyStartDate": "Policy Start Date can't be less than Current Date",
         "MaxPolicyStartDate": " Policy Start Date can't be greater than 30 Days"
-        
+
     }
 }

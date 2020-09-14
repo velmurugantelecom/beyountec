@@ -17,11 +17,12 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
   styleUrls: ['./dash-notification.component.scss']
 })
 export class DashNotificationComponent implements OnInit {
-  displayedColumns: string[] =['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status', 'eye'];
+  displayedColumns: string[] = ['policyNo', 'quoteNo', 'startDate', 'endDate', 'product', 'status', 'eye'];
   selectedColumns: any = [];
   tableData: any = [];
   subscription: Subscription;
   dataSource: any;
+  mobDataSource: any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   panelOpenState = true;
@@ -37,11 +38,11 @@ export class DashNotificationComponent implements OnInit {
   inputData: any = {};
   public autoDataURL = '';
   pageEvent: PageEvent;
-  totalRecords:any;
-  quoteTypeValue:any;
+  totalRecords: any;
+  quoteTypeValue: any;
   screenType;
   tableType;
-
+  breakPoint: any;
   constructor(private postService: CoreService,
     private _bottomSheet: MatBottomSheet,
     public runtimeConfigService: RuntimeConfigService,
@@ -62,22 +63,46 @@ export class DashNotificationComponent implements OnInit {
     // this.getQuoteList('FQ');
     this.getPolicy();
     if (screen.width >= 768) {
-      this.screenType = 1
+      this.screenType = 1;
     } else if (screen.width >= 576) {
       this.screenType = 2
     } else if (screen.width < 576) {
       this.screenType = 3
     }
+    if (screen.width < 700) {
+      this.breakPoint = 1;
+    } else {
+      this.breakPoint = 2;
+    }
+  }
+
+  onResize(event) { //to adjust to screen size
+    if (screen.width >= 768) {
+      this.screenType = 1;
+    } else if (screen.width >= 576) {
+      this.screenType = 2
+    } else if (screen.width < 576) {
+      this.screenType = 3
+      this.breakPoint = 1;
+    }
+    if (screen.width < 700) {
+      this.breakPoint = 1;
+    } else {
+      this.breakPoint = 2;
+    }
   }
   getQuoteList(quoteType) {
-    this.quoteTypeValue=quoteType;
+    this.quoteTypeValue = quoteType;
     let params = {
       'page': 0,
       'pageSize': 5,
       'quoteType': this.quoteTypeValue
     };
     this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
-      this.totalRecords =result.totalRecords;
+      console.log(result)
+      this.mobDataSource = result;
+      this.mobDataSource['typeOfData'] = 'quote';
+      this.totalRecords = result.totalRecords;
       if (!result || result.length === 0) {
         return;
       }
@@ -155,13 +180,16 @@ export class DashNotificationComponent implements OnInit {
     this.spinner.show();
     this.dropdownservice.getpolicy(params).subscribe((data: any) => {
       this.spinner.hide();
+      console.log(data)
+      this.mobDataSource = data;
+      this.mobDataSource['typeOfData'] = 'policy';
       this.tableData = data.data;
-      this.totalRecords =data.totalRecords;
+      this.totalRecords = data.totalRecords;
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.tableType = 'Policy Details'
-    },err => {
+    }, err => {
       this.spinner.hide();
     })
   }
@@ -171,23 +199,25 @@ export class DashNotificationComponent implements OnInit {
     let page = event.pageIndex;
     let size = event.pageSize;
 
-      if(this.activeQuotes=="Policy"){
-        let params = {
-          quoteType: 'p',
-          page: page,
-          pageSize: size,
-        };
+    if (this.activeQuotes == "Policy") {
+      let params = {
+        quoteType: 'p',
+        page: page,
+        pageSize: size,
+      };
       this.spinner.show();
       this.dropdownservice.getpolicy(params).subscribe((data: any) => {
         this.spinner.hide();
+        this.mobDataSource = data;
+        this.mobDataSource['typeOfData'] = 'policy';
         this.tableData = data.data;
         this.dataSource = new MatTableDataSource<any>(this.tableData);
         this.dataSource.sort = this.sort;
-      },err => {
+      }, err => {
         this.spinner.hide();
       })
     }
-    else if(this.activeQuotes=="Quotes" || this.activeQuotes=="Renewal"){
+    else if (this.activeQuotes == "Quotes" || this.activeQuotes == "Renewal") {
       let params = {
         'page': page,
         'pageSize': size,
@@ -196,6 +226,8 @@ export class DashNotificationComponent implements OnInit {
       this.spinner.show();
       this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
         this.spinner.hide();
+        this.mobDataSource = result;
+        this.mobDataSource['typeOfData'] = 'quote';
         if (!result || result.length === 0) {
           return;
         }
@@ -213,7 +245,7 @@ export class DashNotificationComponent implements OnInit {
         this.spinner.hide();
       });
     }
-     
+
 
   }
 
@@ -237,13 +269,13 @@ export class DashNotificationComponent implements OnInit {
   showDetails(quote) {
     console.log(quote)
     if (quote.statusId === "WIP" || quote.statusId === "MR") {
-      this.router.navigate(['/additional-details'], { queryParams: { quoteNo: quote.quoteNo,retrieveQuote: true } });
+      this.router.navigate(['/additional-details'], { queryParams: { quoteNo: quote.quoteNo, retrieveQuote: true } });
     } else if (quote.statusId === 'VF' || quote.statusId === "MA" || quote.statusId === "RA") {
-      this.router.navigate([`/quote-summary`], { queryParams: { quoteNo: quote.quoteNo, validQuote : false } });
+      this.router.navigate([`/quote-summary`], { queryParams: { quoteNo: quote.quoteNo, validQuote: false } });
     }
   }
 
-  showBottomSheet(data){
+  showBottomSheet(data) {
     data['tableType'] = this.tableType;
     this._bottomSheet.open(DashboardBottomSheet, {
       data: { data: data }

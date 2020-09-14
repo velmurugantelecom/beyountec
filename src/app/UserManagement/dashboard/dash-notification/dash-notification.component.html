@@ -22,10 +22,10 @@
                                     <img src="assets/dashboard/quotesactive-icon.png" *ngIf="activeQuotes==='Quotes'" style="height:24px;width:24px;">
                                     <img src="assets/dashboard/quotes-icon.png" *ngIf="activeQuotes !=='Quotes'" style="height:24px;width:24px;"> {{ 'Quotes' | translate }} {{quoteCount}}
                                 </div>
-                                <div class="mt-2 BadgeSpan" [ngClass]="{'Active': activeQuotes==='Renewal'}" (click)="fetchData('Renewal')">
+                                <!-- <div class="mt-2 BadgeSpan" [ngClass]="{'Active': activeQuotes==='Renewal'}" (click)="fetchData('Renewal')">
                                     <img src="assets/dashboard/renewalactive-icon.png" *ngIf="activeQuotes==='Renewal'" style="height:24px;width:24px;">
                                     <img src="assets/dashboard/renewal-icon.png" *ngIf="activeQuotes !=='Renewal'" style="height:24px;width:24px;"> {{ 'Renewal' | translate }} {{renewalCount}}
-                                </div>
+                                </div> -->
                                 <!-- No need of Payment tab as of now -->
                                 <!-- <div class="BadgeSpan" [ngClass]="{'Active': activeQuotes==='Payment'}" (click)="getPaymentDetail()">
                                 <img src="assets/dashboard/paymentactive-icon.png" *ngIf="activeQuotes==='Payment'" style="height:24px;width:24px;">
@@ -33,13 +33,14 @@
                             </div> -->
                             </div>
                             <div class="mt-2">
-                                <button *ngIf="activeQuotes==='Quotes'" (click)="NewQuote()" type="button" class="btn btn-default  bgblue fwhite button roundedbtn">
+                                <button *ngIf="activeQuotes==='Quotes'" (click)="NewQuote()" type="button" class="d-none d-lg-block d-xl-block btn btn-default  bgblue fwhite button roundedbtn">
                       {{ 'NewQuote' | translate }}
                     </button>
+
                             </div>
                         </div>
 
-                        <div class="col-md-12" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
+                        <div class="col-md-12  d-none d-lg-block d-xl-block" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
                             <table class="table" mat-table [dataSource]="dataSource" matSort>
 
                                 <ng-container class="poppins-light-15" [matColumnDef]="column" *ngFor="let column of displayedColumns">
@@ -98,6 +99,54 @@
                             <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
                             </mat-paginator>
 
+                        </div>
+                        <div class="col-md-12 d-block d-sm-block d-md-block d-lg-none" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
+                            <div class="d-flex justify-content-end">
+                                <button *ngIf="activeQuotes==='Quotes'" (click)="NewQuote()" type="button" class="d-block d-sm-block d-md-block d-lg-none btn btn-default  bgblue fwhite button roundedbtn">
+                                {{ 'NewQuote' | translate }}
+                              </button>
+                            </div>
+                            <mat-grid-list [cols]="breakPoint" (window:resize)="onResize($event)" rowHeight="11rem">
+                                <div *ngIf="mobDataSource['typeOfData']=== 'policy'">
+                                    <mat-grid-tile *ngFor="let product of mobDataSource.data">
+                                        <div>
+                                            <mat-card class="example-card">
+                                                <mat-card-header>
+                                                    <mat-card-title>{{ product.policyNo}}</mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content style="text-align: center;">
+                                                    <div class="mt-2">Start Date: {{ product.startDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
+                                                    <div class="mt-2">End Date: {{ product.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
+                                                    <div class="mt-2">Product: {{ product.product}}</div>
+                                                    <div class="mt-2">Status: {{ product.status}}</div>
+                                                    <div class="hyperlink-click mt-2" (click)="navpage(product)">View More>></div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </mat-grid-tile>
+                                </div>
+                                <div *ngIf="mobDataSource['typeOfData']=== 'quote'">
+                                    <mat-grid-tile *ngFor="let product of mobDataSource.data">
+                                        <div>
+                                            <mat-card class="example-card">
+                                                <mat-card-header>
+                                                    <mat-card-title>{{ product.quoteNo}}</mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content style="text-align: center;">
+                                                    <div class="mt-2">Insured Name: {{ product.insuredName}}</div>
+                                                    <div class="mt-2">Product: {{ product.product}}</div>
+                                                    <div class="mt-2">Email: {{ product.emailId}}</div>
+                                                    <div class="mt-2">Status: {{ product.status}}</div>
+                                                    <div class="hyperlink-click mt-2" (click)="showDetails(product)">Convert to Policy>></div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </mat-grid-tile>
+                                </div>
+
+                            </mat-grid-list>
+                            <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+                            </mat-paginator>
                         </div>
                         <div class="centercss f16 py-4" *ngIf="totalRecords==0">
                             No record found

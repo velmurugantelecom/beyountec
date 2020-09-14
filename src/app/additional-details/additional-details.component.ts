@@ -278,7 +278,7 @@ export class AdditionalDetailsComponent implements OnInit {
           questionnaire: this.quoteDetails.vehicleDetails.regStatus
         });
       }
-      if ((!this.isReviseDetails) && (!this.isOldQuote)) {
+      if ((!this.isReviseDetails) && (!this.isOldQuote) || (!this.quoteDetails.vehicleDetails.mortgagedYN)) {
         if (this.quoteDetails.productTypeId == '1116') {
           this.additionalDetails.patchValue({
             mortgagedYN: this.options['financed'][0].value
@@ -719,7 +719,7 @@ export class AdditionalDetailsComponent implements OnInit {
   }
 
   patchFormValues() {
-    if (this.isReviseDetails || this.isOldQuote) {
+    if ((this.isReviseDetails && (this.quoteDetails.vehicleDetails.mortgagedYN)) || this.isOldQuote && (this.quoteDetails.vehicleDetails.mortgagedYN)) {
       this.additionalDetails.patchValue({
         mortgagedYN: this.quoteDetails.vehicleDetails['mortgagedYN'],
       });

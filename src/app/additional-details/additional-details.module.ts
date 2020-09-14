@@ -22,7 +22,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>)={};
 export const MY_CUSTOM_FORMATS = {
     fullPickerInput: 'DD/MM/YYYY',
     parseInput: 'DD/MM/YYYY',
-    datePickerInput: 'DD/MM/YYYY',
+    datePickerInput: localStorage.getItem("DatePickerFormat"),
+   // datePickerInput: 'DD/MM/YYYY',
     timePickerInput: 'LT',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',

@@ -10,6 +10,7 @@ import { LocationStrategy } from '@angular/common';
 import { AppService } from './core/services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/core/services/data.service';
+import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class AppComponent implements OnInit {
     private locationStrategy: LocationStrategy,
     private appService: AppService,
     public translate: TranslateService,
-    private dataService: DataService
+    private dataService: DataService,
+    public runtimeConfigService: RuntimeConfigService
   ) {
     // multi language 
     this.translate.addLangs(['en', 'ar']);
@@ -98,6 +100,7 @@ export class AppComponent implements OnInit {
     });
     localStorage.setItem('maxValue', '0');
     localStorage.setItem('minValue', '0');
+    localStorage.setItem('DatePickerFormat',this.runtimeConfigService.config.DatePickerFormat);
    this.pageLoaderContent=this.dataService.getMotorPageLoaderContent();
   }
   ngDoCheck() {

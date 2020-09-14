@@ -20,7 +20,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 export const MY_CUSTOM_FORMATS = {
     fullPickerInput: 'DD/MM/YYYY',
     parseInput: 'DD/MM/YYYY',
-    datePickerInput: 'DD/MM/YYYY',
+    datePickerInput: localStorage.getItem("DatePickerFormat"),
     timePickerInput: 'LT',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',

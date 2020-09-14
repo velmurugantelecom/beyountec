@@ -152,10 +152,10 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       mobileCode: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.minLength(7),
       Validators.maxLength(7), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)])],
     });
     this.ForgotForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)])],
       otp: ['', []]
     });
     this.OtpForm = this.formBuilder.group({

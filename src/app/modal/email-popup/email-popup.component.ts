@@ -79,7 +79,7 @@ export class EmailPopupComponent implements OnInit {
       this.emailForm.get('email').updateValueAndValidity();
     } else {
       this.emailForm.get('email').enable();
-      this.emailForm.get('email').setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]);
+      this.emailForm.get('email').setValidators([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]);
       this.emailForm.get('email').updateValueAndValidity();
     }
   }

@@ -49,8 +49,8 @@
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'EmailLabel' | translate }}</mat-label>
                             <input matInput placeholder="{{ 'PlaceHolder.Email' | translate }}" formControlName="email" required>
-                            <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email">
-                                {{ 'EmailFormat' | translate }}</mat-error>
+                                <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email || formCtrls.email.errors && formCtrls.email.errors.pattern">
+                                    {{ 'EmailFormat' | translate }}</mat-error>
                             <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.required">
                                 {{ 'Required.Email' | translate }} </mat-error>
                             <mat-error *ngIf="invalidEmail && formCtrls.email.errors">
@@ -137,7 +137,7 @@
                             <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.hasError('required')">
                                 {{'Required.Email' | translate }}
                             </mat-error>
-                            <mat-error *ngIf="ForgotForm.controls.email.errors && ForgotForm.controls.email.errors.email">
+                            <mat-error *ngIf="formCtrls.email.errors && formCtrls.email.errors.email || formCtrls.email.errors && formCtrls.email.errors.pattern">
                                 {{'EmailFormat' | translate }}</mat-error>
                         </mat-form-field>
                         <div *ngIf="isResetLinkSend" class="ml-4 col-md-10 centertext fgreen p-1" style="background-color: #D3D3D3;">

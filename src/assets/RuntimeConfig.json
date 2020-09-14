@@ -20,6 +20,7 @@
     "VehicleValueAdd": 100,
     "VehicleValueMinus": 100,
     "DisplayingDateFormat": "dd/MM/yyyy",
+    "DatePickerFormat": "DD/MM/YYYY",
     "MinFirstRegistrationDate":{"OneYearLessThanMakeYear":false,"PastYear":true},
     "MaxFirstRegistrationDate":{"TillMakeYear":false,"TillCurrentYear":true,"TillFeatureYear":false}
 }

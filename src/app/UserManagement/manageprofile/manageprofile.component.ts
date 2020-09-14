@@ -40,7 +40,7 @@ export class ManageprofileComponent implements OnInit {
       mobileCode: ['', [Validators.required]],
       mobileNo: ['', [Validators.required, Validators.minLength(7),
         Validators.maxLength(7), Validators.pattern(/^[0-9-+() ]*$/)]],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email,Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
     });
     this.service.listOptions('MOBILE_CON_CODE', '*').subscribe(response => {
       this.options['mobileCode'] = response['data'];

@@ -1,4 +1,7 @@
-<ngx-spinner></ngx-spinner>
+<ngx-spinner>
+    <p *ngIf="pageLoaderContent=='MotorPageLoaderContent'" class="loader-content">Please wait for a while, we are calculating your premium.. </p>
+    <p *ngIf="pageLoaderContent=='PaymentPageLoaderContent'" class="loader-content">Pls. be ready with your card details to make payment online </p>
+</ngx-spinner>
 
 <app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>
 <div class="viewport-height">

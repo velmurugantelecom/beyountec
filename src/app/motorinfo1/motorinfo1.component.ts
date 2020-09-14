@@ -13,25 +13,8 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
 import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup.component';
 import swal from 'sweetalert';
 import { TranslateService } from '@ngx-translate/core';
+import { PolicyExpDateValidator } from './policy-expdate-validator';
 
-export function PolicyExpDateValidator(control: AbstractControl) {
-  if (control.value != '') {
-    const givenDate = new Date(control.value);
-    const date = givenDate.getDate();
-    const month = givenDate.getMonth();
-    const year = givenDate.getFullYear();
-    const momentDate = moment({ year: year, month: month, day: date }).startOf('day');
-    const now = moment().startOf('day');
-    const yearsDiff = momentDate.diff(now, 'days');
-    if (yearsDiff < 0) {
-      return { younger: true };
-    } else if (yearsDiff > 60) {
-      return { moreThan60Days: true };
-    } else {
-      return null;
-    }
-  }
-}
 
 export function RegisteredDateValidator(control: AbstractControl) {
   if (control.value != '') {
@@ -124,7 +107,8 @@ export class NewMotorInfoScreen implements OnInit {
     public dialog: MatDialog,
     public runtimeConfigService: RuntimeConfigService,
     private translate: TranslateService,
-    private _bottomSheet: MatBottomSheet) {
+    private _bottomSheet: MatBottomSheet,
+    private policyExpDateValidators: PolicyExpDateValidator) {
     this.route.queryParams
       .subscribe(params => {
         if (params['quoteNo']) {
@@ -742,8 +726,24 @@ export class NewMotorInfoScreen implements OnInit {
         this.showForm = true;
         this.showGrid = false;
         this.enableContinue = false;
-        this.minRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-01-01'))).subtract('years', 1);
-        this.maxRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-12-31')));
+       
+        if(this.runtimeConfigService.config.MinFirstRegistrationDate.OneYearLessThanMakeYear){
+          this.minRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-01-01'))).subtract('years', 1);
+        }
+        else{
+          this.minRegisteredDate = '';
+        }
+        if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillMakeYear){
+          this.maxRegisteredDate = moment(new Date(formValue['makeYear']['value'].concat('-12-31')));
+        }
+        else if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillCurrentYear){
+          const currentDate = new Date();
+          const year = currentDate.getFullYear();
+          this.maxRegisteredDate = moment(new Date(year.toString().concat('-12-31')));
+        }
+        else if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillFeatureYear){
+          this.maxRegisteredDate ='';
+        }
         localStorage.setItem('maxValue', formValue['maxValue']);
         localStorage.setItem('minValue', formValue['vehicleValue']);
         console.log(this.chassisNoForm.value.chassisNo)
@@ -892,7 +892,7 @@ export class NewMotorInfoScreen implements OnInit {
         this.vehicleForm.get(field).updateValueAndValidity();
       } else {
         if (field === 'prevPolicyExpDate') {
-          this.vehicleForm.get(field).setValidators([Validators.required, PolicyExpDateValidator]);
+          this.vehicleForm.get(field).setValidators([Validators.required, this.policyExpDateValidators.PolicyExpDateValidator()]);
         } else if (field === 'registeredDate') {
           this.vehicleForm.get(field).setValidators([Validators.required, RegisteredDateValidator]);
         } else {
@@ -1008,8 +1008,12 @@ export class NewMotorInfoScreen implements OnInit {
 
   // Fetching Plan Details
   fetchAllPlans(data) {
-    this.spinner.show()
+    let MotorPageLoader='MotorPageLoaderContent';
+    this.dataService.setMotorPageLoaderContent(MotorPageLoader);
+    this.spinner.show();
     this.subscription = this.coreService.saveInputs('fetchAllPlansWithRate', data, null).subscribe(response => {
+      let MotorPageLoader='';
+      this.dataService.setMotorPageLoaderContent(MotorPageLoader);
       this.spinner.hide();
       if (response.status === 'VF') {
         this.router.navigate(['/contact-message', 'br-failed']);
@@ -1020,6 +1024,8 @@ export class NewMotorInfoScreen implements OnInit {
         this.router.navigate(['/compare-plans']);
       }
     }, err => {
+      let MotorPageLoader='';
+      this.dataService.setMotorPageLoaderContent(MotorPageLoader);
       this.spinner.hide();
     });
   }
@@ -1051,8 +1057,23 @@ export class NewMotorInfoScreen implements OnInit {
   }
 
   patchQuoteDetails() {
-    this.minRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01'))).subtract('years', 1);
-    this.maxRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-12-31')));
+    if(this.runtimeConfigService.config.MinFirstRegistrationDate.OneYearLessThanMakeYear){
+      this.minRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-01-01'))).subtract('years', 1);
+    }
+    else{
+      this.minRegisteredDate = '';
+    }
+    if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillMakeYear){
+      this.maxRegisteredDate = moment(new Date(this.quoteDetails['vehicleDetails']['makeYear'].toString().concat('-12-31')));
+    }
+    else if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillCurrentYear){
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      this.maxRegisteredDate = moment(new Date(year.toString().concat('-12-31')));
+    }
+    else if(this.runtimeConfigService.config.MaxFirstRegistrationDate.TillFeatureYear){
+      this.maxRegisteredDate ='';
+    }
     this.vehicleForm.patchValue(this.quoteDetails['vehicleDetails']);
     this.insuredForm.patchValue(this.quoteDetails['userDetails']);
     this.vehicleForm.patchValue({

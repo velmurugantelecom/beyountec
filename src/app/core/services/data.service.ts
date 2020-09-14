@@ -9,6 +9,7 @@ export class DataService {
   vehicleDetails: any = {};
   planDetails: any = {};
   email:any='';
+  motorPageLoaderContent:any;
 
   constructor() { }
 
@@ -42,5 +43,11 @@ export class DataService {
 
 getEmailDetails() {
     return this.email;
+}
+setMotorPageLoaderContent(data) {
+  this.motorPageLoaderContent = data;
+}
+getMotorPageLoaderContent() {
+  return this.motorPageLoaderContent;
 }
 }

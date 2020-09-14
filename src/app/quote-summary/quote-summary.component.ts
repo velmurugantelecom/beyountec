@@ -11,6 +11,7 @@ import { DropDownService } from '../core/services/dropdown.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DynamicContentDialog } from '../shared/dynamic-content/dynamic-content.component';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
+import { DataService } from 'src/app/core/services/data.service';
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: 'DD/MM/YYYY hh:mm a',
 };
@@ -51,7 +52,8 @@ export class QuoteSummaryComponent implements OnInit {
     private translate: TranslateService,
     private dropdownservice: DropDownService,
     public dialog: MatDialog,
-    public runtimeConfigService: RuntimeConfigService) {
+    public runtimeConfigService: RuntimeConfigService,
+    private dataService: DataService,) {
 
     this.route.queryParams
       .subscribe(params => {
@@ -174,7 +176,12 @@ export class QuoteSummaryComponent implements OnInit {
       body['adYn'] = 'N';
     this.coreService.postInputs2('insured/dnd', '', body).subscribe(res => {
     });
+    let PaymentPageLoader='PaymentPageLoaderContent';
+    this.dataService.setMotorPageLoaderContent(PaymentPageLoader);
+   
     this.coreService.paymentService(this.quoteNo).subscribe(response => {
+      let PaymentPageLoader='';
+      this.dataService.setMotorPageLoaderContent(PaymentPageLoader);
       this.spinner.hide();
       if (response) {
         let form = document.createElement("form");
@@ -199,6 +206,8 @@ export class QuoteSummaryComponent implements OnInit {
         $("#submitBtn").trigger("click");
       }
     }, err => {
+      let PaymentPageLoader='';
+      this.dataService.setMotorPageLoaderContent(PaymentPageLoader);
       this.spinner.hide();
     });
   }

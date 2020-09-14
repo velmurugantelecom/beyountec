@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LocationStrategy } from '@angular/common';
 import { AppService } from './core/services/app.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from 'src/app/core/services/data.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   isLoggedInUser: boolean;
   isPingStarted: boolean;
   isWatchStarted: boolean;
+  pageLoaderContent:any;
 
   constructor(private userIdle: UserIdleService,
     private auth: AuthService,
@@ -31,7 +33,8 @@ export class AppComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private locationStrategy: LocationStrategy,
     private appService: AppService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private dataService: DataService
   ) {
     // multi language 
     this.translate.addLangs(['en', 'ar']);
@@ -95,6 +98,10 @@ export class AppComponent implements OnInit {
     });
     localStorage.setItem('maxValue', '0');
     localStorage.setItem('minValue', '0');
+   this.pageLoaderContent=this.dataService.getMotorPageLoaderContent();
+  }
+  ngDoCheck() {
+    this.pageLoaderContent=this.dataService.getMotorPageLoaderContent();
   }
 
   stopWatching() {

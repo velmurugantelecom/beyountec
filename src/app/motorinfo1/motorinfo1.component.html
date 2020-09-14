@@ -289,7 +289,7 @@
                             {{ 'Invalid.PolicyExpDate' | translate }}
                         </mat-error>
                         <mat-error *ngIf="vehicleForm.controls.prevPolicyExpDate.hasError('moreThan60Days')">
-                            {{ 'Invalid.PolicyExpDateMorethan60' | translate }}
+                            {{ invalidPolicyExpDateMorethan60 }}
                         </mat-error>
                     </mat-form-field>
                 </div>

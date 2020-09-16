@@ -26,6 +26,8 @@ export class ProductChangePopupComponent implements OnInit {
     ngOnInit() {
       this.language = localStorage.getItem("language");
       this.translate.get('FullInsuranceVehicleAge') .subscribe(value => { 
+      // this.translate.get('FullInsuranceVehicleAgeABC') .subscribe(value => { 
+
         this.fullInsuranceVehicleAge = value.replace("10", this.runtimeConfigService.config.FullInsuranceVehicleAgeGreaterThan); 
       } );
     }
@@ -33,6 +35,7 @@ export class ProductChangePopupComponent implements OnInit {
       if (this.language != localStorage.getItem("language")) {
         this.language = localStorage.getItem("language");
         this.translate.get('FullInsuranceVehicleAge') .subscribe(value => { 
+        // this.translate.get('FullInsuranceVehicleAgeABC') .subscribe(value => { 
           this.fullInsuranceVehicleAge = value.replace("10", this.runtimeConfigService.config.FullInsuranceVehicleAgeGreaterThan); 
         } );
     }

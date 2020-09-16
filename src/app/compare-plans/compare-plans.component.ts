@@ -78,7 +78,7 @@ export class ComparePlansComponent implements OnInit {
       this.isPlanAvailable = false;
     }
     setTimeout(() => {
-    console.log(this.discounts);
+      console.log(this.discounts);
     }, 5000);
     this.language = localStorage.getItem("language");
   }
@@ -102,6 +102,13 @@ export class ComparePlansComponent implements OnInit {
 
   loadCovers() {
     this.planOb['plans'].forEach((plan, index) => {
+      // if (index === 0) {
+      //   plan.planDetails[0].planName = 'Plan 1';
+      // } else if (index === 1) {
+      //   plan.planDetails[0].planName = 'Plan 2';
+      // } else if (index === 2) {
+      //   plan.planDetails[0].planName = 'Plan 3';
+      // }
       let pgroup = this.promoDiscounts['Promotional Discount'] || [];
       if (pgroup.length == 0) this.promoDiscounts['Promotional Discount'] = [];
       this.promoDiscounts['Promotional Discount'].push({
@@ -267,7 +274,7 @@ export class ComparePlansComponent implements OnInit {
       }
     } else {
       value = {
-        discountsAvailable: false 
+        discountsAvailable: false
       }
     }
     this.appService.setDiscountDetails(value);
@@ -388,8 +395,8 @@ export class ComparePlansComponent implements OnInit {
     this.planOb['plans'].forEach(plan => {
       plan.loading.forEach(item => {
         if (item.id === 'DIND02')
-        return;
-        let group =this.discounts[item.description] || [];
+          return;
+        let group = this.discounts[item.description] || [];
         if (group.length == 0) this.discounts[item.description] = [];
         if (item.id === '106') {
           this.discounts[item.description].push({

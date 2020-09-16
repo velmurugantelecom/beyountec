@@ -319,8 +319,8 @@
                 </div>
                 <div class="row col-md-12 col-sm-6 align-items-center mt-2" *ngIf="productId === '1113'">
                     <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-3 vehicle-value-center">
-                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip" matTooltip="{{ 'VehicleValueTooltip' | translate }}"
-                                matTooltipPosition="above" aria-label="Button that shows a tooltip"></i></div>
+                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip" matTooltip="{{ 'VehicleValueTooltip' | translate }}" matTooltipPosition="above" aria-label="Button that shows a tooltip"></i></div>
+                        <!-- <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip" matTooltip="{{ 'VehicleValueTooltipABC' | translate }}" matTooltipPosition="above" aria-label="Button that shows a tooltip"></i></div> -->
                         <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue" [size]="100">
                         </ngx-gauge>
                     </div>

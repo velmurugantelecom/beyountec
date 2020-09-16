@@ -35,8 +35,11 @@
                                         {{item.quoteNo}}</h5>
                                     <span *ngIf="item.statusId == 'R'" class="sub-details poppins-med-14">{{'ReferedTo' | translate}}</span>
                                     <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{ 'Accepted' | translate }}</span>
-                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{ 'Declined' | translate }}
-                  </span>
+                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{ 'Declined' | translate }}</span>
+
+                                    <!-- <span *ngIf="item.statusId == 'R'" class="sub-details poppins-med-14">{{'ReferedToABC' | translate}}</span>
+                                    <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{ 'AcceptedABC' | translate }}</span>
+                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{ 'DeclinedABC' | translate }}</span> -->
                                 </td>
                             </tr>
                         </ng-container>
@@ -152,11 +155,12 @@
                                     <h5 class="link poppins-med-16">
                                         {{item.quoteNo}}</h5>
                                     <span *ngIf="item.statusId == 'R'" class="sub-details poppins-med-14">{{'ReferedTo' | translate }}</span>
-                                    <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{'Accepted' | translate }}
-                    </span>
-                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{'Declined' | translate }}
-                    </span>
+                                    <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{'Accepted' | translate }}</span>
+                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{'Declined' | translate }}</span>
 
+                                    <!-- <span *ngIf="item.statusId == 'R'" class="sub-details poppins-med-14">{{'ReferedToABC' | translate }}</span>
+                                    <span *ngIf="item.statusId == 'RA'" class="sub-details poppins-med-14">{{'AcceptedABC' | translate }}</span>
+                                    <span *ngIf="item.statusId == 'RD'" class="sub-details poppins-med-14">{{'DeclinedABC' | translate }}</span> -->
                                 </td>
                             </tr>
                         </ng-container>

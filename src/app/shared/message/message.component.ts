@@ -71,6 +71,7 @@ export class MessageComponent implements OnInit {
       }
       case 'quotation-failed': {
         this.text = this.languageChange('QuotationFailedAlert');
+        // this.text = this.languageChange('QuotationFailedAlertABC');
         this.icon = 'info';
         let params = {
           userDetails: { ...this.dataService.getUserDetails() },
@@ -140,6 +141,7 @@ export class MessageComponent implements OnInit {
         }
         case 'quotation-failed': {
           this.text = this.languageChange('QuotationFailedAlert');
+          // this.text = this.languageChange('QuotationFailedAlertABC');
           break;
         }
         case 'imported-vehicle': {

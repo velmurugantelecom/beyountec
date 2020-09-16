@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   count: any = 0;
   //  referal quotes
   referalQuoteData = [];
+  public language: any;
 
   //policy due for renewal
   tableData = []
@@ -42,6 +43,13 @@ export class DashboardComponent implements OnInit {
 
     //policy due for Renewal
     this.fetchRenewalQuotes();
+    this.language = localStorage.getItem("language");
+  }
+
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   nav(i) {

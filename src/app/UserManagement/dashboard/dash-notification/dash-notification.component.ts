@@ -43,6 +43,7 @@ export class DashNotificationComponent implements OnInit {
   screenType;
   tableType;
   breakPoint: any;
+  public language: any;
   constructor(private postService: CoreService,
     private _bottomSheet: MatBottomSheet,
     public runtimeConfigService: RuntimeConfigService,
@@ -73,6 +74,12 @@ export class DashNotificationComponent implements OnInit {
       this.breakPoint = 1;
     } else {
       this.breakPoint = 2;
+    }
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
     }
   }
 

@@ -409,6 +409,8 @@
     "PoweredByABC": "ABC Insurance | Powered by Beyontec",
     "ToDecreaseVehicleValue": "To decrease vehicle value please click",
     "ToIncreaseVehicleValue": "To increase vehicle value please click",
+    "NoRecordFound": "No record found",
+    "CoveragePremium": "COVERAGE & PREMIUM DETAILS",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",

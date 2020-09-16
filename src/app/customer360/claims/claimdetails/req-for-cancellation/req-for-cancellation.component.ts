@@ -14,6 +14,7 @@ const moment = _moment;
 })
 export class ReqForCancellationComponent implements OnInit, AfterViewInit {
   cancelReq: FormGroup;
+  public language: any;
   options: any = {};
   navParams: any = {};
   public minEffectiveDate;
@@ -58,6 +59,13 @@ export class ReqForCancellationComponent implements OnInit, AfterViewInit {
 
     })
     this.getReasons();
+    this.language = localStorage.getItem("language");
+  }
+
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   getReasons() {

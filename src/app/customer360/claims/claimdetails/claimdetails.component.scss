@@ -8,8 +8,11 @@
 label {
   color: gray;
 }
-.borderleft {
+.enborder {
   border-left: 1px solid lightgrey;
+}
+.arborder {
+  border-right: 1px solid lightgrey;
 }
 .searchBtn {
   background-color: #ffff;

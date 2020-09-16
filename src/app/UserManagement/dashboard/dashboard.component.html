@@ -8,7 +8,7 @@
 </div>
 
 
-<div class="row p-2 m-0">
+<div class="row p-2 m-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
 
     <div class="col-md-3 py-2">
 
@@ -119,7 +119,7 @@
                 <i class="fa fa-circle dot" style="color:lightgray;" [ngClass]="{'active' : i===count}" *ngFor="let new of news;let i = index;"></i>
             </div> -->
             <!-- <div class="mx-auto"> -->
-            <mat-card-actions style="float:right;margin-right:10px;">
+            <mat-card-actions [ngClass]="{entext :language=='en',artext :language=='ar'}">
                 <button (click)="nav(-1)" [disabled]="!count" class="button"> </button>
                 <button (click)="nav(+1)" [disabled]="!(count< news.length-1)" class="button"> </button>
             </mat-card-actions>

@@ -17,8 +17,7 @@ const moment = _moment;
   providers: [DatePipe]
 })
 export class ReportALOssComponent implements OnInit {
-
-
+  public language: any;
   ReportaLoss: FormGroup;
   policyarr: any
   currentDate:any;
@@ -73,6 +72,12 @@ export class ReportALOssComponent implements OnInit {
         
       }
     })
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
   ngAfterViewInit() {
     this.ReportaLoss.patchValue({ policyNo: this.navParams['policyNo'] })

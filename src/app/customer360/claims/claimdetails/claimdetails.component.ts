@@ -11,6 +11,7 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
 })
 export class ClaimdetailsComponent implements OnInit {
   policyNo: any;
+  public language: any;
   policyarr: any = [];
   constructor(router: Router, 
     public runtimeConfigService: RuntimeConfigService,
@@ -23,8 +24,13 @@ export class ClaimdetailsComponent implements OnInit {
     this.service1.ongetpolicyno.subscribe((data) => {
       this.policyarr = data.data;
     })
+    this.language = localStorage.getItem("language");
 
-
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
 }

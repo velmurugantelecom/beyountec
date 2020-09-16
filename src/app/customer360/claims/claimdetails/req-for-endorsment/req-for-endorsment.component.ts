@@ -13,7 +13,7 @@ import * as moment from 'moment';
   styleUrls: ['./req-for-endorsment.component.scss']
 })
 export class ReqForEndorsmentComponent implements OnInit {
-
+  public language: any;
   public dateTime: Date;
   @ViewChild(MatDatepicker, { static: false }) picker: MatDatepicker<Moment>;
   isValidMoment: boolean = false;
@@ -74,6 +74,13 @@ export class ReqForEndorsmentComponent implements OnInit {
       this.getreasonforchange();
       this.gettype();
     });
+    this.language = localStorage.getItem("language");
+  }
+
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   ngAfterViewInit() {

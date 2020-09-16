@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./vehicletab.component.scss']
 })
 export class VehicletabComponent implements OnInit {
+  public language: any;
 
   constructor(private service1: Customer360Service) { }
   vehicledetails: any;
@@ -23,6 +24,13 @@ export class VehicletabComponent implements OnInit {
       }
     }, err => {
     })
+    this.language = localStorage.getItem("language");
+  }
+
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
 }

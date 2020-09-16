@@ -7,6 +7,7 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
   styleUrls: ['./drivertab.component.scss']
 })
 export class DrivertabComponent implements OnInit {
+  public language: any;
 
   constructor(private service1: Customer360Service,public runtimeConfigService: RuntimeConfigService) { }
   driverdetails: any;
@@ -19,5 +20,11 @@ export class DrivertabComponent implements OnInit {
       this.tcfilenumber = value.data.vehicleDetails.tcFileNumber;
     }, err => {
     })
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 }

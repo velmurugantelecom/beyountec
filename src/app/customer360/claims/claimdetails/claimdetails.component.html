@@ -1,4 +1,4 @@
-<mat-card class="m-5">
+<mat-card class="m-5" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
 
     <div class="row">
         <div class="col-md-3 col-12 m-0">
@@ -6,7 +6,7 @@
             <b>{{policyarr?.policyNo}}</b>
         </div>
 
-        <div class="col-md-3 borderleft col-12 m-0">
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
             <label> {{ 'InsuredNameLabel' | translate }} </label><br>
             <b>{{policyarr?.userDetails?.fullName}}</b>
         </div>
@@ -16,13 +16,13 @@
       <b>{{policyarr?.product}}</b>
     </div> -->
 
-        <div class="col-md-3 borderleft col-12 m-0">
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
             <label>{{ 'Product' | translate }} </label><br>
             <b>{{policyarr?.productTypeName}}</b>
         </div>
 
-        <div class="col-md-3 borderleft col-12 m-0">
-            <label> Policy Period</label><br>
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
+            <label> {{ 'PolicyPeriod' | translate }}</label><br>
             <b class="text-center m-0 p-0">{{policyarr?.startDate | date:runtimeConfigService.config.DisplayingDateFormat}} </b><br>
             <b class="text-center m-0 p-0">{{ 'To' | translate }}</b><br>
             <b class="text-center m-0 p-0"> {{policyarr?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</b>

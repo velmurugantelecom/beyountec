@@ -18,7 +18,7 @@
 <app-claimdetails></app-claimdetails>
 
 <form [formGroup]="cancelReq" focusInvalidInput>
-    <mat-card class="m-5">
+    <mat-card class="m-5" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
 
         <strong>{{ 'PleaseFillCancelReq' | translate }}</strong>
         <hr>

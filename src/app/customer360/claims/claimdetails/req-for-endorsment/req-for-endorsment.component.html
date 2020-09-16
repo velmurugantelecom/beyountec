@@ -15,8 +15,8 @@
 
 <app-claimdetails></app-claimdetails>
 <form [formGroup]="endorsmentreq" focusInvalidInput>
-    <mat-card class="m-5">
-        <strong>{{ 'PleaseFillEndorsReq' | translate }}</strong>
+    <mat-card class="m-5" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+        <p><strong >{{ 'PleaseFillEndorsReq' | translate }}</strong></p>
         <hr>
         <div class="row">
             <div class="col-md-12 col-12">

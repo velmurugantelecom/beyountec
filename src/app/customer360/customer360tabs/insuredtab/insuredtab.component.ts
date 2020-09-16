@@ -9,6 +9,7 @@ import { RuntimeConfigService } from 'src/app/core/services/runtime-config.servi
   styleUrls: ['./insuredtab.component.scss']
 })
 export class InsuredtabComponent implements OnInit {
+  public language: any;
 
   constructor(private service1: Customer360Service,public runtimeConfigService: RuntimeConfigService) { }
   insureddetails: any;
@@ -24,6 +25,13 @@ export class InsuredtabComponent implements OnInit {
       }
     }, err => {
     })
+    this.language = localStorage.getItem("language");
+  }
+
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
 

@@ -21,6 +21,7 @@ export class ManageprofileComponent implements OnInit {
   validEmail: any;
   mobileNumberRequired:any;
   mobileCodeRequired: any;
+  public language: any;
 
 
   constructor(private router: Router,
@@ -74,7 +75,7 @@ export class ManageprofileComponent implements OnInit {
   this.translate.get('Required.MobileCodeRequired') .subscribe(value => { 
     this.mobileCodeRequired = value; 
   } );
-
+  this.language = localStorage.getItem("language");
 
   // this.validation_messages = {
   //   "email": [{ type: 'required', message:  this.emailRequired },
@@ -82,6 +83,11 @@ export class ManageprofileComponent implements OnInit {
   //   "mobileNo": [{ type: 'required', message: this.mobileNumberRequired }],
   //   "mobileCode": [{type: 'required', message: this.mobileCodeRequired}]
   // };
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   onSaveProfile() {

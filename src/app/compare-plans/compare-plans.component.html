@@ -106,22 +106,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
-                <div class="py-2" *ngIf="isNotEmpty(excess)">
-                <div>
-                    <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                        <div class="row" *ngFor="let item of excess | keyvalue">
-                            <div class="mt-3 pl-4 fbold" style="width: 365px;">{{item.key}} {{'InAED' | translate}}
-                            </div>
-                            <ng-container *ngFor="let plan of planOb['plans']">
-                                <div class="mt-3 text-center" style="width: 200px;">
-                                    {{fetchAmount(plan.planDetails[0].planId, item.value, 'E') | DecimalValue}}
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>  
 
             <!-- Premium -->
             <div class="py-2">

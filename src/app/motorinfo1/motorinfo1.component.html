@@ -326,13 +326,13 @@
                     </div>
                     <div class="row pl-4 col-12 col-xs-12 col-sm-12 col-md-3 d-flex justify-content-center">
                         <div>
-                            <i class="fa fa-minus mr-2" #tooltip="matTooltip" matTooltip="To decrease vehicle value please click" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
+                            <i class="fa fa-minus mr-2" #tooltip="matTooltip" matTooltip=" {{ 'ToDecreaseVehicleValue' | translate }}" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
                         </div>
                         <div>
                             <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue" [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
                         </div>
                         <div>
-                            <i class="fa fa-plus ml-2" #tooltip="matTooltip" matTooltip="To increase vehicle value please click" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
+                            <i class="fa fa-plus ml-2" #tooltip="matTooltip" matTooltip="{{ 'ToIncreaseVehicleValue' | translate }}" aria-label="Button that displays a tooltip when focused or hovered over" aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
                         </div>
                     </div>
                 </div>

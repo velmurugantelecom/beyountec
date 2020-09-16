@@ -396,6 +396,8 @@
     "FooterContent": "CALL 800 AFNIC or email us to : callcenter@fujinsco.ae",
     "Copyright": "Copyright",
     "PoweredByBeyontec": "AFNIC | Powered by Beyontec",
+    "ToDecreaseVehicleValue": "To decrease vehicle value please click",
+    "ToIncreaseVehicleValue": "To increase vehicle value please click",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",

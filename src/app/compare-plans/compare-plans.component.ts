@@ -34,6 +34,7 @@ export class ComparePlansComponent implements OnInit {
   public charges: any = {};
   public excess: any = {};
   public VatPercentage = '';
+  public language: any;
   showPromoDiscount = false;
   public discountCode = null;
   selectAlert: any;
@@ -79,6 +80,12 @@ export class ComparePlansComponent implements OnInit {
     setTimeout(() => {
     console.log(this.discounts);
     }, 5000);
+    this.language = localStorage.getItem("language");
+  }
+  ngDoCheck() {
+    if (this.language != localStorage.getItem("language")) {
+      this.language = localStorage.getItem("language");
+    }
   }
 
   ngAfterViewInit() {

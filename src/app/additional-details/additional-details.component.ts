@@ -77,6 +77,8 @@ export class AdditionalDetailsComponent implements OnInit {
   public goTo = '';
   public notes: any;
   public maxPolicyStartDate: any;
+  public invalidFileFormat: any;
+  public mandatoryDocuments: any;
 
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
@@ -863,8 +865,11 @@ export class AdditionalDetailsComponent implements OnInit {
       let fName = response[0].fileName.split('_0_')
       this.fileContainer[i].value = fName[1];
     }, err => {
+      this.translate.get('InvalidFileFormat') .subscribe(value => { 
+        this.invalidFileFormat = value; 
+      } );
       this.spinner.hide();
-      swal('', 'Invalid File Format', 'error')
+      swal('', this.invalidFileFormat, 'error')
     })
 
   }
@@ -880,7 +885,10 @@ export class AdditionalDetailsComponent implements OnInit {
       loadAllDocs: 'Y'
     }
     if (this.DocUploadForm.status === 'INVALID') {
-      swal('', 'Please upload all mandatory documents.', 'error');
+      this.translate.get('MandatoryDocuments') .subscribe(value => { 
+        this.mandatoryDocuments = value; 
+      } );
+      swal('', this.mandatoryDocuments, 'error');
       return;
     }
     this.addMoreDoc = true;

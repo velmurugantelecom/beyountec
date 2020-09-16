@@ -1,6 +1,6 @@
 <ngx-spinner>
-    <p *ngIf="pageLoaderContent=='MotorPageLoaderContent'" class="loader-content">Please wait for a while, we are calculating your premium.. </p>
-    <p *ngIf="pageLoaderContent=='PaymentPageLoaderContent'" class="loader-content">Pls. be ready with your card details to make payment online </p>
+    <p *ngIf="pageLoaderContent=='MotorPageLoaderContent'" class="loader-content">{{ 'QuoteLoaderContent' | translate }} </p>
+    <p *ngIf="pageLoaderContent=='PaymentPageLoaderContent'" class="loader-content">{{ 'PaymentLoaderContent' | translate }} </p>
 </ngx-spinner>
 
 <app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>
@@ -20,12 +20,12 @@
 </div> -->
 <!-- Footer Section -->
 <div class="d-flex" class="footer">
-    <div class="row p-0 m-0 justify-content-between">
+    <div class="row p-0 m-0 justify-content-between" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
         <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
-            Copyright &copy; AFNIC | Powered by Beyontec
+            {{ 'Copyright' | translate }} &copy;  {{ 'PoweredByBeyontec' | translate }}
         </div>
         <div class="right-align col-lg-7 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
-            CALL 800 AFNIC or email us to : callcenter@fujinsco.ae
+            {{ 'FooterContent' | translate }}  
         </div>
     </div>
 </div>

@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   isPingStarted: boolean;
   isWatchStarted: boolean;
   pageLoaderContent:any;
+  public language: any;
 
   constructor(private userIdle: UserIdleService,
     private auth: AuthService,
@@ -118,6 +119,7 @@ export class AppComponent implements OnInit {
 
   bodyStyleChange(value) {
     let body = document.getElementsByTagName('body')[0];
+    this.language=value;
     if (value === 'en') {
       body.dir = "ltr";
     }

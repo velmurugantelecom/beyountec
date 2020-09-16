@@ -82,6 +82,8 @@ export class NewMotorInfoScreen implements OnInit {
   public invalidLicenseIssueDate: any;
   public requiredDobFormat: any;
   public invalidPolicyExpDateMorethan60: any;
+  public areYouSure: any;
+  public quoteConfirmation: any;
 
   minIssueDate
   dobVDate;
@@ -968,9 +970,15 @@ export class NewMotorInfoScreen implements OnInit {
     this.subscription = this.coreService.getInputsDbsync('validateChassisNoAndTcNo', params).subscribe(res => {
       this.spinner.hide();
       if (res.responseCode === -1) {
+        this.translate.get('AreYouSure') .subscribe(value => { 
+          this.areYouSure = value; 
+        } );
+        this.translate.get('QuoteConfirmation') .subscribe(value => { 
+          this.quoteConfirmation = value; 
+        } );
         swal({
-          title: "Are you sure?",
-          text: "Please confirm Chassis No. and Traffic File Number entered is as per the Mulkiya / Vehicle Registration Card",
+          title: this.areYouSure,
+          text: this.quoteConfirmation,
           icon: "warning",
           dangerMode: true,
           buttons: {

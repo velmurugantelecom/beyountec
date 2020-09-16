@@ -26,7 +26,7 @@
                             <p class="mb-1"> {{'YourEmail' | translate }}</p>
                         </div>
                         <div class="text-color">
-                            Interested in our Quote? Click <strong> Purchase Policy</strong> to buy our Policy
+                            {{'InterestedInOurQuote' | translate }} <strong> {{'PurchasePolicySmallLetter' | translate }}</strong> {{'ToBuyOurPolicy' | translate }}
                         </div>
                         <button type="button" class="btn button btn-default bggreen fwhite mt-3" matStepperNext (click)="doContinue('0')">{{'PurchasePolicy' | translate }}</button>
 
@@ -533,7 +533,7 @@
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
                         <div>
-                            <p class="orange-color"> Accepted Formats are *.png,*.jpg,*.pdf (Max Size 10 MB)</p>
+                            <p class="orange-color"> {{'AcceptedFormats' | translate}}</p>
                         </div>
                         <div class="m-1 row" *ngFor="let container of fileContainer ; index as i">
                             <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 pl-1 pr-0 mt-2">
@@ -557,7 +557,7 @@
                                 </div>
                             </div>
                             <p style="margin-top:2px;margin-left:4px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
-                                {{container.label}} is required</p>
+                                {{container.label}} {{'IsRequired' | translate}}</p>
                             <ng-template #elseBlock>
                                 <p style="margin-top:2px" class="placeFont mb-0">{{ 'UplodadDisclaimer'| translate}}</p>
                             </ng-template>

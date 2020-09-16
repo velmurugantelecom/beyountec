@@ -75,6 +75,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public errorMessages = [];
   public otpInterval;
   public guestToken;
+  public passwordSavedAlert:any;
+  public yourAccountAlreadyExists:any;
+  public retrieveQuoteAlert:any;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -101,6 +104,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     private appService: AppService,
     private dataService: DataService,
     public runtimeConfigService: RuntimeConfigService,
+    private translate: TranslateService,
     public media: MediaObserver) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
@@ -304,12 +308,15 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.spinner.hide();
       if (res == true) {
         this.invalidEmail = true;
+        this.translate.get('YourAccountAlreadyExists') .subscribe(value => { 
+          this.yourAccountAlreadyExists = value; 
+        } );
         let dialogRef = this.dialog.open(MessagePopupComponent, {
           width: '400px',
           data: {
             for: 'emailAlreadyExist',
             title: 'Try Login',
-            body: `Your account already exists, please login with you credentials.`
+            body: this.yourAccountAlreadyExists
           }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -387,6 +394,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     let value = {
       guestUser: true
     }
+    this.translate.get('RetrieveQuote') .subscribe(value => { 
+      this.retrieveQuoteAlert = value; 
+    } );
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       let data = response.data;
       localStorage.setItem('guesttokenDetails', data.token);
@@ -397,7 +407,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     let dialogRef = this.dialog.open(QuoteDialog, {
       width: '500px',
       autoFocus: false,
-      data: { QType: Type, QTitle: Title }
+      data: { QType: this.retrieveQuoteAlert, QTitle: Title }
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -456,8 +466,11 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.PwdSopList = res.errorMessages;
       }
       else {
+        this.translate.get('PasswordSavedAlert') .subscribe(value => { 
+          this.passwordSavedAlert = value; 
+        } );
         swal(
-          '', 'Password Saved Succcessfully', 'success'
+          '', this.passwordSavedAlert, 'success'
         );
         this.router.navigate([`new-login`]);
       }

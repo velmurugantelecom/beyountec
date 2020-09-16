@@ -24,8 +24,8 @@
                     </ul>
                     <ul class="mb-0">
                         <div>
-                            <span class="mr-2 fbold">Discount Code</span>
-                            <input class="mr-2" style="width: 125px;" type="text" (blur)="onBlurMethod('promoInputField')" id="promoInputField" placeholder="Discount Code">
+                            <span class="mr-2 fbold">{{ 'PlaceHolder.DiscountCode' | translate }}</span>
+                            <input class="mr-2" style="width: 125px;" type="text" (blur)="onBlurMethod('promoInputField')" id="promoInputField" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
                             <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                 <i (click)="removePromoDiscount('promoInputField')" style="font-size:15px"
                                     class="fas fa-times-circle fa-2x custom-cursor"></i>
@@ -146,7 +146,7 @@
                 <div>
                     <div class="card-body" style="padding:0px;">
                         <div class="row" id="headerDiv">
-                            <div class="mt-2 pl-4 fbold" style="width: 365px;">Promotional Discount (in AED)</div>
+                            <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'PromotionalDiscount' | translate}}{{'InAED' | translate}}</div>
                             <div class="row ml-0" *ngFor="let item of promoDiscounts | keyvalue">
                                 <ng-container *ngFor="let plan of planOb['plans']">
                                     <div class="mt-2 text-center" style="width: 200px;">
@@ -259,7 +259,7 @@
                         <div class="row">
                             <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.excess[0]">
                                 <div>
-                                    Excess Amount
+                                    {{ 'ExcessAmount' | translate }}
                                 </div>
                                 <div class="fbold">
                                     {{plan.planDetails[0].currency}} {{plan.excess[0].amount | DecimalValue}}
@@ -268,7 +268,7 @@
 
                             <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.planDetails[0].grossPremium">
                                 <div>
-                                    Net Premium
+                                    {{ 'NetPremium' | translate }}
                                 </div>
                                 <div class="fbold">
                                     {{plan.planDetails[0].currency}} {{plan.planDetails[0].grossPremium | DecimalValue}}
@@ -276,7 +276,7 @@
                             </div>
                             <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div>
-                                    Premium incl. VAT
+                                    {{ 'PremiumInclVAT' | translate }}
                                 </div>
                                 <div class="fbold">
                                     {{plan.planDetails[0].currency}} {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
@@ -305,8 +305,8 @@
                                     <ul class="mb-0">
                                         <div>
                                             <span class="">
-                                        <span class="mr-2 fbold fgreen">Discount Code</span>
-                                            <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="Discount Code">
+                                        <span class="mr-2 fbold fgreen"> {{ 'PlaceHolder.DiscountCode' | translate }}</span>
+                                            <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
                                             <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                             <i (click)="removePromoDiscountMob(plan.promoFieldId)"
                                                 style="font-size:15px"
@@ -369,7 +369,7 @@
                             <!-- Promotional Discount -->
                             <div *ngIf="showPromoDiscount">
                                 <div class="row" *ngFor="let item of promoDiscounts | keyvalue">
-                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">Promotional Discount (in AED)
+                                    <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'PromotionalDiscount' | translate}}{{'InAED' | translate}}
                                     </div>
                                     <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
                                         {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}

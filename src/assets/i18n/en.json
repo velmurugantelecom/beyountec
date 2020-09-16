@@ -361,6 +361,41 @@
     "FullQuoteNumber": "Enter Full Quote Number",
     "EnterYourOTP": "Enter your OTP",
     "CompletePrevStep": "Please complete previous step.",
+    "RetriveQuote": "RETRIEVE QUOTE",
+    "ExistingUser": "Existing User?",
+    "OTPExpiresin": "OTP Expires in ",
+    "Minuts": "m",
+    "Seconds": "s",
+    "PasswordNotMatch": "Password does not match",
+    "PasswordSavedAlert": "Password Saved Succcessfully",
+    "ClickHereMobile": "click here",
+    "NewUser": "New User?",
+    "YourAccountAlreadyExists": "Your account already exists, please login with you credentials.",
+    "QuoteNumber": "Quote Number",
+    "GetOTP": "Get OTP",
+    "EnterOTP": "Enter OTP",
+    "VehicleValueTooltip": "Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800AFNIC(23642) or email us to callcentre@fujinsco.ae",
+    "AreYouSure": "Are you sure?",
+    "QuoteConfirmation": "Please confirm Chassis No. and Traffic File Number entered is as per the Mulkiya / Vehicle Registration Card",
+    "QuoteLoaderContent": "Please wait for a while, we are calculating your premium..",
+    "PaymentLoaderContent": "Please be ready with your card details to make payment online",
+    "ExcessAmount": "Excess Amount",
+    "PremiumInclVAT": "Premium incl. VAT",
+    "PromotionalDiscount": "Promotional Discount ",
+    "NoClaimDiscount": "No Claim Discount",
+    "PleaseAcceptNCD": "(Please accept the No Claims Discount disclaimer)",
+    "OK": "OK",
+    "NCDContent": "read about NCD Declaration here...",
+    "NewsSpecial": "News & Special offers",
+    "PurchasePolicySmallLetter": "Purchase Policy",
+    "InterestedInOurQuote": "Interested in our Quote? Click",
+    "ToBuyOurPolicy": "to buy our Policy",
+    "InvalidFileFormat": "Invalid File Format",
+    "MandatoryDocuments": "Please upload all mandatory documents.",
+    "AcceptedFormats": "Accepted Formats are *.png,*.jpg,*.pdf (Max Size 10 MB)",
+    "FooterContent": "CALL 800 AFNIC or email us to : callcenter@fujinsco.ae",
+    "Copyright": "Copyright",
+    "PoweredByBeyontec": "AFNIC | Powered by Beyontec",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",
@@ -444,7 +479,8 @@
         "OTPIsRequired": "OTP is required",
         "EmiratesIDLength": "Emirates ID should be 15 digits",
         "ChassisNumber": "Chassis Number should be minimum of 15 digits",
-        "ChassisNumberRequired": "Chassis Number is required"
+        "ChassisNumberRequired": "Chassis Number is required",
+        "FullQuoteNumberRequired": "Full Quote Number is required"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",
@@ -479,7 +515,8 @@
         "EffectiveDate": "Enter Policy Effective date",
         "RegistrationNo": "Enter Registration No",
         "EngineNo": "Enter Engine No",
-        "RegisteredDate": "Enter First Registration Date"
+        "RegisteredDate": "Enter First Registration Date",
+        "DiscountCode": "Discount Code"
     },
     "Invalid": {
         "LicenseIssueDate": "License Issue Date should be greater than or equal to 18 from DOB",
@@ -505,6 +542,5 @@
         "MinFirseRegisteredDate": "First Reg. Date should be 1 year less than make year",
         "MinPolicyStartDate": "Policy Start Date can't be less than Current Date",
         "MaxPolicyStartDate": " Policy Start Date can't be greater than 30 Days"
-
     }
 }

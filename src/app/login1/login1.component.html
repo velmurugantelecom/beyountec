@@ -64,12 +64,12 @@
                     </button>
                 </div>
                 <div class="row justify-content-center">
-                    <button type="button" class="mt-3 col-md-5 col-lg-3 col-sm-7 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">RETRIEVE QUOTE</button>
+                    <button type="button" class="mt-3 col-md-5 col-lg-3 col-sm-7 col-xs-10 col-10 btn blockbutton btn-block bggreen fwhite button roundedbtn" (click)="retrieveQuote('Retrieve Quote', 'Quote No')">{{ 'RetriveQuote' | translate }}</button>
                 </div>
 
                 <div class="mt-2 d-block d-sm-none">
-                    <p class="centercss f14 m-0 p-0">Existing User?&nbsp;
-                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('loginForm')">Login</a>
+                    <p class="centercss f14 m-0 p-0">{{ 'ExistingUser' | translate }}&nbsp;
+                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('loginForm')">{{ 'Login' | translate }}</a>
                     </p>
                 </div>
             </form>
@@ -119,8 +119,8 @@
                     <a class="f14 textGreen">{{'ForgotPassword' | translate }}</a>
                 </div>
                 <div class="mt-2 d-block d-sm-none">
-                    <p class="centercss f14 m-0 p-0">New User?&nbsp;
-                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('guestFlow')">click here</a>
+                    <p class="centercss f14 m-0 p-0">{{'NewUser' | translate }}&nbsp;
+                        <a style="text-decoration: underline;" class="f14 textGreen" (click)="scrollToFunc('guestFlow')">{{'ClickHereMobile' | translate }}</a>
                     </p>
                 </div>
             </form>
@@ -141,7 +141,7 @@
                                 {{'EmailFormat' | translate }}</mat-error>
                         </mat-form-field>
                         <div *ngIf="isResetLinkSend" class="ml-4 col-md-10 centertext fgreen p-1" style="background-color: #D3D3D3;">
-                            We've sent you an OTP. Check your email and enter below
+                            {{'OTPAlert' | translate }}
                         </div>
                         <mat-form-field class="mt-2 ml-4 col-md-10" appearance="outline" *ngIf="isResetLinkSend">
                             <mat-label>{{'Otp' | translate }}</mat-label>
@@ -155,13 +155,13 @@
                             </mat-error>
                         </mat-form-field>
                         <div class="col-md-10 ml-4" *ngIf="isResetLinkSend">
-                            <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
+                            <div>{{'OTPExpiresin' | translate }} {{minutes}}{{'Minuts' | translate }}:{{seconds}}{{'Seconds' | translate }}</div>
                         </div>
                         <div class="d-flex justify-content-center mt-3" *ngIf="!isResetLinkSend">
                             <button (click)="forgotPwd()" type="submit" class="col-md-3 col-sm-4 col-xs-10 col-10 btn btn-block  bggreen fwhite button roundedbtn">{{ 'RESET' | translate }}</button>
                         </div>
                         <div class="d-flex flex-row-reverse mt-2" *ngIf="isResetLinkSend">
-                            <button (click)="forgotPwd()" type="button" class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
+                            <button (click)="forgotPwd()" type="button" class="btn  bggreen fwhite button roundedbtn">{{'ResendOTP' | translate }}</button>
                             <button (click)="verifyFPOTP()" type="submit" class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
                         </div>
                     </form>
@@ -175,7 +175,7 @@
                         <div class="row ml-2">
                             <form *ngIf="!showPassword" class="pt-4 ml-3 col-md-11" [formGroup]="OtpForm" focusInvalidInput autocomplete="off">
                                 <div class="centertext fgreen p-1" style="background-color: #D3D3D3;">
-                                    <div>We've sent you an OTP. Check your email and enter below
+                                    <div> {{'OTPAlert' | translate }}
                                     </div>
                                 </div>
                                 <mat-form-field class="mt-2" appearance="outline">
@@ -194,10 +194,10 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <div class="d-flex justify-content-between">
-                                    <div>OTP Expires in {{minutes}}m:{{seconds}}s</div>
+                                    <div>{{'OTPExpiresin' | translate }} {{minutes}}{{'Minuts' | translate }}:{{seconds}}{{'Seconds' | translate }}</div>
                                 </div>
                                 <div class="d-flex flex-row-reverse mt-2">
-                                    <button *ngIf="!showPassword" (click)="getOtp()" type="button" class="btn  bggreen fwhite button roundedbtn">Resend OTP?</button>
+                                    <button *ngIf="!showPassword" (click)="getOtp()" type="button" class="btn  bggreen fwhite button roundedbtn">{{'ResendOTP' | translate }}</button>
                                     <button (click)="submitOtpForm()" type="submit" class="mr-1 btn bggreen fwhite button roundedbtn">{{'Submit' | translate }}</button>
                                 </div>
 
@@ -210,7 +210,7 @@
                             <form *ngIf="showPassword" class="pt-4" [formGroup]="PasswordForm" focusInvalidInput autocomplete="off">
 
                                 <mat-form-field appearance="outline">
-                                    <mat-label>{{'Username' | translate }}</mat-label>
+                                    <mat-label>{{'UsernameLabel' | translate }}</mat-label>
                                     <input matInput formControlName="userName">
                                     <mat-error *ngIf="PasswordForm.controls.userName.hasError('required')">
                                         {{'Required.userName' | translate }}
@@ -245,7 +245,7 @@
 
 
                                     <mat-error *ngIf="PasswordForm.controls.confirmPassword.hasError('passwordsNotMatch')">
-                                        Password does not match
+                                        {{'PasswordNotMatch' | translate }}
                                     </mat-error>
                                 </mat-form-field>
 

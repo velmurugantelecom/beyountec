@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheet, ThemePalette } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
 import { Customer360Service } from '../../../customer360/customer360.service';
@@ -77,6 +77,7 @@ export class DashNotificationComponent implements OnInit {
     }
     this.language = localStorage.getItem("language");
   }
+
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
       this.language = localStorage.getItem("language");
@@ -107,12 +108,11 @@ export class DashNotificationComponent implements OnInit {
     };
     this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
       console.log(result)
-      this.mobDataSource = result;
-      this.mobDataSource['typeOfData'] = 'quote';
       this.totalRecords = result.totalRecords;
       if (!result || result.length === 0) {
         return;
       }
+      // to filter valid quotes
       let tempArray = [];
       result.data.forEach((quote) => {
         let sgsId = quote.sgsId + '';
@@ -121,6 +121,8 @@ export class DashNotificationComponent implements OnInit {
         }
       })
       this.tableData = tempArray;
+      this.mobDataSource['data'] = tempArray;
+      this.mobDataSource['typeOfData'] = 'quote';
       this.dataSource = new MatTableDataSource<any>(this.tableData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -233,11 +235,10 @@ export class DashNotificationComponent implements OnInit {
       this.spinner.show();
       this.dropdownservice.getInputs('brokerservice/search/quotes/findAll', params).subscribe(result => {
         this.spinner.hide();
-        this.mobDataSource = result;
-        this.mobDataSource['typeOfData'] = 'quote';
         if (!result || result.length === 0) {
           return;
         }
+        // to filter valid quotes
         let tempArray = [];
         result.data.forEach((quote) => {
           let sgsId = quote.sgsId + '';
@@ -246,6 +247,8 @@ export class DashNotificationComponent implements OnInit {
           }
         })
         this.tableData = tempArray;
+        this.mobDataSource['data'] = tempArray;
+        this.mobDataSource['typeOfData'] = 'quote';
         this.dataSource = new MatTableDataSource<any>(this.tableData);
         this.dataSource.sort = this.sort;
       }, err => {
@@ -287,6 +290,14 @@ export class DashNotificationComponent implements OnInit {
     this._bottomSheet.open(DashboardBottomSheet, {
       data: { data: data }
     });
+  }
+
+  onTabChanged(event) {
+    if (event.index === 0) {
+      this.fetchData('Policy')
+    } else if (event.index === 1) {
+      this.fetchData('Quotes')
+    }
   }
 }
 

@@ -409,6 +409,8 @@
     "PoweredByABC": "AFNIC | Powered by ABC Insurance_ar",
     "ToDecreaseVehicleValue": "To decrease vehicle value please click_ar",
     "ToIncreaseVehicleValue": "To increase vehicle value please click_ar",
+    "NoRecordFound": "No record found_ar",
+    "CoveragePremium": "COVERAGE & PREMIUM DETAILS_ar",
     "Required": {
         "Dob": "تاريخ الميلاد مطلوب",
         "InsuredNameArabic": "مطلوب اسم المؤمن عليه باللغة العربية",

@@ -54,6 +54,7 @@ export class Customer360Component implements OnInit {
       policyNo: policyNo,
     };
     this.customerService.getclaims(params).subscribe((data: any) => {
+      console.log(data)
       this.claims = data;
       this.claimdisplay = true;
       this.spinner.hide();

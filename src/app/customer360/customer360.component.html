@@ -1,8 +1,5 @@
 <div *ngIf="currentpolicy" class="container-fluid my-3">
-
-
     <div class="row ml-5 mr-4">
-
         <div class="col-md-4 col-12">
             <div class="row">
                 <label class="poppins-semi-bold-18 pr-2 policy-label">{{currentpolicy?.policyNo}}</label>
@@ -18,75 +15,26 @@
                 </label>
             </div>
         </div>
-
         <div class="col-md-3 col-12">
-
             <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForEndorsment')" class="btn blockbutton btn-block">
                 {{ 'ReqForEndorsement' | translate }}
             </button>
-
         </div>
-
         <div class="col-md-3 col-12">
 
             <button [disabled]="currentpolicy?.statusId == 'CAN'" (click)="navigateclaims('Customer360/ReqForCancalletion')" class="btn blockbutton btn-block">
                 {{ 'ReqForCancel' | translate }}
             </button>
-
         </div>
-
         <div class="col-md-2 col-12">
-
             <button (click)="navigateclaims('Customer360/ReportLoss')" class="btn blockbutton btn-block">
                 {{ 'ReportLoss' | translate }}
             </button>
-
         </div>
-
     </div>
     <mat-card *ngIf="claims && claims.length != 0" class="mx-4">
         <label class="poppins-semi-bold-18">{{ 'Claims' | translate }}</label>
-        <div>
-            <!-- <table mat-table [dataSource]="claims" class="mat-elevation-z8">
-                <ng-container matColumnDef="Claims">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'ClaimFnol' | translate }} #
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{(element.claimNo != null) ? element.claimNo : element.fnolNo}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="IntimatedOn">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef>{{ 'IntimatedOn' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element">
-                        {{element.intimatedDate | date:runtimeConfigService.config.DisplayingDateFormat}} </td>
-                </ng-container>
-                <ng-container matColumnDef="lossOn">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef>{{ 'LossOn' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element">
-                        {{element.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Reserve">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef>{{ 'Reserve' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element"> {{element.reserveAmount}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Settled">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'Settled' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element"> {{element.settledAmount}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Balance">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'Balance' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element"> {{element.balance}} </td>
-                </ng-container>
-                <ng-container matColumnDef="Status">
-                    <th class="poppins-light-15" mat-header-cell *matHeaderCellDef> {{ 'Status' | translate }} </th>
-                    <td class="poppins-reg-15 opa8" mat-cell *matCellDef="let element"> {{element.status}} </td>
-                </ng-container>
-                <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table> -->
+        <div class="d-none d-lg-block d-xl-block">
             <table mat-table [dataSource]="claims" class="mat-elevation-z8">
                 <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
                     <tr>
@@ -118,8 +66,20 @@
             </table>
             <br>
         </div>
-
-
+        <div class="d-block d-sm-block d-md-block d-lg-none">
+            <div class="col-md-6 col-sm-12 col-12 p-0 m-0" *ngFor="let claim of claims">
+                <mat-card class="doc-card mt-2  ml-2">
+                    <div class="row mb-4 m-0 p-0">
+                        <div class="col-5 card-label">Claim No</div>
+                        <div class="col-7 p-0 card-value">{{ claim.fnolNo}}</div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-5 card-label">Loss On</div>
+                        <div class="col-7 p-0 card-value">{{ claim.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
     </mat-card>
     <mat-card *ngIf="claimdisplay" class="d-none d-xl-block mx-4 mb-4 mt-0 pt-0">
         <mat-tab-group style="min-height:300px" class="custtab">
@@ -130,12 +90,9 @@
                         <br>
                         <label>{{ 'Vehicle' | translate }}</label>
                     </div>
-
-
                 </ng-template>
                 <app-vehicletab></app-vehicletab>
             </mat-tab>
-
             <mat-tab>
                 <ng-template mat-tab-label>
                     <div class="p-2" style="flex-direction: column;">
@@ -164,11 +121,8 @@
                         <label>{{ 'Coverage' | translate }}</label>
                     </div>
                 </ng-template>
-
                 <app-coverage></app-coverage>
-
             </mat-tab>
-
             <mat-tab>
                 <ng-template mat-tab-label>
                     <div class="p-2" style="flex-direction: column;">
@@ -180,29 +134,21 @@
                 <app-print-package [policyNo]="currentpolicy?.policyNo"></app-print-package>
             </mat-tab>
         </mat-tab-group>
-
-
     </mat-card>
-
     <div class="d-xl-none">
-
         <mat-accordion>
             <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/vehicle.png">
-
                         <label>{{ 'Vehicle' | translate }}</label>
                     </div>
-
                 </mat-expansion-panel-header>
-
                 <ng-container>
                     <app-vehicletab></app-vehicletab>
                 </ng-container>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
@@ -210,15 +156,12 @@
                         <img src="./assets/customer_360/insured.png" alt="">
                         <label>{{ 'Driver' | translate }}</label>
                     </div>
-
                 </mat-expansion-panel-header>
-
                 <ng-container>
                     <app-drivertab></app-drivertab>
                 </ng-container>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
@@ -227,54 +170,36 @@
                         <label>{{ 'Insured' | translate }}</label>
                     </div>
                 </mat-expansion-panel-header>
-
                 <ng-container>
                     <app-insuredtab></app-insuredtab>
                 </ng-container>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/covered.png" alt="">
                         <label>{{ 'Coverage' | translate }}</label>
-
                     </div>
-
                 </mat-expansion-panel-header>
-
                 <ng-container>
                     <app-coverage></app-coverage>
-
                 </ng-container>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel style="margin-top: 20px" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header style="height: 120px !important;">
                     <div class="p-2">
                         <img src="./assets/customer_360/documents.png" alt="">
                         <label>{{ 'Docs' | translate }}</label>
-
                     </div>
-
                 </mat-expansion-panel-header>
-
                 <ng-container>
                     <app-print-package [policyNo]="currentpolicy?.policyNo"></app-print-package>
                 </ng-container>
             </mat-expansion-panel>
         </mat-accordion>
-
-
     </div>
-
-
-
-
-
-
 </div>

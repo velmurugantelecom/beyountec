@@ -1,148 +1,208 @@
 $appcolor: #01c9cb;
-
-::ng-deep .my-bread-header .breadcrumb > li + li:before {
-  color: #fff;
-  content: "> ";
+::ng-deep .my-bread-header .breadcrumb>li+li:before {
+    color: #fff;
+    content: "> ";
 }
 
 .borderleft {
-  border-left: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
 }
+
 p {
-  color: black;
+    color: black;
 }
+
 .AdvanceSearchSpan {
-  color: #fff;
+    color: #fff;
 }
+
 .toastbg {
-  background-color: #79d279;
-  color: white;
+    background-color: #79d279;
+    color: white;
 }
+
 .blockbutton {
-  border-color: white;
-  border-style: solid;
-  border-radius: 25px;
-  background-color: #007759;
-  color: white;
-  border-width: 2px;
+    border-color: white;
+    border-style: solid;
+    border-radius: 25px;
+    background-color: #007759;
+    color: white;
+    border-width: 2px;
 }
+
 .blockbutton:hover {
-  color: white;
+    color: white;
 }
+
 .bgcolor {
-  background-color: $appcolor;
+    background-color: $appcolor;
 }
+
 // *{
 //   word-wrap: break-word;
 // }
-
 ::ng-deep .custtab .mat-tab-header {
-  color: grey;
-  opacity: 0.8;
-  background-color: white !important;
+    color: grey;
+    opacity: 0.8;
+    background-color: white !important;
 }
+
 ::ng-deep .custtab .mat-tab-labels {
-  justify-content: center !important;
-  background-color: white !important;
+    justify-content: center !important;
+    background-color: white !important;
 }
 
 ::ng-deep .custtab .mat-tab-label {
-  height: 90px !important;
-  width: 150px !important;
-  // margin-right: 50px;
-  background-color: white !important;
+    height: 90px !important;
+    width: 150px !important;
+    // margin-right: 50px;
+    background-color: white !important;
 }
 
 ::ng-deep .custtab .mat-tab-labels.mat-tab-label-active {
-  width: 100px !important;
-  height: 100px !important;
-  padding: 5px;
-  background-color: white !important;
-  color: black;
-  font-weight: 700;
+    width: 100px !important;
+    height: 100px !important;
+    padding: 5px;
+    background-color: white !important;
+    color: black;
+    font-weight: 700;
 }
+
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  background: #ff5200;
-  height: 5px;
+    background: #ff5200;
+    height: 5px;
 }
 
 .mt-0.m-1 {
-  margin-top:0 ! important;
+    margin-top: 0 ! important;
 }
+
 .policy-label {
-  margin-bottom: 0 ! important;
+    margin-bottom: 0 ! important;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 .slidecard {
-  width: 390px;
-  height: 200px;
-  border-top: 5px solid green;
-  border-top-width: auto;
-  position: relative;
-  z-index: 0;
+    width: 390px;
+    height: 200px;
+    border-top: 5px solid green;
+    border-top-width: auto;
+    position: relative;
+    z-index: 0;
 }
 
 .SearchTextBox {
-  /* background-color: transparent; */
-  border: 1px solid #01c9cb;
-  border-radius: 20px;
-  display: grid;
-  width: 100%;
+    /* background-color: transparent; */
+    border: 1px solid #01c9cb;
+    border-radius: 20px;
+    display: grid;
+    width: 100%;
 }
+
 .dropdown-css {
-  background: #0083c0;
-  color: #fff;
-  width: 100%;
-  border-radius: 20px;
-  padding: 6px 13px;
-  border: 1px solid #01c9cb;
+    background: #0083c0;
+    color: #fff;
+    width: 100%;
+    border-radius: 20px;
+    padding: 6px 13px;
+    border: 1px solid #01c9cb;
 }
+
 .dropdown-css1 {
-  background: #01c9cb;
-  color: #fff;
-  width: 220px;
-  border-radius: 20px;
-  padding: 6px 13px;
-  border: 1px solid #fff;
+    background: #01c9cb;
+    color: #fff;
+    width: 220px;
+    border-radius: 20px;
+    padding: 6px 13px;
+    border: 1px solid #fff;
 }
 
 .centerpage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #01c9cb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #01c9cb;
 }
 
 .slide1 {
-  width: 400px;
-  height: 200px;
-  border-top: 5px solid green;
-  border-top-width: auto;
-  position: relative;
-  z-index: 1;
-  transform: translate(0) scale(0.8);
+    width: 400px;
+    height: 200px;
+    border-top: 5px solid green;
+    border-top-width: auto;
+    position: relative;
+    z-index: 1;
+    transform: translate(0) scale(0.8);
 }
+
 .slide2 {
-  width: 400px;
-  height: 200px;
-  border-top: 5px solid green;
-  border-top-width: auto;
-  position: relative;
-  z-index: 2;
-  transform: translateX(-160px) scale(1);
+    width: 400px;
+    height: 200px;
+    border-top: 5px solid green;
+    border-top-width: auto;
+    position: relative;
+    z-index: 2;
+    transform: translateX(-160px) scale(1);
 }
+
 .slide3 {
-  width: 400px;
-  height: 200px;
-  border-top: 5px solid green;
-  border-top-width: auto;
-  position: relative;
-  z-index: 1;
-  transform: translateX(-310px) scale(0.8);
+    width: 400px;
+    height: 200px;
+    border-top: 5px solid green;
+    border-top-width: auto;
+    position: relative;
+    z-index: 1;
+    transform: translateX(-310px) scale(0.8);
+}
+
+.doc-card {
+    width: 300px;
+    height: 100px;
+}
+
+.card-label {
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.card-value {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+::ng-deep .mat-card {
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+    display: block;
+    position: relative;
+    padding: 14px !important;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width: 400px) {
+    .card-label {
+        opacity: 0.8;
+        font-size: 12px;
+    }
+    .card-value {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
+@media only screen and (max-width: 765px) {
+    .doc-card {
+        width: 95%;
+        height: 100px;
+    }
+}
+
+@media only screen and (min-width: 766px) {
+    .doc-card {
+        width: 90%;
+        height: 100px;
+    }
 }

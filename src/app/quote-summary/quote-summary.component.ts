@@ -78,7 +78,7 @@ export class QuoteSummaryComponent implements OnInit {
       this.quoteDetails = response.data.quoteSummary;
       console.log('efffe', this.quoteDetails.vehicleDetails.ncdYears)
       if (this.quoteDetails.vehicleDetails.ncdYears > this.runtimeConfigService.config.VehicleDetailsNCDYears) {
-        this.needNcdDeclaration = true;
+        // this.needNcdDeclaration = true;
       }
       this.mailId = this.quoteDetails.userDetails.email;
       this.coverageMakeover();
@@ -136,18 +136,18 @@ export class QuoteSummaryComponent implements OnInit {
     this.isAgreed = event.checked;
   }
 
-  onChangeDeclaration(event) {
-    if (event.checked && this.needNcdDeclaration) {
-      this.showNCDDisError = false;
-    } else if (!event.checked && this.needNcdDeclaration) {
-      this.showNCDDisError = true;
-    }
-  }
+  // onChangeDeclaration(event) {
+  //   if (event.checked && this.needNcdDeclaration) {
+  //     this.showNCDDisError = false;
+  //   } else if (!event.checked && this.needNcdDeclaration) {
+  //     this.showNCDDisError = true;
+  //   }
+  // }
   generateQuote() {
-    if (this.needNcdDeclaration && !this.ncdDeclaration) {
-      this.showNCDDisError = true;
-      return;
-    }
+    // if (this.needNcdDeclaration && !this.ncdDeclaration) {
+    //   this.showNCDDisError = true;
+    //   return;
+    // }
     this.spinner.show();
     this.showNCDDisError = false;
     this.coreService.postInputs1('generateQuote', this.quoteDetails.quoteId).subscribe(res => {

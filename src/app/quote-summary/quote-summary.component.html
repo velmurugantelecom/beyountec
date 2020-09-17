@@ -573,15 +573,15 @@
         </div>
     </div>
     <div *ngIf="isValidQuote==='true'">
-        <div class="col-md-10 mt-4 mx-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}" *ngIf="isQuickSummary === 'true'">
+        <!-- <div class="col-md-10 mt-4 mx-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}" *ngIf="isQuickSummary === 'true'">
             <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration" (change)="onChangeDeclaration($event)">
             </mat-checkbox>
             <span class="blue-font fbold" (click)="readNCDDeclaration()">{{ 'NoClaimDiscount' | translate }}</span>
             <span class="mx-1" *ngIf="showNCDDisError" style="color: red;">{{ 'PleaseAcceptNCD' | translate }}</span>
-        </div>
+        </div> -->
         <div class="row mt-4 mb-1" *ngIf="isQuickSummary === 'false'">
             <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                <mat-checkbox  class="mx-1 mt-1" [(ngModel)]="offersStatus" color="primary"></mat-checkbox>
+                <mat-checkbox class="mx-1 mt-1" [(ngModel)]="offersStatus" color="primary"></mat-checkbox>
                 <span class="blue-font fbold">{{ 'NewsSpecial' | translate }}</span>
             </div>
         </div>

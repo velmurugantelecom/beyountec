@@ -108,11 +108,11 @@
                                             <div *ngFor="let product of mobDataSource.data" class="col-md-6 col-sm-12 col-12 p-0 m-0">
                                                 <mat-card class="doc-card mt-2  ml-2">
                                                     <div class="row mb-4 m-0 p-0">
-                                                        <div class="col-5 card-label">Policy No</div>
+                                                        <div class="col-5 card-label p-0">Policy No</div>
                                                         <div class="col-7 p-0 card-value hyperlink-click " (click)="navpage(product)">{{ product.policyNo}}</div>
                                                     </div>
                                                     <div class="row m-0 p-0">
-                                                        <div class="col-5 card-label">End Date</div>
+                                                        <div class="col-5 card-label p-0">End Date</div>
                                                         <div class="col-7 p-0 card-value">{{ product.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                                                     </div>
                                                 </mat-card>
@@ -131,11 +131,11 @@
                                             <div class="col-md-6 col-sm-12 col-12 p-0" *ngFor="let product of mobDataSource.data">
                                                 <mat-card class=" doc-card mt-2  ml-2">
                                                     <div class="row mb-4 m-0 p-0">
-                                                        <div class="col-5 card-label">Quote No</div>
+                                                        <div class="col-5 card-label p-0">Quote No</div>
                                                         <div class="col-7 p-0 card-value hyperlink-click" (click)="showDetails(product)">{{ product.quoteNo}}</div>
                                                     </div>
                                                     <div class="row m-0 p-0">
-                                                        <div class="col-5 card-label">Insured Name</div>
+                                                        <div class="col-5 card-label p-0">Insured Name</div>
                                                         <div class="col-7 p-0 card-value">{{ product.insuredName}}</div>
                                                     </div>
                                                 </mat-card>

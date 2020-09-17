@@ -70,11 +70,11 @@
             <div class="col-md-6 col-sm-12 col-12 p-0 m-0" *ngFor="let claim of claims">
                 <mat-card class="doc-card mt-2  ml-2">
                     <div class="row mb-4 m-0 p-0">
-                        <div class="col-5 card-label">Claim No</div>
+                        <div class="col-5 card-label p-0">Claim No</div>
                         <div class="col-7 p-0 card-value">{{ claim.fnolNo}}</div>
                     </div>
                     <div class="row m-0 p-0">
-                        <div class="col-5 card-label">Loss On</div>
+                        <div class="col-5 card-label p-0">Loss On</div>
                         <div class="col-7 p-0 card-value">{{ claim.lossDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
                     </div>
                 </mat-card>

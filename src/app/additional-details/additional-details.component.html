@@ -1,6 +1,6 @@
 <div class="container-fluid row  align-items-between m-0 p-0 stepperTop" style="height: 87%;">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 col-12 mt-3">
-        <div class="row" *ngIf="showHeader">
+        <div class="row" *ngIf="showHeader" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
             <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-7 headfont">
                 <span *ngIf="!isAttachmentArea">{{'AdditionalDetails' | translate }}</span>
                 <span *ngIf="isAttachmentArea">{{'Attachments' | translate }}</span>
@@ -195,7 +195,7 @@
                     <div class="col-lg-8 col-md-12 p-0">
                         <form [formGroup]="additionalDetails" focusInvalidInput autocomplete="off">
                             <div>
-                                <div>
+                                <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                     <div class="f18 col-md-12 mt-05 mb-1">{{'adtlVehicleDetails'| translate }}</div>
                                 </div>
                                 <div class="row px-3">
@@ -237,14 +237,14 @@
                                 <div class="row px-3" *ngIf="QuestionnaireStatusShow">
                                     <div class="col-md-12">
                                         <mat-form-field appearance="outline">
-                                            <mat-label>Select the Registration Type</mat-label>
+                                            <mat-label>{{'SelectRegistrationType'| translate }}</mat-label>
                                             <mat-select required formControlName="questionnaire" (ngModelChange)="questionnaireStatusChange($event)">
                                                 <mat-option *ngFor="let questionnaireStatus of options.questionnaire" [value]="questionnaireStatus.value">
                                                     {{ questionnaireStatus.label }}
                                                 </mat-option>
                                             </mat-select>
                                             <mat-error *ngIf="formCtrls.questionnaire.errors && formCtrls.questionnaire.errors.required">
-                                                Registration Type is required
+                                                {{'Required.SelectRegistrationTypeRequired'| translate }}
                                             </mat-error>
                                         </mat-form-field>
                                     </div>
@@ -340,7 +340,7 @@
                                         </mat-autocomplete>
                                     </div>
                                 </div>
-                                <div>
+                                <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                     <div class="f18 col-md-12 mb-1"> {{'adtlInsuredDetails' | translate }}</div>
                                 </div>
                                 <!-- <div class="f18 col-md-12 mb-1">

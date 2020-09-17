@@ -386,7 +386,7 @@
     "VehicleValueTooltipABC": "Vehicle value shown is based on UAE Market Value. If you feel the value is not as per your expectation kindly contact us on 800 ABC Insuranse(23642) or email us to callcentre@fujinsco.ae",
     "AreYouSure": "Are you sure?",
     "QuoteConfirmation": "Please confirm Chassis No. and Traffic File Number entered is as per the Mulkiya / Vehicle Registration Card",
-    "QuoteLoaderContent": "Please wait for a while, we are calculating your premium..",
+    "QuoteLoaderContent": "Please Wait, we are working on our best plans",
     "PaymentLoaderContent": "Please be ready with your card details to make payment online",
     "ExcessAmount": "Excess Amount",
     "PremiumInclVAT": "Premium incl. VAT",
@@ -411,6 +411,7 @@
     "ToIncreaseVehicleValue": "To increase vehicle value please click",
     "NoRecordFound": "No record found",
     "CoveragePremium": "COVERAGE & PREMIUM DETAILS",
+    "SelectRegistrationType": "Select the Registration Type",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",
@@ -495,7 +496,8 @@
         "EmiratesIDLength": "Emirates ID should be 15 digits",
         "ChassisNumber": "Chassis Number should be minimum of 15 digits",
         "ChassisNumberRequired": "Chassis Number is required",
-        "FullQuoteNumberRequired": "Full Quote Number is required"
+        "FullQuoteNumberRequired": "Full Quote Number is required",
+        "SelectRegistrationTypeRequired": "Registration Type is required"
     },
     "PlaceHolder": {
         "InsuredName": "Enter Insured Name",

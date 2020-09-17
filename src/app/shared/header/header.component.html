@@ -24,16 +24,16 @@
                 </div>
             </ul>
 
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav">
                 <li (click)="navPages(menu.value)" *ngFor="let menu of menus" class="nav-item navlist p-2 my-auto">
                     {{ menu.label }}</li>
             </ul>
-            <ul style="min-width: 100px;" *ngIf="userType=='true'" class="navbar-nav ml-auto custom-cursor" [matMenuTriggerFor]="menu">
+            <ul style="min-width: 100px;" *ngIf="userType=='true'" class="navbar-nav custom-cursor" [matMenuTriggerFor]="menu">
                 <div class="mr-1 align-rtl">
                     <p class="mb-0">{{ 'Hello' | translate }} <span class="mb-0">{{username}}</span></p>
 
                 </div>
-                <button class="nav-item navlist  my-auto" mat-icon-button>
+                <button class="nav-item navlist  mx-auto" mat-icon-button>
           <img src="assets/profile.jpg" style="height: 36px;width: 36px;border-radius: 50%;">
         </button>
             </ul>

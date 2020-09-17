@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   //policy due for renewal
   tableData = []
+  isFirst = true;
   constructor(private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
     private commonservice: CoreService) { }
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit {
           name: 'Save More,Protect More with AFNIC Insurance',
           comment: '10% Off On Home Insurance Products '
         },
-        
+
       ]
     })
     //  referal quotes
@@ -44,6 +45,9 @@ export class DashboardComponent implements OnInit {
     //policy due for Renewal
     this.fetchRenewalQuotes();
     this.language = localStorage.getItem("language");
+    if (screen.width < 768) {
+      this.isFirst = false;
+    }
   }
 
   ngDoCheck() {
@@ -83,7 +87,7 @@ export class DashboardComponent implements OnInit {
     this.commonservice.getInputs('brokerservice/dashboard/dueForRenewal', params).subscribe((result: any) => {
       if (result.data)
         this.tableData = result.data;
-        this.spinner.hide();
+      this.spinner.hide();
     }, err => {
       this.spinner.hide();
     });

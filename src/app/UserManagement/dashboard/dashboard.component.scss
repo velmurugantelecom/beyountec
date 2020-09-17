@@ -1,7 +1,8 @@
 .form-control {
     width: 98%;
-  }
-  .dropdown-css {
+}
+
+.dropdown-css {
     border-radius: 20px;
     width: 140px;
     background-color: #fff !important;
@@ -9,82 +10,82 @@
     border: 1px solid #555 !important;
 }
 
-
-
 #customers {
     border-collapse: collapse;
     width: 100%;
-  }
-  
-  #customers th {
+}
+
+#customers th {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     padding: 8px;
-    color:#a09e9e;
-  }
+    color: #a09e9e;
+}
 
-  #customers td{
+#customers td {
     border-bottom: 1px dashed #ddd;
     font-size: 18px;
     padding: 8px;
-    color:rgba(113, 111, 111, 0.87);
-  }
-  .link{
+    color: rgba(113, 111, 111, 0.87);
+}
+
+.link {
     color: #0083C0 !important;
     font-weight: 450;
     cursor: pointer;
-  }
-  
-  
-  #customers th {
+}
+
+#customers th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     font-weight: 500;
-  }
+}
 
-  .cur-pointer{
+.cur-pointer {
     cursor: pointer;
-  }
+}
 
-  .row {
+.row {
     width: 100%;
-  }
+}
 
-  .exp-icon {
+.exp-icon {
     height: 30px;
     width: 30px;
-  }
+}
 
-  .padl-5{
+.padl-5 {
     padding-left: 5px;
-  }
+}
 
-  .title {
+.title {
     font-size: 18px !important;
-  }
+}
 
-
-.cardheight{
-  height: 330px;
+.cardheight {
+    min-height: 230px;
+    max-height: 230px;
 }
 
 .button {
-  height: 30px;
-  cursor: pointer;
-  width: 30px;
-  border: none;
-  margin-left:10px;
-  background-color: #e0dddd;
-  color: #716d6d;
-  border-radius: 50%;
-  display: inline-block;
+    height: 30px;
+    cursor: pointer;
+    width: 30px;
+    border: none;
+    margin-left: 10px;
+    background-color: #e0dddd;
+    color: #716d6d;
+    border-radius: 50%;
+    display: inline-block;
 }
-.entext{
-  float:right;
-  margin-right:10px;
+
+.entext {
+    float: right;
+    margin-right: 10px;
 }
-.artext{
-  float:left;
-  margin-left:10px;
+
+.artext {
+    float: left;
+    margin-left: 10px;
 }

@@ -22,7 +22,7 @@
                 <p>{{'PolicySuccessAlertTwo' | translate }}</p>
                 <p>{{'PolicySuccessAlertThree' | translate }}</p>
 
-                <div class="fullwidth">
+                <div class="fullwidth" *ngIf="accountActivationTokenStatus">
                     <div class="columns">
                         <img class="m-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
                         <p>{{'DownloadDocument' | translate }}</p>

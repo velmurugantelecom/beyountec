@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import swal from 'sweetalert'
 import { DropDownService } from 'src/app/core/services/dropdown.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-success-msg',
@@ -23,6 +24,7 @@ export class SuccessMsgComponent implements OnInit {
   public currency;
   public amount;
   public language: any;
+  public accountActivationTokenStatus: boolean=true;
   poclicyCreated: any;
   policyId: any
   activateAccount = null;
@@ -33,7 +35,8 @@ export class SuccessMsgComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dropdownservice: DropDownService,
     private translate: TranslateService,
-    private router: Router) {
+    private router: Router,
+    private dataService: DataService) {
 
     this.route.queryParams
       .subscribe(params => {
@@ -68,6 +71,8 @@ export class SuccessMsgComponent implements OnInit {
 
   createPolicy() {
     this.spinner.show();
+    let SuccessPageLoader='SuccessPageLoaderContent';
+    this.dataService.setMotorPageLoaderContent(SuccessPageLoader);
     let params = {
       quoteNumber: this.quoteNo,
       payMode: "PG",
@@ -78,10 +83,13 @@ export class SuccessMsgComponent implements OnInit {
     });
 
     this.coreService.postInputs('brokerservice/policy', {}, params).subscribe(response => {
+      let SuccessPageLoader='';
+      this.dataService.setMotorPageLoaderContent(SuccessPageLoader);
       this.spinner.hide();
       if (response) {
         if (response['accountActivationToken']) {
-          this.activateAccount = response['accountActivationToken']
+          this.activateAccount = response['accountActivationToken'];
+          this.accountActivationTokenStatus=false;
         }
         if (this.mailId)
           this.policyNo = response.policyNo;
@@ -91,6 +99,8 @@ export class SuccessMsgComponent implements OnInit {
         );
       }
     }, err => {
+      let SuccessPageLoader='';
+      this.dataService.setMotorPageLoaderContent(SuccessPageLoader);
       this.spinner.hide();
     });
   }

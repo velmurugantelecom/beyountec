@@ -1,6 +1,7 @@
 <ngx-spinner>
     <p *ngIf="pageLoaderContent=='MotorPageLoaderContent'" class="loader-content">{{ 'QuoteLoaderContent' | translate }} </p>
     <p *ngIf="pageLoaderContent=='PaymentPageLoaderContent'" class="loader-content">{{ 'PaymentLoaderContent' | translate }} </p>
+    <p *ngIf="pageLoaderContent=='SuccessPageLoaderContent'" class="loader-content">{{ 'SuccessLoaderContent' | translate }} </p>
 </ngx-spinner>
 
 <app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>

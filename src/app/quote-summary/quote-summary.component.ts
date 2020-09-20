@@ -301,7 +301,7 @@ export class QuoteSummaryComponent implements OnInit {
         var newWindow = window.open(fileUrl, '_blank');
         setTimeout(function () {
           newWindow.document.title = windowName;
-        }, 1000);
+        }, 3000);
         this.spinner.hide();
       }
     }, err => {

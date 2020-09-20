@@ -46,7 +46,11 @@ export class RequestRedirectComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
-      if (screen.width <= 768) {
+      if (screen.width <= 374) {
+        this.height = "350"
+        this.width = "250"
+        this.frameWidth = "215"
+      } else if (screen.width <= 768) {
         this.height = "350"
         this.width = "250"
         this.frameWidth = "230"

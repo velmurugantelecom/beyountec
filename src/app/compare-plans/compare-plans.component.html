@@ -106,12 +106,12 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
 
             <!-- Premium -->
             <div class="py-2">
                 <div>
-                    <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
+                    <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row" id="headerDiv">
                             <div class="mt-2 pl-4 fbold" style="width: 365px;">
                                 {{'Premium' | translate}}{{'InAED' | translate}}</div>
@@ -200,7 +200,7 @@
             <!-- VAT section -->
             <div class="py-2">
                 <div>
-                    <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
+                    <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row" id="headerDiv">
                             <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'VAT' | translate}} {{ VatPercentage }} {{'InAED' | translate}}</div>
                             <div class="row ml-0" *ngFor="let item of charges | keyvalue">
@@ -237,7 +237,7 @@
         <div class="d-xl-none">
             <mat-accordion>
                 <mat-expansion-panel style="margin-top: 20px" *ngFor="let plan of planOb['plans'];let i = index" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header style="height: 120px !important;" [ngClass]="{ 
+                    <mat-expansion-panel-header [ngClass]="{ 
                         'mob-silver-header': plan.bgColor == 0,
                         'mob-gold-header': plan.bgColor == 1,
                         'mob-platinum-header':plan.bgColor == 2
@@ -257,7 +257,7 @@
                             </div> -->
                         </div>
                         <div class="row">
-                            <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.excess[0]">
+                            <!-- <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12" *ngIf="plan.excess[0]">
                                 <div>
                                     {{ 'ExcessAmount' | translate }}
                                 </div>
@@ -273,13 +273,13 @@
                                 <div class="fbold">
                                     {{plan.planDetails[0].currency}} {{plan.planDetails[0].grossPremium | DecimalValue}}
                                 </div>
-                            </div>
+                            </div> -->
                             <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div>
-                                    {{ 'PremiumInclVAT' | translate }}
+                                    {{ 'PremiumInclVAT' | translate }} {{plan.planDetails[0].currency}}. {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
                                 </div>
-                                <div class="fbold">
-                                    {{plan.planDetails[0].currency}} {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
+                                <div class="mt-1">
+                                    (Inclusive of VAT)
                                 </div>
                             </div>
                         </div>
@@ -340,7 +340,7 @@
                                 </div>
                             </div>
                             <!-- Excess -->
-                            <div *ngIf="isNotEmpty(excess)" >
+                            <div *ngIf="isNotEmpty(excess)">
                                 <div class="row" *ngFor="let item of excess | keyvalue">
                                     <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
                                     <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">

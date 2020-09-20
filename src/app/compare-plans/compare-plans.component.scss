@@ -32,15 +32,12 @@ hr {
 }
 
 .silver-card-header {
-    // background-color: #00c2d1;
-    // background-color: #ADD8E6;
     width: 100%;
     background-image: url('../../assets/compare-plans/blue.jpg');
     background-position: center;
 }
 
 .silver-card-body {
-    // background-color: #e2f2f2;
     background-color: #DEEBF7;
     border: 1px solid #5B9BD5;
 }
@@ -238,8 +235,7 @@ button:hover {
 }
 
 .mob-silver-header {
-    // background-image: radial-gradient(rgb(0, 155, 196), rgb(1, 95, 129)) !important;
-    background-image: url('../../assets/compare-plans/blue.jpg');
+    background-image: radial-gradient(rgb(0, 155, 196), rgb(1, 95, 129)) !important;
     color: white;
 }
 

@@ -11,7 +11,7 @@ import { MessagePopupComponent } from 'src/app/modal/message-popup/message-popup
 import { MatDialog, MatStepper, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataService } from 'src/app/core/services/data.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { RuntimeConfigService } from 'src/app/core/services/runtime-config.service';
 import { AppService } from '../core/services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -75,9 +75,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
   public errorMessages = [];
   public otpInterval;
   public guestToken;
-  public passwordSavedAlert:any;
-  public yourAccountAlreadyExists:any;
-  public retrieveQuoteAlert:any;
+  public passwordSavedAlert: any;
+  public yourAccountAlreadyExists: any;
+  public retrieveQuoteAlert: any;
   public routes = [
     'new-login',
     'new-motor-info',
@@ -128,7 +128,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         }
       }
     });
-    
+
     this.route.queryParams
       .subscribe(params => {
         if (params['reviseDetails']) {
@@ -189,7 +189,7 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.appService.setDiscountDetails({});
     this.appService.setPlanDetails({})
     this.language = localStorage.getItem("language");
-    if(this.dataService.getEmailDetails()!='' && this.formType=="forgotPwd"){
+    if (this.dataService.getEmailDetails() != '' && this.formType == "forgotPwd") {
       this.ForgotForm.controls['email'].disable();
       this.isResetLinkSend = true;
       this.ForgotForm.patchValue({
@@ -218,10 +218,8 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       this.guestToken = response.data;
-      // localStorage.setItem('guesttokenDetails', data.token);
-      // localStorage.setItem('isLoggedIn', 'false');
-      // this.authService.isGuestUser.next(true);
-
+      localStorage.setItem('retrieveToken', this.guestToken.token)
+      this.appService._isTokenReady.next(true);
     });
   }
 
@@ -269,11 +267,11 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.spinner.hide();
       let data = response.data;
       localStorage.setItem('tokenDetails', data.token);
-      if(data.loggedfirst=="Y"){
+      if (data.loggedfirst == "Y") {
         this.dataService.setEmailDetails(data.email);
         this.router.navigate(['/forgotPwd']);
       }
-      else{
+      else {
         localStorage.setItem('Username', data.userName)
         localStorage.setItem('isLoggedIn', 'true');
         this.authService.isUserLoggedIn.next(true);
@@ -299,7 +297,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
 
   getMotorInfo(): void {
     this.infoForm.value['email'] = this.infoForm.value['email'].trim().toLowerCase();
-    console.log(this.infoForm)
     let value = {
       emailId: this.infoForm.value['email']
     }
@@ -308,9 +305,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
       this.spinner.hide();
       if (res == true) {
         this.invalidEmail = true;
-        this.translate.get('YourAccountAlreadyExists') .subscribe(value => { 
-          this.yourAccountAlreadyExists = value; 
-        } );
+        this.translate.get('YourAccountAlreadyExists').subscribe(value => {
+          this.yourAccountAlreadyExists = value;
+        });
         let dialogRef = this.dialog.open(MessagePopupComponent, {
           width: '400px',
           data: {
@@ -331,11 +328,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.infoForm.status == 'INVALID') {
           return;
         } else {
-          // let value = {
-          //   guestUser: true
-          // }
-          // this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-          //   let data = response.data;
           localStorage.setItem('guesttokenDetails', this.guestToken.token);
           localStorage.setItem('isLoggedIn', 'false');
           this.authService.isGuestUser.next(true);
@@ -390,20 +382,13 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
   }
 
-  retrieveQuote(Type: string, Title: string): void {
-    let value = {
-      guestUser: true
-    }
-    this.translate.get('RetrieveQuote') .subscribe(value => { 
-      this.retrieveQuoteAlert = value; 
-    } );
-    this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
-      let data = response.data;
-      localStorage.setItem('guesttokenDetails', data.token);
-      localStorage.setItem('isLoggedIn', 'false');
-      this.authService.isGuestUser.next(true);
-    });
+  retrieveQuote2(Type, Title) {
+  }
 
+  retrieveQuote(Type: string, Title: string): void {
+    this.translate.get('RetrieveQuote').subscribe(value => {
+      this.retrieveQuoteAlert = value;
+    });
     let dialogRef = this.dialog.open(QuoteDialog, {
       width: '500px',
       autoFocus: false,
@@ -411,14 +396,24 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
     });
+    // this.isTokenReady.subscribe(value => {
+    //   if (value === true) {
+    //     localStorage.setItem('guesttokenDetails', this.guestToken.token);
+    //     localStorage.setItem('isLoggedIn', 'false');
+    //     this.authService.isGuestUser.next(true);
+    //     this.retrieveQuote2(Type, Title)
+    //   } else {
+    //     return;
+    //   }
+    // });
   }
 
   forgotPwd() {
     this.ForgotForm.get('otp').setValidators([]);
     this.ForgotForm.get('otp').updateValueAndValidity();
-   if (this.ForgotForm.status === 'INVALID') {
-     return;
-   }
+    if (this.ForgotForm.status === 'INVALID') {
+      return;
+    }
     this.spinner.show();
     this.subscription = this.coreService.postInputs3(`brokerservice/user/forgotPassword?emailId=${this.ForgotForm.value.email.trim().toLowerCase()}`, '').subscribe(res => {
       localStorage.setItem('email', this.ForgotForm.value.email.trim().toLowerCase())
@@ -466,9 +461,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         this.PwdSopList = res.errorMessages;
       }
       else {
-        this.translate.get('PasswordSavedAlert') .subscribe(value => { 
-          this.passwordSavedAlert = value; 
-        } );
+        this.translate.get('PasswordSavedAlert').subscribe(value => {
+          this.passwordSavedAlert = value;
+        });
         swal(
           '', this.passwordSavedAlert, 'success'
         );
@@ -554,12 +549,16 @@ export class QuoteDialog {
   public doTimeout: boolean = false;
   public isCompleted: boolean = false;
   public otpInterval;
+  public retrieveQuoteCall: boolean;
+  public stepper;
   constructor(private service: CoreService,
     private router: Router,
     private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<QuoteDialog>,
     @Inject(MAT_DIALOG_DATA) public data,
     private builder: FormBuilder,
+    private appService: AppService,
+    private authService: AuthService
   ) { }
 
   onNoClick(): void {
@@ -573,21 +572,24 @@ export class QuoteDialog {
     this.OtpForm = this.builder.group({
       otp: ['', Validators.required]
     });
+    this.appService._isTokenReady.subscribe(value => {
+      if (value === true && this.retrieveQuoteCall === true) {
+        localStorage.setItem('guesttokenDetails', localStorage.getItem('retrieveToken'));
+        localStorage.setItem('isLoggedIn', 'false');
+        this.authService.isGuestUser.next(true);
+        this.retrieveQuote();
+      }
+    })
   }
 
-
-  sendEmail(stepper) {
-    if (this.quoteForm.invalid) {
-      return
-    }
-    this.spinner.show();
+  retrieveQuote() {
     this.service.getInputs1(`brokerservice/quotes/confirmQuoteRetrieval?quoteNo=${this.dialogeDetails.trim()}`, '').subscribe(response => {
       if (response) {
         this.OtpForm.reset();
         this.OtpForm.clearValidators();
         clearInterval(this.otpInterval);
         this.isCompleted = true;
-        this.goForward(stepper)
+        this.goForward(this.stepper)
         this.token = response;
         this.minutes = 2;
         this.seconds = 0;
@@ -598,9 +600,22 @@ export class QuoteDialog {
     });
   }
 
+  sendEmail(stepper) {
+    this.stepper = stepper
+    this.retrieveQuoteCall = true;
+    if (this.quoteForm.invalid) {
+      return
+    }
+    this.spinner.show();
+    if (localStorage.getItem('guesttokenDetails')) {
+      this.retrieveQuote();
+    }
+  }
+
   verifyOtp() {
     if (this.OtpForm.status === 'INVALID')
       return;
+
     this.service.getInputs1(`brokerservice/quotes/validateOtp?token=${this.token}&otp=${this.OtpForm.value['otp']}`, '').subscribe(response => {
       if (response == 'true') {
         this.dialogRef.close();

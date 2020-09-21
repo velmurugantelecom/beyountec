@@ -22,6 +22,8 @@ export class AppService {
   public isBackButtonClicked: boolean = false;
   public _languageChange: BehaviorSubject<any> = new BehaviorSubject('');
   public _invalidChassisNumber: BehaviorSubject<any> = new BehaviorSubject('');
+  public _isTokenReady: BehaviorSubject<any> = new BehaviorSubject(false);
+
 
   setuserDetails(value: any): void {
     this.userDetails = value;

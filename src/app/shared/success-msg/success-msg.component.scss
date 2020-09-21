@@ -35,3 +35,59 @@
     font-size: 15px;
     font-weight: 8px;
 }
+
+@media only screen and (min-width: 400px) {
+    .eninstruction{
+        text-align:left;
+        padding-left:8%;
+    }
+    .arinstruction{
+        text-align:right;
+        padding-right:8%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .eninstruction{
+        text-align:left;
+        padding-left:8%;
+    }
+    .arinstruction{
+        text-align:right;
+        padding-right:8%;
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
+    .eninstruction{
+        text-align:left;
+        padding-left:14%;
+    }
+    .arinstruction{
+        text-align:right;
+        padding-right:14%;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .eninstruction{
+        text-align:left;
+        padding-left:23%;
+    }
+    .arinstruction{
+        text-align:right;
+        padding-right:23%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .eninstruction{
+        text-align:left;
+        padding-left:33%;
+    }
+    .arinstruction{
+        text-align:right;
+        padding-right:33%;
+    }
+}

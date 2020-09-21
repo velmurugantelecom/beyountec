@@ -17,11 +17,11 @@
                 Click here to <button class="btn btn-home button fwhite bggreen centercss ml-2" (click)="activateProfile()">Activate Account</button>
             </div>
             <div [ngClass]="{ensucessalign :language=='en',arsuccessalign :language=='ar'}">
-                <p>{{'PolicySuccessAlertOne' | translate }}</p>
+                <!-- <p>{{'PolicySuccessAlertOne' | translate }}</p> -->
                 <!-- <p>{{'PolicySuccessAlertOneABC' | translate }}</p> -->
-                <p>{{'PolicySuccessAlertTwo' | translate }}</p>
-                <p>{{'PolicySuccessAlertThree' | translate }}</p>
-
+                <!-- <p>{{'PolicySuccessAlertTwo' | translate }}</p> -->
+                <!-- <p>{{'PolicySuccessAlertThree' | translate }}</p> -->
+                
                 <div class="fullwidth" *ngIf="accountActivationTokenStatus">
                     <div class="columns">
                         <img class="m-2 custom-cursor" src="./assets/icon1.png" (click)="downloadDocuments()" />
@@ -35,6 +35,23 @@
                         <img class="m-2 custom-cursor" src="./assets/icon3.png" (click)="printDocument()" />
                         <p>{{'PrintDocument' | translate }}</p>
                     </div>
+                </div>  
+                <!-- <div *ngIf="activateAccount" class="fullwidth centercss" > -->
+                    <div *ngIf="activateAccount" class="fullwidth " >
+                    <p> As per the new law from Insurance Authority customer should be onboarded before printing any documents. We request you to activate account by pressing the button above.
+                    </p>
+                    <p>We made the Onboarding process seamless; we will share an OTP to your registered Mobile Number. Once validated you can create your own password and onboard with AFNIC.</p>
+                    
+                    <div [ngClass]="{eninstruction :language=='en',arinstruction :language=='ar'}">
+                    <h5 class="ml-5 ">Benefits of onboarding</h5>
+                        <ul >
+                            <li >You can view / print your policy documents anytime.</li>
+                            <li >You can request for any changes to your policies.</li>
+                            <li >You can request to register claim online.</li>
+                            <li >Get New Quotes/ Retrieve your existing Quote online.</li>
+                          </ul>
+                 
+                </div>
                 </div>
             </div>
         </div>

@@ -218,22 +218,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
     this.subscription = this.coreService.postInputs('login/signIn', value, {}).subscribe(response => {
       this.guestToken = response.data;
-      localStorage.setItem('retrieveToken', this.guestToken.token)
+      localStorage.setItem('guesttokenDetails', this.guestToken.token);
+      localStorage.setItem('isLoggedIn', 'false');
+      this.authService.isGuestUser.next(true);
       this.appService._isTokenReady.next(true);
     });
   }
 
   loadDropdownValues() {
-    // this.errorMessages = [];
-    // this.translate.get('Required.MobileNo').subscribe(val => {
-    //   this.errorMessages.push(val);
-    // });
-    // this.translate.get('MobileNoLength').subscribe(val => {
-    //   this.errorMessages.push(val);
-    // });
-    // this.translate.get('NumberOnly').subscribe(val => {
-    //   this.errorMessages.push(val);
-    // });
     this.subscription = this.dropdownservice.getInputs('brokerservice/options/product/list', '').subscribe((response: any) => {
       this.options['products'] = response.data;
     });
@@ -328,9 +320,9 @@ export class NewLoginScreen implements OnInit, OnDestroy {
         if (this.infoForm.status == 'INVALID') {
           return;
         } else {
-          localStorage.setItem('guesttokenDetails', this.guestToken.token);
-          localStorage.setItem('isLoggedIn', 'false');
-          this.authService.isGuestUser.next(true);
+          // localStorage.setItem('guesttokenDetails', this.guestToken.token);
+          // localStorage.setItem('isLoggedIn', 'false');
+          // this.authService.isGuestUser.next(true);
           this.dataService.setUserDetails(this.infoForm.value);
           this.saveAuditData();
           if (this.quoteNo) {
@@ -382,9 +374,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     }
   }
 
-  retrieveQuote2(Type, Title) {
-  }
-
   retrieveQuote(Type: string, Title: string): void {
     this.translate.get('RetrieveQuote').subscribe(value => {
       this.retrieveQuoteAlert = value;
@@ -396,16 +385,6 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
     });
-    // this.isTokenReady.subscribe(value => {
-    //   if (value === true) {
-    //     localStorage.setItem('guesttokenDetails', this.guestToken.token);
-    //     localStorage.setItem('isLoggedIn', 'false');
-    //     this.authService.isGuestUser.next(true);
-    //     this.retrieveQuote2(Type, Title)
-    //   } else {
-    //     return;
-    //   }
-    // });
   }
 
   forgotPwd() {
@@ -574,9 +553,6 @@ export class QuoteDialog {
     });
     this.appService._isTokenReady.subscribe(value => {
       if (value === true && this.retrieveQuoteCall === true) {
-        localStorage.setItem('guesttokenDetails', localStorage.getItem('retrieveToken'));
-        localStorage.setItem('isLoggedIn', 'false');
-        this.authService.isGuestUser.next(true);
         this.retrieveQuote();
       }
     })

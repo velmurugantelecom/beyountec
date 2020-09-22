@@ -1,6 +1,6 @@
 <div class="container-fluid row  align-items-between m-0 p-0 stepperTop" style="height: 87%;">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 col-12 mt-3">
-        <div class="row" *ngIf="showHeader" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
+        <div class="row" *ngIf="showHeader" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
             <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-7 headfont">
                 <span *ngIf="!isAttachmentArea">{{'AdditionalDetails' | translate }}</span>
                 <span *ngIf="isAttachmentArea">{{'Attachments' | translate }}</span>

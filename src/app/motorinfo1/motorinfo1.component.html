@@ -260,7 +260,7 @@
                 <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
-                        <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate" placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}" formControlName="registeredDate" [min]="minRegisteredDate" [max]="maxRegisteredDate" required AutoDateFormat/>
+                        <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate" placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}" formControlName="registeredDate" [min]="minRegisteredDate" [max]="maxRegisteredDate" required/>
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #registeredDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
                             date_range</mat-icon>
@@ -278,7 +278,7 @@
                 <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
                     <mat-form-field appearance="outline">
                         <mat-label>{{'PrevPolExpiryDate'| translate }}</mat-label>
-                        <input matInput [owlDateTime]="expDate" [owlDateTimeTrigger]="expDate" placeholder="{{ 'PlaceHolder.PrevPolExpiryDate' | translate }}" formControlName="prevPolicyExpDate" [min]="currentYear" required AutoDateFormat />
+                        <input matInput [owlDateTime]="expDate" [owlDateTimeTrigger]="expDate" placeholder="{{ 'PlaceHolder.PrevPolExpiryDate' | translate }}" formControlName="prevPolicyExpDate" [min]="currentYear" required />
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #expDate></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="expDate">
                             date_range</mat-icon>
@@ -306,7 +306,7 @@
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'LicenseIssuedDate' | translate }}</mat-label>
-                        <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="{{ 'PlaceHolder.LicenseIssueDate' | translate }}" formControlName="licenseIssueDate" required AutoDateFormat [min]="minIssueDate" [max]="today" />
+                        <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="{{ 'PlaceHolder.LicenseIssueDate' | translate }}" formControlName="licenseIssueDate" required [min]="minIssueDate" [max]="today" />
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dt1></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
                         <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('required')">
@@ -381,7 +381,7 @@
                 <div class="col-md-4 col-sm-6">
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'Dob' | translate }}</mat-label>
-                        <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp" placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required AutoDateFormat [max]="dobVDate" [min]="dobMinVDate">
+                        <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp" placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required [max]="dobVDate" [min]="dobMinVDate">
                         <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dobdp></owl-date-time>
                         <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dobdp">date_range</mat-icon>
                         <mat-error *ngIf="insuredForm.controls.dob.hasError('required')">

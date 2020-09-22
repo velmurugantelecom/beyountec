@@ -149,14 +149,14 @@ export class NewLoginScreen implements OnInit, OnDestroy {
     this.LoginForm = this.formBuilder.group({
       userName: ['', [Validators.required,]],
       password: ['', [Validators.required,]],
-     // recaptcha: ['', Validators.required]
+      recaptcha: ['', Validators.required]
     });
     this.infoForm = this.formBuilder.group({
-      productType: ['1113', Validators.required],
-      mobileCode: ['050', Validators.required],
-      mobileNo: ['9090900', [Validators.required, Validators.minLength(7),
+      productType: ['', Validators.required],
+      mobileCode: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.minLength(7),
       Validators.maxLength(7), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      email: ['manimani@gmail.com', Validators.compose([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)])],
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)])],
     });
     this.ForgotForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)])],

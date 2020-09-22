@@ -114,7 +114,7 @@ export const configFactory = (configService: RuntimeConfigService) => {
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload,  
-    DynamicContentDialog, RequestRedirectComponent],
+    DynamicContentDialog,RequestRedirectComponent],
   providers: [
     CoreService,
     AuthGuard,

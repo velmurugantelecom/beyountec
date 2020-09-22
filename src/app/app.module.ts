@@ -46,8 +46,6 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
 
-import { VehicleBottomSheet } from './motorinfo1/motorinfo1.component';
-import { NewMotorInfoScreenModule } from './motorinfo1/motorinfo1.module';
 import { RequestRedirectComponent } from './shared/request-redirect/request-redirect.component';
 const userIdleConfig = {
   idle: 600,
@@ -112,12 +110,11 @@ export const configFactory = (configService: RuntimeConfigService) => {
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
     NgxCaptchaModule,
-    NewMotorInfoScreenModule,
     
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload,  
-    DynamicContentDialog, VehicleBottomSheet,RequestRedirectComponent],
+    DynamicContentDialog, RequestRedirectComponent],
   providers: [
     CoreService,
     AuthGuard,

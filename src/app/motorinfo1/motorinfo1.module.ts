@@ -58,6 +58,7 @@ const routes: Routes = [
         OwlMomentDateTimeModule,
         MatBottomSheetModule
     ],
+    entryComponents: [VehicleBottomSheet],
 
     providers: [
         { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },

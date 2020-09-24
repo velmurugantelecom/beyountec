@@ -79,6 +79,9 @@ export class AdditionalDetailsComponent implements OnInit {
   public maxPolicyStartDate: any;
   public invalidFileFormat: any;
   public mandatoryDocuments: any;
+  public registeredInDubai: any;
+  public firstTimeRegisteredInDubai: any;
+  public renewingVehicleInDubai: any;
 
   constructor(private formBuilder: FormBuilder,
     private coreService: CoreService,
@@ -153,6 +156,27 @@ export class AdditionalDetailsComponent implements OnInit {
     this.translate.get('Invalid.MaxPolicyStartDate').subscribe(value => {
       this.maxPolicyStartDate = value.replace("30", this.runtimeConfigService.config.PolicyStartDateGreaterThan);
     });
+
+    this.translate.get('RegisteredInDubai') .subscribe(value => { 
+      this.registeredInDubai = value; 
+    } );
+    this.translate.get('FirstTimeRegisteredInDubai') .subscribe(value => { 
+      this.firstTimeRegisteredInDubai = value; 
+    } );
+    this.translate.get('RenewingVehicleInDubai') .subscribe(value => { 
+      this.renewingVehicleInDubai = value; 
+    } );
+    this.options['questionnaire'] = [
+      {
+        label: this.registeredInDubai,
+        value: '04'
+      }, {
+        label: this.firstTimeRegisteredInDubai,
+        value: '01'
+      }, {
+        label: this.renewingVehicleInDubai,
+        value: '03'
+      }];
   }
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
@@ -160,6 +184,28 @@ export class AdditionalDetailsComponent implements OnInit {
       this.translate.get('Invalid.MaxPolicyStartDate').subscribe(value => {
         this.maxPolicyStartDate = value.replace("30", this.runtimeConfigService.config.PolicyStartDateGreaterThan);
       });
+
+      this.translate.get('RegisteredInDubai') .subscribe(value => { 
+        this.registeredInDubai = value; 
+      } );
+      this.translate.get('FirstTimeRegisteredInDubai') .subscribe(value => { 
+        this.firstTimeRegisteredInDubai = value; 
+      } );
+      this.translate.get('RenewingVehicleInDubai') .subscribe(value => { 
+        this.renewingVehicleInDubai = value; 
+      } );
+
+      this.options['questionnaire'] = [
+        {
+          label: this.registeredInDubai,
+          value: '04'
+        }, {
+          label: this.firstTimeRegisteredInDubai,
+          value: '01'
+        }, {
+          label: this.renewingVehicleInDubai,
+          value: '03'
+        }];
     }
   }
 
@@ -263,17 +309,7 @@ export class AdditionalDetailsComponent implements OnInit {
           label: this.yes,
           value: 'Y'
         },];
-      this.options['questionnaire'] = [
-        {
-          label: 'Is the vehicle already registered in Dubai?',
-          value: '04'
-        }, {
-          label: 'First time registered in Dubai?',
-          value: '01'
-        }, {
-          label: 'Renewing your existing vehicle in Dubai?',
-          value: '03'
-        }];
+
 
       if ((this.quoteDetails.vehicleDetails.registeredAt != "1102") || (this.quoteDetails.vehicleDetails.tribeQuesYN == "Y")) {
         this.additionalDetails.patchValue({

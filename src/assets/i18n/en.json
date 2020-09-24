@@ -413,6 +413,11 @@
     "NoRecordFound": "No record found",
     "CoveragePremium": "COVERAGE & PREMIUM DETAILS",
     "SelectRegistrationType": "Select the Registration Type",
+    "RegisteredInDubai": "Is the vehicle already registered in Dubai?",
+    "FirstTimeRegisteredInDubai": "First time registered in Dubai?",
+    "RenewingVehicleInDubai": "Renewing your existing vehicle in Dubai?",
+    "PreviousOwnerRegistrationNo": "* Previous owner Registration number",
+    "PreviousOwnerPlateCode": "* Previous owner Plate code",
     "Required": {
         "Dob": "Date of Birth is required",
         "InsuredNameArabic": "Insured Name is required",

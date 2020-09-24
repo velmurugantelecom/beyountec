@@ -24,12 +24,12 @@
                 </div>
             </ul>
 
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" [ngClass]="{'ml-auto' :language=='en','mr-auto' :language=='ar'}">
                 <li (click)="navPages(menu.value)" *ngFor="let menu of menus" class="nav-item navlist p-2 my-auto">
                     {{ menu.label }}</li>
             </ul>
             <ul style="min-width: 100px;" *ngIf="userType=='true'" class="navbar-nav custom-cursor" [matMenuTriggerFor]="menu">
-                <div class="mr-1 align-rtl">
+                <div class="mx-1" [ngClass]="{alignrtl:language=='en',alignltr :language=='ar'}">
                     <p class="mb-0">{{ 'Hello' | translate }} <span class="mb-0">{{username}}</span></p>
 
                 </div>

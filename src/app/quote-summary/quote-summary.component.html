@@ -573,26 +573,24 @@
         </div>
     </div>
     <div *ngIf="isValidQuote==='true'">
-        <!-- <div class="col-md-10 mt-4 mx-2" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}" *ngIf="isQuickSummary === 'true'">
-            <mat-checkbox class="mx-1 mt-1" color="primary" [(ngModel)]="ncdDeclaration" (change)="onChangeDeclaration($event)">
-            </mat-checkbox>
-            <span class="blue-font fbold" (click)="readNCDDeclaration()">{{ 'NoClaimDiscount' | translate }}</span>
-            <span class="mx-1" *ngIf="showNCDDisError" style="color: red;">{{ 'PleaseAcceptNCD' | translate }}</span>
-        </div> -->
-        <div class="row mt-4 mb-1" *ngIf="isQuickSummary === 'false'">
-            <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                <mat-checkbox class="mx-1 mt-1" [(ngModel)]="offersStatus" color="primary"></mat-checkbox>
-                <span class="blue-font fbold">{{ 'NewsSpecial' | translate }}</span>
-            </div>
-        </div>
         <div class="row mt-4 mb-1">
             <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                <mat-checkbox color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
+                <mat-checkbox id="terms1" color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
                 <span>{{ 'TermsAndConditionLabel' | translate }}</span>
                 <span class="blue-font fbold" (click)="readTermsAndCond(1)">{{ 'Term1' | translate}}</span>
-                <span class="blue-font fbold" (click)="readTermsAndCond(2)">{{'Term2' | translate}}
-    </span><span>{{'And' | translate}}</span>
-                <span class="blue-font fbold" (click)="readTermsAndCond(3)">{{'Term3' | translate}}</span>
+            </div>
+        </div>
+        <div class="row mt-2 mb-1">
+            <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                <mat-checkbox id="terms2" color="primary" class="mx-1 mt-1" (change)="isAgreedStatus($event)"></mat-checkbox>
+                <span>{{ 'TermsAndConditionLabel' | translate }}</span>
+                <span class="blue-font fbold">{{'Term2' | translate}}</span>
+            </div>
+        </div>
+        <div class="row my-2" *ngIf="isQuickSummary === 'false'">
+            <div class="col-md-10 mx-4" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                <mat-checkbox color="primary" [(ngModel)]="offersStatus" class="mx-1 mt-1"></mat-checkbox>
+                <span class="fbold">{{'Term3' | translate}}</span>
             </div>
         </div>
         <div class="d-flex justify-content-between mr-4 mb-4">
@@ -600,7 +598,7 @@
       {{ 'ReviseDetails' | translate }}
     </button>
             <div *ngIf="isQuickSummary === 'true'"></div>
-            <button type="button" class="btn button bggreen fwhite" [disabled]="!isAgreed" (click)=generateQuote() *ngIf="isQuickSummary === 'true'">
+            <button type="button" class="btn button bggreen fwhite" [disabled]="!isAgreedTerm1 || !isAgreedTerm2" (click)=generateQuote() *ngIf="isQuickSummary === 'true'">
       {{ 'GenQuote' | translate }}
     </button>
             <!-- To Generate policy without payment -->
@@ -609,7 +607,7 @@
     GENERATE POLICY 
   </button> -->
             <!-- To Generate policy with payment -->
-            <button type="submit" class="btn button bggreen fwhite" [disabled]="!isAgreed" *ngIf="isQuickSummary === 'false'" (click)="makePayment()">
+            <button type="submit" class="btn button bggreen fwhite" [disabled]="!isAgreedTerm1 || !isAgreedTerm2" *ngIf="isQuickSummary === 'false'" (click)="makePayment()">
       {{ 'MakePayment' | translate }}
     </button>
         </div>

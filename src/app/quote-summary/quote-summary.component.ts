@@ -31,7 +31,8 @@ export class QuoteSummaryComponent implements OnInit {
   public quoteNumber: any;
   public selectedPlan: any;
   public quoteDetails: any;
-  public isAgreed: boolean;
+  public isAgreedTerm1: boolean;
+  public isAgreedTerm2: boolean;
   public isQuickSummary = 'true';
   public attachments: any;
   public pageHeader: any;
@@ -76,10 +77,6 @@ export class QuoteSummaryComponent implements OnInit {
     }
     this.dropdownservice.getInputs(url, params).subscribe((response) => {
       this.quoteDetails = response.data.quoteSummary;
-      console.log('efffe', this.quoteDetails.vehicleDetails.ncdYears)
-      if (this.quoteDetails.vehicleDetails.ncdYears > this.runtimeConfigService.config.VehicleDetailsNCDYears) {
-        // this.needNcdDeclaration = true;
-      }
       this.mailId = this.quoteDetails.userDetails.email;
       this.coverageMakeover();
       let netPremium = response.data.quoteSummary.risks[0].netPremium
@@ -133,21 +130,14 @@ export class QuoteSummaryComponent implements OnInit {
   }
 
   isAgreedStatus(event) {
-    this.isAgreed = event.checked;
+    if (event.source.id === 'terms1') {
+      this.isAgreedTerm1 = event.checked;
+    } else if (event.source.id === 'terms2') {
+      this.isAgreedTerm2 = event.checked;
+    }
   }
 
-  // onChangeDeclaration(event) {
-  //   if (event.checked && this.needNcdDeclaration) {
-  //     this.showNCDDisError = false;
-  //   } else if (!event.checked && this.needNcdDeclaration) {
-  //     this.showNCDDisError = true;
-  //   }
-  // }
   generateQuote() {
-    // if (this.needNcdDeclaration && !this.ncdDeclaration) {
-    //   this.showNCDDisError = true;
-    //   return;
-    // }
     this.spinner.show();
     this.showNCDDisError = false;
     this.coreService.postInputs1('generateQuote', this.quoteDetails.quoteId).subscribe(res => {

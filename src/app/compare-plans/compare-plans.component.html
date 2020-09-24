@@ -24,8 +24,8 @@
                     </ul>
                     <ul class="mb-0">
                         <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                            <span class="mr-2 fbold">{{ 'PlaceHolder.DiscountCode' | translate }}</span>
-                            <input class="mr-2" style="width: 125px;" type="text" (blur)="onBlurMethod('promoInputField')" id="promoInputField" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
+                            <span class="fbold" [ngClass]="{'mr-2' :language=='en','ml-2' :language=='ar'}">{{ 'PlaceHolder.DiscountCode' | translate }}</span>
+                            <input [ngClass]="{'mr-2' :language=='en','ml-2' :language=='ar'}" style="width: 125px;" type="text" (blur)="onBlurMethod('promoInputField')" id="promoInputField" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
                             <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                 <i (click)="removePromoDiscount('promoInputField')" style="font-size:15px"
                                     class="fas fa-times-circle fa-2x custom-cursor"></i>
@@ -34,7 +34,7 @@
                     </ul>
                 </div>
                 <div class="plan-container" style="width: 625px;">
-                    <mat-card *ngFor="let plan of planOb['plans'];" class="card mr-1" style="width: 200px;height: 94%;" [ngClass]="{
+                    <mat-card *ngFor="let plan of planOb['plans'];" class="card" [ngClass]="{'mr-1' :language=='en','ml-1' :language=='ar'}" style="width: 200px;height: 94%;" [ngClass]="{
       'mat-elevation-z24': isSelectedPlan(plan)
     }">
                         <div class="no_margin plan-name-amt">
@@ -147,7 +147,7 @@
                     <div class="card-body" style="padding:0px;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                         <div class="row" id="headerDiv">
                             <div class="mt-2 pl-4 fbold" style="width: 365px;">{{'PromotionalDiscount' | translate}}{{'InAED' | translate}}</div>
-                            <div class="row ml-0" *ngFor="let item of promoDiscounts | keyvalue">
+                            <div class="row mx-0" *ngFor="let item of promoDiscounts | keyvalue">
                                 <ng-container *ngFor="let plan of planOb['plans']">
                                     <div class="mt-2 text-right" style="width: 200px;">
                                         {{fetchAmount(plan.planDetails[0].planId, item.value, 'D') | DecimalValue}}
@@ -242,16 +242,16 @@
                         'mob-gold-header': plan.bgColor == 1,
                         'mob-platinum-header':plan.bgColor == 2
                        }">
-                        <div class="d-flex">
+                        <div class="d-flex" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                             <div class="m-1 fbold">
-                                {{plan.planDetails[0].planName}}
-                                <span *ngIf="plan.confirmed" class="ml-2"><i style="color: #32ba7c;"
+                                {{plan.planDetails[0].planName}} vvv
+                                <span *ngIf="plan.confirmed"  [ngClass]="{'ml-2' :language=='en','mr-2' :language=='ar'}"><i style="color: #32ba7c;"
                                 class="fa fa-check-circle fa-x" aria-hidden="true"></i>
                             </span>
                             </div>
                             <!-- <div class="ml-4 mt-2 row ">
                                 <div class="justify-content-center"> -->
-                            <input class="mt-2 ml-2" type="radio" value="auto" [checked]="plan.confirmed" (click)="planselectMob(plan)" />
+                            <input class="mt-2"  [ngClass]="{'ml-2' :language=='en','mr-2' :language=='ar'}" type="radio" value="auto" [checked]="plan.confirmed" (click)="planselectMob(plan)" />
                             <!-- <button class="btn button bggreen fwhite" (click)="planselectMob(plan)">Choose Plan</button> -->
                             <!-- </div>
                             </div> -->
@@ -274,12 +274,12 @@
                                     {{plan.planDetails[0].currency}} {{plan.planDetails[0].grossPremium | DecimalValue}}
                                 </div>
                             </div> -->
-                            <div style="border-left: 3px solid #ececec;" class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12">
-                                <div>
-                                    {{ 'PremiumInclVAT' | translate }} {{plan.planDetails[0].currency}}. {{plan.planDetails[0].premiumWithVAT | DecimalValue}}
+                            <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12"  [ngClass]="{enmobilealignment:language=='en',armobilealignment :language=='ar'}">
+                                <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                                    {{ 'PremiumInclVAT' | translate }} {{plan.planDetails[0].currency}}. {{plan.planDetails[0].premiumWithVAT | DecimalValue}} MMM
                                 </div>
-                                <div class="mt-1">
-                                    (Inclusive of VAT)
+                                <div class="mt-1" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                                    (Inclusive of VAT) 
                                 </div>
                             </div>
                         </div>
@@ -293,20 +293,20 @@
                        }">
                         <ng-container>
                             <div class="flex-container m-1 p-2">
-                                <div style="flex-grow: 7">
-                                    <ul role="list">
+                                <div style="flex-grow: 7" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                                    <ul role="list" >
                                         <li *ngFor="let item of mandatoryCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                            <span class="coverage-content">{{item.key}}</span>
+                                            <span class="coverage-content">{{item.key}}</span> 
                                         </li>
                                         <li *ngFor="let item of optionalCovers | keyvalue: originalOrder" class="p-1 " style="height: 40px;">
-                                            <span class="coverage-content">{{item.key}}</span>
+                                            <span class="coverage-content">{{item.key}}</span> 
                                         </li>
                                     </ul>
                                     <ul class="mb-0">
-                                        <div>
+                                        <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                             <span class="">
-                                        <span class="mr-2 fbold fgreen"> {{ 'PlaceHolder.DiscountCode' | translate }}</span>
-                                            <input class="mr-2" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
+                                        <span class="fbold fgreen" [ngClass]="{'mr-2' :language=='en','ml-2' :language=='ar'}"> {{ 'PlaceHolder.DiscountCode' | translate }}</span>
+                                            <input  [ngClass]="{'mr-2' :language=='en','ml-2' :language=='ar'}" style="width: 120px;" type="text" (blur)="onBlurMethodMob($event, null)" id="{{plan.promoFieldId}}" placeholder="{{ 'PlaceHolder.DiscountCode' | translate }}">
                                             <span style="margin-top: 5px;color: red;" *ngIf="showPromoDiscount">
                                             <i (click)="removePromoDiscountMob(plan.promoFieldId)"
                                                 style="font-size:15px"
@@ -340,7 +340,7 @@
                                 </div>
                             </div>
                             <!-- Excess -->
-                            <div *ngIf="isNotEmpty(excess)">
+                            <div *ngIf="isNotEmpty(excess)" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="row" *ngFor="let item of excess | keyvalue">
                                     <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
                                     <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
@@ -349,7 +349,7 @@
                                 </div>
                             </div>
                             <!-- Premium -->
-                            <div class="row" id="headerDiv">
+                            <div class="row" id="headerDiv" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'Premium' | translate}}{{'InAED' | translate}}
                                 </div>
                                 <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
@@ -357,7 +357,7 @@
                                 </div>
                             </div>
                             <!-- Discount -->
-                            <div *ngIf="isNotEmpty(discounts)">
+                            <div *ngIf="isNotEmpty(discounts)" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="row" *ngFor="let item of discounts | keyvalue">
                                     <div class="col-xs-9 col-9 mt-2 pl-4 fbold">
                                         {{item.key}}{{'InAED' | translate}}</div>
@@ -367,7 +367,7 @@
                                 </div>
                             </div>
                             <!-- Promotional Discount -->
-                            <div *ngIf="showPromoDiscount">
+                            <div *ngIf="showPromoDiscount" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="row" *ngFor="let item of promoDiscounts | keyvalue">
                                     <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'PromotionalDiscount' | translate}}{{'InAED' | translate}}
                                     </div>
@@ -377,7 +377,7 @@
                                 </div>
                             </div>
                             <!-- Loadings section-->
-                            <div *ngIf="isNotEmpty(loadings)">
+                            <div *ngIf="isNotEmpty(loadings)" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="row" *ngFor="let item of loadings | keyvalue">
                                     <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{item.key}} {{'InAED' | translate}}</div>
                                     <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
@@ -386,7 +386,7 @@
                                 </div>
                             </div>
                             <!-- Net Premium -->
-                            <div class="row" id="headerDiv">
+                            <div class="row" id="headerDiv" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="col-xs-9 col-9 mt-2 pl-4 fbold">
                                     {{'NetPremium' | translate}}{{'InAED' | translate}}
                                 </div>
@@ -395,14 +395,14 @@
                                 </div>
                             </div>
                             <!-- VAT section -->
-                            <div class="row" id="headerDiv">
+                            <div class="row" id="headerDiv" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'VAT' | translate}} {{ VatPercentage }} {{'InAED' | translate}}</div>
                                 <div class="col-xs-3 col-3 d-flex justify-content-end mt-2" *ngFor="let item of charges | keyvalue">
                                     {{fetchAmount(plan.planDetails[0].planId, item.value, 'P') | DecimalValue}}
                                 </div>
                             </div>
                             <!-- Premium including VAT-->
-                            <div class="row" id="headerDiv">
+                            <div class="row" id="headerDiv" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                                 <div class="col-xs-9 col-9 mt-2 pl-4 fbold">{{'PremiumIncludingVAT' | translate}} {{'InAED' | translate}}</div>
                                 <div class="col-xs-3 col-3 d-flex justify-content-end mt-2">
                                     {{getPremiumWithVat(plan.planDetails[0]) | DecimalValue}}

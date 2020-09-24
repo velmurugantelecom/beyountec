@@ -111,9 +111,18 @@ export class QuoteSummaryComponent implements OnInit {
   ngDoCheck() {
     if (this.language != localStorage.getItem("language")) {
       this.language = localStorage.getItem("language");
-      this.translate.get('QuoteSummary').subscribe(value => {
-        this.pageHeader = value;
-      });
+      if (this.isQuickSummary == 'false') {
+        this.translate.get('SummaryForThe').subscribe(value => {
+          this.summaryFor = value;
+        });
+        this.pageHeader = this.summaryFor + ' ' + this.quoteNo;
+      }
+     else if (this.isQuickSummary == 'true') {
+        this.translate.get('QuoteSummary').subscribe(value => {
+          this.pageHeader = value;
+        });
+      }
+ 
     }
   }
 

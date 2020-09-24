@@ -8,7 +8,7 @@
         <hr class="hr-line">
         <div class="d-flex align-items-center mx-auto py-auto centercss" style="min-height: 70vh;">
             <form [formGroup]="infoForm" (ngSubmit)="getMotorInfo()" focusInvalidInput autocomplete="off">
-                <div class=" mx-0">
+                <div class=" mx-0" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                     <div class="row radiocenter mx-4">
                         <mat-radio-group formControlName="productType" (change)="selectOption($event)">
                             <mat-radio-button class="m-2" *ngFor="let product of options['products']" [value]="product.value">{{product.label}}

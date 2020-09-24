@@ -534,7 +534,7 @@
             <mat-step>
                 <div class="col-md-12">
                     <form [formGroup]="DocUploadForm" focusInvalidInput autocomplete="off">
-                        <div>
+                        <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                             <p class="orange-color"> {{'AcceptedFormats' | translate}}</p>
                         </div>
                         <div class="m-1 row" *ngFor="let container of fileContainer ; index as i">
@@ -559,7 +559,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}"> 
-                            <p style="margin-top:2px;margin-left:4px" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
+                            <p style="margin-top:2px;" class="error-message mb-0" *ngIf="isAttachmentSubmitted && formCtrlsDoc[container.controlName]?.errors else elseBlock">
                                 {{container.label}} {{'IsRequired' | translate}}</p>
                             <ng-template #elseBlock>
                                 <p style="margin-top:2px" class="placeFont mb-0">{{ 'UplodadDisclaimer'| translate}}</p>

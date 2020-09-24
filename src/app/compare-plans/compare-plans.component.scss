@@ -88,7 +88,12 @@ input[type='radio']:checked:after {
 .card {
     border: none;
 }
-
+.enmobilealignment{
+    border-left: 3px solid #ececec;
+}
+.armobilealignment{
+    border-right: 3px solid #ececec;
+}
 .gold-card-header {
     // background-color: #81d54a;
     // background-color: #FBF1DE;

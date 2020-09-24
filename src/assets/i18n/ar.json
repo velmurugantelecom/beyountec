@@ -539,7 +539,7 @@
         "RegistrationNo": "Enter Registration No_ar",
         "EngineNo": "Enter Engine No_ar",
         "RegisteredDate": "Enter First Registration Date_ar",
-        "DiscountCode": "Discount Code_ar"
+        "DiscountCode": "Discount Code"
     },
     "Invalid": {
         "LicenseIssueDate": "يجب أن يكون تاريخ إصدار الترخيص أكبر من أو يساوي 18 من DOB",

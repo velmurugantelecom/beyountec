@@ -100,7 +100,7 @@
                             </mat-paginator>
 
                         </div>
-                        <div class="col-md-12 d-block d-sm-block d-md-block d-lg-none" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
+                        <div class="col-md-12 d-block d-sm-block d-md-block d-lg-none" style="margin-top:20px;display:inline-block;padding:0px;">
                             <div>
                                 <mat-tab-group (selectedTabChange)="onTabChanged($event);">
                                     <mat-tab label="Policy">
@@ -117,6 +117,9 @@
                                                     </div>
                                                 </mat-card>
                                             </div>
+                                        </div>
+                                        <div class="centercss f16" *ngIf="totalRecords==0">
+                                            No record found
                                         </div>
                                         <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
                                         </mat-paginator>
@@ -141,13 +144,16 @@
                                                 </mat-card>
                                             </div>
                                         </div>
+                                        <div class="centercss f16" *ngIf="totalRecords==0">
+                                            No record found
+                                        </div>
                                         <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
                                         </mat-paginator>
                                     </mat-tab>
                                 </mat-tab-group>
                             </div>
                         </div>
-                        <div class="centercss f16 py-4" *ngIf="totalRecords==0">
+                        <div class="centercss f16 d-none d-lg-block d-xl-block" *ngIf="totalRecords==0">
                             No record found
                         </div>
                     </div>

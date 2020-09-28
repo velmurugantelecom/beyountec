@@ -6,13 +6,8 @@ import { SuccessMsgComponent } from './shared/success-msg/success-msg.component'
 import { GuestAuthGuard } from './core/guard/guest.auth.guard';
 import { MessageComponent } from './shared/message/message.component';
 import { PaymentFailedComponent } from './shared/payment-failed/payment-failed.component';
-import { RequestRedirectComponent } from './shared/request-redirect/request-redirect.component';
 
 const routes: Routes = [
-  {
-    path: 'test',
-    component: RequestRedirectComponent
-  },
   {
     path: 'payment-succeed',
     component: SuccessMsgComponent,

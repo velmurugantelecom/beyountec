@@ -64,6 +64,7 @@ export const MY_CUSTOM_FORMATS = {
     PaymentFailedComponent,
     DynamicContentDialog
   ],
+  entryComponents: [RequestRedirectComponent],
   providers: [
     { provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE] },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },

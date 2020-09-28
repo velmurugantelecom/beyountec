@@ -45,8 +45,6 @@ import { DataService } from './core/services/data.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { RuntimeConfigService } from './core/services/runtime-config.service';
 import { DynamicContentDialog } from './shared/dynamic-content/dynamic-content.component';
-
-import { RequestRedirectComponent } from './shared/request-redirect/request-redirect.component';
 const userIdleConfig = {
   idle: 600,
   timeout: 1,
@@ -114,7 +112,7 @@ export const configFactory = (configService: RuntimeConfigService) => {
   ],
   entryComponents: [chooseProduct, EmailPopupComponent, WebCamComponent, TimeoutDialogComponent
     , MessagePopupComponent, ProductChangePopupComponent, ContentPopupComponent, ScanAndUpload,  
-    DynamicContentDialog,RequestRedirectComponent],
+    DynamicContentDialog],
   providers: [
     CoreService,
     AuthGuard,

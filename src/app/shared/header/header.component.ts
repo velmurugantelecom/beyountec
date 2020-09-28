@@ -62,11 +62,7 @@ export class HeaderComponent implements OnInit {
     this.username = localStorage.getItem("Username");
     if (localStorage.getItem("isLoggedIn") == "false" && this.routerurl != 'new-login') {
 
-      if (this.routerurl != 'new-login' && this.routerurl != '') {
-        this.menus = [
-          { label: this.home, value: 'new-login' }
-        ];
-      } else {
+      if (this.routerurl != 'new-login' && this.routerurl != '' && this.routerurl != undefined) {
         this.menus = [
           { label: this.home, value: 'new-login' }
         ];

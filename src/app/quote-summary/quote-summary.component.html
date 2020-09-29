@@ -92,7 +92,7 @@
                             <div> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                    <div class="col-md-12 col-sm-12 col-12" *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc">
                         <label class="label_form">{{ 'RegistrationType' | translate }}</label>
                         <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
                     </div>
@@ -367,7 +367,7 @@
                         <label class="label_form">{{ 'TCFNo' | translate }}</label>
                         <div class="field-value"> {{quoteDetails?.vehicleDetails?.tcFileNumber}}</div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.ncdYearsDesc">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="quoteDetails?.vehicleDetails?.regStatusDesc">
                         <label class="label_form">{{ 'RegistrationType' | translate }}</label>
                         <div class="field-value">{{quoteDetails?.vehicleDetails?.regStatusDesc}}</div>
                     </div>

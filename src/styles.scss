@@ -334,7 +334,18 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-fie
     padding: 0px !important;
     font-size: 20px !important;
 }
-
+.swal-button{
+    font-weight: 400;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+  //  border: 1px solid ;
+  //  margin-left:15px;
+   // margin-right:15px;
+   margin:12px !important;
+    line-height: 1.5;
+    font-family: inherit;
+    line-height: inherit; 
+}
 .swal-icon {
     width: 55px;
     height: 55px;
@@ -449,3 +460,10 @@ input[type=number] {
         width: 30%;
     }
 }
+
+.mat-option {
+    font-size: inherit !important;
+    line-height: 3em !important;
+    height: 3em !important;
+    display: block !important;
+	}

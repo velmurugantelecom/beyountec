@@ -244,7 +244,7 @@
                        }">
                         <div class="d-flex" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
                             <div class="m-1 fbold">
-                                {{plan.planDetails[0].planName}} vvv
+                                {{plan.planDetails[0].planName}} 
                                 <span *ngIf="plan.confirmed"  [ngClass]="{'ml-2' :language=='en','mr-2' :language=='ar'}"><i style="color: #32ba7c;"
                                 class="fa fa-check-circle fa-x" aria-hidden="true"></i>
                             </span>
@@ -276,10 +276,10 @@
                             </div> -->
                             <div class="mt-1 col-lg-4 col-md-4 col-sm-4 col-12"  [ngClass]="{enmobilealignment:language=='en',armobilealignment :language=='ar'}">
                                 <div [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                                    {{ 'PremiumInclVAT' | translate }} {{plan.planDetails[0].currency}}. {{plan.planDetails[0].premiumWithVAT | DecimalValue}} MMM
+                                    {{ 'PremiumInclVAT' | translate }} {{plan.planDetails[0].currency}}. {{plan.planDetails[0].premiumWithVAT | DecimalValue}} 
                                 </div>
                                 <div class="mt-1" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
-                                    (Inclusive of VAT) 
+                                    (Inclusive of VAT 5%) 
                                 </div>
                             </div>
                         </div>

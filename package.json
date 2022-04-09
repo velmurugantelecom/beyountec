@@ -31,7 +31,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",
     "mask": "^0.2.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "ng-pick-datetime": "^7.0.0",
     "ng-pick-datetime-moment": "^1.0.8",
     "ngx": "^2.4.0",
